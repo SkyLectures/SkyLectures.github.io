@@ -2,6 +2,7 @@
 layout: post
 title:  "부경대학교 JAVA 프로그래밍(45H)"
 date:   2014-03-03 09:00:00 +0900
+permalink: /categories/lectlog/ 
 categories: lectlog
 ---
 
