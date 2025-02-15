@@ -25,7 +25,7 @@ categories: materials
 
     5-3. 데이터 전처리
 
-    5-4. 탐색적 데이터 분석(Exploratory Data Analysis, EDA) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/materials/source_files/Part03_DataScience_1-5-4_EDA.ipynb)
+    5-4. 탐색적 데이터 분석(Exploratory Data Analysis, EDA) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SkyLectures/LectureMaterials/Part03_DataScience_1-5-4_EDA.ipynb)
 
 6. 데이터 모델링
 
