@@ -28,15 +28,15 @@ description:           >
   Sky Lectures develops and shares learning materials on artificial intelligence and related IT technologies.
 
 # A shorter description for the sidebar.
-tagline:               Change `tagline` in `_config.yml`
+tagline:               AI / IT Lectures
 
 # A list of keywords for your blog
-keywords:              []
+keywords:              [AI, IT, Lecture, 인공지능, 정보기술, 강의, 강좌]
 
 # A (square) logo for your site.
 # If provided, it will be shown at the top of the sidebar.
 # It also used by the `jekyll-seo-tag` plugin.
-logo:                  /assets/img/logo.png
+logo:                  /assets/img/AiDALab_Logo_white.png
 
 # This should be the same author as first entry in `_data/authors.yml`.
 author:
@@ -94,7 +94,7 @@ remote_theme: hydecorp/hydejack
 # ----------------------------------------------------------------------------------------
  
 # Sidebar image and theme color of the site.
-accent_image:          /assets/img/sidebar-bg.jpg
+accent_image:          /assets/img/sidebar-bg-summer.jpg
 accent_color:          rgb(79,177,186)
 
 # This is used for the `theme-color` meta tag,
