@@ -20,12 +20,12 @@
 lang:                  ko
 
 # The title of your blog. Used in the sidebar and the browser tab.
-title:                 Sky Lectures
+title:                 AiDA Lectures
 
 # A short description (~150 chars) of the page used for the meta description tag.
 # Can use markdown, but no more than one paragraph (enforced by `>`)
 description:           >
-  Sky Lectures develops and shares learning materials on artificial intelligence and related IT technologies.
+  **AiDA Lectures** develops and shares learning materials on artificial intelligence and related IT technologies.
 
 # A shorter description for the sidebar.
 tagline:               AI / IT Lectures
@@ -48,14 +48,20 @@ author:
 
 # Add links to the sidebar.
 menu:
-  - title:             LectLog
-    url:               /lectlog/
-  - title:             Materials
-    url:               /materials/
-  - title:             Documentation
-    url:               /docs/
-  - title:             About
-    url:               /about/
+  - title: LectLog
+    url:   /lectlog/
+  - title: Q&A
+    url:   https://cafe.naver.com/aidalab
+  - title: Materials
+    url:   /materials/
+  - title: Curriculums
+    url:   /curriculums/
+  - title: Blog
+    url:   /blog/
+  - title: Documentation
+    url:   /docs/
+  - title: About
+    url:   /about/
 
 # Add links to the footer.
 # Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..
@@ -68,22 +74,22 @@ legal:
     url:               /CHANGELOG/
 
 # This text will appear in a `<small>` tag in the footer of every page.
-copyright:             © 2024. All rights reserved.
+copyright:             © 2020. AiDALab Co. All rights reserved.
 
 # Format of the permalinks
 permalink:             /:categories/:year-:month-:day-:title/
 
 # Pagination configuration (used by the `blog` layout)
 paginate:              10
-paginate_path:         /:num/
+paginate_path:         /blog/:num/
 
 
 # Theme
 # ---------------------------------------------------------------------------------------
 
 # This will use the gem `jekyll-theme-hydejack`, as defined in the sibling `Gemfile`.
-# theme: jekyll-theme-hydejack
-remote_theme: hydecorp/hydejack
+theme: jekyll-theme-hydejack
+# remote_theme: hydecorp/hydejack
 
 # You can uncomment `theme` above and replace it with `remote_theme` here iff you are using the 
 # `jekyll-remote-theme` plugin (which is the case when using the legacy GitHub Pages pipeline).
@@ -128,7 +134,7 @@ defaults:
   # You can use this to provide a default accent color and background for
   # all pages under a given path:
   - scope:
-      path:            hyde/
+      path:            lectlog/
     values:
       accent_color:    rgb(38,139,210)
       theme_color:     rgb(32,32,32)

@@ -10,7 +10,7 @@ slug: lectlog
 
 # (Optional) Write a short (~150 characters) description of this featured tag.
 description: >
-  Lecture History
+  현재 진행 중인 강의 및 지금까지의 강의 이력<br>Current lectures and history of lectures so far
 
 # (Optional) You can disable grouping posts by date.
 # no_groups: true

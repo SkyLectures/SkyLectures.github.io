@@ -1,11 +1,10 @@
 ---
 layout: page
-title:  "03. Data Science"
-date:   2025-01-29 09:00:00 +0900
+title:  "2. Data Science"
+date:   2025-02-27 09:00:00 +0900
+permalink: /materials/02_DataScience
 categories: materials
 ---
-
-# Part 03. Data Science
 
 ## **1. 데이터 과학 / 데이터 분석**
 

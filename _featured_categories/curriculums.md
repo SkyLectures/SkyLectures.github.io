@@ -3,14 +3,14 @@
 layout: page
 
 # The title of the tag's page.
-title: Materials
+title: Curriculum Examples
 
 # The name of the tag, used in a post's front matter (e.g. tags: [<slug>]).
-slug: materials
+slug: curriculums
 
 # (Optional) Write a short (~150 characters) description of this featured tag.
 description: >
-  Lecture Materials
+  Curriculum Examples
 
 # (Optional) You can disable grouping posts by date.
 # no_groups: true
@@ -20,7 +20,7 @@ description: >
 sitemap: false
 ---
 
-# Materials
+# Curriculum Examples
 
 ### [1. Python](/materials/01_Python)
   - Python 기초 문법 및 응용
