@@ -8,24 +8,27 @@ categories: materials
 
 ## **1.Python 기초**
 
-1. Python 개요
-2. Python 가상환경 설정
+1. [Python 개요](/materials/S01-01-01-00_Python_Overview)
+
+2. [Python 가상환경 설정](/materials/S01-01-02-00_Virtual_Environment)
+
 3. Python 기초
-    - 기본 문법
-    - 값의 처리, 변수
-    - Under Bar의 이해
-    - 기본 자료형
-    - 연산자
-    - Sequennce 자료형
-    - Mapping & Set 자료형
-    - 제어문
-    - 함수
-    - 클래스
-    - 모듈과 패키지
-    - 예외처리
-    - 입출력
-    - 파일처리
-    - 정규표현식
+    - [기본 문법](/materials/S01-01-03-01_Python_Basic)
+    - [값의 처리, 변수](/materials/S01-01-03-02_Variables)
+    - [Under Bar의 이해](/materials/S01-01-03-03_Underbar)
+    - [자료형](/materials/S01-01-03-04_Data_Type)
+    - [연산자](/materials/S01-01-03-05_Operators)
+    - [Sequence 자료형](/materials/S01-01-03-06_Sequence_Type)
+    - [Mapping & Set 자료형](/materials/S01-01-03-07_Mapping_Set_Type)
+    - [제어문](/materials/S01-01-03-08_Control_Statements)
+    - [함수](/materials/S01-01-03-09_Functions)
+    - [내장함수](/materials/S01-01-03-10_Built-in_Functions)
+    - [클래스](/materials/S01-01-03-11_Classes)
+    - [모듈과 패키지](/materials/S01-01-03-12_Modules_Packages)
+    - [예외처리](/materials/S01-01-03-13_Exceptions)
+    - [입출력](/materials/S01-01-03-14_Inputs_Outputs)
+    - [파일처리](/materials/S01-01-03-15_File_Handling)
+    - [정규표현식](/materials/S01-01-03-16_Regular_Expressions)
 
 
 ## **2.Python 라이브러리**
