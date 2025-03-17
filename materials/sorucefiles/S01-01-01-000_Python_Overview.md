@@ -15,7 +15,7 @@ categories: materials
     > - “1989년 12월, 저는 크리스마스 주중에 저의 ‘취미’가 될 만한 프로그램을 찾고 있었습니다.”
     > - 1999년, DARPA에게 Computer Programming for Everybody라는 자금 제안서를 제출하여 Python에 대한 나의 목표를 정의하였습니다. 당연히 무료이며 오픈 소스이므로 누구나 개발할 수 있습니다.
     > - 평이한 영어로 이해할 수 있는 코드, 일상적인 업무에 대한 적합성과 짧은 개발 시간 등 장점을 기반으로 파이썬은 대중적인 프로그래밍 언어가 되었습니다.
-    > <p align="center"><img src="./images/S01-01-01-00_001.jpg" width="400"></p>
+    > <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-01-00_001.jpg?raw=true" width="400"></p>
 
 
 ## 1.2 파이썬의 특징

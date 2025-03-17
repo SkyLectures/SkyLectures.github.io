@@ -13,39 +13,45 @@ categories: materials
 2. [Python 가상환경 설정](/materials/S01-01-02-00_Virtual_Environment)
 
 3. Python 기초
-    - [기본 문법](/materials/S01-01-03-01_Python_Basic)
-    - [값의 처리, 변수](/materials/S01-01-03-02_Variables)
-    - [Under Bar의 이해](/materials/S01-01-03-03_Underbar)
-    - [자료형](/materials/S01-01-03-04_Data_Type)
-    - [연산자](/materials/S01-01-03-05_Operators)
-    - [Sequence 자료형](/materials/S01-01-03-06_Sequence_Type)
-    - [Mapping & Set 자료형](/materials/S01-01-03-07_Mapping_Set_Type)
-    - [제어문](/materials/S01-01-03-08_Control_Statements)
-    - [함수](/materials/S01-01-03-09_Functions)
-    - [내장함수](/materials/S01-01-03-10_Built-in_Functions)
-    - [클래스](/materials/S01-01-03-11_Classes)
-    - [모듈과 패키지](/materials/S01-01-03-12_Modules_Packages)
-    - [예외처리](/materials/S01-01-03-13_Exceptions)
-    - [입출력](/materials/S01-01-03-14_Inputs_Outputs)
-    - [파일처리](/materials/S01-01-03-15_File_Handling)
-    - [정규표현식](/materials/S01-01-03-16_Regular_Expressions)
+- [기본 문법](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-001_Basic.ipynb)
+- [값의 처리, 변수](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-002_Variables.ipynb)
+- [Under Bar의 이해](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-003_UnderBar.ipynb)
+- [자료형](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-004_DataType.ipynb)
+- [연산자](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-005_Operators.ipynb)
+- [Sequence 자료형](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-006_Sequence_DataType.ipynb)
+- [Mapping & Set 자료형](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-007_Mapping_Set_DataType.ipynb)
+- [제어문](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-008_Control_Statements.ipynb)
+- [함수](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-009_Functions.ipynb)
+- [내장함수](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-010_Built-in_Functions.ipynb)
+- [클래스](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-011_Classes.ipynb)
+- [모듈과 패키지](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-012_Modules_Packages.ipynb)
+- [예외처리](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-013_Exceptions.ipynb)
+- [입출력](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-014_Inputs_Outputs.ipynb)
+- [파일처리](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-015_File_Handling.ipynb)
+- [정규표현식](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-016_Regular_Expressions.ipynb)
 
 
 ## **2.Python 라이브러리**
-1. Numpy
-2. Pandas
-3. Matplotlib
+
+- [Numpy](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-02-01_Numpy.ipynb)
+- [Pandas](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-02-02_Pandas.ipynb)
+- [Matplotlib](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-02-03_Matplotlib.ipynb)
+- [Seaborn](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-02-04_Seaborn.ipynb)
 
 
 ## **3. Python GUI(Graphical User Interface)**
 
+- [그래픽 유저 인터페이스(GUI)](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-021_GUI.ipynb)
+- [예제 실습](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-01-03-022_Examples.ipynb)
+
 
 ## **4. Python 기반 WEB Service 개발**
 
-1. WEB Server의 이해
+1. [WEB Server 개발의 이해](/materials/S01-04-01-00_Web_Service_Development_Overview)
 2. Django Programming
-    - 개발 환경
-    - 동작 원리
-    - 기본 서비스 구현 실습
-    - RESTful API 개요
-    - RESTful API 구현 실습
+    - [Django Framework 개요](/materials/S01-04-02-01_Django_Framework_Overview)
+    - [개발 환경 설정](/materials/S01-04-02-01_Django_Framework_Overview)
+    - [동작 원리](/materials/S01-04-02-01_Django_Framework_Overview)
+    - [기본 서비스 구현 실습](/materials/S01-04-02-01_Django_Framework_Overview)
+    - [RESTful API 개요](/materials/S01-04-02-01_Django_Framework_Overview)
+    - [RESTful API 구현 실습](/materials/S01-04-02-01_Django_Framework_Overview)
