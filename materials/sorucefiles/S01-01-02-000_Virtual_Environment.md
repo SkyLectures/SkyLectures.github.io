@@ -12,7 +12,7 @@ categories: materials
 - 각 프로젝트마다 다른 버전의 파이썬과 모듈을 사용하는 경우가 많음
 - 버전별 호환성 문제가 존재함
 
-<p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_001.png?raw=True" width="500"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_001.png" width="500"></p>
 
 - 이러한 이유로 파이썬 프로젝트는 가상환경에서의 개발을 권장함
 
@@ -29,24 +29,24 @@ categories: materials
 ##### 1. Python 공식사이트에서 각 OS에 맞는 설치파일 다운로드
 - [https://www.python.org/downloads/](https://www.python.org/downloads/)
 
-    <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_002.png?raw=True" width="820"></p>
+    <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_002.png" width="820"></p>
 
-    <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_003.png?raw=True" width="800"></p>
+    <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_003.png" width="800"></p>
 
 
 ##### 2. 설치파일 실행
 
-<p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_004.png?raw=True" width="800"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_004.png" width="800"></p>
 
 
 -  Windows의 경우
     - ‘Windows Terminal’ / ‘PowerShell’ / ‘명령 프롬프트’에서 python 실행
 
-        <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_005.png?raw=True" width="750"></p>
+        <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_005.png" width="750"></p>
 
 - 파이썬 버전을 선택하려면
 
-    <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_006.png?raw=True" width="800"></p>
+    <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_006.png" width="800"></p>
 
 
 ##### 3. 가상환경 설정 (Windows 기준)
@@ -56,18 +56,18 @@ categories: materials
         - 윈도우 탐색기에서 생성해도 무방함
         - 생성한 폴더 안에서 작업을 진행함 (권장사항)
 
-            <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_007.png?raw=True" width="700"></p>
+            <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_007.png" width="700"></p>
 
 - 가상환경 설정
     - python -m venv [생성하고자 하는 가상환경의 이름]
 
-        <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_008.png?raw=True" width="700"></p>
+        <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_008.png" width="700"></p>
 
 - 가상환경 활성화
     - .\Script\activate 명령으로 가상환경 활성화
         - 프롬프트의 앞에 **(가상환경이름)**이 표시되면 활성화 성공임
 
-            <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_009.png?raw=True" width="600"></p>
+            <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_009.png" width="600"></p>
 
     - Linux/Mac의 경우 : **$ source ./bin/activate** 명령으로 활성화
         - 해당 가상환경의 폴더에 들어와 있는 경우에는 source ./bin/activate를 사용하고
@@ -76,21 +76,21 @@ categories: materials
 - 가상환경 활성화 오류 발생 시 해결 방안
     - Windows 환경에서 PowerShell을 사용하는 경우 다음과 같은 오류가 자주 발생함
 
-        <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_010.png?raw=True" width="800"></p>
+        <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_010.png" width="800"></p>
 
         - 대부분의 경우 권한부족으로 인한 문제임
         - PowerShell을 관리자 권한으로 실행한 후
 
-            <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_011.png?raw=True" width="800"></p>
+            <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_011.png" width="800"></p>
 
         - **Set-ExecutionPolicy RemoteSigned** 명령 실행
             - 변경 여부 확인에서 **Y (또는 A)** 선택
 
-                <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_012.png?raw=True" width="700"></p>
+                <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_012.png" width="700"></p>
 
 - 가상환경 구축 명령어
 
-    <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_013.png?raw=True" width="800"></p>
+    <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_013.png" width="800"></p>
 
     ```bash
     # Linux / MAC의 경우
@@ -162,30 +162,30 @@ categories: materials
     4. Colab 환경 설정
         - G-Drive 화면에서 마우스 우클릭 메뉴에서 Colaboratory 선택
 
-            <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_019.png?raw=True" width="800"></p>
+            <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_019.png" width="800"></p>
 
         - Colaboratory 메뉴가 보이지 않는 경우
             1. https://colab.research.google.com 접속
 
             2. 우측 하단 “새 노트“ 선택하여 Note 생성
 
-                <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_014.png?raw=True" width="800"></p>
+                <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_014.png" width="800"></p>
 
             3. 원하는 파일명 지정 후 작업 시작
 
-                <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_015.png?raw=True" width="800"></p>
+                <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_015.png" width="800"></p>
 
                 - 작업 내용은 자동 저장되며, 파일 메뉴에서 직접 저장도 가능
 
-                <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_016.png?raw=True" width="800"></p>
+                <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_016.png" width="800"></p>
 
             4.저장 후 자동으로 생성된 Colab Notebooks 폴더로 돌아가서 작업 파일 저장 확인 가능
 
-            <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_017.png?raw=True" width="800"></p>
+            <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_017.png" width="800"></p>
 
-            <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_018.png?raw=True" width="800"></p>
+            <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_018.png" width="800"></p>
 
 
         - 작업 진행
 
-            <p align="center"><img src="https://github.com/SkyLectures/LectureMaterials/blob/main/images/S01-01-02-00_020.png?raw=True" width="800"></p>
+            <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-02-00_020.png" width="800"></p>

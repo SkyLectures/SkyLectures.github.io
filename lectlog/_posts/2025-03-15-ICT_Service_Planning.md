@@ -29,10 +29,8 @@ categories: lectlog
 
 ### 2. 웹서비스 시스템 구현
 
-- 웹서비스 시스템 기초
-    - 웹서비스 시스템 구조의 이해
-    - 시스템 환경 설정
-    - 파이썬 기반 웹서버 실습
+- [웹서비스 시스템 기초](/materials/S01-04-01-00_Web_Service_Development_Overview)
+- 파이썬 기반 웹서버 실습
 
 - Django WebFramework 프로그래밍
     - Django WebFramework 개요
