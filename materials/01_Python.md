@@ -48,11 +48,9 @@ categories: materials
 ## **4. Python 기반 WEB Service 개발**
 
 1. [WEB Server 개발의 이해](/materials/S01-04-01-00_Web_Service_Development_Overview)
-    - [Simple Web Server 실습](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-01-001_Simple_Web_Server.ipynb)
+    - [Simple Web Server 실습](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-01-01_Simple_Web_Server.ipynb)
 2. Django Programming
-    - [Django Framework 개요](/materials/S01-04-02-01_Django_Framework_Overview)
-    - [개발 환경 설정](/materials/S01-04-02-01_Django_Framework_Overview)
-    - [동작 원리](/materials/S01-04-02-01_Django_Framework_Overview)
-    - [기본 서비스 구현 실습](/materials/S01-04-02-01_Django_Framework_Overview)
+    - [Django WebFramework 개요](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-01_Django_Overview.ipynb)
+    - [기본 서비스 구현 실습](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-02_Django_Basic_Service.ipynb)
     - [RESTful API 개요](/materials/S01-04-02-01_Django_Framework_Overview)
     - [RESTful API 구현 실습](/materials/S01-04-02-01_Django_Framework_Overview)

@@ -30,11 +30,12 @@ categories: lectlog
 ### 2. 웹서비스 시스템 구현
 
 - [웹서비스 시스템 기초](/materials/S01-04-01-00_Web_Service_Development_Overview)
-- 파이썬 기반 웹서버 실습
+- [Simple Web Server 실습](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-01-01_Simple_Web_Server.ipynb)
 
 - Django WebFramework 프로그래밍
-    - Django WebFramework 개요
-    - 사진 목록 보기
+    - [Django WebFramework 개요](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-01_Django_Overview.ipynb)
+    - [기본 서비스 구현 실습](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-02_Django_Basic_Service.ipynb)
+        - 사진 목록 보기
     - Todo List 웹서비스
     - 게시판 만들기
 
