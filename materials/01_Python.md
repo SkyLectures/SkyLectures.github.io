@@ -59,7 +59,7 @@ categories: materials
 
 3. Django REST Framework(DRF)
     - [RESTful API 개요](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-01_RESTful_API_Overview.ipynb)
-    - [Django REST Framework 개요](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-02_DRF_overview.ipynb)
+    - [Django REST Framework 개요](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-02_DRF_Overview.ipynb)
     - Django 기반 RESTful API 구현 실습: 게시판 만들기
         - [게시판 사용자 관리](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-03_DRF_BBS_Users.ipynb)
         - [게시판 글 관리](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-04_DRF_BBS_Posts.ipynb)
