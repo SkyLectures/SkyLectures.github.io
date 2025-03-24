@@ -49,8 +49,17 @@ categories: materials
 
 1. [WEB Server 개발의 이해](/materials/S01-04-01-00_Web_Service_Development_Overview)
     - [Simple Web Server 실습](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-01-01_Simple_Web_Server.ipynb)
+
 2. Django Programming
     - [Django WebFramework 개요](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-01_Django_Overview.ipynb)
-    - [기본 서비스 구현 실습](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-02_Django_Basic_Service.ipynb)
-    - [RESTful API 개요](/materials/S01-04-02-01_Django_Framework_Overview)
-    - [RESTful API 구현 실습](/materials/S01-04-02-01_Django_Framework_Overview)
+    - [Django 기반 서비스 기본 흐름](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-02_Django_Basic_Service.ipynb)
+    - Django 기반 서비스 구현 실습
+        - [사진 목록 보기](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-03_Django_Picture_List.ipynb)
+        - [Todo List 웹서비스](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-04_Django_Todo_List.ipynb)
+
+3. Django REST Framework(DRF)
+    - [RESTful API 개요](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-01_RESTful_API_Overview.ipynb)
+    - [Django REST Framework 개요](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-02_DRF_overview.ipynb)
+    - Django 기반 RESTful API 구현 실습: 게시판 만들기
+        - [게시판 사용자 관리](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-03_DRF_BBS_Users.ipynb)
+        - [게시판 글 관리](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-04_DRF_BBS_Posts.ipynb)
