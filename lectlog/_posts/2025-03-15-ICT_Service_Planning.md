@@ -49,9 +49,14 @@ categories: lectlog
 
 ### 3. LLM 활용
 
-- ChatGPT API / Ollama 실습
-- LangChain 기반 LLM 활용 실습
-- 웹서비스 LLM 적용 실습
+- [LLM 개요](/materials/S03-05-01-00_LLM_Overview)
+- [LLM 활용(ChatGPT API / Ollama 사용 실습)](/materials/S03-05-02-00_LLM_Applications)
+- LangChain
+    1. [LangChain 개요](/materials/S03-05-03-01_LangChain_Overview)
+    2. [LangChain 활용]
+        - [LLM + LangChain으로 데이터 처리하기](/materials/S03-05-03-02_01_LangChain_Pandas)
+        - [LLM + LangChain으로 대화하기](/materials/S03-05-03-02_02_LangChain_Chat)
+
 
 ### 4. 서비스 기획 구현
 
