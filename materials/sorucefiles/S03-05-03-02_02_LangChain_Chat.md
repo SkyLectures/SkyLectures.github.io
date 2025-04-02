@@ -45,6 +45,7 @@ pip install langchain langchain-community langchain-huggingface
 ```
 
 - LLM 정의
+
 ```python
 from langchain_community.chat_models import ChatOllama
 from langchain_core.output_parsers import StrOutputParser
@@ -52,8 +53,11 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 # LLM 정의
 llm = ChatOllama(model="gemma2")
+```
 
-# 프롬프트 정의
+- 프롬프트 정의
+
+```python
 character_prompt = ChatPromptTemplate.from_messages([
     ('system', (
         '당신은 세계 최고의 연기자입니다. 당신은 현재 연쇄 살인범에게 납치를 당했습니다. '
@@ -76,7 +80,11 @@ character_prompt = ChatPromptTemplate.from_messages([
     MessagesPlaceholder('chat_history'),
     ('human', '{input}')
 ])
+```
 
+- 체인 정의
+
+```python
 # 체인 구성
 chain = character_prompt | llm | StrOutputParser()
 
