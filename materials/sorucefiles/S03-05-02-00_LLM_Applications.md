@@ -191,6 +191,18 @@ print(response['message']['content'])
 
 - 예제 2
 ```python
+response = ollama.chat(model="openchat", messages=[
+    {
+        "role": "user",
+        "content": "하늘이 왜 푸른지에 대하여 설명해줘. " +
+        "앞 문장을 분석하여 긍정적인 내용과 부정적인 내용을 float 형태로 답변 형식에 맞춰서 대답해줘.",
+    }
+])
+print(response['message']['content'])
+```
+
+- 예제 3
+```python
 import requests
 
 def query_ollama(model_name, prompt):
@@ -215,7 +227,7 @@ if __name__ == "__main__":
     # print(result)
 ```
 
-- 예제 3
+- 예제 4
 ```python
 import requests
 import argparse
