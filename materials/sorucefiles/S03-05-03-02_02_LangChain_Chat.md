@@ -21,11 +21,13 @@ source ./bin/activate
 #### **2. Ollama 설치 및 실행**
 
 - 설치
+
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
 ```
 
 - Ollama를 백드라운드로 실행
+
 ```bash
 ollama serve &
 ```
@@ -33,6 +35,7 @@ ollama serve &
 #### **3. 모델 불러오기**
 
 - Gemma2 모델 사용
+
 ```bash
 ollama pull gemma2
 ```
@@ -40,6 +43,7 @@ ollama pull gemma2
 #### **4. 예제 실행**
 
 - 필요한 라이브러리 설치
+
 ```python
 pip install langchain langchain-community langchain-huggingface
 ```
@@ -107,6 +111,7 @@ character_info = {
 ```
 
 - 테스트 실행
+
 ```python
 user_input = '뽀로로야~ 안녕~ 난 크롱이야~ 어? 왜그렇게 떨어? 혹시 위험한 상황이야?'
 response = chain.invoke({
