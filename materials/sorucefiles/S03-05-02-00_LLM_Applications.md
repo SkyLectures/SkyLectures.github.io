@@ -178,6 +178,7 @@ ollama run openchat
 #### **2.1.3 실행 예제**
 
 - 예제 1
+
 ```python
 import ollama
 response = ollama.chat(model='openchat', messages=[
@@ -190,6 +191,7 @@ print(response['message']['content'])
 ```
 
 - 예제 2
+
 ```python
 response = ollama.chat(model="openchat", messages=[
     {
@@ -202,6 +204,7 @@ print(response['message']['content'])
 ```
 
 - 예제 3
+
 ```python
 import requests
 
@@ -228,6 +231,7 @@ if __name__ == "__main__":
 ```
 
 - 예제 4
+
 ```python
 import requests
 import argparse
