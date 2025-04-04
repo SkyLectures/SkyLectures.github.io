@@ -35,16 +35,16 @@ categories: lectlog
 - Django WebFramework 프로그래밍
     - [Django WebFramework 개요](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-01_Django_Overview.ipynb)
     - [Django 기반 서비스 기본 흐름](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-02_Django_Basic_Service.ipynb)
-    - Django 기반 서비스 구현 실습
+    - Django 기반 서비스 구현 실습 (코드출처: 백엔드를 위한 Django REST Framework with 파이썬)
         - [사진 목록 보기](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-03_Django_Picture_List.ipynb)
         - [Todo List 웹서비스](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-02-04_Django_Todo_List.ipynb)
 
 - Django REST Framework(DRF)
     - [RESTful API 개요](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-01_RESTful_API_Overview.ipynb)
     - [Django REST Framework 개요](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-02_DRF_Overview.ipynb)
-    - Django 기반 RESTful API 구현 실습: 게시판 만들기
-        - [게시판 사용자 관리](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-03_DRF_BBS_Users.ipynb)
-        - [게시판 글 관리](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-04_DRF_BBS_Posts.ipynb)
+    - DRF 활용 실습: 게시판 만들기 (코드출처: 백엔드를 위한 Django REST Framework with 파이썬)
+        - [게시판 사용자 관리](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-03_01-DRF_BBS_Users.ipynb)
+        - [게시판 글 관리](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-04-03-03_02-DRF_BBS_Posts.ipynb)
 
 
 ### 3. LLM 활용
@@ -60,9 +60,7 @@ categories: lectlog
 
 ### 4. 서비스 기획 구현
 
-- 서비스 기획 개요
-- 기획 기반 서비스 구성 분석
-- 개발 환경 구축
-- 서비스 기본 기능 구현
-- 서비스 UI/UX 적용
-- 서비스 UI/UX 적용 및 테스트
+- Pystagram 만들기 (코드출처: 이한영의 Django 입문)
+    - [개발환경 구성 및 인증시스템 구현](/materials/S01-04-03-04_01-WebService_Pystagram_01)
+    - [글 관리 기능 구현](/materials/S01-04-03-04_02-WebService_Pystagram_02)
+    - [부가 기능 구현](/materials/S01-04-03-04_03-WebService_Pystagram_03)
