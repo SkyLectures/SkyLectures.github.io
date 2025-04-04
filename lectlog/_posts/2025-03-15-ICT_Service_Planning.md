@@ -66,3 +66,4 @@ categories: lectlog
     - [회원가입 기능 구현](/materials/S01-04-03-04_03-WebService_Pystagram_03)
     - [글 관리 기능 구현](/materials/S01-04-03-04_04-WebService_Pystagram_04)
     - [부가 기능 구현](/materials/S01-04-03-04_05-WebService_Pystagram_05)
+    - [글 상세 관리 기능 구현](/materials/S01-04-03-04_06-WebService_Pystagram_06)
