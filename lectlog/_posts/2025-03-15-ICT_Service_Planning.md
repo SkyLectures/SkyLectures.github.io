@@ -61,6 +61,8 @@ categories: lectlog
 ### 4. 서비스 기획 구현
 
 - Pystagram 만들기 (코드출처: 이한영의 Django 입문)
-    - [개발환경 구성 및 인증시스템 구현](/materials/S01-04-03-04_01-WebService_Pystagram_01)
-    - [글 관리 기능 구현](/materials/S01-04-03-04_02-WebService_Pystagram_02)
-    - [부가 기능 구현](/materials/S01-04-03-04_03-WebService_Pystagram_03)
+    - [환경구축 및 기본 정보 설정](/materials/S01-04-03-04_01-WebService_Pystagram_01)
+    - [로그인/로그아웃 기능 구현](/materials/S01-04-03-04_02-WebService_Pystagram_02)
+    - [회원가입 기능 구현](/materials/S01-04-03-04_03-WebService_Pystagram_03)
+    - [글 관리 기능 구현](/materials/S01-04-03-04_04-WebService_Pystagram_04)
+    - [부가 기능 구현](/materials/S01-04-03-04_05-WebService_Pystagram_05)
