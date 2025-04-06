@@ -30,44 +30,45 @@ categories: materials
     ```
 
 #### 1.2 임시설정 변경
-    - templates/users/feeds.html 파일을 templates/posts/feeds.html 로 이동
-    - config/views.py 파일에서 users/feeds를 posts/feeds로 변경
-    - users/views.py 파일에서 users/feeds를 posts/feeds로 변경
 
-    - config/urls.py
+- templates/users/feeds.html 파일을 templates/posts/feeds.html 로 이동
+- config/views.py 파일에서 users/feeds를 posts/feeds로 변경
+- users/views.py 파일에서 users/feeds를 posts/feeds로 변경
 
-        ```python
-        urlpatterns = [
-            path('admin/', admin.site.urls),
-            path('', index),
-            path("users/", include("users.urls")),
-            path("posts/", include("posts.urls")),
-        ]
-        ```
+- config/urls.py
 
-    - users/urls.py
+    ```python
+    urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('', index),
+        path("users/", include("users.urls")),
+        path("posts/", include("posts.urls")),
+    ]
+    ```
 
-        ```python
-        from django.urls import path
-        from users.views import login_view, logout_view, signup
+- users/urls.py
 
-        urlpatterns = [
-            path('login/', login_view),
-            path('logout/', logout_view),
-            path("signup/", signup),
-        ]
-        ```
+    ```python
+    from django.urls import path
+    from users.views import login_view, logout_view, signup
 
-    - posts/urls.py
+    urlpatterns = [
+        path('login/', login_view),
+        path('logout/', logout_view),
+        path("signup/", signup),
+    ]
+    ```
 
-        ```python
-        from django.urls import path
-        from users.views import feeds 
+- posts/urls.py
 
-        urlpatterns = [
-            path('feeds/', feeds),
-        ]
-        ```
+    ```python
+    from django.urls import path
+    from users.views import feeds 
+
+    urlpatterns = [
+        path('feeds/', feeds),
+    ]
+    ```
 
 #### 1.3 글/이미지/댓글 모델링
 
@@ -101,73 +102,76 @@ categories: materials
         ```
 
 #### 1.4 관리자 페이지에 모델 등록
-    - posts/admin.py
 
+- posts/admin.py
+
+    ```python
+    from django.contrib import admin
+    from posts.models import Post, PostImage, Comment
+
+    @admin.register(Post)
+    class PostAdmin(admin.ModelAdmin):
+        list_display = [
+            "id",
+            "content",
+        ]
+
+    @admin.register(PostImage)
+    class PostImageAdmin(admin.ModelAdmin):
+        list_display = [
+            "id",
+            "post",
+            "photo",
+        ]
+
+    @admin.register(Comment)
+    class CommentAdmin(admin.ModelAdmin):
+        list_display = [
+            "id",
+            "post",
+            "content",
+        ]
+    ```
+
+#### 1.5 admin에 연관 객체 표시
+
+- ForeignKey로 연결된 객체 확인
+    - posts/admin.py
+    
         ```python
-        from django.contrib import admin
-        from posts.models import Post, PostImage, Comment
+        class CommentInline(admin.TabularInline):
+            model = Comment
+            extra = 1
 
         @admin.register(Post)
         class PostAdmin(admin.ModelAdmin):
-            list_display = [
-                "id",
-                "content",
-            ]
-
-        @admin.register(PostImage)
-        class PostImageAdmin(admin.ModelAdmin):
-            list_display = [
-                "id",
-                "post",
-                "photo",
-            ]
-
-        @admin.register(Comment)
-        class CommentAdmin(admin.ModelAdmin):
-            list_display = [
-                "id",
-                "post",
-                "content",
+            ...
+            inlines = [
+                CommentInline,
             ]
         ```
 
-#### 1.5 admin에 연관 객체 표시
-    - ForeignKey로 연결된 객체 확인
-        - posts/admin.py
-        
-            ```python
-            class CommentInline(admin.TabularInline):
-                model = Comment
-                extra = 1
+        ```python
+        class CommentInline(admin.TabularInline):
+            ...
 
-            @admin.register(Post)
-            class PostAdmin(admin.ModelAdmin):
-                ...
-                inlines = [
-                    CommentInline,
-                ]
-            ```
+        class PostImageInline(admin.TabularInline):
+            model = PostImage
+            extra = 1
 
-            ```python
-            class CommentInline(admin.TabularInline):
-                ...
-
-            class PostImageInline(admin.TabularInline):
-                model = PostImage
-                extra = 1
-
-            @admin.register(Post)
-            class PostAdmin(admin.ModelAdmin):
-                ...
-                inlines = [
-                    CommentInline,
-                    PostImageInline,
-                ]
-            ```
+        @admin.register(Post)
+        class PostAdmin(admin.ModelAdmin):
+            ...
+            inlines = [
+                CommentInline,
+                PostImageInline,
+            ]
+        ```
 
 ### 2. 썸네일 이미지 표시
 
 #### 2.1 직접 admin을 조작해서 썸네일 표시 코드 추가
+
 - posts/admin.py
 
     ```python
@@ -201,19 +205,19 @@ categories: materials
 
 #### 2.2 오픈소스 라이브러리를 사용한 썸네일 표시
 
-    ```bash
-    pip install django-admin-thumbnails
-    ```
+```bash
+pip install django-admin-thumbnails
+```
 
-    ```python
-    # 위에서 추가한 코드들은 모두 삭제하고 썸네일 라이브러리를 사용함
-    import admin_thumbnails
+```python
+# 위에서 추가한 코드들은 모두 삭제하고 썸네일 라이브러리를 사용함
+import admin_thumbnails
 
-    @admin_thumbnails.thumbnail("photo")
-    class PostImageInline(admin.TabularInline):
-        model = PostImage
-        extra = 1
-    ```
+@admin_thumbnails.thumbnail("photo")
+class PostImageInline(admin.TabularInline):
+    model = PostImage
+    extra = 1
+```
 
 <br>
 
