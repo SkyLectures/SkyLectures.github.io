@@ -48,18 +48,14 @@ author:
 
 # Add links to the sidebar.
 menu:
-  - title: Blog
-    url:   /blog/
   - title: LectLog
     url:   /lectlog/
   - title: Q&A
     url:   https://cafe.naver.com/aidalab
   - title: Materials
     url:   /materials/
-  - title: Curriculums
-    url:   /curriculums/
-  - title: Documentation
-    url:   /docs/
+  # - title: Documentation
+  #   url:   /docs/
   - title: About
     url:   /about/
 

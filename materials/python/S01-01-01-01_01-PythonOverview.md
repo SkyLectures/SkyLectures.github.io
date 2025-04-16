@@ -1,12 +1,12 @@
 ---
 layout: page
-title:  "1. 파이썬 개요(Python Overview)"
+title:  "파이썬 개요"
 date:   2025-03-01 09:00:00 +0900
-permalink: /materials/S01-01-01-00_Python_Overview
+permalink: /material/python/S01-01-01-01_01-PythonOverview
 categories: materials
 ---
 
-## 1.1 파이썬의 기원
+## 1. 파이썬의 기원
 
 - 1990년 네덜란드 암스테르담, 귀도 반 로섬에 의해 개발
 - 1991년 발표된 인터프리터형 언어
@@ -15,10 +15,10 @@ categories: materials
     > - “1989년 12월, 저는 크리스마스 주중에 저의 ‘취미’가 될 만한 프로그램을 찾고 있었습니다.”
     > - 1999년, DARPA에게 Computer Programming for Everybody라는 자금 제안서를 제출하여 Python에 대한 나의 목표를 정의하였습니다. 당연히 무료이며 오픈 소스이므로 누구나 개발할 수 있습니다.
     > - 평이한 영어로 이해할 수 있는 코드, 일상적인 업무에 대한 적합성과 짧은 개발 시간 등 장점을 기반으로 파이썬은 대중적인 프로그래밍 언어가 되었습니다.
-    > <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-01-01-00_001.jpg" width="400"></p>
+    > <p align="center"><img src="/materials/images/python/S01-01-01-01_01-001.jpg" width="400"></p>
 
 
-## 1.2 파이썬의 특징
+## 2. 파이썬의 특징
 
 - 쉽게 익힐 수 있는 프로그래밍 언어이다(문법이 쉽다).
 - 간결하다.
@@ -26,18 +26,18 @@ categories: materials
 - 무료(오픈소스)이다.
 - 개발 속도가 빠르다.
 <br><br>
-<img src="./images/Common_001.png" width="30"> 그런데... <span style="color: #C00">**정말 쉬울까?**</span>
+<img src="/materials/images/Common_001.png" width="30">&nbsp;&nbsp;<span style="color: #C00; font-size:24px; vertical-align: middle;">**그런데... 정말 쉬울까?**</span>
 
 
-### 1.2.1 파이썬이 쉽다는 말은 누가 했을까?
+### 2.1 파이썬이 쉽다는 말은 누가 했을까?
 
 - **귀도 반 로섬**: 취미로 프로그래밍 언어를 만들 정도의 엄청난 능력자 → <span style="color: #00D">쉽다는 기준이 일반인과 다름</span>
 - **기존 개발자**: 개발 경험이 풍부하므로 C/C++/C#, Java 등과 비교하면 당연히 쉬움 → <span style="color: #00D">쉽다는 기준이 일반인과 다름</span>
-- **영어권 일반인**: "평이한 영어로 이해할 수 있는 코드”가 개발 기준 → 아무래도 접근하기 쉬움 → <span style="color: #00D">쉽다는 기준이 <span style="color: #C00">한국인</span>과 다름</span>
+- **영어권 일반인**: "평이한 영어로 이해할 수 있는 코드”가 개발 기준 → 당연히 접근하기 쉬움 → <span style="color: #00D">쉽다는 기준이 <span style="color: #C00">한국인</span>과 다름</span>
 - **비 영어권 일반인**: “뭔 소린지 하나도 모르겠다!!!”라는 반응이 생각보다 많음 → <span style="color: #C00">**진짜 쉽나??**</span>
 
 
-### 1.2.2 입문자에게 파이썬은...
+### 2.2 입문자에게 파이썬은...
 
 - 파이썬의 특징이자 장점인 동적 언어 → <span style="color: #00D">입문자에겐 의미를 알 수 없는 특징</span>
 - 자료형을 신경 쓰지 않아도 됨 → <span style="color: #00D">나중에 꼬이기 시작하면 답이 없음</span>
@@ -46,14 +46,14 @@ categories: materials
 - 등등…
 
 
-### 1.2.3 시작부터 겁을 주는 이유는?
+### 2.3 시작부터 겁을 주는 이유는?
 
 - 그럼에도 불구하고 파이썬의 접근성은 타 언어보다는 용이하다.
 - <span style="color: #C00">**이해가 잘 가지 않더라도 나 혼자만 뒤처지는 것이 아니다!!**</span>
 - 겁먹을 필요 없다!! 해 보면 그래도 다른 것보다는 쉽다!!
 
 
-### 1.2.4 그러면 다시 한 번.. 파이썬의 언어적 특징
+### 2.4 그러면 다시 한 번.. 파이썬의 언어적 특징
 
 - **플랫폼 독립적인 언어** : 어떤 운영체제든 상관없이 사용할 수 있는 언어 → <span style="color: #00D">글쎄..</span>
 - **인터프리터 언어** : 컴파일러 언어와 달리 소스코드 자체가 바로 실행되는 언어 → <span style="color: #00D">속도는 느리지만, 간편하게 사용 가능</span>
@@ -61,17 +61,17 @@ categories: materials
 - **동적 타이핑 언어** : 프로그램의 실행 시점에서 각 프로그램 변수의 타입을 결정하는 언어 → <span style="color: #00D">적어도 코딩할 때는 크게 신경 쓰지 않아도 됨</span>
 
 
-## 1.3 AI/데이터 과학 분야에서는 왜 파이썬을 많이 사용할까?
+## 3. AI/데이터 과학 분야에서는 왜 파이썬을 많이 사용할까?
 
-### 1.3.1 국내 도입
+### 3.1 국내 도입
 - 1991년에 발표된 언어지만 국내에선 그다지 주목받지 못해..
 > - 책장에서 발견한 옛 파이썬 도서 (1998.01.17 발행) 대학생때 사 놓고 거의 보지 않음
->
+> <p align="center"><img src="/materials/images/python/S01-01-01-01_01-002.jpg" width="302" height="320">&nbsp;&nbsp;<img src="/materials/images/python/S01-01-01-01_01-003.png" width="200" height="312"></p>
 
 - 알파고 이후, AI에 대한 관심이 급증하면서 일단 외국의 트렌드를 따라 감
 - 그럼 외국에서는 왜?
 
-### 1.3.2 데이터 과학, AI 분야에 대한 파이썬의 강점
+### 3.2 데이터 과학, AI 분야에 대한 파이썬의 강점
 
 - 개발 속도, 개발의 용이성 등 다양한 특징
 - 언어 자체적으로 64Bit 이상의 매우 큰 정수 연산 지원 → 이·공학 분야에서 많이 활용
@@ -82,12 +82,12 @@ categories: materials
     - 인터프리터형 언어의 특징 + 다양한 라이브러리 → 연구 과정에서 요구되는 노력 감소 지원
 - 이러한 이유들로 인해 채택됨
 
-### 1.3.3 파이썬의 단점
+### 3.3 파이썬의 단점
 
 - <span style="color: #C00">**느리다**</span>
-    - 인터프리터형 언어이므로 코드를 한 줄씩 읽고 해석하여 실행
-        - → Cpython 확장 모듈: 개발된 파이썬 모듈을 C/C++ 루틴 호출 연동 등을 통해 성능향상
-        - → Cython: Cpython 확장 모듈을 쉽게 생성하도록 지원하는 컴파일 언어
+    - 인터프리터형 언어이므로 코드를 한 줄씩 읽고 해석하여 실행<br>
+        → Cpython 확장 모듈: 개발된 파이썬 모듈을 C/C++ 루틴 호출 연동 등을 통해 성능향상<br>
+        → Cython: Cpython 확장 모듈을 쉽게 생성하도록 지원하는 컴파일 언어
 - 디자인, 환경 등에 대한 제약: 개선을 위한 다양한 라이브러리 개발 중
 - GUI 지원 취약: QtPy, Tkinter 등 라이브러리 및 툴킷 지원으로 보완 중
 
