@@ -2,9 +2,11 @@
 layout: page
 title:  "파이썬 가상환경 설정"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/python/S01-01-02-01_01-VirtualEnvironment
+permalink: /material/S01-01-02-01_01-VirtualEnvironment
 categories: materials
 ---
+* toc
+{:toc .large-only .toc-sticky:true}
 
 ## 1. 파이썬 프로젝트는..
 
@@ -27,7 +29,9 @@ categories: materials
 
 #### 2.1.1 파이썬 설치하기
 
-##### (1) Python 공식사이트에서 각 OS에 맞는 설치파일 다운로드
+##### (1) 설치파일 다운로드
+
+- Python 공식사이트에서 각 OS에 맞는 설치파일 다운로드
 
 - [https://www.python.org/downloads/](https://www.python.org/downloads/)
 
@@ -36,7 +40,7 @@ categories: materials
     <p align="center"><img src="/materials/images/python/S01-01-02-01_01-003.png" width="800"></p>
 
 
-##### (2) 설치파일 실행
+##### (2) 설치파일 실행(windows 기준)
 
 <p align="center"><img src="/materials/images/python/S01-01-02-01_01-004.png" width="800"></p>
 
@@ -139,7 +143,7 @@ deactivate
 
 - 학습자의 환경이 서로 다를 경우, 예제 코드의 작동 여부 및 결과가 다르게 나타날 가능성이있음 
 
-##### (3) 데이터 분석 / 인공지능(딥러닝 등) 관련 프로젝트의 경우
+##### (3) 데이터 분석 / AI 관련 프로젝트의 경우
 
 - 가장 큰 문제는 비용
 - 딥러닝용(또는 데이터 분석용) PC/서버를 직접 구성하려면 대규모의 GPU가 필요함
@@ -147,7 +151,7 @@ deactivate
     - NVIDIA RTX 5090(개인용) 가격: 약 705만원(2025년 3월 기준)
     - NVIDIA RTX 4090 Ti 24G(개인용) 가격: 약 475만원(2025년 3월 기준)
 
-##### → 이러한 이유로 Google에서 제공하는 Colab 활용 권장
+<span style="color: red;">**→ 이러한 이유로 Google에서 제공하는 Colab 활용 권장**</span>
 
 - Colab의 지원 환경
     - 파이썬 / R 지원

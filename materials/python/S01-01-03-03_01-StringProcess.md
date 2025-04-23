@@ -2,9 +2,11 @@
 layout: page
 title:  "파이썬 기본 문법: 3. 문자열 처리"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/python/S01-01-03-03_01-StringProcess
+permalink: /material/S01-01-03-03_01-StringProcess
 categories: materials
 ---
+* toc
+{:toc .large-only .toc-sticky:true}
 
 문자열을 조작하는 작업은 이후 데이터 분석, AI 학습을 위한 데이터 조작 등에서 많이 활용되므로 다양하게 익혀두는 것이 좋습니다.
 

@@ -2,9 +2,11 @@
 layout: page
 title:  "파이썬 표준 라이브러리"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/python/S01-01-04-01_01-StandardLibrary
+permalink: /material/S01-01-04-01_01-StandardLibrary
 categories: materials
 ---
+* toc
+{:toc .large-only .toc-sticky:true}
 
 - 파이썬에는 내장되어 있는 수많은 표준 라이브러리가 있습니다. 그 중에서 자주 사용할만한 몇 개의 라이브러리의 예시를 살펴보겠습니다. 그 외의 필요한 라이브러리들은 파이썬 공식 사이트의 레퍼런스를 참고하시기 바랍니다.<br><br>
     - [파이썬 언어 레퍼런스](https://docs.python.org/3/reference/index.html)

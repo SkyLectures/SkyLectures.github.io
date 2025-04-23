@@ -2,9 +2,11 @@
 layout: page
 title:  "Matplotlib"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/python/S01-01-04-04_01-Matplotlib
+permalink: /material/S01-01-04-04_01-Matplotlib
 categories: materials
 ---
+* toc
+{:toc .large-only .toc-sticky:true}
 
 ## 1. Matplotlib 개요
 
@@ -806,8 +808,7 @@ img
 ```python
 import pandas as pd
 
-# cctv = pd.read_csv('./CCTV_20190920.csv', encoding='cp949')
-cctv = pd.read_csv('https://raw.githubusercontent.com/aidalabs/Lectures/master/LectureFiles/datasets/S01-01-04-04_01-SejongCCTV.csv', encoding='cp949')
+cctv = pd.read_csv('https://github.com/SkyLectures/LectureMaterials/raw/refs/heads/main/datasets/S01-01-04-04_01-SejongCCTV.csv', encoding='cp949')
 cctv.head()
 ```
 
@@ -1127,7 +1128,7 @@ mymap
 <img src='/materials/images/python/S01-01-04-04_01-027.png' width="900"/>
 
 ```python
-light = pd.read_csv('https://raw.githubusercontent.com/aidalabs/Lectures/master/LectureFiles/datasets/S01-01-04-04_01-DaejeonTrafficLight.csv', encoding='cp949')
+light = pd.read_csv('https://github.com/SkyLectures/LectureMaterials/raw/refs/heads/main/datasets/S01-01-04-04_01-DaejeonTrafficLight.csv', encoding='cp949')
 light.info()
 ```
 
@@ -1144,7 +1145,7 @@ mymap
 <img src='/materials/images/python/S01-01-04-04_01-028.png' width="900"/>
 
 ```python
-trans = pd.read_csv('https://raw.githubusercontent.com/aidalabs/Lectures/master/LectureFiles/datasets/S01-01-04-04_01-PohangRSE.csv', encoding='cp949')
+trans = pd.read_csv('https://github.com/SkyLectures/LectureMaterials/raw/refs/heads/main/datasets/S01-01-04-04_01-PohangRSE.csv', encoding='cp949')
 
 mymap = folium.Map(location=[(trans['위도'].max() + trans['위도'].min())/2,(trans['경도'].max() + trans['경도'].min()) / 2], zoom_start=12)
 for loc in trans[['위도', '경도', '시설물 위치']].values:

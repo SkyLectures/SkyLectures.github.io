@@ -5,6 +5,8 @@ date:   2025-02-27 09:00:00 +0900
 permalink: /materials/S01-01_01-PythonBasic
 categories: materials
 ---
+* toc
+{:toc .large-only .toc-sticky:true}
 
 ## 1. [파이썬 개요](/material/python/S01-01-01-01_01-PythonOverview)
 

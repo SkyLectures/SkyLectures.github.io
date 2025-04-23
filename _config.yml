@@ -54,6 +54,19 @@ menu:
     url:   https://cafe.naver.com/aidalab
   - title: Materials
     url:   /materials/
+    # submenu:
+    #   - title: Python
+    #     url:   /materials/01_Python
+    #   - title: Data Science
+    #     url:   /materials/02_DataScience
+    #   - title: Artificial Intelligence
+    #     url:   /materials/03_AI
+    #   - title: Single Board Comput
+    #     url:   /materials/04_SBC
+    #   - title: Smart Factory
+    #     url:   /materials/05_SmartFactory
+    #   - title: Git & GitHub
+    #     url:   /materials/06_Github
   # - title: Documentation
   #   url:   /docs/
   - title: About
@@ -174,6 +187,7 @@ defaults:
     values:
       seo:
         type:          WebPage
+
 
 kramdown:
   math_engine:         katex

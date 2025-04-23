@@ -2,9 +2,11 @@
 layout: page
 title:  "파이썬 기본 문법: 6. 예외 처리"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/python/S01-01-03-06_01-Exceptions
+permalink: /material/S01-01-03-06_01-Exceptions
 categories: materials
 ---
+* toc
+{:toc .large-only .toc-sticky:true}
 
 ## 1. 예외 처리(Exception Handling)의 개요
 

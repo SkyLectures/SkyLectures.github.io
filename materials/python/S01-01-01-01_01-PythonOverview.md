@@ -2,9 +2,11 @@
 layout: page
 title:  "파이썬 개요"
 date:   2025-03-01 09:00:00 +0900
-permalink: /material/python/S01-01-01-01_01-PythonOverview
+permalink: /material/S01-01-01-01_01-PythonOverview
 categories: materials
 ---
+* toc
+{:toc .large-only .toc-sticky:true}
 
 ## 1. 파이썬의 기원
 

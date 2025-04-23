@@ -1,11 +1,11 @@
 ---
-# Featured tags need to have either the `list` or `grid` layout (PRO only).
+# Featured 태그는 'list' 또는 'grid' 레이아웃을 가져야 함(grid: PRO 전용).
 layout: list
 
-# The title of the tag's page.
+# 태그 페이지의 제목
 title: Lecture Log
 
-# The name of the tag, used in a post's front matter (e.g. tags: [<slug>]).
+# 게시물의 프론트 매터(front matter)에 사용되는 태그의 이름 (e.g. tags: [<slug>]).
 slug: lectlog
 
 # (Optional) Write a short (~150 characters) description of this featured tag.

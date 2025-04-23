@@ -2,9 +2,11 @@
 layout: page
 title:  "파이썬 기본 문법: 2. 제어문"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/python/S01-01-03-02_01-ControlStatements
+permalink: /material/S01-01-03-02_01-ControlStatements
 categories: materials
 ---
+* toc
+{:toc .large-only .toc-sticky:true}
 
 ## 1. 조건문 (if 구문)
 
@@ -19,7 +21,8 @@ categories: materials
     - <span style="color: #C00">만약 ☆☆☆이면 ○○○를 해라.</span> 라는 의미입니다.
 
         ```python
-        a = 10
+        #//file: `test.py`
+a = 10
         b = 20
 
         if a > b:

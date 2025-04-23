@@ -2,9 +2,11 @@
 layout: page
 title:  "파이썬 기본 문법: 4. 함수, 클래스"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/python/S01-01-03-04_01-FunctionsClasses
+permalink: /material/S01-01-03-04_01-FunctionsClasses
 categories: materials
 ---
+* toc
+{:toc .large-only .toc-sticky:true}
 
 ## 1. 함수(Function)
 
