@@ -19,7 +19,7 @@ categories: materials
 
 ### 2-1. 웹 시스템의 동작 구조
 
-<p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-04-01-00_001.png" width="800"></p>
+<p align="center"><img src="/materials/images/python/S01-04-01-00_001.png" width="800"></p>
 
 - 요청과 응답
     - 요청과 응답은 HTTP(Hypertext Transfer Protocol)라는 프로토콜을 지키면서 통신을 수행함
@@ -36,7 +36,7 @@ categories: materials
 - 네트워크 기반의 컴퓨팅 모델의 하나
 - 서비스를 요청하는 클라이언트와 이를 제공하는 서버로 구성됨
 
-<p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-04-01-00_002.png" width="800"></p>
+<p align="center"><img src="/materials/images/python/S01-04-01-00_002.png" width="800"></p>
 
 - 주요 특징
     - 역할 분담
@@ -55,15 +55,15 @@ categories: materials
 - 각 요소의 작동 방식
 
     - Server의 작동 방식
-    <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-04-01-00_003.jpg" width="600"></p>
+    <p align="center"><img src="/materials/images/python/S01-04-01-00_003.jpg" width="600"></p>
     <br><br>
 
     - Client의 작동 방식
-    <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-04-01-00_004.jpg" width="400"></p>
+    <p align="center"><img src="/materials/images/python/S01-04-01-00_004.jpg" width="400"></p>
     <br><br>
 
     - Server-Client의 작동 방식
-    <p align="center"><img src="https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/images/S01-04-01-00_005.jpg" width="600"></p>
+    <p align="center"><img src="/materials/images/python/S01-04-01-00_005.jpg" width="600"></p>
     <br><br>
 
 
