@@ -49,18 +49,21 @@ description: >
   - 자동 음성 인식(Automatic Speech Recognition, ASR)
   - AI 윤리(AI Ethics)
 
-## [4. Single Board Computer(SBC)](/materials/04_SBC)
+## [4. Cloud Platform](/materials/04_CloudPlatform)
+
+
+## [5. Single Board Computer(SBC)](/materials/05_SBC)
   - 아두이노(Arduino)
   - 라즈베리파이(Raspberry Pi)
   - NVIDIA 젯슨 나노(Jetson Nano)
 
-## [5. Smart Factory](/materials/05_SmartFactory)
+## [6. Smart Factory](/materials/06_SmartFactory)
   - 4차 산업혁명과 Smart Factory
   - 업무 프로세스 및 애플리케이션(ERP, SCM 등)
   - 제조 프로세스 및 애플리케이션(MES, PLM 등)
   - 핵심 기술(Digitai Twin, IoT, Robot, 3D Printing 등)
 
-## [6. Git & Github](/materials/06_Github)
+## [7. Git & Github](/materials/07_Github)
   - Git 개요 및 사용
   - Github 개요 및 사용
   - Githbu Action 기반 CI/CD

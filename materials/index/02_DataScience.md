@@ -5,6 +5,8 @@ date:   2025-02-27 09:00:00 +0900
 permalink: /materials/02_DataScience
 categories: materials
 ---
+* toc
+{:toc .large-only .toc-sticky:true}
 
 ## **1. 데이터 과학 / 데이터 분석**
 
