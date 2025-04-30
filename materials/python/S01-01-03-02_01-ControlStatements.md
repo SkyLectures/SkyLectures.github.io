@@ -2,7 +2,7 @@
 layout: page
 title:  "파이썬 기본 문법: 2. 제어문"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-01-03-02_01-ControlStatements
+permalink: /materials/S01-01-03-02_01-ControlStatements
 categories: materials
 ---
 * toc

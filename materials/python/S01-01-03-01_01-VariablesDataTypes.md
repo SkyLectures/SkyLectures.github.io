@@ -2,7 +2,7 @@
 layout: page
 title:  "파이썬 기본 문법: 1. 변수와 자료형"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-01-03-01_01-VariablesDataTypes
+permalink: /materials/S01-01-03-01_01-VariablesDataTypes
 categories: materials
 ---
 * toc

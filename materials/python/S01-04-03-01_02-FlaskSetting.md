@@ -2,7 +2,7 @@
 layout: page
 title:  "Flask 설치 및 환경설정"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-04-03-01_02-FlaskSetting
+permalink: /materials/S01-04-03-01_02-FlaskSetting
 categories: materials
 ---
 * toc

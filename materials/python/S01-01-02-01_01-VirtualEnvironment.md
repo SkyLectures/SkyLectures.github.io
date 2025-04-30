@@ -2,7 +2,7 @@
 layout: page
 title:  "파이썬 가상환경 설정"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-01-02-01_01-VirtualEnvironment
+permalink: /materials/S01-01-02-01_01-VirtualEnvironment
 categories: materials
 ---
 * toc

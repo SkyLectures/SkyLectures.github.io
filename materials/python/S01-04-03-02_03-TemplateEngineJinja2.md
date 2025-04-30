@@ -2,7 +2,7 @@
 layout: page
 title:  "템플릿 엔진(Jinja2) 활용"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-04-03-02_03-TemplateEngineJinja2
+permalink: /materials/S01-04-03-02_03-TemplateEngineJinja2
 categories: materials
 ---
 * toc

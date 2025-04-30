@@ -2,7 +2,7 @@
 layout: page
 title:  "Flask 웹 프레임워크 개요"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-04-03-01_01-FlaskOverview
+permalink: /materials/S01-04-03-01_01-FlaskOverview
 categories: materials
 ---
 * toc

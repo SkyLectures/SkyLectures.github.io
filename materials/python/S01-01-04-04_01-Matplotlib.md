@@ -2,7 +2,7 @@
 layout: page
 title:  "Matplotlib"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-01-04-04_01-Matplotlib
+permalink: /materials/S01-01-04-04_01-Matplotlib
 categories: materials
 ---
 * toc

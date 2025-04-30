@@ -2,7 +2,7 @@
 layout: page
 title:  "파이썬 기본 문법: 6. 예외 처리"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-01-03-06_01-Exceptions
+permalink: /materials/S01-01-03-06_01-Exceptions
 categories: materials
 ---
 * toc

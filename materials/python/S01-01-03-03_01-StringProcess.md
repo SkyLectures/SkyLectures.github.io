@@ -2,7 +2,7 @@
 layout: page
 title:  "파이썬 기본 문법: 3. 문자열 처리"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-01-03-03_01-StringProcess
+permalink: /materials/S01-01-03-03_01-StringProcess
 categories: materials
 ---
 * toc

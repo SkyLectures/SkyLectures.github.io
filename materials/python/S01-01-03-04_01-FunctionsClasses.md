@@ -2,7 +2,7 @@
 layout: page
 title:  "파이썬 기본 문법: 4. 함수, 클래스"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-01-03-04_01-FunctionsClasses
+permalink: /materials/S01-01-03-04_01-FunctionsClasses
 categories: materials
 ---
 * toc

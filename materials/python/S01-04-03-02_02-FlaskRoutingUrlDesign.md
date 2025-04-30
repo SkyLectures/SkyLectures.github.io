@@ -2,7 +2,7 @@
 layout: page
 title:  "Flask의 라우팅 및 URL 설계"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-04-03-02_02-FlaskRoutingUrlDesign
+permalink: /materials/S01-04-03-02_02-FlaskRoutingUrlDesign
 categories: materials
 ---
 * toc

@@ -2,7 +2,7 @@
 layout: page
 title:  "Flask 기반 웹서비스 기본 흐름"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-04-03-02_01-FlaskBasedServiceProcess
+permalink: /materials/S01-04-03-02_01-FlaskBasedServiceProcess
 categories: materials
 ---
 * toc

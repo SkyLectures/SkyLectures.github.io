@@ -2,7 +2,7 @@
 layout: page
 title:  "웹 서버 개발의 이해"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-04-01-01_01-WebServerOverview
+permalink: /materials/S01-04-01-01_01-WebServerOverview
 categories: materials
 ---
 * toc

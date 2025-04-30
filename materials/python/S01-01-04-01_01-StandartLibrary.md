@@ -2,7 +2,7 @@
 layout: page
 title:  "파이썬 표준 라이브러리"
 date:   2025-03-01 10:00:00 +0900
-permalink: /material/S01-01-04-01_01-StandardLibrary
+permalink: /materials/S01-01-04-01_01-StandardLibrary
 categories: materials
 ---
 * toc
