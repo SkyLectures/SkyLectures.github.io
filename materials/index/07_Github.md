@@ -1,6 +1,6 @@
 ---
 layout: page
-title:  "6. Git & Github"
+title:  "7. Git & Github"
 date:   2025-02-27 09:00:00 +0900
 permalink: /materials/07_Github
 categories: materials
@@ -16,16 +16,14 @@ categories: materials
 
 ## 2. Git & Github 중급
 
-### 2.1 Github Branch 관리
+### 2.1 [Github Branch 관리](/materials/S07-04-01-01_01-GithubBranch)
 - Github Branch를 활용한 팀 협업 구조 설계 및 실습
 
-### 2.2 Github PR과 코드 리뷰
+### 2.2 [Github 풀 리퀘스트와 코드 리뷰](/materials/S07-05-01-01_01-GithubPullRequestCodeReview)
 - PR(Pull Request) 생성 및 코드 리뷰 실습
 
 ## 3. Git & Github 고급
 
-### 3.1 Github Action
+### 3.1 [Github Action](/materials/S07-06-01-01_01-GithubAction)
 - Github Action을 활용한 CI/CD 파이프라인 구성
 - Github Action을 활용한 Flask 애플리케이션 배포 및 테스트 자동화
-
-## 4. Git 프로젝트 연동

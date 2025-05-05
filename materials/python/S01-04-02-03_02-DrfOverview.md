@@ -1,8 +1,8 @@
 ---
 layout: page
-title:  "파이썬 중급: Sequence 자료형"
+title:  "Django: DRF 개요"
 date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S01-02-04-01_01-SequenceDataTypes
+permalink: /materials/S01-04-02-03_02-DrfOverview
 categories: materials
 ---
 * toc

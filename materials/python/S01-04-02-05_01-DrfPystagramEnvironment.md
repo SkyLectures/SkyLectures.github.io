@@ -1,8 +1,8 @@
 ---
 layout: page
-title:  "파이썬 중급: Sequence 자료형"
+title:  "Django: Pystagram-환경구축"
 date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S01-02-04-01_01-SequenceDataTypes
+permalink: /materials/S01-04-02-05_01-DrfPystagramEnvironment
 categories: materials
 ---
 * toc

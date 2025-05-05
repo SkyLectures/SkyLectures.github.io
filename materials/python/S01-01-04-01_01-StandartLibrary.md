@@ -1,6 +1,6 @@
 ---
 layout: page
-title:  "파이썬 표준 라이브러리"
+title:  "파이썬 기초: 라이브러리-파이썬 표준 라이브러리"
 date:   2025-03-01 10:00:00 +0900
 permalink: /materials/S01-01-04-01_01-StandardLibrary
 categories: materials

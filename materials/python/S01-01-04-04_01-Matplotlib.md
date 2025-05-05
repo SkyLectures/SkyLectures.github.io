@@ -1,6 +1,6 @@
 ---
 layout: page
-title:  "Matplotlib"
+title:  "파이썬 기초: 라이브러리-Matplotlib"
 date:   2025-03-01 10:00:00 +0900
 permalink: /materials/S01-01-04-04_01-Matplotlib
 categories: materials

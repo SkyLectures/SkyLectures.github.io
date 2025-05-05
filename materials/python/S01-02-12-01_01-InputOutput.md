@@ -1,8 +1,8 @@
 ---
 layout: page
-title:  "파이썬 중급: Sequence 자료형"
+title:  "파이썬 중급: 입출력"
 date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S01-02-04-01_01-SequenceDataTypes
+permalink: /materials/S01-02-12-01_01-InputOutput
 categories: materials
 ---
 * toc
