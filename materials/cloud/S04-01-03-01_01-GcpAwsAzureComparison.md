@@ -2,7 +2,7 @@
 layout: page
 title:  "GCP, AWS, Azure 비교"
 date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S04-01-02-01_01-GcpAwsAzureComparison
+permalink: /materials/S04-01-03-01_01-GcpAwsAzureComparison
 categories: materials
 ---
 * toc

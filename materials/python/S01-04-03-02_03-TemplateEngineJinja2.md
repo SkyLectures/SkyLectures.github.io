@@ -204,12 +204,12 @@ if __name__ == '__main__':
 
 **설명:**
 
-* `{{ user_name }}`: 뷰 함수에서 `user_name`이라는 이름으로 전달된 변수의 값을 HTML 내에 출력합니다.
-* `{% for item in item_list %}` ... `{% endfor %}`: 뷰 함수에서 `item_list`라는 이름으로 전달된 리스트의 각 항목을 반복하여 `<li>` 태그 내에 출력합니다.
-* `{{ user_info.username|upper }}`: 뷰 함수에서 `user_info`라는 이름으로 전달된 딕셔너리의 `username` 키에 접근하여 값을 출력하고, `upper` 필터를 적용하여 대문자로 변환합니다.
-* `{{ user_info.email }}`: 뷰 함수에서 `user_info` 딕셔너리의 `email` 키 값을 출력합니다.
-* `{% if user_info.email.endswith('@example.com') %}` ... `{% else %}` ... `{% endif %}`: 뷰 함수에서 전달된 `user_info.email` 값에 따라 조건부로 다른 내용을 출력합니다.
-* `<a href="/about">About Page</a>`: `/about` URL로 이동하는 링크를 생성합니다.
+* `{{ user_name }}`: 뷰 함수에서 `user_name`이라는 이름으로 전달된 변수의 값을 HTML 내에 출력함
+* `{% for item in item_list %}` ... `{% endfor %}`: 뷰 함수에서 `item_list`라는 이름으로 전달된 리스트의 각 항목을 반복하여 `<li>` 태그 내에 출력함
+* `{{ user_info.username|upper }}`: 뷰 함수에서 `user_info`라는 이름으로 전달된 딕셔너리의 `username` 키에 접근하여 값을 출력하고, `upper` 필터를 적용하여 대문자로 변환함
+* `{{ user_info.email }}`: 뷰 함수에서 `user_info` 딕셔너리의 `email` 키 값을 출력함
+* `{% if user_info.email.endswith('@example.com') %}` ... `{% else %}` ... `{% endif %}`: 뷰 함수에서 전달된 `user_info.email` 값에 따라 조건부로 다른 내용을 출력함
+* `<a href="/about">About Page</a>`: `/about` URL로 이동하는 링크를 생성함
 
 **3. 템플릿 파일 (`templates/about.html`):**
 
@@ -229,11 +229,9 @@ if __name__ == '__main__':
 
 **실행 방법:**
 
-1.  위의 `app.py`, `templates/index.html`, `templates/about.html` 파일을 동일한 프로젝트 폴더 구조로 저장합니다 (`templates` 폴더를 `app.py`와 같은 레벨에 생성해야 합니다).
-2.  터미널 또는 명령 프롬프트에서 해당 프로젝트 폴더로 이동합니다.
-3.  `pip install Flask` 명령어를 실행하여 Flask를 설치합니다 (이미 설치되어 있다면 생략).
-4.  `python app.py` 명령어를 실행하여 Flask 개발 서버를 시작합니다.
-5.  웹 브라우저에서 `http://127.0.0.1:5000/` 또는 `http://localhost:5000/` 주소로 접속하면 `index.html` 페이지가 렌더링된 것을 확인할 수 있습니다.
-6.  `http://127.0.0.1:5000/about` 주소로 접속하면 `about.html` 페이지가 렌더링된 것을 확인할 수 있습니다.
-
-이 예제를 통해 Flask 웹 프레임워크에서 Jinja2 템플릿 엔진이 어떻게 작동하는지 기본적인 개념, 구조, 프로세스, 그리고 실제 코드를 통해 이해할 수 있습니다. Jinja2의 더 많은 기능 (템플릿 상속, 매크로, 필터 등)을 학습하면 더욱 강력하고 효율적인 웹 애플리케이션 개발이 가능해집니다.
+1.  위의 `app.py`, `templates/index.html`, `templates/about.html` 파일을 동일한 프로젝트 폴더 구조로 저장(`templates` 폴더를 `app.py`와 같은 레벨에 생성해야 합니다).
+2.  터미널 또는 명령 프롬프트에서 해당 프로젝트 폴더로 이동
+3.  `pip install Flask` 명령어를 실행하여 Flask 설치(이미 설치되어 있다면 생략)
+4.  `python app.py` 명령어를 실행하여 Flask 개발 서버 시작
+5.  웹 브라우저에서 `http://127.0.0.1:5000/` 또는 `http://localhost:5000/` 주소로 접속하면 `index.html` 페이지가 렌더링된 것을 확인할 수 있음
+6.  `http://127.0.0.1:5000/about` 주소로 접속하면 `about.html` 페이지가 렌더링된 것을 확인할 수 있음

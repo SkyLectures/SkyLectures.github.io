@@ -2,7 +2,7 @@
 layout: page
 title:  "클라우드 플랫폼(Cloud Platform) 개요"
 date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S04-01-01-01_01-CloudPlatformOverview
+permalink: /materials/S04-01-02-01_01-CloudPlatformOverview
 categories: materials
 ---
 * toc
