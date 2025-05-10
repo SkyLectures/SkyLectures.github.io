@@ -31,3 +31,4 @@ categories: materials
     ```bash
     sed 's/old_string/new_string/g' input.txt > output.txt # 'input.txt'에서 'old_string'을 'new_string'으로 모두 바꾸어 'output.txt'에 저장
     sed -i 's/original/modified/g
+    ```
