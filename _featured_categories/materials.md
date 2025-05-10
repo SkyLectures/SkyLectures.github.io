@@ -50,3 +50,9 @@ description: >
 ## [7. Git & Github](/materials/07_Github)
   - Git & Github 개요 / Git & Github 사용 기초 / Git 고급 사용 
   - Githbu Action 기반 CI/CD
+
+## [8. Linux](/materials/08_Linux)
+  - 리눅스 개요 / 리눅스 기초 이해 / 리눅스 심화 / 리눅스 기반 개발
+  - 리눅스 명령어
+      - 파일 및 디렉토리 관리 / 사용자 및 권한 관리 / 패키지 관리
+      - 프로세스 관리 / 네트워크 관리 / 텍스트 처리 및 검색

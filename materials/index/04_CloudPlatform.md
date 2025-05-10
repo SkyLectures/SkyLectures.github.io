@@ -19,7 +19,7 @@ categories: materials
     1. GCP 계정 생성 및 프로젝트 설정
     2. VM 인스턴스 생성 및 SSH 접속
 3. [GCP 활용](/materials/S04-02-03-01_01-GcpUsage)
-
+4. [GCP 활용을 위한 기초 리눅스 명령어](/materials/S04-02-04-01_01-GcpLinuxCommands)
 
 ## 3. AWS
 1. [AWS 개요](/materials/S04-03-01-01_01-AwsOverview)
