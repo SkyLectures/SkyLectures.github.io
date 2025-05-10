@@ -11,9 +11,7 @@ categories: materials
 
 ## 1. 웹서버 로그 처리하기
 
-```bash
-!wget https://raw.githubusercontent.com/SkyLectures/LectureMaterials/main/datasets/S01-04-01-001_001-access_log -O ./access_log
-```
+[로그파일 다운로드](/materials/datasets/S01-04-01-001_001-access_log)
 
 ### 1.1 총 페이지 뷰 수 계산하기
 
