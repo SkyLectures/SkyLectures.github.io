@@ -1,0 +1,9 @@
+---
+layout: page
+title:  "테스트 문제: 리눅스 개요"
+date:   2025-03-01 10:00:00 +0900
+permalink: /materials/S99-08-01-01_01-LinuxBasic
+categories: materials
+---
+* toc
+{:toc .large-only .toc-sticky:true}
