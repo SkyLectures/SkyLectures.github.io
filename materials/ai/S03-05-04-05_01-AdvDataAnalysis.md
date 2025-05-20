@@ -18,7 +18,9 @@ categories: materials
 
 > 다음 영화 리뷰 텍스트 데이터를 분석하여 각 리뷰의 주요 감정을 (긍정, 부정, 중립)으로 분류하고, 전체 리뷰를 긍정적 감정, 부정적 감정, 중립적 감정별로 각각 요약하여 제시해 주세요. 각 감정별 요약은 핵심 내용과 함께 해당 감정을 나타내는 대표적인 표현을 포함하도록 합니다.
 
-(샘플 리뷰 데이터는 필요에 따라 제공될 수 있음)
+- 샘플 데이터
+    - [네이버 영화리뷰 데이터(train)](https://drive.google.com/file/d/1TD0N5Xm9zQSQm4Ipxpelia6v18ACZ_c3/view?usp=sharing)
+    - [네이버 영화리뷰 데이터(test)](https://drive.google.com/file/d/1tXp5trW7y03zUioBQscO52q_8ScH-KwM/view?usp=sharing)
 
 ## 2. 뉴스 기사 데이터 분석을 통한 사건의 흐름 및 핵심 정보 요약
 
@@ -30,7 +32,8 @@ categories: materials
 
 > 제공된 뉴스 기사 데이터셋('OO 사건' 관련)을 시간 순서대로 분석하여 사건의 주요 발생 시점, 관련된 주요 인물 및 기관, 사건 전개의 핵심 내용, 그리고 최종 결과를 요약하여 제시해 주세요. 각 단계별 요약은 핵심 키워드를 포함하도록 합니다.
 
-(샘플 뉴스 기사 데이터셋은 필요에 따라 제공될 수 있음)
+- 샘플 데이터
+    - [뉴스 샘플데이터](https://drive.google.com/file/d/1ZNwm_B4-LwOPhETkjRA6QGaekcOyNZHC/view?usp=sharing)
 
 ## 3. 고객 문의 데이터 분석을 통한 주요 불만 사항 및 개선점 도출
 
@@ -42,7 +45,8 @@ categories: materials
 
 > 고객 문의 텍스트 데이터를 분석하여 주요 불만 사항의 유형 (예: 배송 지연, 제품 불량, 고객 응대 불만 등)을 분류하고, 각 불만 유형별 빈도수를 파악하여 가장 시급하게 개선해야 할 사항들을 요약하여 제시해 주세요. 각 요약은 구체적인 개선 방안을 포함하도록 합니다.
 
-(샘플 고객 문의 데이터는 필요에 따라 제공될 수 있음)
+- 샘플 데이터
+    - [한국농어촌공사 고객문의답변 사례정보](https://drive.google.com/file/d/1go9EOxR4nXicNObZlv1A54xT5EOsDRpw/view?usp=sharing)
 
 ## 4. 학술 논문 초록 데이터 분석을 통한 연구 동향 및 핵심 아이디어 요약
 
@@ -54,7 +58,8 @@ categories: materials
 
 > 제공된 학술 논문 초록 데이터셋('인공지능 윤리' 관련)을 분석하여 최근 연구의 주요 주제 및 방법론, 그리고 각 논문에서 제시하는 핵심 아이디어를 요약하여 제시해 주세요. 전체 연구 동향을 한 문장으로 요약하고, 각 논문별 요약은 연구의 의의를 포함하도록 합니다.
 
-(샘플 학술 논문 초록 데이터셋은 필요에 따라 제공될 수 있음)
+- 샘플 데이터
+    - [국내 논문 전문 텍스트](https://drive.google.com/file/d/13OyCNC5jkVBAzsAZFUjLavMviRA8Pw6b/view?usp=sharing)
 
 ## 5. 소셜 미디어 데이터 분석을 통한 특정 주제에 대한 여론 분석 및 요약
 
