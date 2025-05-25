@@ -9,6 +9,7 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 ## 1. 사진 목록 보기
+- 코드출처: 백엔드를 위한 Django REST Framework with 파이썬(영진닷컴)
 
 ### 1.1 사진 목록 화면 만들기
 

@@ -72,21 +72,23 @@ categories: materials
 
 1. [웹서버 개발의 이해](/materials/S01-04-01-01_01-WebServerOverview)
 2. [Simple 웹서버 개발 예제](/materials/S01-04-01-02_01-SimpleWebServer)
+3. [REST API 개요](/materials/S01-04-01-03_01-RestApiOverview)
 
 ### 4.2 [Django 웹 프레임워크 기반 웹서비스]
 
 1. [Django WebFramework 개요](/materials/S01-04-02-01_01-DjangoOverview)
 2. [Django 기반 서비스 기본 흐름](/materials/S01-04-02-01_02-DjangoBasedServiceProcess)
-3. Django 기반 서비스 구현 실습 (코드출처: 백엔드를 위한 Django REST Framework with 파이썬)
+3. Django 기반 서비스 구현 실습
     - [사진 목록 보기](/materials/S01-04-02-02_01-PictureList)
     - [Todo List 웹서비스](/materials/S01-04-02-02_02-TodoList)
-6. Django REST Framework(DRF)
-    - [RESTful API 개요](/materials/S01-04-02-03_01-RestApiOverview)
-    - [DRF 개요](/materials/S01-04-02-03_02-DrfOverview)
-7. DRF 활용 실습: 게시판 만들기 (코드출처: 백엔드를 위한 Django REST Framework with 파이썬)
+4. Django REST Framework(DRF)
+    - [DRF 개요](/materials/S01-04-02-03_01-DrfOverview)
+    - [도서정보 API](/materials/S01-04-02-03_02-BookInfoApi)
+    - [Todo List API](/materials/S01-04-02-03_03-TodoListApi)
+5. DRF 활용 실습: 게시판 만들기
     - [게시판 사용자 관리](/materials/S01-04-02-04_01-DrfBbsUsers)
     - [게시판 글 관리](/materials/S01-04-02-04_02-DrfBbsPosts)
-8. DRF 활용 실습: Pystagram 만들기 (코드출처: 이한영의 Django 입문)
+6. DRF 활용 실습: Pystagram 만들기 (코드출처: 이한영의 Django 입문)
     - [환경구축](/materials/S01-04-02-05_01-DrfPystagramEnvironment)
     - [기본 정보 설정](/materials/S01-04-02-05_02-DrfPystagramBasicInfo)
     - [로그인/로그아웃 기능 구현](/materials/S01-04-02-05_03-DrfPystagramLoginLogout)
