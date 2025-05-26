@@ -2,7 +2,7 @@
 layout: page
 title:  "LangChain"
 date:   2025-04-02 12:53:00 +0900
-permalink: /materials/S03-05-03-02_02_LangChain_Chat
+permalink: /materials/S03-05-03-05_01-LangChainChatbot
 categories: materials
 ---
 
