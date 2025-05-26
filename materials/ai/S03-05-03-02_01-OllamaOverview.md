@@ -2,7 +2,7 @@
 layout: page
 title:  "LangChain: Ollama 개요"
 date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S03-05-06-01_01-OllamaOverview
+permalink: /materials/S03-05-03-02_01-OllamaOverview
 categories: materials
 ---
 * toc

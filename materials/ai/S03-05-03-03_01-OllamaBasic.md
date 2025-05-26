@@ -2,7 +2,7 @@
 layout: page
 title:  "LangChain: Ollama 사용해 보기"
 date:   2025-04-01 09:00:00 +0900
-permalink: /materials/S03-05-03-01_01-LangChainOverview
+permalink: /materials/S03-05-03-03_01-OllamaBasic
 categories: materials
 ---
 * toc
