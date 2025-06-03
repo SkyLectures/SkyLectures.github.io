@@ -215,7 +215,7 @@ categories: materials
             ...
             <body>
                 <h1>로그인</h1>
-                {{ form.as_p }}
+                { { form.as_p }}
             </body>
             ...
             ```
@@ -227,21 +227,21 @@ categories: materials
                 - Form이 제대로 작동하려면 구성요소들이 <form> 태그 안에 있어야 함
 
         - templates/users/login.html
-            - {% raw %} ... {% endraw %} 구문은 블록코드 플러그인의 표기 문제 해결을 위한 것이므로 무시하도록 함
+            - { % raw %} ... { % endraw %} 구문은 블록코드 플러그인의 표기 문제 해결을 위한 것이므로 무시하도록 함
             
             ```html
-            {% raw %}
+            { % raw %}
             ...
             <body>
                 <h1>로그인</h1>
                 <form method="POST">
-                    {% csrf_token %}
-                    {{ form.as_p }}
+                    { % csrf_token %}
+                    { { form.as_p }}
                     <button type="submit">로그인</button>
                 </form>
             </body>
             ...
-            {% endraw %}
+            { % endraw %}
             ```
             
 - View에 전달된 데이터를 Form으로 처리하기
@@ -370,7 +370,7 @@ categories: materials
         <html lang="ko">
         <body>
             <h1>피드 페이지</h1>
-            <div>{{ user.username }} (ID: {{ user.id }})</div>
+            <div>{ { user.username }} (ID: { { user.id }})</div>
             <a href="/users/logout/">로그아웃</a>
         </body>
         </html>
@@ -397,24 +397,24 @@ categories: materials
     - templates/users/login.html
 
         ```html
-        {% raw %}
-        {% load static %}
+        { % raw %}
+        { % load static %}
         <!doctype html>
         <html lang="ko">
         <head>
-            <link rel="stylesheet" href="{% static 'css/style.css' %}">
+            <link rel="stylesheet" href="{ % static 'css/style.css' %}">
         </head>
         <body>
             <div id="login">
                 <form method="POST">
-                {% csrt_token %}
-                {{ form.as_p }}
+                { % csrt_token %}
+                { { form.as_p }}
                 <button type="submit" class="btn btn-login">로그인</button>
                 </form>
             </div>
         </body>
         </html>
-        {% endraw %}
+        { % endraw %}
         ```
 
     - [style.css 다운로드](https://raw.githubusercontent.com/SkyLectures/LectureMaterials/refs/heads/main/Part01_Python/S01-04-03-04_01-WebService_Pystagram_01_style.css)

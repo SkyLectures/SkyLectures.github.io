@@ -84,19 +84,19 @@ categories: materials
     - templates/users/signup.html
 
         ```html
-        {% raw %}
+        { % raw %}
         <!doctype html>
         <html lang="ko">
         <body>
             <h1>Sign up</h1>
             <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
+            { % csrf_token %}
+            { { form.as_p }}
             <button type="submit">회원가입</button>
             </form>
         </body>
         </html>
-        {% endraw %}
+        { % endraw %}
        ```
 <br>
 
@@ -442,88 +442,88 @@ categories: materials
 - templates/users/signup.html
 
     ```html
-    {% raw %}
-    {% load static %}
+    { % raw %}
+    { % load static %}
     <!document html>
     <html lang="ko">
     <head>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{ % static 'css/style.css' %}">
     </head>
     <body>
         <div id="signup">
             <form method="POST" enctype="multipart/form-data">
                 <h1>Pystagram</h1>
-                {% csrf_token %}
-                {{ form.as_p }}
+                { % csrf_token %}
+                { { form.as_p }}
                 <button type="submit" class="btn btn-signup">가입</button>
             </form>
         </div>
     </body>
     </html>
-    {% endraw %}
+    { % endraw %}
     ```
 
 - templates/base.html
-    - Template을 확장하는 {% raw %}{% extends %}{% endraw %} 태그
+    - Template을 확장하는 { % raw %}{ % extends %}{ % endraw %} 태그
 
         ```html
-        {% raw %}
-        {% load static %}
+        { % raw %}
+        { % load static %}
         <!doctype html>
         <html lang="ko">
         <head>
-            <link rel="stylesheet" href="{% static 'css/style.css' %}">
+            <link rel="stylesheet" href="{ % static 'css/style.css' %}">
         </head>
         <body>
-            {% block content %}{% endblock %}
+            { % block content %}{ % endblock %}
         </body>
         </html>
-        {% endraw %}
+        { % endraw %}
         ```
 
 - templates/users/login.html
 
     ```html
-    {% raw %}
-    {% extends 'base.html' %}
+    { % raw %}
+    { % extends 'base.html' %}
 
-    {% block content %}
+    { % block content %}
     <div id="login">
         <form method="POST">
             <h1>Pystagram</h1>
-            {% csrf_token %}
-            {{ form.as_p }}
+            { % csrf_token %}
+            { { form.as_p }}
             <button type="submit" class="btn btn-login">로그인</button>
         </form>
     </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 - templates/users/signup.html
 
     ```html
-    {% raw %}
-    {% extends 'base.html' %}
+    { % raw %}
+    { % extends 'base.html' %}
 
-    {% block content %}
+    { % block content %}
     <div id="signup">
         <form method="POST" enctype="multipart/form-data">
             <h1>Pystagram</h1>
-            {% csrf_token %}
-            {{ form.as_p }}
+            { % csrf_token %}
+            { { form.as_p }}
             <button type="submit" class="btn btn-signup">가입</button>
         </form>
     </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 - templates/users/signup.html
     - 회원가입과 로그인 페이지 간의 링크 추가
 
         ```html
-        {% raw %}
+        { % raw %}
         <div id="signup">
             <form method="POST" enctype="multipart/form-data">
                 ...
@@ -531,13 +531,13 @@ categories: materials
                 <a href="/users/login/">로그인 페이지로 이동</a>
             </form>
         </div>
-        {% endraw %}
+        { % endraw %}
         ```
 
 - templates/users/login.html
 
     ```html
-    {% raw %}
+    { % raw %}
     <div id="login">
         <form method="POST">
             ...
@@ -545,5 +545,5 @@ categories: materials
             <a href="/users/signup/">회원가입 페이지로 이동</a>
         </form>
     </div>
-    {% endraw %}
+    { % endraw %}
     ```

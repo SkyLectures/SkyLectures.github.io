@@ -49,15 +49,15 @@ categories: materials
 - templates/posts/post_detail.html
 
     ```html
-    {% raw %}
-    {% extends 'base.html' %}
+    { % raw %}
+    { % extends 'base.html' %}
 
-    {% block content %}
+    { % block content %}
     <div id="post_detail">
         <h1>Post Detail</h1>
     </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 #### 1.3 Template 내용 구현
@@ -65,20 +65,20 @@ categories: materials
 - templates/posts/feeds.html
 
     ```html
-    {% raw %}
-    {% extends 'base.html' %}
-    {% block content %}
+    { % raw %}
+    { % extends 'base.html' %}
+    { % block content %}
     <nav>...</nav>
     <div id="feeds" class="post-container">
-        {% for post in posts %}
-            <article id="post-{{ post.id }}" class="post">
+        { % for post in posts %}
+            <article id="post-{ { post.id }}" class="post">
             ...
             </article>
-        {% endfor %}
+        { % endfor %}
     </div>
     ...
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 - templates/posts/post_detail.html
@@ -86,17 +86,17 @@ categories: materials
     - Post 상세화면에서는 Post Queryset 대신 단일 Post 객체가 전달되며 나머지 모습은 피드페이지와 동일함
 
         ```html
-        {% raw %}
-        {% extends 'base.html' %}
+        { % raw %}
+        { % extends 'base.html' %}
 
-        {% block content %}
+        { % block content %}
         <div id="feeds" class="post-container">
-            <article id="post-{{ post.id }}" class="post">
+            <article id="post-{ { post.id }}" class="post">
             ...
             </article>
         </div>
-        {% endblock %}
-        {% endraw %}
+        { % endblock %}
+        { % endraw %}
         ```
 
 #### 1.4 PostForm 전달
@@ -114,13 +114,13 @@ categories: materials
         return render(request, "posts/post_detail.html", context)
     ```
 
-#### 1.5 {% raw %}{% include %} 태그로 Template 재사용{% endraw %}
+#### 1.5 { % raw %}{ % include %} 태그로 Template 재사용{ % endraw %}
 
 - templates/posts/post.html
     - <article> 태그를 post.html로 재사용
 
         ```html
-        <article id="post-{{ post.id }}" class="post">
+        <article id="post-{ { post.id }}" class="post">
         ...
         </article>
         ```
@@ -128,63 +128,63 @@ categories: materials
 - templates/posts/feed.html
 
     ```html
-    {% raw %}
-    {% extends 'base.html' %}
-    {% block content %}
+    { % raw %}
+    { % extends 'base.html' %}
+    { % block content %}
     <nav>...</nav>
     <div id="feeds" class="post-container">
-        {% for post in posts %}
-            {% include 'posts/post.html' %}
-        {% endfor %}
+        { % for post in posts %}
+            { % include 'posts/post.html' %}
+        { % endfor %}
     </div>
     ...
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 - templates/posts/post_detail.html
 
     ```html
-    {% raw %}
-    {% extends 'base.html' %}
-    {% block content %}
+    { % raw %}
+    { % extends 'base.html' %}
+    { % block content %}
     <nav>...</nav>
     <div id="feeds" class="post-container">
-        {% include 'posts/post.html' %}
+        { % include 'posts/post.html' %}
     </div>
     ...
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 - templates/nav.html
     - <nav> 태그의 내용을 별도의 nav.html로 이동
 
         ```html
-        {% raw %}
+        { % raw %}
         <nav>
             <h1>
-                <a href="{% url 'posts:feeds' %}">Pystagram</a>
+                <a href="{ % url 'posts:feeds' %}">Pystagram</a>
             </h1>
-            <a href="{% url 'posts:post_add' %}">Add post</a>
-            <a href="{% url 'users:logout' %}">Logout</a>
+            <a href="{ % url 'posts:post_add' %}">Add post</a>
+            <a href="{ % url 'users:logout' %}">Logout</a>
         </nav>
-        {% endraw %}
+        { % endraw %}
         ```
 
 - templates/posts/feeds.html, templates/posts/post_detail.html 공통
 
     ```html
-    {% raw %}
-    {% extends 'base.html' %}
-    {% block content %}
-    {% include 'nav.html' %}
+    { % raw %}
+    { % extends 'base.html' %}
+    { % block content %}
+    { % include 'nav.html' %}
     <div id="feeds" class="post-container">
-        {% include 'posts/post.html' %}
+        { % include 'posts/post.html' %}
     </div>
     ...
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 #### 1.6 해시태그 검색결과에 링크 추가
@@ -192,13 +192,13 @@ categories: materials
 - templates/posts/tags.html
 
     ```html
-    {% raw %}
+    { % raw %}
     <div class="post-grid">
-        <a href="{% url 'posts:post_detail' post_id=post.id %}">
-            <img src="{{ post.postimage_set.first.photo.url }}" alt="">
+        <a href="{ % url 'posts:post_detail' post_id=post.id %}">
+            <img src="{ { post.postimage_set.first.photo.url }}" alt="">
         </a>
     </div>
-    {% endraw %}
+    { % endraw %}
     ```
 
 ### 2. 글 작성 후 이동할 위치
@@ -222,27 +222,27 @@ categories: materials
     - 댓글 작성 완료 후 사용자를 이동시킬 페이지를 각각의 경우에 따라 다르게 지정할 필요가 있음
 
         ```html
-        {% raw %}
+        { % raw %}
         <div id="feeds" class="post-container">
-            {% url 'posts:post_detail' post.id as action_redirect_to %}
-            {% include 'posts/post.html' with action_redirect_url=action_redirect_to %}
+            { % url 'posts:post_detail' post.id as action_redirect_to %}
+            { % include 'posts/post.html' with action_redirect_url=action_redirect_to %}
         </div>
-        {% endraw %}
+        { % endraw %}
         ```
 
 - templates/posts/post.html
 
     ```html
-    {% raw %}
+    { % raw %}
     <div class="post-comment-create">
-        <form method="POST" action="{% url 'posts:comment_add' %}?next={{ action_redirect_url }}">
-            {% csrf_token %}
-            <input type="hidden" name="post" value="{{ post.id }}">
-            {{ comment_form.content }}
+        <form method="POST" action="{ % url 'posts:comment_add' %}?next={ { action_redirect_url }}">
+            { % csrf_token %}
+            <input type="hidden" name="post" value="{ { post.id }}">
+            { { comment_form.content }}
             <button type="submit">게시</button>
         </form>
     </div>
-    {% endraw %}
+    { % endraw %}
     ```
 
 - posts/views.py
@@ -268,16 +268,16 @@ categories: materials
 - templates/posts/feeds.html
 
     ```html
-    {% raw %}
+    { % raw %}
     <div id="feeds" class="post-container">
-        {% for post in posts %}
-            {% with post.id|stringformat:"s" as post_id %}
-                {% url 'posts:feeds' as action_redirect_to %}
-                {% include 'posts/post.html' with action_redirect_url=action_redirect_to|add:'#post-'|add:post.id %}
-            {% endwith %}
-        {% endfor %}
+        { % for post in posts %}
+            { % with post.id|stringformat:"s" as post_id %}
+                { % url 'posts:feeds' as action_redirect_to %}
+                { % include 'posts/post.html' with action_redirect_url=action_redirect_to|add:'#post-'|add:post.id %}
+            { % endwith %}
+        { % endfor %}
     </div>
-    {% endraw %}
+    { % endraw %}
     ```
 
 #### 2.2 Custom Template Filter
@@ -297,21 +297,21 @@ categories: materials
 - templates/posts/feeds.html
 
     ```html
-    {% raw %}
-    {% extends 'base.html' %}
-    {% load custom_tags %}
+    { % raw %}
+    { % extends 'base.html' %}
+    { % load custom_tags %}
 
-    {% block content %}
-    {% include 'nav.html' %}
+    { % block content %}
+    { % include 'nav.html' %}
     <div id="feeds" class="post-container">
-        {% for post in posts %}
-            {% url 'posts:feeds' as action_redirect_to %}
-            {% include 'posts/post.html' with action_redirect_url=action_redirect_to|concat:'#post-'|concat:post.id %}
-        {% endfor %}
+        { % for post in posts %}
+            { % url 'posts:feeds' as action_redirect_to %}
+            { % include 'posts/post.html' with action_redirect_url=action_redirect_to|concat:'#post-'|concat:post.id %}
+        { % endfor %}
     </div>
     ...
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 ### 3. Template 중복코드 제거
@@ -349,73 +349,73 @@ categories: materials
     - 모든 기반 레이아웃의 최상단 Template
 
         ```html
-        {% raw %}
-        {% load static %}
+        { % raw %}
+        { % load static %}
         <!doctype html>
         <html lang="ko">
         <head>
-            <link rel="stylesheet" href="{% static 'css/style.css' %}">
+            <link rel="stylesheet" href="{ % static 'css/style.css' %}">
             <title>Pystagram</title>
-            {% block head %}{% endblock %}
+            { % block head %}{ % endblock %}
         </head>
         <body>
-            {% block base_content %}{% endblock %}
+            { % block base_content %}{ % endblock %}
         </body>
         </html>
-        {% endraw %}
+        { % endraw %}
         ```
 
 - templates/base.html
     - 로그인, 회원가입에서 사용
 
         ```html
-        {% raw %}
-        {% extends '_base.html' %}
+        { % raw %}
+        { % extends '_base.html' %}
 
-        {% block base_content %}
-            {% block content %}{% endblock %}
-        {% endblock %}
-        {% endraw %}
+        { % block base_content %}
+            { % block content %}{ % endblock %}
+        { % endblock %}
+        { % endraw %}
         ```
 
 - templates/base_nav.html
     - 글 작성에서 사용
 
         ```html
-        {% raw %}
-        {% extends '_base.html' %}
+        { % raw %}
+        { % extends '_base.html' %}
 
-        {% block base_content %}
-            {% include 'nav.html' %}
-            {% block content %}{% endblock %}
-        {% endblock %}
-        {% endraw %}
+        { % block base_content %}
+            { % include 'nav.html' %}
+            { % block content %}{ % endblock %}
+        { % endblock %}
+        { % endraw %}
         ```
 
 - templates/base_slider.html
     - 피드, 글 상세에서 사용
 
         ```html
-        {% raw %}
-        {% extends '_base.html' %}
-        {% load static %}
+        { % raw %}
+        { % extends '_base.html' %}
+        { % load static %}
 
-        {% block head %}
-            <link href="{% static 'splide/splide.css' %}" rel="stylesheet">
-            <script src="{% static 'splide/splide.js' %}"></script>
-        {% endblock %}
+        { % block head %}
+            <link href="{ % static 'splide/splide.css' %}" rel="stylesheet">
+            <script src="{ % static 'splide/splide.js' %}"></script>
+        { % endblock %}
 
-        {% block base_content %}
-            {% include 'nav.html' %}
-            {% block content %}{% endblock %}
+        { % block base_content %}
+            { % include 'nav.html' %}
+            { % block content %}{ % endblock %}
             <script>
                 const elms = document.getElementsByClassName('splide');
                 for (let i = 0; i < elms.length; i++) {
                     new Splide(elms[i]).mount();
                 }
             </script>
-        {% endblock %}
-        {% endraw %}
+        { % endblock %}
+        { % endraw %}
         ```
 
 #### 3.3 분할한 Template을 사용하도록 코드 수정
@@ -423,62 +423,62 @@ categories: materials
 - templates/posts/feeds.html
 
     ```html
-    {% raw %}
-    {% extends 'base_slider.html' %}
-    {% load custom_tags %}
+    { % raw %}
+    { % extends 'base_slider.html' %}
+    { % load custom_tags %}
 
-    {% block content %}
+    { % block content %}
         <div id="feeds" class="post-container">
-            {% for post in posts %}
-                {% url 'posts:feeds' as action_redirect_to %}
-                {% include 'posts/post.html' with action_redirect_url=action_redirect_to|concat:'#post-'|concat:post.id %}
-            {% endfor %}
+            { % for post in posts %}
+                { % url 'posts:feeds' as action_redirect_to %}
+                { % include 'posts/post.html' with action_redirect_url=action_redirect_to|concat:'#post-'|concat:post.id %}
+            { % endfor %}
         </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 - templates/posts/post_detail.html
 
     ```html
-    {% raw %}
-    {% extends 'base_slider.html' %}
+    { % raw %}
+    { % extends 'base_slider.html' %}
 
-    {% block content %}
+    { % block content %}
         <div id="feeds" class="post-container">
-            {% url 'posts:post_detail' post.id as action_redirect_to %}
-            {% include 'posts/post.html' with action_redirect_url=action_redirect_to %}
+            { % url 'posts:post_detail' post.id as action_redirect_to %}
+            { % include 'posts/post.html' with action_redirect_url=action_redirect_to %}
         </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 - templates/posts/tags.html
 
     ```html
-    {% raw %}
-    {% extends 'base_nav.html' %}
+    { % raw %}
+    { % extends 'base_nav.html' %}
 
-    {% block content %}
+    { % block content %}
         <div id="tags">
             ...
         </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 - templates/posts/post_add.html
 
     ```html
-    {% raw %}
-    {% extends 'base_nav.html' %}
+    { % raw %}
+    { % extends 'base_nav.html' %}
 
-    {% block content %}
+    { % block content %}
         <div id="post-add">
             ...
         </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 ### 4. 좋아요 기능**
@@ -617,20 +617,20 @@ categories: materials
     - templates/posts/post.html
 
         ```html
-        {% raw %}
+        { % raw %}
         <div class="post-buttons">
-            <form action="{% url 'posts:post_like' post_id=post.id %}?next={{ action_redirect_url }}" method="POST">
-                {% csrf_token %}
+            <form action="{ % url 'posts:post_like' post_id=post.id %}?next={ { action_redirect_url }}" method="POST">
+                { % csrf_token %}
                 <button type="submit"
-                    {% if user in post.like_users.all %}
+                    { % if user in post.like_users.all %}
                         style="color: red;"
-                    {% endif %}>
-                    Likes({{ post.like_users.count }})
+                    { % endif %}>
+                    Likes({ { post.like_users.count }})
                 </button>
             </form>
-            <span>Comments({{ post.comment_set.count }})</span>
+            <span>Comments({ { post.comment_set.count }})</span>
         </div>
-        {% endraw %}
+        { % endraw %}
         ```
 
 
@@ -771,31 +771,31 @@ categories: materials
 - templates/users/profile.html
 
     ```html
-    {% raw %}
-    {% extends 'base_nav.html' %}
+    { % raw %}
+    { % extends 'base_nav.html' %}
 
-    {% block content %}
+    { % block content %}
     <div id="profile">
         <h1>Profile</h1>
     </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 - templates/posts/post.html
 
     ```html
-    {% raw %}
-    <article id="post-{{ post.id }}" class="post">
+    { % raw %}
+    <article id="post-{ { post.id }}" class="post">
         <header class="post-header">
-            <a href="{% url 'users:profile' user_id=post.user.id %}">
-                {% if post.user.profile_image %}
-                    <img src="{{ post.user.profile_image.url }}" alt="">
-                {% endif %}
-                <span>{{ post.user.username }}</span>
+            <a href="{ % url 'users:profile' user_id=post.user.id %}">
+                { % if post.user.profile_image %}
+                    <img src="{ { post.user.profile_image.url }}" alt="">
+                { % endif %}
+                <span>{ { post.user.username }}</span>
             </a>
         </header>
-    {% endraw %}
+    { % endraw %}
     ```
 
 #### 6.3 프로필 Template에 정보 전달
@@ -820,50 +820,50 @@ categories: materials
 - templates/users/profile.html
 
     ```html
-    {% raw %}
-    {% extends 'base_nav.html' %}
+    { % raw %}
+    { % extends 'base_nav.html' %}
 
-    {% block content %}
+    { % block content %}
     <div id="profile">
         <div class="info">
             <!-- 프로필 이미지 영역 -->
-            {% if user.profile_image %}
-                <img src="{{ user.profile_image.url }}">
-            {% endif %}
+            { % if user.profile_image %}
+                <img src="{ { user.profile_image.url }}">
+            { % endif %}
 
             <!-- 사용자 정보 영역 -->
             <div class="info-texts">
-                <h1>{{ user.username }}</h1>
+                <h1>{ { user.username }}</h1>
                 <div class="counts">
                     <dl>
                         <dt>Posts</dt>
-                        <dd>{{ user.post_set.count }}</dd>
+                        <dd>{ { user.post_set.count }}</dd>
                         <dt>Followers</dt>
-                        <dd>{{ user.followers.count }}</dd>
+                        <dd>{ { user.followers.count }}</dd>
                         <dt>Following</dt>
-                        <dd>{{ user.following.count }}</dd>
+                        <dd>{ { user.following.count }}</dd>
                     </dl>
                 </div>
-                <p>{{ user.short_description }}</p>
+                <p> { { user.short_description }}</p>
             </div>
         </div>
         <!-- 사용자가 작성한 Post목록 -->
         <div class="post-grid-container">
-            {% for post in user.post_set.all %}
-                {% if post.postimage_set.first %}
-                    {% if post.postimage_set.first.photo %}
+            { % for post in user.post_set.all %}
+                { % if post.postimage_set.first %}
+                    { % if post.postimage_set.first.photo %}
                         <div class="post-grid">
-                            <a href="{% url 'posts:post_detail' post_id=post.id %}">
-                                <img src="{{ post.postimage_set.first.photo.url }}" alt="">
+                            <a href="{ % url 'posts:post_detail' post_id=post.id %}">
+                                <img src="{ { post.postimage_set.first.photo.url }}" alt="">
                             </a>
                         </div>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
+                    { % endif %}
+                { % endif %}
+            { % endfor %}
         </div>
     </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 ### 7. 팔로우/팔로잉 목록
@@ -892,62 +892,62 @@ categories: materials
 - templates/base_profile.html
 
     ```html
-    {% raw %}
-    {% extends 'base_nav.html' %}
+    { % raw %}
+    { % extends 'base_nav.html' %}
 
-    {% block content %}
+    { % block content %}
     <div id="profile">
         <div class="info">
             <!-- 프로필 이미지 영역 -->
-            {% if user.profile_image %}
-                <img src="{{ user.profile_image.url }}">
-            {% endif %}
+            { % if user.profile_image %}
+                <img src="{ { user.profile_image.url }}">
+            { % endif %}
 
             <!-- 사용자 정보 영역 -->
             <div class="info-texts">
-                <h1>{{ user.username }}</h1>
+                <h1>{ { user.username }}</h1>
                 <div class="counts">
                     <dl>
                         <dt>Posts</dt>
-                        <dd>{{ user.post_set.count }}</dd>
+                        <dd>{ { user.post_set.count }}</dd>
                         <dt>Followers</dt>
-                        <dd>{{ user.followers.count }}</dd>
+                        <dd>{ { user.followers.count }}</dd>
                         <dt>Following</dt>
-                        <dd>{{ user.following.count }}</dd>
+                        <dd>{ { user.following.count }}</dd>
                     </dl>
                 </div>
-                <p>{{ user.short_description }}</p>
+                <p>{ { user.short_description }}</p>
             </div>
         </div>
-        {% block bottom_data %}{% endblock %}
+        { % block bottom_data %}{ % endblock %}
     </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 - templates/users/profile.html
 
     ```html
-    {% raw %}
-    {% extends 'base_profile.html' %}
+    { % raw %}
+    { % extends 'base_profile.html' %}
 
-    {% block bottom_data %}
+    { % block bottom_data %}
     <!-- 사용자가 작성한 Post목록 -->
     <div class="post-grid-container">
-        {% for post in user.post_set.all %}
-            {% if post.postimage_set.first %}
-                {% if post.postimage_set.first.photo %}
+        { % for post in user.post_set.all %}
+            { % if post.postimage_set.first %}
+                { % if post.postimage_set.first.photo %}
                     <div class="post-grid">
-                        <a href="{% url 'posts:post_detail' post_id=post.id %}">
-                            <img src="{{ post.postimage_set.first.photo.url }}" alt="">
+                        <a href="{ % url 'posts:post_detail' post_id=post.id %}">
+                            <img src="{ { post.postimage_set.first.photo.url }}" alt="">
                         </a>
                     </div>
-                {% endif %}
-            {% endif %}
-        {% endfor %}
+                { % endif %}
+            { % endif %}
+        { % endfor %}
     </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 #### 7.3 팔로우/팔로잉 목록
@@ -1002,55 +1002,55 @@ categories: materials
 - templates/users/followers.html
 
     ```html
-    {% raw %}
-    {% extends 'base_profile.html' %}
+    { % raw %}
+    { % extends 'base_profile.html' %}
 
-    {% block bottom_data %}
+    { % block bottom_data %}
     <div class="relationships">
         <h3>Followers</h3>
-        {% for relationship in relationships %}
+        { % for relationship in relationships %}
             <div class="relationship">
-                <a href="{% url 'users:profile' user_id=relationship.from_user.id %}">
-                    {% if relationship.from_user.profile_image %}
-                        <img src="{{ relationship.from_user.profile_image.url }}">
-                    {% endif %}
+                <a href="{ % url 'users:profile' user_id=relationship.from_user.id %}">
+                    { % if relationship.from_user.profile_image %}
+                        <img src="{ { relationship.from_user.profile_image.url }}">
+                    { % endif %}
                     <div class="relationship-info">
-                        <span>{{ relationship.from_user.username }}</span>
-                        <span>{{ relationship.created|date:"y.m.d" }}</span>
+                        <span>{ { relationship.from_user.username }}</span>
+                        <span>{ { relationship.created|date:"y.m.d" }}</span>
                     </div>
                 </a>
             </div>
-        {% endfor %}
+        { % endfor %}
     </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 - templates/users/following.html
 
     ```html
-    {% raw %}
-    {% extends 'base_profile.html' %}
+    { % raw %}
+    { % extends 'base_profile.html' %}
 
-    {% block bottom_data %}
+    { % block bottom_data %}
     <div class="relationships">
         <h3>Following</h3>
-        {% for relationship in relationships %}
+        { % for relationship in relationships %}
             <div class="relationship">
-                <a href="{% url 'users:profile' user_id=relationship.to_user.id %}">
-                    {% if relationship.to_user.profile_image %}
-                        <img src="{{ relationship.to_user.profile_image.url }}">
-                    {% endif %}
+                <a href="{ % url 'users:profile' user_id=relationship.to_user.id %}">
+                    { % if relationship.to_user.profile_image %}
+                        <img src="{ { relationship.to_user.profile_image.url }}">
+                    { % endif %}
                     <div class="relationship-info">
-                        <span>{{ relationship.to_user.username }}</span>
-                        <span>{{ relationship.created|date:"y.m.d" }}</span>
+                        <span>{ { relationship.to_user.username }}</span>
+                        <span>{ { relationship.created|date:"y.m.d" }}</span>
                     </div>
                 </a>
             </div>
-        {% endfor %}
+        { % endfor %}
     </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 #### 7.4 프로필 페이지 링크 구성
@@ -1058,27 +1058,27 @@ categories: materials
 - templates/base_profile.html
 
     ```html
-    {% raw %}
+    { % raw %}
     <!-- 사용자 정보 영역 -->
     <div class="info-texts">
-        <h1>{{ user.username }}</h1>
+        <h1>{ { user.username }}</h1>
         <div class="counts">
             <dl>
                 <dt>Posts</dt>
                 <dd>
-                    <a href="{% url 'users:profile' user_id=user.id %}">{{ user.post_set.count }}</a>
+                    <a href="{ % url 'users:profile' user_id=user.id %}">{ { user.post_set.count }}</a>
                 </dd>
                 <dt>Followers</dt>
                 <dd>
-                    <a href="{% url 'users:followers' user_id=user.id %}">{{ user.followers.count }}</a>
+                    <a href="{ % url 'users:followers' user_id=user.id %}">{ { user.followers.count }}</a>
                 </dd>
                 <dt>Following</dt>
                 <dd>
-                    <a href="{% url 'users:following' user_id=user.id %}">{{ user.following.count }}</a>
+                    <a href="{ % url 'users:following' user_id=user.id %}">{ { user.following.count }}</a>
                 </dd>
             </dl>
         </div>
-    {% endraw %}
+    { % endraw %}
     ```
 
 
@@ -1139,29 +1139,29 @@ categories: materials
 - templates/posts/post.html
 
     ```html
-    {% raw %}
-    <article id="post-{{ post.id }}" class="post">
+    { % raw %}
+    <article id="post-{ { post.id }}" class="post">
         <header class="post-header">
-            <a href="{% url 'users:profile' user_id=post.user.id %}">
+            <a href="{ % url 'users:profile' user_id=post.user.id %}">
                 ...
             </a>
 
             <!-- 글의 작성자가 로그인 한 사용자라면 팔로우 버튼을 표시하지 않는다 -->
             <!-- (자기 자신을 팔로우 하는것을 방지) -->
-            {% if user != post.user %}
-                <form action="{% url 'users:follow' user_id=post.user.id %}?next={{ action_redirect_url }}" method="POST">
-                    {% csrf_token %}
+            { % if user != post.user %}
+                <form action="{ % url 'users:follow' user_id=post.user.id %}?next={ { action_redirect_url }}" method="POST">
+                    { % csrf_token %}
                     <button type="submit" class="btn btn-primary">
                         <!-- 이 Post의 작성자가 이미 자신의 팔로잉 목록에 포함된 경우 -->
-                        {% if post.user in user.following.all %}
+                        { % if post.user in user.following.all %}
                             Unfollow
                         <!-- 이 Post의 작성자를 아직 팔로잉 하지 않은 경우 -->
-                        {% else %}
+                        { % else %}
                             Follow
-                        {% endif %}
+                        { % endif %}
                     </button>
                 </form>
-            {% endif %}
+            { % endif %}
         </header>
-    {% endraw %}
+    { % endraw %}
     ```

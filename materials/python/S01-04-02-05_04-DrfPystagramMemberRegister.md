@@ -243,26 +243,26 @@ class PostImageInline(admin.TabularInline):
 - templates/posts/feeds.html
 
     ```html
-    {% raw %}
-    {% extends 'base_slider.html' %}
-    {% block content %}
+    { % raw %}
+    { % extends 'base_slider.html' %}
+    { % block content %}
         <nav>
             <h1>Pystagram</h1>
         </nav>
         <div id="feeds" class="post-container">
-            {% for post in posts %}
+            { % for post in posts %}
                 <article class="post">
                     <header class="post-header">
-                        {% if post.user.profile_image %}
-                            <img src="{{ post.user.profile_image.url }}">
-                        {% endif %}
-                        <span>{{ post.user.username }}</span>
+                        { % if post.user.profile_image %}
+                            <img src="{ { post.user.profile_image.url }}">
+                        { % endif %}
+                        <span>{ { post.user.username }}</span>
                     </header>
                 </article>
-            {% endfor %}
+            { % endfor %}
         </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 #### 3.3 이미지 슬라이더 구현
@@ -270,30 +270,30 @@ class PostImageInline(admin.TabularInline):
     - templates/base.html
 
         ```html
-        {% raw %}
-        {% load static %}
+        { % raw %}
+        { % load static %}
         <!doctype html>
         <html lang="ko">
         <head>
-            <link rel="stylesheet" href="{% static 'css/style.css' %}">
-            <link rel="stylesheet" href="{% static 'splide/splide.css' %}">
-            <script src="{% static 'splide/splide.js' %}"></script>
+            <link rel="stylesheet" href="{ % static 'css/style.css' %}">
+            <link rel="stylesheet" href="{ % static 'splide/splide.css' %}">
+            <script src="{ % static 'splide/splide.js' %}"></script>
         </head>
         <body>
         ...
-        {% endraw %}
+        { % endraw %}
         ```
 
 - Splide 라이브러리 사용
     - templates/posts/feeds.html
 
         ```html
-        {% raw %}
-        {% extends 'base.html' %}
-        {% block content %}
+        { % raw %}
+        { % extends 'base.html' %}
+        { % block content %}
         ...
             <div id="feeds" class="post-container">
-                {% for post in posts %}
+                { % for post in posts %}
                     <article class="post">
                         <header class="post-header">
                             ...
@@ -303,30 +303,30 @@ class PostImageInline(admin.TabularInline):
                         <div class="post-images splide">
                             <div class="splide__track">
                                 <ul class="splide__list">
-                                    {% for image in post.postimage_set.all %}
-                                        {% if image.photo %}
+                                    { % for image in post.postimage_set.all %}
+                                        { % if image.photo %}
                                             <li class="splide__slide">
-                                                <img src="{{ image.photo.url }}">
+                                                <img src="{ { image.photo.url }}">
                                             </li>
-                                        {% endif %}
-                                    {% endfor %}
+                                        { % endif %}
+                                    { % endfor %}
                                 </ul>
                             </div>
                         </div>
                         <!-- 이미지 슬라이드 영역 종료 -->
                     </article>
-                {% endfor %}
+                { % endfor %}
             </div>
-        {% endblock %}
-        {% endraw %}
+        { % endblock %}
+        { % endraw %}
         ```
 
 #### 3.4 템플릿 하단에 자바스크립트 코드 작성
 - templates/posts/feeds.html
 
     ```html
-    {% raw %}
-    {% block content %}
+    { % raw %}
+    { % block content %}
         <div id="feeds" class="post-container">
             ...
         </div>
@@ -337,8 +337,8 @@ class PostImageInline(admin.TabularInline):
                 new Splide(elms[i]).mount();
             }
         </script>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 #### 3.5 글 속성 출력
@@ -350,7 +350,7 @@ class PostImageInline(admin.TabularInline):
             <header class="post-header">...</header>
             <div class="post-images">...</div>
             <div class="post-content">
-                {{ post.content|linebreaksbr }}
+                { { post.content|linebreaksbr }}
             </div>
         ```
 
@@ -367,29 +367,29 @@ class PostImageInline(admin.TabularInline):
     - 댓글 목록 표시
 
         ```html
-        {% raw %}
+        { % raw %}
         <div class="post-buttons">...</div>
         <div class="post-comments">
             <ul>
                 <1-- 각 Post에 연결된 PostComment들을 순회 -->
-                {% for comment in post.comment_set.all %}
+                { % for comment in post.comment_set.all %}
                     <li>
-                        <span>{{ comment.user.username }}</span>
-                        <span>{{ comment.content }}</span>
+                        <span>{ { comment.user.username }}</span>
+                        <span>{ { comment.content }}</span>
                     </li>
-                {% endfor %}
+                { % endfor %}
             </ul>
             <button>Likes(0)</button>
             <span>Comments(0)</span>
         </div>
-        {% endraw %}
+        { % endraw %}
         ```
 
     - 작성일자, 댓글 입력창 표시
 
         ```html
         <div class="post-comments">...</div>
-        <small>{{ post.created }}</small>
+        <small>{ { post.created }}</small>
         <div class="post-comments-create">
             <input type="text" placeholder="댓글 달기...">
             <button type="submit">게시</button>
@@ -560,15 +560,15 @@ class PostImageInline(admin.TabularInline):
         - 직접 작성했던 input 요소를 삭제하고 comment_form.as_p 변수 사용
 
             ```html
-            {% raw %}
+            { % raw %}
             <div class="post-comments-create">
                 <form method="POST">
-                    {% csrf_token %}
-                    {{ comment_form.as_p }}
+                    { % csrf_token %}
+                    { { comment_form.as_p }}
                     <button type="submit">게시</button>
                 </form>
             </div>
-            {% endraw %}
+            { % endraw %}
             ```
 
         - CommentForm에는 post, content 필드가 있고 이 둘을 as_p로 렌더링한 경우
@@ -576,15 +576,15 @@ class PostImageInline(admin.TabularInline):
             - 자동으로 < label>요소와 < input>요소가 만들어짐. 여기서는 "내용:"으로 나타나는 < label>요소가 필요하지 않음. content 값을 입력받을 < input> 요소만 있으면 됨
 
             ```html
-            {% raw %}
+            { % raw %}
             <div class="post-comments-create">
                 <form method="POST">
-                    {% csrf_token %}
-                    {{ comment_form.content }}
+                    { % csrf_token %}
+                    { { comment_form.content }}
                     <button type="submit">게시</button>
                 </form>
             </div>
-            {% endraw %}
+            { % endraw %}
             ```
 
     - posts/forms.py
@@ -644,16 +644,16 @@ class PostImageInline(admin.TabularInline):
     - templates/posts/feeds.html
 
         ```html
-        {% raw %}
+        { % raw %}
         <div class="post-comments-create">
             <form method="POST" action="/posts/comment_add/">
-                {% csrf_token %}
-                <input type="hidden" name="post" value="{{ post.id }}">
-                {{ comment_form.content }}
+                { % csrf_token %}
+                <input type="hidden" name="post" value="{ { post.id }}">
+                { { comment_form.content }}
                 <button type="submit">게시</button>
             </form>
         </div>
-        {% endraw %}
+        { % endraw %}
         ```
 
 - 사용자 정보를 View에서 직접 할당
@@ -679,11 +679,11 @@ class PostImageInline(admin.TabularInline):
     - templates/posts/feeds.html
 
         ```html
-        {% raw %}
+        { % raw %}
         <div id="feeds" class="post-container">
-            {% for post in posts %}
-                <article id="post-{{ post.id }}" class="post">
-        {% endraw %}
+            { % for post in posts %}
+                <article id="post-{ { post.id }}" class="post">
+        { % endraw %}
         ```
 
     - posts/views.py
@@ -723,7 +723,7 @@ class PostImageInline(admin.TabularInline):
     ```html
     <div class="post-buttons">
         <button type="submit">Likes(0)</button>
-        <span>Comments({{ post.comment_set.count }})</span>
+        <span>Comments({ { post.comment_set.count }})</span>
     </div>
     ```
 
@@ -782,26 +782,26 @@ class PostImageInline(admin.TabularInline):
     - templates/posts/feeds.html
 
         ```html
-        {% raw %}
+        { % raw %}
         <div class="post-comments">
             <ul>
-                {% for comment in post.comment_set.all %}
+                { % for comment in post.comment_set.all %}
                     <li>
-                        <span>{{ comment.user.username }}</span>
-                        <span>{{ comment.content }}</span>
+                        <span>{ { comment.user.username }}</span>
+                        <span>{ { comment.content }}</span>
 
                         <!-- 댓글 삭제 form 추가 -->
-                        {% if user == comment.user %}
-                            <form method="POST" action="/posts/comment_delete/{{ comment.id }}/">
-                                {% csrf_token %}
+                        { % if user == comment.user %}
+                            <form method="POST" action="/posts/comment_delete/{ { comment.id }}/">
+                                { % csrf_token %}
                                 <button type="submit">삭제</button>
                             </form>
-                        {% endif %}
+                        { % endif %}
                     </li>
-                {% endfor %}
+                { % endfor %}
             </ul>
         </div>
-        {% endraw %}
+        { % endraw %}
         ```
 
 <br>
@@ -842,15 +842,15 @@ class PostImageInline(admin.TabularInline):
 - templates/posts/post_add.html
 
     ```html
-    {% raw %}
-    {% externds 'base.html' %}
+    { % raw %}
+    { % externds 'base.html' %}
 
-    {% block content %}
+    { % block content %}
         <div id="post-add">
             <h1>Post Add</h1>
         </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 <br>
@@ -889,23 +889,23 @@ class PostImageInline(admin.TabularInline):
 - templates/posts/post_add.html
 
     ```html
-    {% raw %}
-    {% externds 'base.html' %}
+    { % raw %}
+    { % externds 'base.html' %}
 
-    {% block content %}
+    { % block content %}
         <nav>
             <h1>Pystagram</h1>
         </nav>
         <div id="post-add">
             <h1>Post Add</h1>
             <form method="POST">
-                {% csrf_token %}
-                {{ form.as_p }}
+                { % csrf_token %}
+                { { form.as_p }}
                 <button type="submit">게시</button>
             </form>
         </div>
-    {% endblock %}
-    {% endraw %}
+    { % endblock %}
+    { % endraw %}
     ```
 
 <br>
@@ -916,17 +916,17 @@ class PostImageInline(admin.TabularInline):
     - templates/posts/post_add.html
 
         ```html
-        {% raw %}
+        { % raw %}
         <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
+            { % csrf_token %}
             <div>
                 <labl for="id_images">이미지</label>
                 <input id="id_images" name="images" type="file" multiple>
             </div>
-            {{ form.as_p }}
+            { { form.as_p }}
             <button type="submit">게시</button>
         </form>
-        {% endraw %}
+        { % endraw %}
         ```
 
 - View에서 multiple 속성을 가진 file input의 데이터 받기

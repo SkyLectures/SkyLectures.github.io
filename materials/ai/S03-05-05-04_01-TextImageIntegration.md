@@ -8,114 +8,270 @@ categories: materials
 * toc
 {:toc .large-only .toc-sticky:true}
 
+## 1. Django 기반 예제
 
+- 예제 설명
+    - Django 기반으로 구성한 프로젝트
+    - 내용
+        - 사용자가 프롬프트를 입력하면
+        - GPT-4 Turbo로부터 텍스트 설명을 받고
+        - DALL·E 3로부터 이미지를 생성하며
+        - 둘을 웹 페이지에 동시에 출력하는 예제
 
-## 1. 기능 구성
+- 프로젝트 구조
 
-### 1.1 처리 작업
-
-**텍스트 프롬프트 1회 입력 →**
-1. GPT가 설명 텍스트 생성
-2. DALL·E가 해당 프롬프트 기반 이미지 생성
-3. 사용자에게 **텍스트 + 이미지** 동시 출력
-
-
-### 1.2 사용 기술 스택
-
-- Python
-- Flask (백엔드 및 웹서버)
-- OpenAI API (GPT-3.5 또는 GPT-4 + DALL·E)
-- HTML (Jinja 템플릿 엔진)
-
-
-### 1.3 전체 구조 흐름
-
-```
-[사용자 입력 프롬프트]
-       ↓
-[Flask] → [GPT 호출] → 요약/설명 텍스트 생성
-       → [DALL·E 호출] → 이미지 생성 (URL 반환)
-       ↓
-[HTML 페이지에 결과 표시 (텍스트 + 이미지)]
-```
-
-
-## 2. 예제 구현
-
-### 2.1 프로젝트 구조
-
-```
-text-image-app/
-├── app.py
-├── templates/
-│   └── index.html
-├── .env
-└── requirements.txt
-```
-
-### 2.2 코드 구성
-
-- **requirements.txt**
-
-    ```txt
-    flask
-    openai
-    python-dotenv
+    ```bash
+    openai_webapp/
+    ├── mysite/
+    │   ├── settings.py
+    │   ├── urls.py
+    │   └── wsgi.py
+    ├── dallegpt/
+    │   ├── templates/
+    │   │   └── dallegpt/
+    │   │       └── index.html
+    │   ├── views.py
+    │   ├── urls.py
+    │   └── __init__.py
+    ├── manage.py
+    └── requirements.txt
     ```
 
-- **.env**
+- 라이브러리
 
+    ```bash
+    pip install django
     ```
-    OPENAI_API_KEY=your_api_key_here
+
+- 예제 코드
+    - Django 설정
+
+        ```python
+        #//file: mysite/settings.py
+
+        # settings.py (일부 발췌)
+        import os
+        from dotenv import load_dotenv
+        load_dotenv()
+
+        # templates 경로 설정
+        TEMPLATES[0]['DIRS'] = [BASE_DIR / "dallegpt" / "templates"]
+
+        # secret key 등 기존 설정 유지
+        ```
+
+    - URL 설정
+
+        ```python
+        #//file: mysite/urls.py
+
+        from django.contrib import admin
+        from django.urls import path, include
+
+        urlpatterns = [
+            path("admin/", admin.site.urls),
+            path("", include("dallegpt.urls")),  # 앱 경로 추가
+        ]
+        ```
+
+        ```python
+        #//file: dallegpt/urls.py
+
+        from django.urls import path
+        from . import views
+
+        urlpatterns = [
+            path("", views.index, name="index"),
+        ]
+        ```
+        
+    - 뷰 함수
+
+        ```python
+        #//file: dallegpt/views.py
+
+        from django.shortcuts import render
+        from openai import OpenAI
+        import os
+
+        client = OpenAI()
+
+        def index(request):
+            gpt_text = None
+            image_url = None
+            prompt = ""
+
+            if request.method == "POST":
+                prompt = request.POST.get("prompt", "")
+                try:
+                    # 1. GPT로 텍스트 설명 생성
+                    chat_response = client.chat.completions.create(
+                        model="gpt-4o",
+                        messages=[
+                            {"role": "system", "content": "당신은 이미지 설명을 생성하는 친절한 도우미입니다."},
+                            {"role": "user", "content": f"'{prompt}'에 대한 설명을 작성해줘."}
+                        ],
+                        max_tokens=300,
+                        temperature=0.7
+                    )
+                    gpt_text = chat_response.choices[0].message.content
+
+                    # 2. DALL·E로 이미지 생성
+                    image_response = client.images.generate(
+                        model="dall-e-3",
+                        prompt=prompt,
+                        n=1,
+                        size="1024x1024",
+                        quality="standard"
+                    )
+                    image_url = image_response.data[0].url
+
+                except Exception as e:
+                    gpt_text = f"오류 발생: {str(e)}"
+
+            return render(request, "dallegpt/index.html", {
+                "prompt": prompt,
+                "gpt_text": gpt_text,
+                "image_url": image_url
+            })
+        ```
+
+    -  템플릿 (dallegpt/templates/dallegpt/index.html)
+
+        ```html
+        <!DOCTYPE html>
+        <html lang="ko">
+        <head>
+            <meta charset="UTF-8">
+            <title>GPT + DALL·E 이미지 생성기</title>
+            <style>
+                body { font-family: sans-serif; margin: 40px; }
+                textarea, input { width: 400px; padding: 8px; }
+                img { max-width: 512px; display: block; margin-top: 20px; }
+            </style>
+        </head>
+        <body>
+            <h1>AI 설명 & 이미지 생성기</h1>
+            <form method="POST">
+                { % csrf_token %}
+                <label>프롬프트 입력:</label><br>
+                <input type="text" name="prompt" value="{ { prompt }}" required><br><br>
+                <button type="submit">생성하기</button>
+            </form>
+
+            { % if gpt_text %}
+                <h2>GPT 설명 결과:</h2>
+                <p>{ { gpt_text }}</p>
+            { % endif %}
+
+            { % if image_url %}
+                <h2>생성된 이미지:</h2>
+                <img src="{ { image_url }}" alt="AI 생성 이미지">
+            { % endif %}
+        </body>
+        </html>
+        ```
+
+- 실행 방법
+    - 서버 실행
+
+        ```bash
+        # 프로젝트 생성 및 앱 등록 후
+        python manage.py migrate
+        python manage.py runserver
+        ```
+
+    - 브라우저 테스트
+        - http://localhost:8000에 접속 후 프롬프트를 입력해서 테스트
+
+
+## 2. Flask 기반 예제
+
+- 예제 설명
+    - Flask 기반으로 구성한 프로젝트
+    - 내용
+        - 사용자가 프롬프트를 입력하면
+        - GPT-4 Turbo로부터 텍스트 설명을 받고
+        - DALL·E 3로부터 이미지를 생성하며
+        - 둘을 웹 페이지에 동시에 출력하는 예제
+
+- 전체 구조 흐름
+
+    ```text
+    [사용자 입력 프롬프트]
+        ↓
+    [Flask] → [GPT 호출] → 요약/설명 텍스트 생성
+        → [DALL·E 호출] → 이미지 생성 (URL 반환)
+        ↓
+    [HTML 페이지에 결과 표시 (텍스트 + 이미지)]
     ```
+
+- 프로젝트 구조
+
+    ```bash
+    flask_dalle_gpt/
+    ├── app.py                     # Flask 앱 실행 스크립트
+    ├── templates/
+    │   └── index.html             # 웹 템플릿
+    ├── static/
+    │   └── style.css              # (선택) CSS 스타일
+    └── requirements.txt           # 필요 패키지 목록
+    ```
+
+- 라이브러리
+
+    ```bash
+    pip install flask
+    ```
+
+- 예제 코드
 
 - **app.py (Flask 서버)**
 
     ```python
     from flask import Flask, render_template, request
-    import openai
+    from openai import OpenAI
     import os
-    from dotenv import load_dotenv
-
-    # 환경 변수 로드
-    load_dotenv()
 
     app = Flask(__name__)
-    openai.api_key = os.getenv("OPENAI_API_KEY")
+    client = OpenAI()
 
     @app.route("/", methods=["GET", "POST"])
     def index():
-        gpt_response = None
+        prompt = ""
+        gpt_text = None
         image_url = None
 
         if request.method == "POST":
-            user_prompt = request.form["prompt"]
+            prompt = request.form["prompt"]
 
             try:
-                # 1. GPT 응답 생성
-                chat_response = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
+                # 1. GPT-4 Turbo로 텍스트 생성
+                chat_response = client.chat.completions.create(
+                    model="gpt-4o",
                     messages=[
-                        {"role": "system", "content": "You are an expert visual storyteller."},
-                        {"role": "user", "content": f"'{user_prompt}'를 설명하는 짧은 글을 만들어줘."}
+                        {"role": "system", "content": "당신은 이미지 설명을 잘 해주는 도우미입니다."},
+                        {"role": "user", "content": f"'{prompt}'에 대한 설명을 써줘."}
                     ],
-                    temperature=0.7
+                    temperature=0.7,
+                    max_tokens=300
                 )
-                gpt_response = chat_response['choices'][0]['message']['content']
+                gpt_text = chat_response.choices[0].message.content
 
-                # 2. DALL·E 이미지 생성
-                image_response = openai.Image.create(
-                    prompt=user_prompt,
-                    n=1,
-                    size="512x512"
+                # 2. DALL·E 3로 이미지 생성
+                image_response = client.images.generate(
+                    model="dall-e-3",
+                    prompt=prompt,
+                    size="1024x1024",
+                    quality="standard",
+                    n=1
                 )
-                image_url = image_response['data'][0]['url']
+                image_url = image_response.data[0].url
 
             except Exception as e:
-                gpt_response = f"오류 발생: {e}"
-                image_url = None
+                gpt_text = f"오류 발생: {str(e)}"
 
-        return render_template("index.html", gpt_response=gpt_response, image_url=image_url)
+        return render_template("index.html", prompt=prompt, gpt_text=gpt_text, image_url=image_url)
 
     if __name__ == "__main__":
         app.run(debug=True)
@@ -127,57 +283,48 @@ text-image-app/
     <!DOCTYPE html>
     <html lang="ko">
     <head>
-    <meta charset="UTF-8">
-    <title>텍스트 + 이미지 생성기</title>
+        <meta charset="UTF-8">
+        <title>GPT + DALL·E 생성기</title>
+        <style>
+            body { font-family: sans-serif; margin: 40px; }
+            input[type="text"] { width: 400px; padding: 10px; }
+            button { padding: 10px 20px; }
+            img { max-width: 512px; margin-top: 20px; }
+            textarea { width: 500px; height: 150px; margin-top: 20px; }
+        </style>
     </head>
     <body>
-    <h1>텍스트 + 이미지 생성기</h1>
-    <form method="POST">
-        <label>프롬프트를 입력하세요:</label><br>
-        <input type="text" name="prompt" size="60" required>
-        <button type="submit">생성</button>
-    </form>
+        <h1>GPT + DALL·E 생성기</h1>
+        <form method="POST">
+            <label for="prompt">프롬프트:</label><br>
+            <input type="text" id="prompt" name="prompt" value="{ { prompt or '' }}" required>
+            <button type="submit">생성</button>
+        </form>
 
-    { % if gpt_response %}
-        <h2>GPT가 생성한 텍스트:</h2>
-        <p>{ { gpt_response }}</p>
-    { % endif %}
+        { % if gpt_text %}
+            <h2>GPT 설명 결과:</h2>
+            <textarea readonly>{ { gpt_text }}</textarea>
+        { % endif %}
 
-    { % if image_url %}
-        <h2>생성된 이미지:</h2>
-        <img src="{ { image_url }}" alt="Generated Image" width="512">
-    { % endif %}
+        { % if image_url %}
+            <h2>생성된 이미지:</h2>
+            <img src="{ { image_url }}" alt="Generated Image">
+        { % endif %}
     </body>
     </html>
     ```
 
-## 3. 사용 예시
+- 실행 방법
+    1. app.py 실행
 
-1. 앱 실행
+        ```bash
+        python app.py
+        ```
 
-```bash
-python app.py
-```
+    2. 브라우저에서 http://localhost:5000 접속
+    3. 텍스트 프롬프트 입력 → 이미지 생성 및 표시
 
-2. 브라우저 접속
-
-```
-http://localhost:5000
-```
-
-3. 프롬프트 입력 예:
-
-```
-a cat astronaut floating in space
-```
-
-4. 결과:
-
-- GPT는 해당 내용을 간략히 설명한 텍스트 생성
-- DALL·E는 우주에 떠 있는 고양이 우주인 이미지를 생성해 표시
-
-
-## 4. 확장 아이디어
+## 3. 확장 아이디어
 
 | 기능                                  | 설명                                                      |
 |---------------------------------------|-----------------------------------------------------------|
@@ -187,8 +334,7 @@ a cat astronaut floating in space
 | React 또는 Vue.js 프론트엔드 연동     | API 결과를 프론트로 실시간 전달                           |
 | 이미지 편집 기능 (DALL·E inpainting) | 이미지 일부 영역을 선택해 재생성 가능                     |
 
-
-## 5. 요약
+## 4. 요약
 
 | 항목         | 설명                                        |
 |--------------|---------------------------------------------|

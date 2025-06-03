@@ -21,163 +21,319 @@ categories: materials
 
 ## 2. DALL·E API 키 설정 방법
 
-1. [OpenAI 플랫폼](https://platform.openai.com/account/api-keys)에서 로그인 후
+1. [OpenAI 플랫폼](https://platform.openai.com/api-keys)에서 로그인 후
 2. `Create new secret key` 클릭하여 키 생성
-3. 해당 키를 복사하고 `.env` 파일 또는 환경 변수에 저장
-
-    ```env
-    OPENAI_API_KEY=your_api_key_here
-    ```
+3. 해당 키를 복사하고 환경 변수에 저장
 
 ## 3. DALL·E 이미지 생성 요청 형식
 
 ### 3.1 기본 요청 구조 (Text-to-Image)
 
-```http
-POST https://api.openai.com/v1/images/generations
-```
+- **REST API**
+    ```bash
+    POST https://api.openai.com/v1/images/generations
+    ```
 
 - **Headers:**
 
     ```http
-    Authorization: Bearer YOUR_API_KEY
+    Authorization: Bearer YOUR_OPENAI_API_KEY
     Content-Type: application/json
     ```
 
-- **Body (예시):**
+- **Body (JSON):**
+    - 예시
 
-    ```json
-    {
-        "prompt": "a futuristic city with flying cars",
+        ```json
+        {
+        "model": "dall-e-3",
+        "prompt": "a futuristic city skyline at sunset",
         "n": 1,
-        "size": "1024x1024"
-    }
+        "size": "1024x1024",
+        "quality": "standard"
+        }
+        ```
+
+### 3.2 예제
+
+- **Curl 예제**
+
+    ```bash
+    curl https://api.openai.com/v1/images/generations \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer YOUR_OPENAI_API_KEY" \
+    -d '{
+        "model": "dall-e-3",
+        "prompt": "a futuristic city skyline at sunset",
+        "n": 1,
+        "size": "1024x1024",
+        "quality": "standard"
+    }'
     ```
+
+- **Python requests 라이브러리 사용 예제**
+
+    ```python
+    import requests
+
+    # OpenAI API Key
+    API_KEY = "your_openai_api_key"
+
+    # 요청 헤더
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    # 요청 바디
+    payload = {
+        "model": "dall-e-3",
+        "prompt": "a futuristic city skyline at sunset",
+        "n": 1,
+        "size": "1024x1024",
+        "quality": "standard"
+    }
+
+    # 이미지 생성 요청
+    response = requests.post(
+        "https://api.openai.com/v1/images/generations",
+        headers=headers,
+        json=payload
+    )
+
+    # 응답 처리
+    if response.status_code == 200:
+        image_url = response.json()['data'][0]['url']
+        print("이미지 URL:", image_url)
+        
+        # 이미지 다운로드 (선택 사항)
+        img_data = requests.get(image_url).content
+        with open("generated_image.png", "wb") as f:
+            f.write(img_data)
+            print("이미지가 'generated_image.png'로 저장되었습니다.")
+    else:
+        print("오류:", response.status_code, response.text)
+    ```
+
+- **OpenAI Python SDK v1.x의 최신 스타일 기준 예제**
+
+    ```python
+    from openai import OpenAI
+
+    # OpenAI 클라이언트 초기화 (환경 변수 사용 권장)
+    client = OpenAI()
+
+    # 이미지 생성 요청
+    response = client.images.generate(
+        model="dall-e-3",
+        prompt="a futuristic city skyline at sunset",
+        n=1,
+        size="1024x1024",
+        quality="standard"
+    )
+
+    # 이미지 URL 추출
+    image_url = response.data[0].url
+    print("이미지 URL:", image_url)
+
+    # 이미지 다운로드 (선택 사항)
+    import requests
+
+    img_data = requests.get(image_url).content
+    with open("generated_image.png", "wb") as f:
+        f.write(img_data)
+        print("이미지가 'generated_image.png'로 저장되었습니다.")
+    ```
+
+- requests 방식과 OpenAI SDK 방식 비교
+
+| 항목         | `requests` 방식   | `openai` SDK 방식 (추천)         |
+| ------------ | ----------------- | -------------------------------- |
+| HTTP 직접 처리 | 수동 헤더/URL 설정 필요 | 자동 처리 (함수 기반) |
+| 에러 처리      | 수동 처리 필요        | 예외 발생, `.http_status`로 확인 가능 |
+| 코드 길이      | 상대적으로 길고 반복적    | 간결하고 읽기 쉬움 |
+| 유지보수       | API 변경에 취약      | SDK 자동 업데이트 반영 |
 
 
 ## 4. Flask를 이용한 DALL·E 이미지 생성 예제
 
-### 4.1 프로젝트 구조
+### 4.1 기본 예제
+- Flask 설치
 
-```
-dalle-flask-app/
-├── app.py
-├── templates/
-│   └── index.html
-├── .env
-└── requirements.txt
-```
-
-### 4.2 프로젝트 코드
-
-- **requirements.txt**
-
-    ```txt
-    flask
-    openai
-    python-dotenv
+    ```bash
+    pip install flask
     ```
 
-- **.env**
+- 소스코드
 
-    ```env
-    OPENAI_API_KEY=your_openai_api_key_here
+    ```python
+    #//file: "app.py"
+
+    from flask import Flask, request, render_template_string
+    from openai import OpenAI
+    import os
+
+    app = Flask(__name__)
+
+    # OpenAI 클라이언트 초기화 (환경 변수 또는 직접 입력)
+    client = OpenAI()
+
+    # HTML 템플릿
+    HTML_TEMPLATE = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>DALL·E 이미지 생성기</title>
+    </head>
+    <body>
+        <h1>DALL·E 이미지 생성</h1>
+        <form method="POST">
+            <label>프롬프트:</label><br>
+            <input type="text" name="prompt" style="width: 300px;" required><br><br>
+            <button type="submit">이미지 생성</button>
+        </form>
+        {% if image_url %}
+            <h2>결과</h2>
+            <img src="{{ image_url }}" alt="Generated Image" style="max-width: 512px;">
+        {% endif %}
+    </body>
+    </html>
+    """
+
+    @app.route("/", methods=["GET", "POST"])
+    def generate_image():
+        image_url = None
+        if request.method == "POST":
+            prompt = request.form["prompt"]
+            try:
+                response = client.images.generate(
+                    model="dall-e-3",
+                    prompt=prompt,
+                    n=1,
+                    size="1024x1024",
+                    quality="standard"
+                )
+                image_url = response.data[0].url
+            except Exception as e:
+                image_url = None
+                print("❌ 오류:", str(e))
+
+        return render_template_string(HTML_TEMPLATE, image_url=image_url)
+
+    if __name__ == "__main__":
+        app.run(debug=True)
+    ```
+
+- 실행 방법
+    1. app.py 실행
+
+        ```bash
+        python app.py
+        ```
+
+    2. 브라우저에서 http://localhost:5000 접속
+    3. 텍스트 프롬프트 입력 → 이미지 생성 및 표시
+
+- 특징
+
+| 기능                          | 설명                             |
+| ----------------------------- | -------------------------------- |
+| 최신 OpenAI SDK (`v1.x`) 사용 | `OpenAI` 객체 기반 호출          |
+| 프롬프트 입력 폼              | 사용자 입력 처리                 |
+| 이미지 웹 출력                | `img` 태그로 생성된 이미지 표시  |
+| 환경 변수 지원                | 보안상의 이유로 API 키 하드코딩 대신 환경변수 권장 |
+
+
+### 4.2 템플릿 적용 형태 예제
+
+- 프로젝트 구조
+
+    ```bash
+    dalle_flask_app/
+    ├── app.py                  # Flask 애플리케이션 진입점
+    ├── templates/
+    │   └── index.html          # HTML 템플릿 (Jinja2)
+    ├── static/
+    │   └── style.css           # (선택) 스타일 시트
+    └── requirements.txt        # 필요한 패키지 목록
     ```
 
 - **app.py**
 
-```python
-#//file: "app.py"
-from flask import Flask, render_template, request
-import openai
-import os
-from dotenv import load_dotenv
+    ```python
+    #//file: "app.py"
+    from flask import Flask, render_template, request
+    from openai import OpenAI
+    import os
 
-load_dotenv()
+    client = OpenAI()
 
-app = Flask(__name__)
+    # Flask 앱 초기화
+    app = Flask(__name__)
 
-# API 키 설정
-openai.api_key = os.getenv("OPENAI_API_KEY")
+    @app.route("/", methods=["GET", "POST"])
+    def generate_image():
+        image_url = None
+        prompt = None
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    image_url = None
-    if request.method == "POST":
-        prompt = request.form["prompt"]
-        try:
-            response = openai.Image.create(
-                prompt=prompt,
-                n=1,
-                size="512x512"
-            )
-            image_url = response['data'][0]['url']
-        except Exception as e:
-            image_url = f"Error: {e}"
+        if request.method == "POST":
+            prompt = request.form["prompt"]
+            try:
+                response = client.images.generate(
+                    model="dall-e-3",
+                    prompt=prompt,
+                    n=1,
+                    size="1024x1024",
+                    quality="standard"
+                )
+                image_url = response.data[0].url
+            except Exception as e:
+                print("오류:", e)
 
-    return render_template("index.html", image_url=image_url)
+        return render_template("index.html", image_url=image_url, prompt=prompt)
 
-if __name__ == "__main__":
-    app.run(debug=True)
-```
+    if __name__ == "__main__":
+        app.run(debug=True)
+    ```
 
 - **templates/index.html**
 
-```html
-<!--//file: "templates/index.html"-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>DALL·E Image Generator</title>
-</head>
-<body>
-    <h1>DALL·E 이미지 생성기</h1>
-    <form method="POST">
-        <label>프롬프트를 입력하세요:</label><br>
-        <input type="text" name="prompt" size="60">
-        <button type="submit">이미지 생성</button>
-    </form>
+    ```html
+    <!--//file: "templates/index.html"-->
+    <!DOCTYPE html>
+    <html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+        <title>DALL·E 이미지 생성기</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            input[type="text"] { width: 400px; padding: 10px; }
+            button { padding: 10px 20px; }
+            img { max-width: 512px; margin-top: 20px; }
+        </style>
+    </head>
+    <body>
+        <h1>DALL·E 이미지 생성기</h1>
+        <form method="POST">
+            <label>프롬프트 입력:</label><br>
+            <input type="text" name="prompt" value="{{ prompt or '' }}" required><br><br>
+            <button type="submit">이미지 생성</button>
+        </form>
 
-    { % if image_url %}
-        <h3>생성된 이미지:</h3>
-        { % if image_url.startswith('Error') %}
-            <p style="color: red">{ { image_url }}</p>
-        { % else %}
-            <img src="{ { image_url }}" alt="Generated Image" width="512">
-        { % endif %}
-    { % endif %}
-</body>
-</html>
-```
+        {% if image_url %}
+            <h2>생성된 이미지:</h2>
+            <img src="{{ image_url }}" alt="Generated Image">
+        {% endif %}
+    </body>
+    </html>
+    ```
 
-### 4.3 실행 방법
+- 실행 방법
+    1. app.py 실행
 
-1. 라이브러리 설치
-```bash
-pip install -r requirements.txt
-```
+        ```bash
+        python app.py
+        ```
 
-2. 서버 실행
-```bash
-python app.py
-```
-
-3. 브라우저에서 접속
-```
-http://localhost:5000/
-```
-
-4. 텍스트 프롬프트를 입력하면 DALL·E가 이미지를 생성하고 보여줌
-
----
-
-## 5. 요약
-
-| 항목 | 설명 |
-|------|------|
-| **API 키** | OpenAI 대시보드에서 생성 후 `.env`에 저장 |
-| **요청 방식** | POST `/v1/images/generations` |
-| **입력 파라미터** | `prompt`, `n`, `size` |
-| **출력** | 이미지 URL 반환 (웹에서 사용 가능) |
-| **Flask 통합** | 사용자 입력 → 이미지 생성 → 결과 웹에 출력 |
+    2. 브라우저에서 http://localhost:5000 접속
+    3. 텍스트 프롬프트 입력 → 이미지 생성 및 표시

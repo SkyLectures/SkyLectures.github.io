@@ -30,14 +30,14 @@ categories: materials
     - templates/users/signup.html
 
         ```html
-        {% raw %}
+        { % raw %}
         <div id="signup">
             <form method="POST" enctype="multipart/form-data">
                 ...
-                <a href="{% url '/users/login2/' %}">로그인 페이지로 이동</a>
+                <a href="{ % url '/users/login2/' %}">로그인 페이지로 이동</a>
             </form>
         </div>
-        {% endraw %}
+        { % endraw %}
         ```
 
     - posts/views.py
@@ -93,9 +93,9 @@ categories: materials
     ]
     ```
 
-- Template을 위한 {% raw %}{% url %}{% endraw %} 태그
+- Template을 위한 { % raw %}{ % url %}{ % endraw %} 태그
 
-    - {% raw %}{% url "URL pattern name" %}{% endraw %} 태그는 Template에서 urls.py의 내용을 이용해 동적으로 URL을 생성함
+    - { % raw %}{ % url "URL pattern name" %}{ % endraw %} 태그는 Template에서 urls.py의 내용을 이용해 동적으로 URL을 생성함
         - 구조
             ```text
             {urls.py에 있는 app_name}:{path()에 지정된 name}
@@ -116,9 +116,9 @@ categories: materials
     - templates/users/signup.html
 
         ```html
-        {% raw %}
-        <a href="{% url 'users:login' %}">로그인 페이지로 이동</a>
-        {% endraw %}
+        { % raw %}
+        <a href="{ % url 'users:login' %}">로그인 페이지로 이동</a>
+        { % endraw %}
         ```
 
     - posts/urls.py
@@ -133,75 +133,75 @@ categories: materials
         ]
         ```
 
-- {% raw %} {% url %}{% endraw %}  태그를 사용하도록 기존 Template 코드 수정
+- { % raw %} { % url %}{ % endraw %}  태그를 사용하도록 기존 Template 코드 수정
 
     - 로그인 페이지
         - templates/users/login.html
 
             ```html
-            {% raw %}
-            <a href="{% url 'users:signup' %}">회원가입 페이지로 이동</a>
-            {% endraw %}
+            { % raw %}
+            <a href="{ % url 'users:signup' %}">회원가입 페이지로 이동</a>
+            { % endraw %}
             ```
 
     - 회원가입 페이지
         - templates/users/signup.html
 
             ```html
-            {% raw %}
-            <a href="{% url 'users:login' %}">로그인 페이지로 이동</a>
-            {% endraw %}
+            { % raw %}
+            <a href="{ % url 'users:login' %}">로그인 페이지로 이동</a>
+            { % endraw %}
             ```
 
     - 글 작성 페이지
         - templates/posts/post_add.html
 
             ```html
-            {% raw %}
+            { % raw %}
             <nav>
                 <h1>
-                    <a href="{% url 'posts:feeds' %}">Pystagram</a>
+                    <a href="{ % url 'posts:feeds' %}">Pystagram</a>
                 </h1>
-                <a href="{% url 'users:logout' %}">Logout</a>
+                <a href="{ % url 'users:logout' %}">Logout</a>
             </nav>
-            {% endraw %}
+            { % endraw %}
             ```
 
     - 피드 페이지 - 내비게이션 바 부분
         - templates/posts/feeds.html
 
             ```html
-            {% raw %}
+            { % raw %}
             <nav>
                 <h1>
-                    <a href="{% url 'posts:feeds' %}">Pystagram</a>
+                    <a href="{ % url 'posts:feeds' %}">Pystagram</a>
                 </h1>
-                <a href="{% url 'posts:post_add' %}">Add post</a>
-                <a href="{% url 'users:logout' %}">Logout</a>
+                <a href="{ % url 'posts:post_add' %}">Add post</a>
+                <a href="{ % url 'users:logout' %}">Logout</a>
             </nav>
-            {% endraw %}
+            { % endraw %}
             ```
 
     - 댓글 삭제 부분
         - templates/posts/feeds.html
 
             ```html
-            {% raw %}
+            { % raw %}
             <div class="post-comments">
                 ...
-                {% if user == comment.user %}
-                    <form method="POST" action="{% url 'posts:comment_delete' comment_id=comment.id %}">
-            {% endraw %}
+                { % if user == comment.user %}
+                    <form method="POST" action="{ % url 'posts:comment_delete' comment_id=comment.id %}">
+            { % endraw %}
             ```
 
     - 댓글 생성 부분
         - templates/posts/feeds.html
 
             ```html
-            {% raw %}
+            { % raw %}
             <div class="post-comment-create">
-                <form method="POST" action="{% url 'posts:comment_add' %}">
-            {% endraw %}
+                <form method="POST" action="{ % url 'posts:comment_add' %}">
+            { % endraw %}
             ```
 
 ### 1.3 View의 동적 URL 변경
@@ -209,7 +209,7 @@ categories: materials
 - View를 위한 reverse 함수
 
     - Terminal
-        - Template에서 {% raw %} {% url %}{% endraw %}  태그를 사용하듯 View에서는 reverse 함수로 동적 URL을 생성할 수 있음
+        - Template에서 { % raw %} { % url %}{ % endraw %}  태그를 사용하듯 View에서는 reverse 함수로 동적 URL을 생성할 수 있음
 
             ```bash
             python manage.py shell
@@ -433,11 +433,11 @@ categories: materials
 
         ```html
         <div class="post-content">
-            {{ post.content|linebreaksbr }}
+            { { post.content|linebreaksbr }}
             <div class="post-tags">
-                {% for tag in post.tags.all %}
-                    <span>#{{ tag.name }}</span>
-                {% endfor %}
+                { % for tag in post.tags.all %}
+                    <span>#{ { tag.name }}</span>
+                { % endfor %}
             </div>
         </div>
         ```
@@ -474,20 +474,20 @@ categories: materials
     - templates/posts/tags.html
 
         ```html
-        {% raw %}
-        {% extends 'base.html' %}
+        { % raw %}
+        { % extends 'base.html' %}
 
-        {% block content %}
+        { % block content %}
             <nav>
                 <h1>
-                    <a href="{% url 'posts:feeds' %}">Pystagram</a>
+                    <a href="{ % url 'posts:feeds' %}">Pystagram</a>
                 </h1>
-                <a href="{% url 'posts:post_add' %}">Add Post</a>
-                <a href="{% url 'users:logout' %}">Logout</a>
+                <a href="{ % url 'posts:post_add' %}">Add Post</a>
+                <a href="{ % url 'users:logout' %}">Logout</a>
             </nav>
             <div id="tags">
                 <header class="tags-header">
-                    <h2>#{{ tag_name }}</h2>
+                    <h2>#{ { tag_name }}</h2>
                     <div>게시물 1,094</div>
                 </header>
                 <div class="post-grid-container">
@@ -501,8 +501,8 @@ categories: materials
                     <div class="post-grid"></div>
                 </div>
             </div>
-        {% endblock %}
-        {% endraw %}
+        { % endblock %}
+        { % endraw %}
         ```
 
 - View에서 해시태그를 찾고 해당하는 Post 목록 돌려주기
@@ -537,38 +537,38 @@ categories: materials
     - templates/posts/tags.html
 
         ```html
-        {% raw %}
+        { % raw %}
         ...
         </nav>
         <div id="tags">
             <header class="tags-header">
-                <h2>#{{ tag_name }}</h2>
-                <div>게시물 {{ posts.count }}</div>
+                <h2>#{ { tag_name }}</h2>
+                <div>게시물 { { posts.count }}</div>
             </header>
             <div class="post-grid-container">
-                {% for post in posts %}
+                { % for post in posts %}
                     <div class="post-grid"></div>
-                {% endfor %}
+                { % endfor %}
             </div>
         </div>
-        {% endraw %}
+        { % endraw %}
         ```
 
 - 각각의 Post가 가진 첫 번째 이미지 보여주기
     - templates/posts/tags.html
 
         ```html
-        {% raw %}
+        { % raw %}
         <div class="post-grid-container">
-            {% for post in posts %}
-                {% if post.postimage_set.first and post.postimage_set.first.photo %}
+            { % for post in posts %}
+                { % if post.postimage_set.first and post.postimage_set.first.photo %}
                     <div class="post-grid">
-                        <img src="{{ post.postimage_set.first.photo.url }}" alt="">
+                        <img src="{ { post.postimage_set.first.photo.url }}" alt="">
                     </div>
-                {% endif %}
-            {% endfor %}
+                { % endif %}
+            { % endfor %}
         </div>
-        {% endraw %}
+        { % endraw %}
         ```
 
     - posts/views.py
@@ -593,35 +593,35 @@ categories: materials
     - templates/posts/tags.html
 
         ```html
-        {% raw %}
+        { % raw %}
         <div class="post-grid-container">
-            {% for post in posts %}
-                {% if post.postimage_set.first and post.postimage_set.first.photo %}
+            { % for post in posts %}
+                { % if post.postimage_set.first and post.postimage_set.first.photo %}
                     <div class="post-grid">
-                        <img src="{{ post.postimage_set.first.photo.url }}" alt="">
+                        <img src="{ { post.postimage_set.first.photo.url }}" alt="">
                     </div>
-                {% endif %}
-            {% empty %}
+                { % endif %}
+            { % empty %}
                 <p>검색된 게시물이 없습니다</p>
-            {% endfor %}
+            { % endfor %}
         </div>
-        {% endraw %}
+        { % endraw %}
         ```
 
 - 피드 페이지의 글에서 해시태그 링크 생성
     - templates/posts/feeds.html
 
         ```html
-        {% raw %}
+        { % raw %}
         <div class="post-content">
-            {{ post.content|linebreaksbr }}
+            { { post.content|linebreaksbr }}
             <div class="post-tags">
-                {% for tag in post.tags.all %}
-                    <a href="{% url 'posts:tags' tag_name=tag.name %}">#{{ tag.name }}</a>
-                {% endfor %}
+                { % for tag in post.tags.all %}
+                    <a href="{ % url 'posts:tags' tag_name=tag.name %}">#{ { tag.name }}</a>
+                { % endfor %}
             </div>
         </div>
-        {% endraw %}
+        { % endraw %}
         ```
 
 ### 2.4 해시태그 생성
@@ -656,22 +656,22 @@ categories: materials
     - templates/posts/post_add.html
 
         ```html
-        {% raw %}
+        { % raw %}
         <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
+            { % csrf_token %}
             <div>
                 <!-- label의 for속성에는 가리키는 input의 id값을 입력 -->
                 <label for="id_images">이미지</label>
                 <input id="id_images" name="images" type="file" multiple>
             </div>
-            {{ form.as_p }}
+            { { form.as_p }}
             <div>
                 <label for="id_tags">해시태그</label>
                 <input id="id_tags" name="tags" type="text" placeholder="쉼표(,)로 구분하여 여러 태그 입력">
             </div>
             <button type="submit">게시</button>
         </form>
-        {% endraw %}
+        { % endraw %}
         ```
 
 - 쉼표로 구분된 문자열 처리
