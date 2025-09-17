@@ -1,0 +1,16 @@
+---
+layout: page
+title:  "국립안동대학교 SW융합교육원 SW특강: AI와 ChatGPT, 산업에서 문화까지 어떻게 흘러왔을까?"
+date:   2023-05-01 09:00:00 +0900
+permalink: /lectlog/2023-05-01-Andong_Univ
+categories: lectlog
+---
+
+## [강의 개요]
+
+* 고객사: 국립안동대학교 SW융합교육원 / (주)알고링크
+* 주제: AI와 ChatGPT, 산업에서 문화까지 어떻게 흘러왔을까?
+* 강의기간: 2023.05.01
+* 강의시간: 2H
+
+## [강의 내용]

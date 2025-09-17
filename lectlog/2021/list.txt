@@ -1,0 +1,17 @@
+합계 60
+drwxrwxr-x  2 seokhwan seokhwan 4096  8월 11 23:16 .
+drwxrwxr-x 11 seokhwan seokhwan 4096  8월 11 20:29 ..
+-rw-rw-r--  1 seokhwan seokhwan  479  8월 11 20:02 2021-03-30-Ehwa_Univ.md
+-rw-rw-r--  1 seokhwan seokhwan  532  8월 11 20:02 2021-04-07-Udream_AI.md
+-rw-rw-r--  1 seokhwan seokhwan  489  8월 11 20:02 2021-07-09-SKHynix_DT.md
+-rw-rw-r--  1 seokhwan seokhwan  439  8월 11 20:02 2021-07-19-ICT_AI.md
+-rw-rw-r--  1 seokhwan seokhwan  539  8월 11 20:01 2021-09-23-Sihung_SmartFactory.md
+-rw-rw-r--  1 seokhwan seokhwan  466  8월 11 20:01 2021-10-12-Ehwa_Univ.md
+-rw-rw-r--  1 seokhwan seokhwan  720  8월 11 20:01 2021-10-19-GSC_AIoT_1st.md
+-rw-rw-r--  1 seokhwan seokhwan  466  8월 11 20:01 2021-11-11-ICT_AI_Ethics_1st.md
+-rw-rw-r--  1 seokhwan seokhwan  720  8월 11 20:01 2021-11-15-GSC_AIoT_2nd.md
+-rw-rw-r--  1 seokhwan seokhwan  720  8월 11 20:01 2021-11-29-GSC_AIoT_3rd.md
+-rw-rw-r--  1 seokhwan seokhwan  720  8월 11 20:01 2021-12-06-GSC_AIoT_4th.md
+-rw-rw-r--  1 seokhwan seokhwan  463  8월 11 20:01 2021-12-13-ICT_AI_Ethics_2nd.md
+-rw-rw-r--  1 seokhwan seokhwan  720  8월 11 20:01 2021-12-20-GSC_AIoT_5th.md
+-rw-rw-r--  1 seokhwan seokhwan    0  8월 11 23:16 list.txt

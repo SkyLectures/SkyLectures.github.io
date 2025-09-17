@@ -11,10 +11,12 @@
 # Free version
 # ---------------------------------------------------------------------------------------
 aidalect:              AiDA Lectures
-lectlogo:              Lecture Logs
-materials:             Lecture Materials
+lectlogo:              강의 이력
+materials:             강의 자료
+curlect:               진행/대기 중인 강의
 home:                  Home
 pages:                 Pages
+issues:                최근 이슈
 posts:                 Posts
 about:                 About
 related_posts:         Related Posts

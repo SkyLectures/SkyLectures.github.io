@@ -74,9 +74,9 @@ categories: materials
 2. [Simple 웹서버 개발 예제](/materials/S01-04-01-02_01-SimpleWebServer)
 3. [REST API 개요](/materials/S01-04-01-03_01-RestApiOverview)
 
-### 4.2 [Django 웹 프레임워크 기반 웹서비스]
+### 4.2 Django 기반 웹서비스
 
-1. [Django WebFramework 개요](/materials/S01-04-02-01_01-DjangoOverview)
+1. [Django 웹프레임워크 개요](/materials/S01-04-02-01_01-DjangoOverview)
 2. [Django 기반 서비스 기본 흐름](/materials/S01-04-02-01_02-DjangoBasedServiceProcess)
 3. Django 기반 서비스 구현 실습
     - [사진 목록 보기](/materials/S01-04-02-02_01-PictureList)
@@ -96,30 +96,23 @@ categories: materials
     - [부가 기능 구현](/materials/S01-04-02-05_05-DrfPystagramPost)
     - [글 상세 관리 기능 구현](/materials/S01-04-02-05_06-DrfPystagramAdditionalFunctions)
 
+### 4.3 Flask 기반 웹서비스
 
-### 4.3 [Flask 웹 프레임워크 기반 웹서비스](/materials/S01-04_03-FlaskWebFramework)
 1. [Flask 웹프레임워크 개요](/materials/S01-04-03-01_01-FlaskOverview)
-    - 파이썬으로 개발된 Flask 웹 프레임워크에 대한 기본적인 개념을 살펴봅니다.
-
 2. [Flask 설치 및 환경설정](/materials/S01-04-03-01_02-FlaskSetting)
-    - Flask 웹프레임워크를 이용하기 위한 개발환경의 설정 방법을 살펴봅니다.
-
 3. [Flask 기반 웹서비스 기본 흐름](/materials/S01-04-03-02_01-FlaskBasedServiceProcess)
-    - Flask 웹프레임워크의 기본 구조를 살펴봅니다.
-    - 예제코드를 중심으로 Flask 기반 웹서비스의 기본 흐름을 살펴봅니다.
-
 4. [Flask의 라우팅 및 URL 설계](/materials/S01-04-03-02_02-FlaskRoutingUrlDesign)
-
 5. [템플릿 엔진(Jinja2) 활용](/materials/S01-04-03-02_03-TemplateEngineJinja2)
-
 6. [정적 파일 관리](/materials/S01-04-03-02_04-StaticFiles)
-
 7. [동적 콘텐츠를 위한 Jinja2 활용](/materials/S01-04-03-02_05-DynamicContentsJinja2)
-
 8. [사용자 입력처리(Form 및 API)](/materials/S01-04-03-02_06-UserInputs)
-
 9. [GET / POST 메서드 활용](/materials/S01-04-03-02_07-GetPostMethods)
 
+### 4.4 FastAPI 기반 웹서비스
+
+1. FastAPI 웹프레임워크 개요
+2. FastAPI 설치 및 환경설정
+3. FastAPI 기반 웹서비스 기본 흐름
 
 
 ## 5. 파이썬 GUI 프로그래밍
@@ -130,7 +123,3 @@ categories: materials
 
 ## 6. 파이썬 기반 게임 프로그래밍
 
-
-
-<br><br><br>Colab 코드 연결 예시(실제로는 링크되지 않음)
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SkyLectures/LectureMaterials/blob/main/Part01_Python/S01-02-04_Seaborn.ipynb)

@@ -48,12 +48,12 @@ author:
 
 # Add links to the sidebar.
 menu:
-  - title: LectLog
+  - title: 강의 이력
     url:   /lectlog/
-  - title: Q&A
-    url:   https://cafe.naver.com/aidalab
-  - title: Materials
+  - title: 강의 자료
     url:   /materials/
+  - title: Q & A
+    url:   https://cafe.naver.com/aidalab
     # submenu:
     #   - title: Python
     #     url:   /materials/01_Python

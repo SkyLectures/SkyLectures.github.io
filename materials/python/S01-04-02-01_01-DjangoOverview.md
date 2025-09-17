@@ -135,7 +135,15 @@ categories: materials
 
 ### 2.5 Django 설치하기
 
-- 가상환경에 설치하는 것을 권장함
+- 가상환경 생성하기
+
+    ```bash
+    python -m venv django_simple
+    cd django_simple
+    source bin/activate
+    ```
+
+- Django 설치하기
 
     ```bash
     pip install django
@@ -149,6 +157,12 @@ categories: materials
 
 #### 2.6.1 django 버전 확인해보기
 
+- 파일로 생성해도 되고 파이썬 CLI 환경에서 코드 입력 및 실행해도 됨
+
+```bash
+python -m django --version
+```
+
 ```python
 import django
 
@@ -157,15 +171,20 @@ print(django.get_version())
 
 #### 2.6.2 Django 기반 심플 웹서버 실행해 보기
 
-```bash
-mkdir django_test
-cd django_test
+- django 프로젝트 생성
 
-django-admin startproject mytestsite
-cd mytestsite
+    ```bash
+    django-admin startproject mytestsite .
+    ```
 
-python manage.py runserver
-```
+    - mytestsite(프로젝트 명) 다음에 **.** 을 입력할 것을 권장함
+    - **.** 을 입력하지 않아도 문제는 없으나 mytestsite라는 프로젝트 폴더가 생성되고 그 안에 프로젝트를 위한 설정이 새롭게 추가되므로 폴더 구조가 꽤 번거로워짐
+
+- 웹서버 실행하기
+
+    ```bash
+    python manage.py runserver
+    ```
 
 - 웹 브라우저에서 http://127.0.0.1:8000/ 로 접속하면 심플 웹서버가 실행 중임을 확인할 수 있음
 

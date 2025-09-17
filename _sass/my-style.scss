@@ -12,3 +12,79 @@
     margin: 1rem 0;
   }
 }
+
+.insert-image {
+  img {
+    width: 97%;
+    margin-left: auto;
+    margin-right: 0;
+    height: auto;
+  }
+  font-size: 0.75rem;
+  text-align: right;
+  line-height: 15px;
+}
+
+blockquote {
+  /* 여기에 원하는 스타일 추가 */
+  margin: 1em 0;
+  padding: 0.7em;
+  border-left: 5px solid #007700;  /* 왼쪽 테두리 색상 */
+  background-color: #fff7cd;       /* 배경색 */
+  font-style: normal;              /* 기울임체 제거 */
+  color: #007700;
+}
+
+.info-table {
+  table{
+    width: 97% !important;
+    margin-left: auto;
+    margin-right: 0;
+    caption-side: bottom;
+    text-align: right;
+  }  
+
+  caption {
+    font-size: 0.65rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.2rem;
+    text-align: right;
+    color: #555;
+    border: 0px;
+  }
+
+  th {
+    border: 1px solid #999 !important;
+    background-color: #c1c7e7;
+    padding: 0.5rem;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+  }
+
+  td {
+    border: 1px solid #999 !important;
+    background-color: #fff !important;
+    text-align: center;
+  }
+
+  .td-rowheader {
+    background-color: #fed !important;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .td-left {
+    text-align: left;
+  }
+
+  .td-right {
+    text-align: right;
+  }
+
+  margin: 0rem;
+  padding: 0rem;
+  font-size: 0.75rem;
+  text-align: right;    
+}
