@@ -30,16 +30,19 @@ layout: base
   <!--
   <hr class="dingbat related"/>
   -->
-  <h2 class="hr-bottom">{{ strings.curlect | default:"Posts" }}</h2>
+  <h2 class="hr-bottom">2025년 {{ strings.curlect | default:"Posts" }}</h2>
   <ul class="related-posts">
-    <li><img src="http://img.shields.io/badge/진행중-blue?style=plastic"> <a href="/lectlog/2025-09-09-SSAFY">(09.09) SSAFY 13기 특화프로젝트 전문가 리뷰 1~2차(7H)</a></li>
-    <li><img src="http://img.shields.io/badge/준비중-success?style=plastic"> <a href="/lectlog/2025-09-19-GWNU_SmartFactory">(09.19) 국립강릉원주대학교: 스마트팩토리 특강(3H)</a></li>
+    <li><img src="http://img.shields.io/badge/완료-red?style=plastic"> (03.14/03.28) SSAFY 12기 특화프로젝트 전문가 리뷰 1~2차(7H)</a></li>
+    <li><img src="http://img.shields.io/badge/완료-red?style=plastic"> (03.18~04.30) AI 기반 서비스의 기획 및 구현(80H)</a></li>
+    <li><img src="http://img.shields.io/badge/완료-red?style=plastic"> (05.15~06.14) 생성형 AI 개발자 맞춤형 인재 양성 과정(152H)</a></li>
+    <li><img src="http://img.shields.io/badge/완료-red?style=plastic"> (06.19~06.20) 수도권ICT이노베이션스퀘어교육사업 멘토링(3H)</a></li>
+    <li><img src="http://img.shields.io/badge/완료-red?style=plastic"> (09.09/09.23) SSAFY 13기 특화프로젝트 전문가 리뷰 1~2차(7H)</a></li>
     <li><img src="http://img.shields.io/badge/준비중-success?style=plastic"> <a href="/lectlog/2025-10-21-">(10.21~10.31) 스마트팩토리 품질경쟁력 기반DX경영(45H)</a></li>
   </ul>
 
   {% if site.posts.size > 0 %}
     <h2 class="hr-bottom">{{ strings.issues | default:"Posts" }}</h2>
-    <ul class="related-posts">
+    <ul class="related-posts" style="font-weight: normal;">
       {% for post in site.posts limit:5 %}
         {% include_cached components/post-list-item.html post=post %}
       {% endfor %}
