@@ -32,7 +32,7 @@ nbproject
 # Folders to ignore
 node_modules
 package-lock.json
-vendor
+vendor/bundle
 .sass-cache
 .jekyll-metadata
 .jekyll-cache
