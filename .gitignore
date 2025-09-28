@@ -46,4 +46,4 @@ _zip
 _config.yml
 
 /assets/js/*hydejack-*
-/_sass/*/__*__/*
+# /_sass/*/__*__/*
