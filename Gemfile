@@ -10,7 +10,7 @@ source "https://rubygems.org"
 # Happy Jekylling!
 gem "jekyll", "~> 4.3"
 
-gem "jekyll-theme-hydejack", "~> 9.1"
+# gem "jekyll-theme-hydejack", "~> 9.1"
 # gem "hydecorp/hydejack"
 
 # If you are part of the ["Customers" team](https://github.com/orgs/hydecorp/teams/pro-customers), 
