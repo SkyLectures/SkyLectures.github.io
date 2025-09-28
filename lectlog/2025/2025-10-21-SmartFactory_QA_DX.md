@@ -16,8 +16,12 @@ categories: lectlog
 ## [강의 내용]
 
 ### 1일차
-- [스마트팩토리의 이해](/materials/S06-01-01-01_01-SmartFactoryOverview)
-- [스마트팩토리와 DX 경영의 필요성](/materials/S06-03-01-01_01-DxManagement)
+- 스마트팩토리의 이해
+    - [스마트팩토리 개요](/materials/S06-01-01-01_01-SmartFactoryOverview)
+    - [스마트팩토리의 핵심 구성 요소 및 기술](/materials/S06-01-01-02_01-SmartFactoryComponentsAndTechnologies)
+- 스마트팩토리와 DX 경영의 필요성
+    - [제조산업의 패러다임 변화(4차 산업혁명, DX)](/materials/S06-01-01-02_01-ParadigmShiftInTheManufacturingIndustry)
+    - [DX기반 스마트팩토리가 가져올 가치와 경쟁력, DX 경영의 필요성](/materials/S06-03-01-01_01-DxManagement)
 - [품질경영시스템(ISO 9001) 이해](/materials/S06-03-02-01_01-Iso9001Overview)
 - [스마트팩토리와 ISO 9001 연계](/materials/S06-03-03-01_01-SmartFactoryXIso9001)
 - [스마트 품질경영 프로세스 설계(기반)](/materials/S06-03-04-01_01-DxManagementProcess)
