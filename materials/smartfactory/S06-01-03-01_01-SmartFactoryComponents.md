@@ -346,9 +346,9 @@ categories: materials
 
 ### 3.5 스마트팩토리 구성요소 및 기술 연관도
 
-<div class="insert-image">
-    <img src="/materials/smartfactory/images/S06-01-03-01_01-003.png"><br>
-    (자료출처: AiDALab 직접 작성)
+<div class="insert-image" style="text-align: center;">
+    <img style="width: 700px;" src="/materials/smartfactory/images/S06-01-03-01_01-003.png"><br>
+    자료출처: 아이다랩(AiDALab)
 </div>
 <br>
 

@@ -54,6 +54,9 @@ menu:
     url:   /materials/
   - title: Q & A
     url:   https://cafe.naver.com/aidalab
+    external: true
+    new_tab: true
+  
     # submenu:
     #   - title: Python
     #     url:   /materials/01_Python
@@ -71,6 +74,17 @@ menu:
   #   url:   /docs/
   - title: About
     url:   /about/
+
+  - type: custom_separator
+
+  - title: AiDALab
+    url:   https://aidalab.tistory.com
+    external: true
+    new_tab: true
+  - title: Everything I Study
+    url:   https://blog.naver.com/aida-smart
+    external: true
+    new_tab: true
 
 # Add links to the footer.
 # Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..
