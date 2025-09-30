@@ -2,7 +2,7 @@
 layout: page
 title:  "스마트팩토리 품질경쟁력 기반DX경영(45H)"
 date:   2025-10-21 13:00:00 +0900
-permalink: /lectlog/2025-10-21-
+permalink: /lectlog/2025-10-21-SmartFactory_QA_DX
 categories: lectlog
 ---
 * toc
@@ -15,6 +15,8 @@ categories: lectlog
 > - **주제:** 스마트팩토리 품질경쟁력 기반DX경영(45H)
 > - **강의기간:** 2025.10.21 ~ 2025.10.31
 > - **강의시간:** 45H
+> - 비고
+>   - 강의의 진행은 상황에 맞게 조절하여 진행함
 {: .expert-quote}
 
 ## [강의 내용]
@@ -35,50 +37,49 @@ categories: lectlog
 - AI의 종류 및 기본 이해
 - [AI 소프트웨어와 평가](/materials/S03-10-01-01_01-AiSwEvaluation)
 - [AI 소프트웨어 테스트의 필요성](/materials/S03-10-01-02_01-AiSwTestOverview)
-
-### 3일차: AI 소프트웨어 테스트 기법
 - AI 개발 공정 및 모델 사례
 - AI 기반 품질 예측 및 불량 감지(개념)
+
+### 3일차: AI 소프트웨어 테스트 기법
 - [기존 SW와 AI SW의 차이점 및 테스트](/materials/S03-10-01-03_01-ExistingSwAndAiSwComparison)
 - [기존 테스트 기법의 적용 가능성](/materials/S03-10-01-04_01-ExistingTestingTechniques)
 - [AI SW 테스트 기법 개요](/materials/S03-10-01-05_01-AiSwTestingTechniques)
-- 튜토리얼 환경 설정(Python)
+- [튜토리얼 환경 준비](/materials/S03-10-02-01_01-TutorialPreparation)
+    - 튜토리얼 환경 설정(Python)
+    - 튜토리얼 데이터셋 및 모델 학습 준비
+- [AI 모델 학습 및 실행 확인](/materials/S03-10-02-02_01-AiModelTrainingAndVerification)
+- [AI 모델 성능 평가 및 검증](/materials/S03-10-02-03_01-AiModelEvaluationAndValidation)
 
 ### 4일차: 메타모픽 테스트 기법
-- 튜토리얼 데이터셋 및 모델 학습 준비
-- [AI 모델 학습 및 실행 확인](/materials/S03-10-02-01_01-AiModelTrainingAndVerification)
-- [AI 모델 성능 평가 및 검증](/materials/S03-10-02-02_01-AiModelEvaluationAndValidation)
 - 메타모픽 테스트 기법
-    - [메타모픽 테스트 기법의 개념](/materials/S03-10-02-03_01-MetamorphicTestOverview)
+    - [메타모픽 테스트 기법의 개념](/materials/S03-10-02-04_01-MetamorphicTestOverview)
     - 메타모픽 테스트 기법의 활용
-
-### 5일차: 뉴런 커버리지 테스트 기법
-- 메타모픽 테스트 기법
     - 메타모픽 테스트 기법 튜토리얼
     - 메타모픽 테스트 기법을 위한 데이터 가공
+
+### 5일차: 뉴런 커버리지 테스트 기법
 - [뉴런 커버리지 테스트 기법]
-    - [뉴런 커버리지 테스트 기법의 개념](/materials/S03-10-02-04_01-NeuronCoverageTestOverview)
+    - [뉴런 커버리지 테스트 기법의 개념](/materials/S03-10-02-05_01-NeuronCoverageTestOverview)
     - 뉴런 커버리지를 이용한 테스트 및 전략
     - 뉴런 커버리지 테스트 기법 튜토리얼
 
 ### 6일차: 최대 안전 반경 테스트 기법
 - 최대 안전 반경 테스트 기법
-    - [최대 안전 반경 테스트 기법의 개념](/materials/S03-10-02-05_01-MaximumSafetyRadiusTestOverview)
+    - [최대 안전 반경 테스트 기법의 개념](/materials/S03-10-02-06_01-MaximumSafetyRadiusTestOverview)
     - 최대 안전 반경 계산 방법
     - 최대 안전 반경 테스트(튜토리얼)
-- 커버리지 검증 기법
-    - [커버리지 검증 기법의 개념](/materials/S03-10-02-06_01-CoverageVerificationOverview)
-    - XGBoost 모델의 커버리지 검증
 
 ### 7일차: 커버리지 검증 기법
 - 커버리지 검증 기법
+    - [커버리지 검증 기법의 개념](/materials/S03-10-02-07_01-CoverageVerificationOverview)
+    - XGBoost 모델의 커버리지 검증
     - 커버리지 검증을 위한 입력 데이터 범위 탐색
     - DNN 모델의 커버리지 검증
 - AI 기반 불량 감지 시스템 설계(실전)
 - 딥러닝 기반 불량 이미지 감지
-- [스마트 품질경영 문서화의 중요성](/materials/S06-03-05-01_01-DxManagementDocumentation)
 
 ### 8일차: 종합 실습 프로젝트
+- [스마트 품질경영 문서화의 중요성](/materials/S06-03-05-01_01-DxManagementDocumentation)
 - 스마트팩토리 품질 문서 작성 실습(계획서)
 - 스마트팩토리 품질 문저 작성 실습(보고서)
 - 사례 기반 종합 실습 프로젝트(계획 및 데이터 분석)

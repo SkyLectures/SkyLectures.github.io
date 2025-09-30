@@ -1,8 +1,8 @@
 ---
 layout: page
-title:  "AI 모델 성능 평가 및 검증"
+title:  "튜토리얼 환경 준비"
 date:   2025-07-29 10:00:00 +0900
-permalink: /materials/S03-10-02-02_01-AiModelEvaluationAndValidation
+permalink: /materials/S03-10-02-01_01-TutorialPreparation
 categories: materials
 ---
 * toc
