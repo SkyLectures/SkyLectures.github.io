@@ -26,6 +26,38 @@
   margin-bottom: 4em;
 }
 
+pre {
+  width: auto;      // 전체 너비를 차지하지 않도록
+  // margin: 1rem 0;   // 여백 조정
+  margin-left: auto;
+  margin-right: 0;
+  padding: 1rem;    // 내부 여백
+  border-radius: 10px; // 모서리 둥글게
+  border: 1px solid #9dd5eb;
+  background-color: #edf3f5; // 배경색 변경
+  font-size: 1rem;
+}
+
+.pre-header-common {
+  // @extend .color-transition;
+  width: auto;      // 전체 너비를 차지하지 않도록
+  margin-left: auto;
+  margin-right: 0;
+  height: 2rem;
+  border: 1px solid #9dd5eb;
+  background-color: #bee2ee;
+  color: #000000;
+  font-weight: bold;
+}
+
+div.highlight {
+  position: relative;
+
+  > button {
+    margin-right: 1rem;
+  }
+}
+
 blockquote {
   margin: 1em 0;
   padding: 0.7em;
