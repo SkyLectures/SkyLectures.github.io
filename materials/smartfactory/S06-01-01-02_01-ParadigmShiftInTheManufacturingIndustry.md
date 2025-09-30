@@ -113,7 +113,6 @@ categories: materials
     - 생산의 유연성과 효율성을 극대화
 
 <div style="text-align:center;"><h4>스마트팩토리의 주요 기술 간의 연관성</h4></div>
-
 <div class="insert-image">
     <img style="width: 800px;" src="/materials/smartfactory/images/S06-01-01-02_01-002.png"><br>    
     <caption>(그림출처: 아이다랩(AiDALab))</caption>
@@ -186,8 +185,7 @@ categories: materials
     - 생산성뿐만 아니라 작업자의 삶의 질 향상, 친환경 생산, 예측 불가능한 외부 충격에 강한 유연한 생산 시스템 구축
     - 이를 통해 더 나은 사회를 만들고 기업의 지속 가능한 성장을 도모함
 
-<div style="text-align:center;"><h3>제조산업의 패러다임 변화</h3></div>
-
+<div style="text-align:center;"><h4>제조산업의 패러다임 변화</h4></div>
 <div class="insert-image">
     <img style="width: 800px;" src="/materials/smartfactory/images/S06-01-01-02_01-003.png"><br>
     (그림출처: 아이다랩(AiDALab))

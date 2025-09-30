@@ -16,6 +16,7 @@ categories: materials
         - ( ICT 미적용 ) – **기초 – 중간1 – 중간2 – 고도**
     - 기업의 종합적인 스마트 역량을 측정하여 ‘기업제조혁신역량 수준(Level 1 ~ 5)’으로 구분하는 것과 연관됨
 
+<div style="text-align:center;"><h4>단계별로 본 스마트팩토리</h4></div>
 <div class="info-table">
     <table>
         <caption>(자료출처: 스마트제조혁신추진단 https://www.smart-factory.kr/usr/pr/sf/ma/smrtFctryIntrcn)</caption>
@@ -76,17 +77,18 @@ categories: materials
 > - 언론매체에서 다루는 기사와 달리 현재 대다수의 중소기업들은 ICT 미적용~기초 수준을 벗어나지 못하고 있음
 > - 많은 중소기업이 비교적 적은 비용으로 쉽게 시작할 수 있는 기초 단계를 구축 중
 > - 기초 단계라 해도 실시간 만들어지는 제품을 바로 집계해 관리할 수 있고, 자재 이력관리(lot-tracking)까지 가능한 수준이며, 그것만으로도 기대 이상의 성과에 만족하고 있음
+{: .expert-quote}
 
 
 ## 2. 스마트팩토리의 5대요건
 
-> - 스마트팩토리를 구성하고 수준 별로 발전시킴에 있어서 꼭 필요한 다섯 가지 조건
+- 스마트팩토리를 구성하고 수준 별로 발전시킴에 있어서 꼭 필요한 다섯 가지 조건
 
+<div style="text-align:center;"><h4>스마트팩토리의 5대 요건</h4></div>
 <div class="insert-image">
     <img src="/materials/smartfactory/images/S06-01-03-01_01-002.png"><br>
     (자료출처: 스마트제조혁신추진단 https://www.smart-factory.kr/usr/pr/sf/ma/smrtFctryIntrcn)
 </div>
-<br>
 
 - 4M (생산의 4요소): Man, Machinery, Material, Method
     - Man (인적 요소): 작업자 또는 인력
@@ -102,6 +104,7 @@ categories: materials
 > - 스마트팩토리의 주요 기술과 구성 요소는 다양하지만 그 <span style="color: red;">핵심은 **데이터**</span>임
 > - 각 기업이 자사에 적합한 스마트팩토리를 설계, 구축하기 위해서는 자사의 <span style="color: red;">모든 업무 프로세스가 어떻게 연결되어 있으며, 그 프로세스에서 데이터가 어디로 이동/전달되고, 어떻게 사용되는지</span>를 정확하게 이해할 필요가 있음
 > - 그러나 이 부분을 간과하고 추진하는 스마트팩토리 구축 사업이 대부분이며, 도입 실패의 주요 원인이 되고 있음
+{: .expert-quote}
 
 ### 3.1 데이터 수집 및 연결
 
@@ -276,6 +279,7 @@ categories: materials
 ### 3.4 가시화 및 협업
 
 > 디지털 트윈, 가상물리 시스템 등은 가시화 및 협업 뿐만아니라 자동화 및 제어를 위한 기술로도 사용됨
+{: .expert-quote}
 
 #### 3.4.1 디지털 트윈(Digital Twin)
 - 기술 설명
@@ -342,10 +346,11 @@ categories: materials
     - 글로벌 팀을 위한 가상 설계 검토 공간
     - 몰입형 교육 및 훈련 프로그램 제공 등    
 
-> 메타버스는 매우 현실적이며 실용적인 미래지향의 가능성을 가지고 있으나 현재는 업계의 잘못된 인식에 의해 단순한 3D 캐릭터 채팅 플랫폼 수준으로 전락했다고 할 수 있음.<br>원래의 메타버스의 개념은 인공지능, 로봇 및 자동화, 디지털 트윈 등 스마트팩토리의 주요 기술영역을 모두 포괄할 수 있는 기술이었으며, 현재 추진 중인 스마트팩토리, 스마트시티를 뛰어넘는 환경을 만들어 줄 수도 있는 기술임.
+> - 메타버스는 매우 현실적이며 실용적인 미래지향의 가능성을 가지고 있으나 현재는 업계의 잘못된 인식에 의해 단순한 3D 캐릭터 채팅 플랫폼 수준으로 전락했다고 할 수 있음.
+> - 원래의 메타버스의 개념은 인공지능, 로봇 및 자동화, 디지털 트윈 등 스마트팩토리의 주요 기술영역을 모두 포괄할 수 있는 기술이었으며, 현재 추진 중인 스마트팩토리, 스마트시티를 뛰어넘는 환경을 만들어 줄 수도 있는 기술임.
+{: .expert-quote}
 
-### 3.5 스마트팩토리 구성요소 및 기술 연관도
-
+<div style="text-align:center;"><h4>스마트팩토리의 구성요소 및 기술 연관도</h4></div>
 <div class="insert-image" style="text-align: center;">
     <img style="width: 700px;" src="/materials/smartfactory/images/S06-01-03-01_01-003.png"><br>
     자료출처: 아이다랩(AiDALab)
