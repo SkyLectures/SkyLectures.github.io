@@ -17,7 +17,10 @@ categories: materials
     > - “1989년 12월, 저는 크리스마스 주중에 저의 ‘취미’가 될 만한 프로그램을 찾고 있었습니다.”
     > - 1999년, DARPA에게 Computer Programming for Everybody라는 자금 제안서를 제출하여 Python에 대한 나의 목표를 정의하였습니다. 당연히 무료이며 오픈 소스이므로 누구나 개발할 수 있습니다.
     > - 평이한 영어로 이해할 수 있는 코드, 일상적인 업무에 대한 적합성과 짧은 개발 시간 등 장점을 기반으로 파이썬은 대중적인 프로그래밍 언어가 되었습니다.
-    > <p align="center"><img src="/materials/images/python/S01-01-01-01_01-001.jpg" width="400"></p>
+    > <div class="insert-image" style="margin-bottom: 1em;">
+    >    <img src="/materials/python/images/S01-01-01-01_01-001.jpg" style="width: 400px;">
+    > </div>
+    {: .expert-quote}
 
 
 ## 2. 파이썬의 특징
@@ -67,8 +70,14 @@ categories: materials
 
 ### 3.1 국내 도입
 - 1991년에 발표된 언어지만 국내에선 그다지 주목받지 못해..
+
 > - 책장에서 발견한 옛 파이썬 도서 (1998.01.17 발행) 대학생때 사 놓고 거의 보지 않음
-> <p align="center"><img src="/materials/images/python/S01-01-01-01_01-002.jpg" width="302" height="320">&nbsp;&nbsp;<img src="/materials/images/python/S01-01-01-01_01-003.png" width="200" height="312"></p>
+> <div class="insert-image" style="margin-bottom: 1em;">
+>   <img src="/materials/python/images/S01-01-01-01_01-002.jpg" style="width: 302px; height: 320px;">
+>   &nbsp;&nbsp;
+>   <img src="/materials/python/images/S01-01-01-01_01-003.png" style="width: 200px; height: 312px;">
+> </div>
+{: .expert-quote}
 
 - 알파고 이후, AI에 대한 관심이 급증하면서 일단 외국의 트렌드를 따라 감
 - 그럼 외국에서는 왜?

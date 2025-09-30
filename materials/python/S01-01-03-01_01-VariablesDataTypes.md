@@ -16,14 +16,14 @@ categories: materials
 그리고 이 작업은 단순하게 보면, <span style="color: #C00">우리가 가지고 있는 데이터를 우리가 원하는 형태로 가공, 처리하는 과정을 정리하는 작업</span>일 뿐입니다. 말 그대로 우리가 어떤 데이터를 가지고 있고 그 데이터를 특정 형태로 바꾸기를 원할 때, 몇 개의 명령어를 이용하여 그 바꾸는 과정을 순서대로 적어주면 끝입니다.<br><br>
 그래서 프로그래밍은 <span style="color: #C00">**데이터 입력 → 데이터 처리 → 데이터 출력**</span>이라는 과정으로 이루어집니다.<br><br>
 
-<p style="text-align: center"><img src="/materials/images/python/S01-01-03-01_01-001.png" width="600"></p>
+<p style="text-align: center"><img src="/materials/python/images/S01-01-03-01_01-001.png" width="600"></p>
 
 [(참고) 그럼 왜 그렇게 어렵게 보일까요?](https://blog.naver.com/aida-smart/223744963918)
 
 
 ## 2. 첫번째 파이썬 프로그램
 
-<img src="/materials/images/python/S01-01-03-01_01-002.png">
+<img src="/materials/python/images/S01-01-03-01_01-002.png">
 
 - 매우 단순해 보이지만 위의 코드는 제대로 작동하는 프로그램입니다.<br><br>
 - 위의 내용을 입력과 출력으로 분리하는 작업을 생각해 봅시다
@@ -38,7 +38,7 @@ categories: materials
   - 연산의 결과는 c라고 하는 변수를 만들어서 그 안에 넣어줍시다.<br><br>
   - 이제 연산이 끝난 c의 값을 출력해 봅니다.
 
-<img src="/materials/images/python/S01-01-03-01_01-003.png"><br><br>
+<img src="/materials/python/images/S01-01-03-01_01-003.png"><br><br>
 
 - 이렇게 하나의 프로그램 코드가 완성되었습니다.
 - 위의 방법이 프로그래밍의 가장 기본적인 방법입니다.<br><br><br>
