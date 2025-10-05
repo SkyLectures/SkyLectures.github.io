@@ -8,7 +8,7 @@ categories: materials
 * toc
 {:toc .large-only .toc-sticky:true}
 
-> - 디지털 전환(DX; Digital Transformation)이란?
+> - **디지털 전환(DX; Digital Transformation)**이란?
 >   - 단순히 최신 디지털 기술을 도입하는 것을 넘어, 
 >   - 기업의 비즈니스 모델, 조직 문화, 운영 프로세스, 고객 경험 등 기업 활동 전반을 근본적으로 변화시키는 전략적인 혁신 과정
 {: .expert-quote}

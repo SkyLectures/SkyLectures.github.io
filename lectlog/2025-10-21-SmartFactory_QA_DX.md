@@ -37,16 +37,16 @@ categories: lectlog
 - AI의 종류 및 기본 이해
 - [AI 소프트웨어와 평가](/materials/S03-10-01-01_01-AiSwEvaluation)
 - [AI 소프트웨어 테스트의 필요성](/materials/S03-10-01-02_01-AiSwTestOverview)
-- AI 개발 공정 및 모델 사례
-- AI 기반 품질 예측 및 불량 감지(개념)
+- [AI 개발 공정 및 모델 사례](/materials/S06-04-02-01_01-AiDevelopmentProcessAndModelExamples)
+- [AI 기반 품질 예측 및 불량 감지(개념)](/materials/S06-04-03-01_01-AiBasedQualityPredictionAndDefectDetection)
 
 ### 3일차: AI 소프트웨어 테스트 기법
 - [기존 SW와 AI SW의 차이점 및 테스트](/materials/S03-10-01-03_01-ExistingSwAndAiSwComparison)
 - [기존 테스트 기법의 적용 가능성](/materials/S03-10-01-04_01-ExistingTestingTechniques)
 - [AI SW 테스트 기법 개요](/materials/S03-10-01-05_01-AiSwTestingTechniques)
-- [튜토리얼 환경 준비](/materials/S03-10-02-01_01-TutorialPreparation)
-    - 튜토리얼 환경 설정(Python)
-    - 튜토리얼 데이터셋 및 모델 학습 준비
+- 튜토리얼 환경 준비
+    - [파이썬 환경 설정](/materials/S03-10-02-01_01-TutorialPreparation)
+    - [데이터셋 및 모델 학습 준비](/materials/S03-10-02-01_02-DatasetAndModelTrainingPreparation)
 - [AI 모델 학습 및 실행 확인](/materials/S03-10-02-02_01-AiModelTrainingAndVerification)
 - [AI 모델 성능 평가 및 검증](/materials/S03-10-02-03_01-AiModelEvaluationAndValidation)
 
@@ -80,10 +80,10 @@ categories: lectlog
 
 ### 8일차: 종합 실습 프로젝트
 - [스마트 품질경영 문서화의 중요성](/materials/S06-03-05-01_01-DxManagementDocumentation)
-- 스마트팩토리 품질 문서 작성 실습(계획서)
-- 스마트팩토리 품질 문저 작성 실습(보고서)
-- 사례 기반 종합 실습 프로젝트(계획 및 데이터 분석)
-- 종합 실습 프로젝트(AI 모델링 및 품질 검증)
+- [스마트팩토리 품질 문서 작성 실습(계획서)](/materials/S06-03-06-01_01-QualityDocumentationPlan)
+- [스마트팩토리 품질 문저 작성 실습(보고서)](/materials/S06-03-06-02_01-QualityDocumentationReport)
+- [사례 기반 종합 실습 프로젝트(계획 및 데이터 분석)](/materials/S06-09-01-01_01-PlanningAndDataAnalysisPrj)
+- [종합 실습 프로젝트(AI 모델링 및 품질 검증)](/materials/S06-09-02-01_01-AiModelingAndQualityVerificationPrj)
 - 종합 실습 프로젝트(통합 및 발표 준비)
 
 ### 9일차: 종합 실습 프로젝트 발표

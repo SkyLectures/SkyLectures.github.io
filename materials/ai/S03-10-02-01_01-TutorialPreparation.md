@@ -1,6 +1,6 @@
 ---
 layout: page
-title:  "튜토리얼 환경 준비"
+title:  "튜토리얼 환경 준비: 파이썬 환경 설정"
 date:   2025-07-29 10:00:00 +0900
 permalink: /materials/S03-10-02-01_01-TutorialPreparation
 categories: materials
@@ -266,3 +266,96 @@ categories: materials
         <div class="insert-image">
             <img src="/materials/python/images/S01-01-02-01_01-020.png">
         </div>
+
+## 3. 외부 라이브러리 및 테스트 도구 설치
+
+> - 사용 교재: 인공지능 소프트웨어 품질 보증을 위한 테스트 기법 (제이펍)
+>   - 단점: 구 버전의 Tensorflow 등을 사용하고 있으므로 현재 시점에서 실무에 구현할 때에는 부적절한 부분이 있을 수 있음
+>   - 수정 및 검증이 가능한 범위에서 수정하여 진행함(버전, 코드, 활용 등)
+{: .expert-quote}
+
+### 3.1 외부 라이브러리
+
+- **TensorFlow**
+    - Google에서 개발한 오픈소스 머신러닝 플랫폼
+    - 딥러닝 모델을 포함한 다양한 인공지능 모델의 구축, 학습, 배포에 사용됨
+    - 복잡한 계산 과정을 데이터 흐름 그래프(data flow graph)로 표현하여 효율적인 연산을 지원함
+    - 서버, 엣지 디바이스, 브라우저 등 다양한 환경에 모델을 배포할 수 있는 강력한 기능을 제공함
+    - 교재에서는 1.12.3 버전을 사용하고 있음
+    - 설치 명령: pip install tensorflow==1.12.3
+
+- **Keras**
+    - 딥러닝 모델 구축을 간편하게 해주는 고수준 API
+    - 특히 TensorFlow의 상위 계층 라이브러리로 많이 사용
+    - 직관적인 코드로 빠르게 모델을 개발할 수 있도록 지원함
+    - 복잡한 딥러닝 모델을 쉽게 만들 수 있는 장점을 가짐
+    - 단, 매우 복잡한 프로젝트에서는 직접적인 백엔드 프레임워크(예: TensorFlow)를 다루는 것이 더 유연할 수 있음
+    - 교재에서는 2.2.5 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install keras==2.2.5</span>
+
+- **NumPy**
+    - 파이썬에서 다차원 배열(ndarray) 객체를 효과적으로 처리하고, 고성능 수치 계산을 가능하게 하는 핵심 라이브러리
+    - 대규모 행렬 및 벡터 연산에 최적화되어 있음
+    - 머신러닝 모델의 학습 과정에서 발생하는 수많은 수치 계산의 기반이 됨
+    - 교재에서는 1.16.6 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install numpy==1.16.6</span>
+
+- **Pandas**
+    - 데이터 분석 및 조작을 위한 강력한 라이브러리
+    - 'DataFrame'이라는 테이블 형태의 자료 구조를 중심으로 데이터의 읽기, 정리, 필터링, 통계분석 등을 효율적으로 수행하기 위하여 사용됨
+    - 데이터 전처리 단계에서 필수적이며, AI 모델에 입력할 데이터를 가공하는 데 매우 유용합니다.
+    - 교재에서는 1.1.2 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install pandas==1.1.2</span>
+
+- **Matplotlib**
+    - 파이썬에서 데이터를 시각화하기 위해 가장 널리 사용되는 라이브러리
+    - 간단한 선 그래프부터 복잡한 3D 플롯까지 다양한 형태의 그래프를 생성
+    - 데이터의 패턴, 추세, 이상치 등의 시각적 분석과 모델의 성능 평가를 지원함
+    - 교재에서는 3.3.2 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install matplotlib==3.3.2</span>
+
+- **Scikit-learn**
+    - 머신러닝에 필요한 다양한 알고리즘과 유틸리티를 제공하는 범용 라이브러리
+    - 회귀, 분류, 군집화 등의 주요 머신러닝 작업을 위한 표준 도구들을 포함
+    - AI 모델의 정밀도, 재현율, F1-스코어 등 성능 지표 계산에도 활용
+    - 다양한 머신러닝 기법을 쉽게 적용하고 평가할 수 있게 지원함
+    - 교재에서는 0.23.2 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install scikit-learn==0.23.2</span>
+
+- **XGBoost**
+    - 'eXtreme Gradient Boosting' 알고리즘을 구현한 라이브러리
+    - 분류와 회귀 문제에서 뛰어난 성능을 보이는 트리 기반 앙상블 모델을 정의하고 학습하는 데 사용
+    - 캐글(Kaggle)과 같은 데이터 과학 경연에서 자주 우승을 차지할 만큼 강력한 성능을 자랑함
+    - 교재에서는 1.2.0 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install xgboost==1.2.0</span>
+
+- **Z3-solver**
+    - 'SMT(Satisfiability Modulo Theories) Solver' 도구 중 하나
+    - 논리식의 만족성(satisfiability)을 평가하는 데 사용됨
+    - 소프트웨어 검증, 형식 추론, 최적화 문제 등 복잡한 논리 기반 문제 해결에 활용됨
+    - 교재에서는 4.8.6 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install z3-solver==4.8.6</span>
+
+- **Numba**
+    - 파이썬 코드를 CPU나 GPU에서 실행될 수 있는 고성능 기계어 코드로 변환하여 실행 속도를 고속화하기 위한 Just-In-Time(JIT) 컴파일러 라이브러리
+    - 특히 반복문이나 수치 연산이 많은 파이썬 코드를 최적화하는 데 효과적
+    - 교재에서는 0.51.2 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install numba==0.51.2</span>
+
+- **MMdnn**
+    - 다양한 딥러닝 프레임워크(예: TensorFlow, PyTorch, Keras)로 만들어진 모델의 형식을 서로 변환하거나 배포하기 위한 라이브러리
+    - 'Model Migration and Deployment for Deep Neural Network'의 약자
+    - 서로 다른 프레임워크 간의 모델 호환성을 높여줌
+    - 교재에서는 0.3.1 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install mmdnn==0.3.1</span>
+
+- **H5py**
+    - HDF5(Hierarchical Data Format) 형식의 파일을 다루기 위한 파이썬 인터페이스 라이브러리
+    - AI 모델의 가중치, 학습 데이터, 모델 구조 등 대용량 데이터를 파일에 저장하거나 읽어들이는 데 주로 사용
+    - 효율적인 데이터 관리를 가능하게 함
+    - 교재에서는 2.8.0 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install h5py==2.8.0</span>
+
+> - **일괄설치 명령**<br>
+>   - pip install tensorflow==1.12.3 keras==2.2.5 numpy==1.16.6 pandas==1.1.2 matplotlib==3.3.2 scikit-learn==0.23.2 xgboost==1.2.0 z3-solver==4.8.6 numba==0.51.2 mmdnn==0.3.1 h5py==2.8.0
+{: .expert-quote}
