@@ -17,7 +17,7 @@ categories: lectlog
 > - **강의시간:** 45H
 > - 비고
 >   - 강의의 진행은 상황에 맞게 조절하여 진행함
-{: .expert-quote}
+
 
 ## [강의 내용]
 
@@ -32,9 +32,13 @@ categories: lectlog
 - [스마트 품질경영 프로세스 설계(기반)](/materials/S06-03-04-01_01-DxManagementProcess)
 
 ### 2일차: AI 소프트웨어와 평가
-- [제조 데이터 수집 및 분석](/materials/S06-04-01-01_01-ManufacturingDataCollectAndAnalyze)
-- 데이터 수집 및 전처리 기법
+- 데이터 수집, 전처리, 분석
+    - [데이터 수집 방법](/materials/S02-02-01-01_01-DataCollection)
+    - [데이터 전처리 기법](/materials/S02-02-02-01_01-DataPreprocess)
+    - [제조 데이터 수집 및 분석](/materials/S06-04-01-01_01-ManufacturingDataCollectAndAnalyze)
 - AI의 종류 및 기본 이해
+    - [인공지능(AI) 개요](/materials/S03-01-01-01_01-AiOverview.md)
+    - [딥러닝 기초](/materials/)
 - [AI 소프트웨어와 평가](/materials/S03-10-01-01_01-AiSwEvaluation)
 - [AI 소프트웨어 테스트의 필요성](/materials/S03-10-01-02_01-AiSwTestOverview)
 - [AI 개발 공정 및 모델 사례](/materials/S06-04-02-01_01-AiDevelopmentProcessAndModelExamples)

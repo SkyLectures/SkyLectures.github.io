@@ -59,21 +59,37 @@ div.highlight {
 }
 
 blockquote {
-  margin: 1em 0;
   padding: 0.7em;
-  border-left: 5px solid #007700;
-  background-color: #fff7cd;
+  border: 1px solid #f8cb78;
+  border-left: 5px solid #f8cb78;
+  border-right: 5px solid #daa749;
+  border-bottom: 1px solid #daa749;
+  border-radius: 10px;
+  background-color: #fffcee;
   font-style: normal;
-  color: #007700;
+  color: #000;
 }
 
 blockquote.expert-quote {
   padding: 0.7em;
-  border: 1px solid #f8cb78;
-  border-left: 5px solid #f8cb78;
-  border-right: 5px solid #f8cb78;
+  border: 1px solid #f3989d;
+  border-left: 5px solid #f3989d;
+  border-right: 5px solid #b64e53;
+  border-bottom: 1px solid #b64e53;
   border-radius: 10px;
-  background-color: #fffcee;
+  background-color: #fff0f1;
+  font-style: normal;
+  color: #000;
+}
+
+blockquote.summary-quote {
+  padding: 0.7em;
+  border: 1px solid #91ebb3;
+  border-left: 5px solid #91ebb3;
+  border-right: 5px solid #56b85a;
+  border-bottom: 1px solid #56b85a;
+  border-radius: 10px;
+  background-color: #e7f8e9;
   font-style: normal;
   color: #000;
 }

@@ -10,7 +10,7 @@ categories: materials
 
 > 스마트팩토리는 산업혁명의 흐름과 궤를 같이하며 발전해 옴<br>
 > <span style="color: darkorange;">참고: 아래의 내용 중, 산업활동의 영역에 대한 설명은 학문적으로 증명된 내용이 아니라, 산업영역의 확장을 설명하기 위한 강사 개인의 의견임</span>
-{: .expert-quote}
+
 
 ## 1. 변화의 시작: 4차 산업혁명
 
@@ -38,7 +38,7 @@ categories: materials
     - Programmable Logic Controller(PLC)와 같은 자동화 기기들이 도입되며 효율성이 증대됨
     - 공장 자동화(Factory Automation, FA)의 시대라고 할 수 있으나 이 시기에도 공정 간의 정보 공유는 제한적임
 
-- **4차 산업혁명 (2010년대 이후): <span style="color:red;">스마트팩토리의 등장</span>**
+- **4차 산업혁명 (2010년대 이후): <span style="color:darkred;">스마트팩토리의 등장</span>**
     - 빅데이터, 인공지능(AI), 사물인터넷(IoT), 클라우드 컴퓨팅 등의 정보기술을 기반으로 하는 초연결 혁명의 시기
     - 산업활동의 영역이 네트워크로 연결된 가상 공간을 기반으로 데이터가 연결되는 초 연결공간까지 확장되는 시기<br><br>
     - 2011년 독일 하노버 산업박람회, **Industry 4.0** 용어 처음 사용 **→** 본격적으로 스마트팩토리 개념에 주목하기 시작
@@ -85,7 +85,7 @@ categories: materials
     - Industry 4.0은 공장 내 모든 설비, 제품, 시스템을 **IoT(사물인터넷)**로 연결하고,
     - **5G/6G**와 같은 초고속, 초저지연 통신기술을 통해
     - 데이터를 실시간으로 주고받는 **초연결성**을 기반으로 함
-    - 이는 <span style="color:red;">**데이터 수집의 근간**</span>을 이룸
+    - 이는 <span style="color:darkred;">**데이터 수집의 근간**</span>을 이룸
 
 - **클라우드 컴퓨팅**
     - 방대한 데이터를 **저장하고 공유**하며,
@@ -94,7 +94,7 @@ categories: materials
 - **빅데이터 & AI**
     - 수집된 방대한 데이터(**빅데이터**)는
     - **AI(인공지능)**의 학습 재료가 되어
-    - 생산 최적화, 불량 예측, 설비 예지 보전 등 <span style="color:red;">**초지능적인 판단**</span>을 가능하게 함
+    - 생산 최적화, 불량 예측, 설비 예지 보전 등 <span style="color:darkred;">**초지능적인 판단**</span>을 가능하게 함
     - AI는 스마트팩토리의 '두뇌' 역할을 하며 지능형 의사결정 수행
 
 - **CPS (사이버 물리 시스템) & 디지털 트윈**
@@ -105,10 +105,10 @@ categories: materials
 
     - **디지털 트윈**
         - CPS의 구체적인 구현체
-        - 현실 공장의 디지털 복제본을 만들어 가상 <span style="color:red;">**시뮬레이션과 최적화**</span>를 가능하게 함
+        - 현실 공장의 디지털 복제본을 만들어 가상 <span style="color:darkred;">**시뮬레이션과 최적화**</span>를 가능하게 함
 
 - **로봇 및 자동화**
-    - <span style="color:red;">**사람의 개입 없이**</span> 물리적인 작업 수행
+    - <span style="color:darkred;">**사람의 개입 없이**</span> 물리적인 작업 수행
     - 전통적인 자동화를 넘어 AI와 연계
     - 생산의 유연성과 효율성을 극대화
 
@@ -124,7 +124,7 @@ categories: materials
 ### 3.1 DX(Digital Transformation, 디지털 전환)
 
 - Industry 4.0이 제조업의 '생산 시스템'에 대한 기술적 로드맵이라면
-- DX는 이를 통해 달성하고자 하는 기업의 <span style="color:red;">**'전사적인 비즈니스 모델 및 운영 방식 혁신'**</span>을 의미
+- DX는 이를 통해 달성하고자 하는 기업의 <span style="color:darkred;">**'전사적인 비즈니스 모델 및 운영 방식 혁신'**</span>을 의미
 - 단순히 스마트팩토리를 구축하는 것을 넘어, 
 - 기업의 가치 사슬 전반(연구개발, 생산, 물류, 마케팅, 영업, 서비스)과 조직 문화, 고객 경험까지
 - 디지털 기술을 활용하여 근본적으로 변화시키는 전략
@@ -195,6 +195,8 @@ categories: materials
 > - 이 과정에서 **AI와 빅데이터, IoT, 클라우드, CPS, 디지털 트윈** 등 수많은 첨단 기술들이 유기적으로 결합되어 지능형 생산 환경을 만들고 있음<br>
 > - 이러한 기술적, 효율적 발전을 기반으로 인간의 가치를 최우선에 두는 **Industry 5.0** 시대로 진화하며 지속 가능한 미래 제조업을 향해 나아가고 있음
 {: .expert-quote}
+
+<br><br>
 
 <div class="insert-image">
     <img src="/materials/smartfactory/images/S06-01-01-02_01-004.png"><br>
