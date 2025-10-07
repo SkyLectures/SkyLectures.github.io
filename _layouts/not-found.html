@@ -27,11 +27,15 @@ layout: base
   {% if test != "" %}
     {{ content }}
   {% else %}
-    {% capture home_link %}<a href="{{ '/' | relative_url }}">{{ strings.not_found.home_link | default:"Head back home" }}</a>{% endcapture %}
-    {% assign text = strings.not_found.message
-      | default:"Sorry, we've misplaced that URL or it's pointing to something that doesn't exist. <!--home_link--> to try finding it again." %}
-    <p class="lead">
-      {{ text | replace:"<!--home_link-->", home_link }}
-    </p>
+    <div style="text-align: center;">
+      {% capture home_link %}<a href="{{ '/' | relative_url }}">{{ strings.not_found.home_link | default:"Head back home" }}</a>{% endcapture %}
+      {% assign text = strings.not_found.message
+        | default:"Sorry, we've misplaced that URL or it's pointing to something that doesn't exist.<br> <!--home_link--> to try finding it again." %}
+      <p class="lead">
+        {{ text | replace:"<!--home_link-->", home_link }}
+      </p>
+      <br>
+      <img src="/assets/img/MyWebError_404.jpg" alt="404 Not Found" width="400px" />
+    </div>
   {% endif %}
 </div>
