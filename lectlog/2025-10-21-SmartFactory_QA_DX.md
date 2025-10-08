@@ -38,7 +38,7 @@ categories: lectlog
     - [제조 데이터 수집 및 분석](/materials/S06-04-01-01_01-ManufacturingDataCollectAndAnalyze)
 - AI의 종류 및 기본 이해
     - [인공지능(AI) 개요](/materials/S03-01-01-01_01-AiOverview)
-    - [딥러닝 기초](/materials/S03-03-01-01_01-DeepLearningOverview_)
+    - [딥러닝 기초](/materials/S03-03-01-01_01-DeepLearningOverview)
 - [AI 소프트웨어와 평가](/materials/S03-10-01-01_01-AiSwEvaluation)
 - [AI 소프트웨어 테스트의 필요성](/materials/S03-10-01-02_01-AiSwTestOverview)
 - [AI 개발 공정 및 모델 사례](/materials/S06-04-02-01_01-AiDevelopmentProcessAndModelExamples)
