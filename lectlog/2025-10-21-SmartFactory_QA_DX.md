@@ -41,7 +41,7 @@ categories: lectlog
     - [딥러닝 기초](/materials/S03-03-01-01_01-DeepLearningOverview)
 - [AI 소프트웨어와 평가](/materials/S03-10-01-01_01-AiSwEvaluation)
 - [AI 소프트웨어 테스트의 필요성](/materials/S03-10-01-02_01-AiSwTestOverview)
-- [AI 개발 공정 및 모델 사례](/materials/S06-04-02-01_01-AiDevelopmentProcessAndModelExamples)
+- [AI 개발 공정 및 모델 사례](/materials/S03-01-02-01_01-AiDevelopmentProcess)
 - [AI 기반 품질 예측 및 불량 감지(개념)](/materials/S06-04-03-01_01-AiBasedQualityPredictionAndDefectDetection)
 
 ### 3일차: AI 소프트웨어 테스트 기법
