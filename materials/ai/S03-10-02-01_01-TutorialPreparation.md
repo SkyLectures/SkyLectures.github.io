@@ -10,7 +10,6 @@ categories: materials
 
 > **참고자료**
 > - [파이썬 개요](/materials/S01-01-01-01_01-PythonOverview)
-{: .expert-quote}
 
 ## 1. 실행환경 설정
 
@@ -62,7 +61,6 @@ categories: materials
 >     </div>
 > 
 >     - 이러한 이유로  <span style="color: red;">**파이썬 프로젝트는 가상환경에서의 개발을 권장함**</span>
-{: .expert-quote}
 
 - **파이썬 가상환경 직접 구축하기**
 
@@ -173,7 +171,6 @@ categories: materials
 >       - 프로젝트 폴더 자체가 별도로 만들어졌기 때문에 모든 프로젝트 환경에서 동일한 설정을 사용할 수 있음
 >       - 앞으로 작성할 소스코드 외에는 'venv' 폴더 안에 필요한 모든 파일들이 설치됨
 >       - 다만 폴더의 레벨이 한 단계 더 깊어짐
-{: .expert-quote}
 
 
 ## 2. Google Colaboratory(Colab)
@@ -272,7 +269,6 @@ categories: materials
 > - 사용 교재: 인공지능 소프트웨어 품질 보증을 위한 테스트 기법 (제이펍)
 >   - 단점: 구 버전의 Tensorflow 등을 사용하고 있으므로 현재 시점에서 실무에 구현할 때에는 부적절한 부분이 있을 수 있음
 >   - 수정 및 검증이 가능한 범위에서 수정하여 진행함(버전, 코드, 활용 등)
-{: .expert-quote}
 
 ### 3.1 외부 라이브러리
 
@@ -358,4 +354,3 @@ categories: materials
 
 > - **일괄설치 명령**<br>
 >   - pip install tensorflow==1.12.3 keras==2.2.5 numpy==1.16.6 pandas==1.1.2 matplotlib==3.3.2 scikit-learn==0.23.2 xgboost==1.2.0 z3-solver==4.8.6 numba==0.51.2 mmdnn==0.3.1 h5py==2.8.0
-{: .expert-quote}
