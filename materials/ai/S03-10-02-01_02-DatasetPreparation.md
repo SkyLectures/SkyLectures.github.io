@@ -1,16 +1,20 @@
 ---
 layout: page
-title:  "튜토리얼 환경 준비: 데이터셋 및 모델학습 준비"
+title:  "튜토리얼 환경 준비: 데이터셋 준비"
 date:   2025-07-29 10:00:00 +0900
-permalink: /materials/S03-10-02-01_02-DatasetAndModelTrainingPreparation
+permalink: /materials/S03-10-02-01_02-DatasetPreparation
 categories: materials
 ---
 * toc
 {:toc .large-only .toc-sticky:true}
 
-## 1. 실습에 사용할 데이터 셋
+> - 본 과정과 관련된 참고 교재는 현 시점에서 제공되지 않는 구 버전의 Tensorflow(1.12.3 버전)를 사용하고 있으므로 실습 불가
+>   - 본 과정에서는 현 시점에서의 최신 버전의 Tensorflow(2.19.0 버전), PyTorch(2.8.0+cu126 버전)를 이용하여 실습함
+> - 본 과정과 관련된 참고 교재는 구 버전의 Tensorflow(1.12.3 버전)에서만 작동하는 도구를 사용하고 있으므로 실습 불가
+>   - 본 과정에서는 별도의 도구를 사용하지 않음
+{: .expert-quote}
 
-### 1.1 MNIST 데이터셋
+### 1. MNIST 데이터셋
 
 - 데이터셋 개요
     - National Institute of Standards and Technology
@@ -36,20 +40,25 @@ categories: materials
     - 훈련용 데이터셋: 6만쌍 (전체 데이터의 약 85.7%)
     - 테스트용 데이터셋: 1만쌍 (전체 데이터의 약 14.3%)
 
+- Tensorflow, PyTorch에서 제공하는 데이터셋을 사용함
+
 - 코드 예시
 
 ```python
 # TensorFlow에서 불러오기
-from tensorflow.examples.tutorials.mnist import input_data
-mnist = input_data.read_data_sets()
+import tensorflow as tf
 
-# Keras에서 불러오기
-import keras
-(x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
+(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+
+# PyTorch에서 불러오기
+import torchvision
+
+train_dataset = torchvision.datasets.MNIST(root='./data', train=True, transform=transform, download=True)
+test_dataset = torchvision.datasets.MNIST(root='./data', train=False, transform=transform, download=True)
 
 ```
 
-### 1.2 HouseSales 데이터셋
+### 2.2 HouseSales 데이터셋
 
 - 데이터셋 개요
     - 부동산 시장 분석이나 가격 예측에 주로 사용되는 데이터셋
@@ -91,10 +100,16 @@ import keras
     - 훈련용 데이터셋: 전체의 70% (15,129건)
     - 테스트용 데이터셋: 전체의 30% (6,484건)
 
-## 2. AI 모델의 준비
+- Kaggle에서 제공하는 kc_house_data.csv 데이터셋을 사용함
+    - 다운로드 시 로그인 등 절차가 필요하므로 이번 과정에서는 별도로 제공하는 경로로 다운로드 함
 
-### 2.1 MNIST 데이터셋의 학습된 모델
+- 코드 예시
 
+```python
+# Pandas를 사용하여 불러오기
+import pandas as pd
 
+file_path='https://raw.githubusercontent.com/SkyLectures/LectureMaterials/refs/heads/main/datasets/S03-10-02-02_01-kc_house_data.csv'
+df = pd.read_csv(file_path)
 
-### 2.2 HouseSales 데이터셋의 학습된 모델
+```

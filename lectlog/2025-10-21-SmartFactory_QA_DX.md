@@ -50,7 +50,7 @@ categories: lectlog
 - [AI SW 테스트 기법 개요](/materials/S03-10-01-05_01-AiSwTestingTechniques)
 - 튜토리얼 환경 준비
     - [파이썬 환경 설정](/materials/S03-10-02-01_01-TutorialPreparation)
-    - [데이터셋 및 모델 학습 준비](/materials/S03-10-02-01_02-DatasetAndModelTrainingPreparation)
+    - [데이터셋 및 모델 학습 준비](/materials/S03-10-02-01_02-DatasetPreparation)
 - [AI 모델 학습 및 실행 확인](/materials/S03-10-02-02_01-AiModelTrainingAndVerification)
 - [AI 모델 성능 평가 및 검증](/materials/S03-10-02-03_01-AiModelEvaluationAndValidation)
 
