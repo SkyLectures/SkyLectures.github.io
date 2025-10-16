@@ -2,7 +2,7 @@
 layout: page
 title:  "스마트팩토리 품질 문서 작성 실습: 관리문서 작성"
 date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S06-03-06-02_01-QualityDocumentationReport
+permalink: /materials/S06-03-06-02_01-QualityDocumentationManagementDoc
 categories: materials
 ---
 * toc

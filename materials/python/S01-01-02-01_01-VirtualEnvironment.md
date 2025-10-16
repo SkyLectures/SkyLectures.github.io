@@ -8,9 +8,44 @@ categories: materials
 * toc
 {:toc .large-only .toc-sticky:true}
 
-## 1. 가상환경 설정 (로컬 시스템)
+## 1. 실행환경 설정
 
-### 1.1 가상환경을 사용하는 이유
+### 1.1 파이썬 설치
+
+- **설치파일 다운로드**
+    - Python 공식사이트에서 각 OS에 맞는 설치파일 다운로드
+    - [https://www.python.org/downloads/](https://www.python.org/downloads/)
+
+    <div class="insert-image">
+        <img src="/materials/python/images/S01-01-02-01_01-002.png">
+    </div>
+    <div class="insert-image">
+        <img src="/materials/python/images/S01-01-02-01_01-003.png">
+    </div>
+
+
+- **설치파일 실행(windows 기준)**
+
+    <div class="insert-image">
+        <img src="/materials/python/images/S01-01-02-01_01-004.png">
+    </div>
+
+    - **최신 버전의 Windows의 경우**
+        - ‘Windows Terminal’ / ‘PowerShell’ / ‘명령 프롬프트’에서 python 실행
+
+        <div class="insert-image">
+            <img src="/materials/python/images/S01-01-02-01_01-005.png">
+        </div>
+
+        - 파이썬 버전을 선택하려면
+
+        <div class="insert-image">
+            <img src="/materials/python/images/S01-01-02-01_01-006.png">
+        </div>
+
+### 1.2 가상환경 설정
+
+- **가상환경을 사용하는 이유**
 
 > - 파이썬 프로젝트는..
 >     - 프로젝트의 특징에 따른 다양한 환경을 가짐
@@ -23,74 +58,73 @@ categories: materials
 >     </div>
 > 
 >     - 이러한 이유로  <span style="color: red;">**파이썬 프로젝트는 가상환경에서의 개발을 권장함**</span>
-{: .expert-quote}
 
-### 1.2 파이썬 가상환경 직접 구축하기
+- **파이썬 가상환경 직접 구축하기**
 
-- **가상환경을 지원하는 도구**
-    - VirtualEnv: 구버전의 파이썬에서부터 많이 사용되어 온 도구
-    - Venv: 파이썬 3.4 부터 기본적으로 포함된 도구 (권장)
-    - Anaconda: 최근 가장 인기있는 파이썬의 배포 패키지
+    - **가상환경을 지원하는 도구**
+        - VirtualEnv: 구버전의 파이썬에서부터 많이 사용되어 온 도구
+        - Venv: 파이썬 3.4 부터 기본적으로 포함된 도구 (권장)
+        - Anaconda: 최근 가장 인기있는 파이썬의 배포 패키지
 
-- **가상환경 설정하기 (Windows 기준)**
+    - **가상환경 설정하기 (Windows 기준)**
 
-    1. 작업용 폴더(디렉토리) 생성
+        1. 작업용 폴더(디렉토리) 생성
 
-        - 작업용 폴더(디렉토리)의 생성은 필수사항이 아닌 권장사항임
-        - mkdir 명령을 통해 작업용 폴더(디렉토리)를 생성함 (mkdir: make directory)
-            - 윈도우 탐색기에서 생성해도 무방함
-            - 생성한 폴더 안에서 작업을 진행함 (권장사항)
-
-                <div class="insert-image">
-                    <img src="/materials/images/python/S01-01-02-01_01-007.png">
-                </div>
-
-    2. 가상환경 설정
-
-        - python -m venv [생성하고자 하는 가상환경의 이름]
-
-            <div class="insert-image">
-                <img src="/materials/images/python/S01-01-02-01_01-008.png">
-            </div>
-
-    3. 가상환경 활성화
-
-        - .\Script\activate 명령으로 가상환경 활성화
-            - 프롬프트의 앞에 **(가상환경이름)**이 표시되면 활성화 성공임
-
-                <div class="insert-image">
-                    <img src="/materials/images/python/S01-01-02-01_01-009.png">
-                </div>
-
-        - Linux/Mac의 경우 : **$ source ./bin/activate** 명령으로 활성화
-            - 해당 가상환경의 폴더에 들어와 있는 경우에는 source ./bin/activate를 사용하고
-            - 그렇지 않은 경우에는 source 가상환경이름/bin/activate를 사용함
-
-        - 가상환경 활성화 오류 발생 시 해결 방안
-            - Windows 환경에서 PowerShell을 사용하는 경우 다음과 같은 오류가 자주 발생함
-
-                <div class="insert-image">
-                    <img src="/materials/images/python/S01-01-02-01_01-010.png">
-                </div>
-
-                - 대부분의 경우 권한부족으로 인한 문제임
-                - PowerShell을 관리자 권한으로 실행한 후
+            - 작업용 폴더(디렉토리)의 생성은 필수사항이 아닌 권장사항임
+            - mkdir 명령을 통해 작업용 폴더(디렉토리)를 생성함 (mkdir: make directory)
+                - 윈도우 탐색기에서 생성해도 무방함
+                - 생성한 폴더 안에서 작업을 진행함 (권장사항)
 
                     <div class="insert-image">
-                        <img src="/materials/images/python/S01-01-02-01_01-011.png">
+                        <img src="/materials/python/images/S01-01-02-01_01-007.png">
                     </div>
 
-                - **Set-ExecutionPolicy RemoteSigned** 명령 실행
-                    - 변경 여부 확인에서 **Y (또는 A)** 선택
+        2. 가상환경 설정
+
+            - python -m venv [생성하고자 하는 가상환경의 이름]
+
+                <div class="insert-image">
+                    <img src="/materials/python/images/S01-01-02-01_01-008.png">
+                </div>
+
+        3. 가상환경 활성화
+
+            - .\Script\activate 명령으로 가상환경 활성화
+                - 프롬프트의 앞에 **(가상환경이름)**이 표시되면 활성화 성공임
+
+                    <div class="insert-image">
+                        <img src="/materials/python/images/S01-01-02-01_01-009.png">
+                    </div>
+
+            - Linux/Mac의 경우 : **$ source ./bin/activate** 명령으로 활성화
+                - 해당 가상환경의 폴더에 들어와 있는 경우에는 source ./bin/activate를 사용하고
+                - 그렇지 않은 경우에는 source 가상환경이름/bin/activate를 사용함
+
+            - 가상환경 활성화 오류 발생 시 해결 방안
+                - Windows 환경에서 PowerShell을 사용하는 경우 다음과 같은 오류가 자주 발생함
+
+                    <div class="insert-image">
+                        <img src="/materials/python/images/S01-01-02-01_01-010.png">
+                    </div>
+
+                    - 대부분의 경우 권한부족으로 인한 문제임
+                    - PowerShell을 관리자 권한으로 실행한 후
 
                         <div class="insert-image">
-                            <img src="/materials/images/python/S01-01-02-01_01-012.png">
+                            <img src="/materials/python/images/S01-01-02-01_01-011.png">
                         </div>
+
+                    - **Set-ExecutionPolicy RemoteSigned** 명령 실행
+                        - 변경 여부 확인에서 **Y (또는 A)** 선택
+
+                            <div class="insert-image">
+                                <img src="/materials/python/images/S01-01-02-01_01-012.png">
+                            </div>
 
 - **가상환경 구축 명령어 정리**
 
     <div class="insert-image">
-        <img src="/materials/images/python/S01-01-02-01_01-013.png">
+        <img src="/materials/python/images/S01-01-02-01_01-013.png">
     </div>
 
     - Linux / MAC의 경우
@@ -134,8 +168,6 @@ categories: materials
 >       - 프로젝트 폴더 자체가 별도로 만들어졌기 때문에 모든 프로젝트 환경에서 동일한 설정을 사용할 수 있음
 >       - 앞으로 작성할 소스코드 외에는 'venv' 폴더 안에 필요한 모든 파일들이 설치됨
 >       - 다만 폴더의 레벨이 한 단계 더 깊어짐
-{: .expert-quote}
-
 
 
 ## 2. Google Colaboratory(Colab)
@@ -189,7 +221,7 @@ categories: materials
     - G-Drive 화면에서 마우스 우클릭 메뉴에서 Colaboratory 선택
 
         <div class="insert-image">
-            <img src="/materials/images/python/S01-01-02-01_01-019.png" style="border: 1px solid gray;">
+            <img src="/materials/python/images/S01-01-02-01_01-019.png" style="border: 1px solid gray;">
         </div>
 
     - Colaboratory 메뉴가 보이지 않는 경우
@@ -198,33 +230,58 @@ categories: materials
         2. 우측 하단 “새 노트“ 선택하여 Note 생성
 
             <div class="insert-image">
-                <img src="/materials/images/python/S01-01-02-01_01-014.png">
+                <img src="/materials/python/images/S01-01-02-01_01-014.png">
             </div>
 
         3. 원하는 파일명 지정 후 작업 시작
 
             <div class="insert-image">
-                <img src="/materials/images/python/S01-01-02-01_01-015.png">
+                <img src="/materials/python/images/S01-01-02-01_01-015.png">
             </div>
 
             - 작업 내용은 자동 저장되며, 파일 메뉴에서 직접 저장도 가능
 
                 <div class="insert-image">
-                    <img src="/materials/images/python/S01-01-02-01_01-016.png">
+                    <img src="/materials/python/images/S01-01-02-01_01-016.png">
                 </div>
 
         4. 저장 후 자동으로 생성된 Colab Notebooks 폴더로 돌아가서 작업 파일 저장 확인 가능
 
             <div class="insert-image">
-                <img src="/materials/images/python/S01-01-02-01_01-017.png">
+                <img src="/materials/python/images/S01-01-02-01_01-017.png">
             </div>
 
             <div class="insert-image">
-                <img src="/materials/images/python/S01-01-02-01_01-018.png">
+                <img src="/materials/python/images/S01-01-02-01_01-018.png">
             </div>
 
     - 작업 진행
 
         <div class="insert-image">
-            <img src="/materials/images/python/S01-01-02-01_01-020.png">
+            <img src="/materials/python/images/S01-01-02-01_01-020.png">
         </div>
+
+## 3. 외부 라이브러리
+
+- **NumPy**
+    - 파이썬에서 다차원 배열(ndarray) 객체를 효과적으로 처리하고, 고성능 수치 계산을 가능하게 하는 핵심 라이브러리
+    - 대규모 행렬 및 벡터 연산에 최적화되어 있음
+    - 머신러닝 모델의 학습 과정에서 발생하는 수많은 수치 계산의 기반이 됨
+    - 교재에서는 1.16.6 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install numpy==1.16.6</span>
+
+- **Pandas**
+    - 데이터 분석 및 조작을 위한 강력한 라이브러리
+    - 'DataFrame'이라는 테이블 형태의 자료 구조를 중심으로 데이터의 읽기, 정리, 필터링, 통계분석 등을 효율적으로 수행하기 위하여 사용됨
+    - 데이터 전처리 단계에서 필수적이며, AI 모델에 입력할 데이터를 가공하는 데 매우 유용합니다.
+    - 교재에서는 1.1.2 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install pandas==1.1.2</span>
+
+- **Matplotlib**
+    - 파이썬에서 데이터를 시각화하기 위해 가장 널리 사용되는 라이브러리
+    - 간단한 선 그래프부터 복잡한 3D 플롯까지 다양한 형태의 그래프를 생성
+    - 데이터의 패턴, 추세, 이상치 등의 시각적 분석과 모델의 성능 평가를 지원함
+    - 교재에서는 3.3.2 버전을 사용하고 있음
+    - 설치 명령: <span style="color: green;">pip install matplotlib==3.3.2</span>
+
+- 그 외 수많은 라이브러리가 존재함

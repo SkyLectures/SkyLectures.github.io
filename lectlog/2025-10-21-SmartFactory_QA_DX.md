@@ -56,27 +56,26 @@ categories: lectlog
 
 ### 4일차: 메타모픽 테스트 기법
 - 메타모픽 테스트 기법
-    - [메타모픽 테스트 기법의 개념](/materials/S03-10-02-04_01-MetamorphicTestOverview)
-    - 메타모픽 테스트 기법의 활용
-    - 메타모픽 테스트 기법 튜토리얼
+    - [메타모픽 테스트 기법의 개념과 활용](/materials/S03-10-02-04_01-MetamorphicTestOverview)
+    - [메타모픽 테스트 기법 튜토리얼](/materials/S03-10-02-04_02-MetamorphicTestPractice)
     - 메타모픽 테스트 기법을 위한 데이터 가공
 
 ### 5일차: 뉴런 커버리지 테스트 기법
 - 뉴런 커버리지 테스트 기법
     - [뉴런 커버리지 테스트 기법의 개념](/materials/S03-10-02-05_01-NeuronCoverageTestOverview)
     - 뉴런 커버리지를 이용한 테스트 및 전략
-    - 뉴런 커버리지 테스트 기법 튜토리얼
+    - [뉴런 커버리지 테스트 기법 튜토리얼](/materials/S03-10-02-05_02-NeuronCoverageTestPractice)
 
 ### 6일차: 최대 안전 반경 테스트 기법
 - 최대 안전 반경 테스트 기법
     - [최대 안전 반경 테스트 기법의 개념](/materials/S03-10-02-06_01-MaximumSafetyRadiusTestOverview)
-    - 최대 안전 반경 계산 방법
-    - 최대 안전 반경 테스트(튜토리얼)
+    - [최대 안전 반경 계산 방법]
+    - [최대 안전 반경 테스트(튜토리얼)](/materials/S03-10-02-06_02-MaximumSafetyRadiusTestPractice)
 
 ### 7일차: 커버리지 검증 기법
 - 커버리지 검증 기법
     - [커버리지 검증 기법의 개념](/materials/S03-10-02-07_01-CoverageVerificationOverview)
-    - XGBoost 모델의 커버리지 검증
+    - [XGBoost 모델의 커버리지 검증](/materials/S03-10-02-07_02-CoverageVerificationPractice)
     - 커버리지 검증을 위한 입력 데이터 범위 탐색
     - DNN 모델의 커버리지 검증
 - AI 기반 불량 감지 시스템 설계(실전)

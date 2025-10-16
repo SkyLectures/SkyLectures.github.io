@@ -126,6 +126,8 @@ categories: materials
 
 ## 3. AI 모델 학습 및 실행 실습
 
+- [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/ai/notebooks/S03-03-02-04_01-DnnCnn.ipynb)
+
 ### 3.1 MNIST 데이터셋 학습
 
 #### 3.1.1 Tensorflow 기반 DNN 모델
