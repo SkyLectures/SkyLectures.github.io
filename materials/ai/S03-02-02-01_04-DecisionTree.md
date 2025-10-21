@@ -1,8 +1,8 @@
 ---
 layout: page
-title:  "파이썬 중급: 내장함수"
-date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S01-02-09-01_01-BuiltInFunctions
+title:  "의사 결정 나무"
+date:   2025-07-29 10:00:00 +0900
+permalink: /materials/S03-02-02-01_04-DecisionTree
 categories: materials
 ---
 * toc

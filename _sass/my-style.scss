@@ -50,6 +50,10 @@ pre {
   font-weight: bold;
 }
 
+code {
+  background-color: #f3e0d1;
+}
+
 div.highlight {
   position: relative;
 
@@ -59,6 +63,15 @@ div.highlight {
 }
 
 blockquote {
+  padding: 0.7em;
+  border: 1px solid #AAAAAA;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  font-style: normal;
+  color: #000;
+}
+
+blockquote.common-quote {
   padding: 0.7em;
   border: 1px solid #f8cb78;
   border-left: 5px solid #f8cb78;

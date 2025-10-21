@@ -1,8 +1,8 @@
 ---
 layout: page
-title:  "파이썬 중급: 내장함수"
-date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S01-02-09-01_01-BuiltInFunctions
+title:  "생성형 모델 실습"
+date:   2025-07-29 10:00:00 +0900
+permalink: /materials/S03-03-03-03_02-GenerativeModelPractice
 categories: materials
 ---
 * toc

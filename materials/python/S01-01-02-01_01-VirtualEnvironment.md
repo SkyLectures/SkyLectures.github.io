@@ -14,7 +14,7 @@ categories: materials
 
 - **설치파일 다운로드**
     - Python 공식사이트에서 각 OS에 맞는 설치파일 다운로드
-    - [https://www.python.org/downloads/](https://www.python.org/downloads/)
+    - [https://www.python.org/downloads/](https://www.python.org/downloads/){: target="_blank"}
 
     <div class="insert-image">
         <img src="/materials/python/images/S01-01-02-01_01-002.png">
@@ -58,6 +58,9 @@ categories: materials
 >     </div>
 > 
 >     - 이러한 이유로  <span style="color: red;">**파이썬 프로젝트는 가상환경에서의 개발을 권장함**</span>
+{: .common-quote}
+
+<br>
 
 - **파이썬 가상환경 직접 구축하기**
 
@@ -155,7 +158,7 @@ categories: materials
         deactivate
         ```
 
-<br><br>
+<br>
 
 > - 가상환경의 이름을 '프로젝트 명'으로 할 것인가, 'venv' 등의 통일된 이름으로 할 것인가는 개발자/팀의 정책에 따를 것
 >   - '프로젝트 명'으로 하는 경우
@@ -168,7 +171,7 @@ categories: materials
 >       - 프로젝트 폴더 자체가 별도로 만들어졌기 때문에 모든 프로젝트 환경에서 동일한 설정을 사용할 수 있음
 >       - 앞으로 작성할 소스코드 외에는 'venv' 폴더 안에 필요한 모든 파일들이 설치됨
 >       - 다만 폴더의 레벨이 한 단계 더 깊어짐
-
+{: .common-quote}
 
 ## 2. Google Colaboratory(Colab)
 
@@ -193,7 +196,7 @@ categories: materials
         - NVIDIA RTX 5090(개인용) 가격: 약 705만원(2025년 3월 기준)
         - NVIDIA RTX 4090 Ti 24G(개인용) 가격: 약 475만원(2025년 3월 기준)
 
-        <span style="color: red;">**→ 이러한 이유로 Google에서 제공하는 Colab 활용 권장**</span>
+        <span style="color: darkred;">**→ 이러한 이유로 Google에서 제공하는 Colab 활용 권장**</span>
 
 ### 2.2 Colab의 특징
 

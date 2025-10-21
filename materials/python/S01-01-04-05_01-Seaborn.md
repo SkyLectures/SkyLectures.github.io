@@ -7,3 +7,8 @@ categories: materials
 ---
 * toc
 {:toc .large-only .toc-sticky:true}
+
+
+<div class="insert-image" style="text-align: center;">
+    <img style="width: 400px;" src="/assets/img/PagePreparing.png">
+</div>

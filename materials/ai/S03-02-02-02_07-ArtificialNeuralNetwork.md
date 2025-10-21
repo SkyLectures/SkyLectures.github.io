@@ -1,8 +1,8 @@
 ---
 layout: page
-title:  "파이썬 중급: 내장함수"
-date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S01-02-09-01_01-BuiltInFunctions
+title:  "인공신경망"
+date:   2025-07-29 10:00:00 +0900
+permalink: /materials/S03-02-02-02_07-ArtificialNeuralNetwork
 categories: materials
 ---
 * toc

@@ -78,7 +78,7 @@ categories: materials
                 </tr>
                 <tr>
                     <td>1.1</td>
-                    <td>2025.11.15)</td>
+                    <td>2025.11.15</td>
                     <td class="td-left">
                         - IoT 센서 확장 계획 및 보안 강화 내용 추가
                     </td>

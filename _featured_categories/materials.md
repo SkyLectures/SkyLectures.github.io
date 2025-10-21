@@ -10,24 +10,13 @@ description: >
 
 ## 1. Python
 
-### 1.1 파이썬 문법 / 기초 라이브러리
-- **기초**
+### 1.1 파이썬 문법 / 기본 라이브러리
+- **파이썬 기본 문법**
     - [파이썬 개요](/materials/S01-01-01-01_01-PythonOverview)
     - [파이썬 개발 환경 설정](/materials/S01-01-02-01_01-VirtualEnvironment)
-    - [파이썬 기본 문법](/materials/S01-01-03-01_01-PythonBasicIntegration)
-    - [변수와 자료형](/materials/S01-01-03-02_01-VariablesDataTypes)
-    - [제어문](/materials/S01-01-03-03_01-ControlStatements)
-    - [문자열 처리](/materials/S01-01-03-04_01-StringProcess)
-    - [함수, 클래스](/materials/S01-01-03-05_01-FunctionsClasses)
-    - [모듈, 패키지, 라이브러리](/materials/S01-01-03-06_01-Modules)
-    - [예외처리](/materials/S01-01-03-07_01-Exceptions)
-    - [표준 라이브러리](/materials/S01-01-04-01_01-StandardLibrary)
-    - [Numpy](/materials/S01-01-04-02_01-Numpy)
-    - [Pandas](/materials/S01-01-04-03_01-Pandas)
-    - [Matplotlib](/materials/S01-01-04-04_01-Matplotlib)
-    - [Seaborn](/materials/S01-01-04-05_01-Seaborn)
+    - [파이썬 기본 문법](/materials/S01-01-03-01_01-PythonBasic)
 
-- **중급**
+- **파이썬 문법 상세**
     - [값의 처리와 변수](/materials/S01-02-01-01_01-Variables)
     - [연산자](/materials/S01-02-02-01_01-Operatros)
     - [자료형](/materials/S01-02-03-01_01-DataTypes)
@@ -44,7 +33,15 @@ description: >
     - [정규표현식](/materials/S01-02-14-01_01-RegularExpressions)
     - [Under Bar의 이해](/materials/S01-02-15-01_01-UnderBar)
 
-- **고급(준비 중)**
+- **파이썬 라이브러리**
+    - [파이썬 표준 라이브러리](/materials/S01-01-04-01_01-PythonLibrary)
+    - [Numpy](/materials/S01-01-04-02_01-Numpy)
+    - [Pandas](/materials/S01-01-04-03_01-Pandas)
+    - [Matplotlib](/materials/S01-01-04-04_01-Matplotlib)
+    - [Seaborn](/materials/S01-01-04-05_01-Seaborn)
+
+- **고성능 파이썬**
+    - 준비중...
 
 ### 1.2 파이썬 응용
 
@@ -109,12 +106,57 @@ description: >
 
 ## [3. ArtificiaL Intelligence(AI)](/materials/03_AI)
 ### 3.1 AI 개요
+- [AI 개요](/materials/S03-01-01-01_01-AiOverview)
+- [AI 시스템의 개발 공정](/materials/S03-01-02-01_01-AiDevelopmentProcess)
 
-### 3.2 머신러닝(ML) 
+### 3.2 머신러닝(ML)
+- 머신러닝 개요
+- 머신러닝 모델
+    - 기본모델
+        - [선형회귀(Linear Regression)](/materials/S03-02-02-01_01-LinearRegression)
+        - [로지스틱 회귀(Logistic Regression)](/materials/S03-02-02-01_02-LogisticRegression)
+        - [K-최근접이웃(K-Nearest Neighbors, KNN)](/materials/S03-02-02-01_03-KNearestNeighbors)
+        - [의사결정나무(Decision Tree)](/materials/S03-02-02-01_04-DecisionTree)
+        - [서포트 벡터 머신(Support Vector Machine, SVM)](/materials/S03-02-02-01_05-SupportVectorMachine)
+    - 심화모델(앙상블 모델)
+        - [앙상블 러닝 개요(Bagging, Boosting)](/materials/S03-02-02-02_01-EnsembleLearningOverview)
+        - [랜덤 포레스트(Random Forest)](/materials/S03-02-02-02_02-RandomForest)
+        - [그래디언트 부스팅 머신(Gradient Boosting Machine, GBM)](/materials/S03-02-02-02_03-GradientBoostingMachine)
+        - [XGBoost(Extream Gradient Boost)](/materials/S03-02-02-02_04-ExtreamGradientBoost)
+        - [LightGBM(Light Gradient Boosting Machine)](/materials/S03-02-02-02_05-LightGbm)
+        - [CatBoost](/materials/S03-02-02-02_06-CatBoost)
+    - [인공신경망(Artificial Neural Network, ANN)](/materials/S03-02-02-02_07-ArtificialNeuralNetwork)
 
 ### 3.3 딥러닝(DL) 
+- [딥러닝 개요](/materials/S03-03-01-01_01-DeepLearningOverview)
+- 딥러닝 모델
+    - 기본 모델
+        - DNN
+            - [DNN 모델](/materials/S03-03-02-01_01-DnnModel)
+            - [DNN 모델 실습](/materials/S03-03-02-01_02-DnnPractice)
+    - 응용 모델
+        - CNN
+            - [CNN 모델](/materials/S03-03-02-02_01-CnnModel)
+            - [CNN 모델 실습](/materials/S03-03-02-02_02-CnnPractice)
+        - RNN
+            - [RNN 모델](/materials/S03-03-02-03_01-RnnModel)
+            - [RNN 모델 실습](/materials/S03-03-02-03_02-RnnPractice)
+            - [LSTM 모델](/materials/S03-03-02-03_03-LstmModel)
+            - [LSTM 모델 실습](/materials/S03-03-02-03_04-LstmPractice)
+        - 통합실습
+            - [DNN + CNN 모델 실습](/materials/S03-03-02-04_01-DnnCnnPractice)
+    - 확장 기술
+        - 전이학습(Transfer Learning)
+            - [전이학습 개요](/materials/S03-03-03-01_01-TransferLearningOverview)
+            - [전이학습 실습](/materials/S03-03-03-01_02-TransferLearningPractice)
+        - 미세 조정(Fine-tuning)
+            - [미세조정 개요](/materials/S03-03-03-02_01-FineTuningOverview)
+            - [미세조정 실습](/materials/S03-03-03-02_02-FineTuningPractice)
 
 ### 3.4 강화학습(RL)
+- [강화학습 개요](/materials/S03-07-01-01_01-RlOverview)
+- [강화학습 모델](/materials/S03-07-02-01_01-RlModel)
+- [강화학습 실습](/materials/S03-07-03-01_01-RlPractice)
 
 ### 3.5 자연어 처리(NLP) 
 

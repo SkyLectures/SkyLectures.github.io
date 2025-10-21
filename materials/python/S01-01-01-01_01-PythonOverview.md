@@ -21,6 +21,7 @@ categories: materials
     > <div class="insert-image" style="margin-bottom: 1em;">
     >    <img src="/materials/python/images/S01-01-01-01_01-001.jpg" style="width: 300px;">
     > </div>
+    {: .common-quote}
 
 ## 2. 파이썬의 특징
 
@@ -106,6 +107,7 @@ categories: materials
 >   &nbsp;&nbsp;
 >   <img src="/materials/python/images/S01-01-01-01_01-003.png" style="width: 200px; height: 312px;">
 > </div>
+{: .common-quote}
 
 - 알파고 이후, AI에 대한 관심이 급증하면서 일단 외국의 트렌드를 따라 감
 - 그럼 외국에서는 왜?

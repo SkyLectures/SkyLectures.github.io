@@ -8,64 +8,69 @@ categories: materials
 * toc
 {:toc .large-only .toc-sticky:true}
 
-## 1. Matplotlib 개요
+## 1. 데이터 시각화
 
-### 1.1 Matplotlib란?
+- **데이터 시각화 개요**
+  - 정보와 데이터를 그래프로 나타내는 것
+  - 차트, 그래프, 맵과 같은 **시각적 요소**를 사용하여, 데이터에서 추세, 이상 값 및 패턴을 보고 이해할 수 있도록 해 주며
+  - 데이터 분석에 쉽게 접근할 수 있도록 하는 방법
+  - 특히 빅 데이터의 세계에서, 데이터 시각화 도구와 기술은 막대한 양의 정보를 분석하고 데이터 기반 의사 결정을 내리는 데에 필수적
 
-- 파이썬에서 플롯(그래프)을 그릴 때 주로 쓰이는 2D, 3D 플롯팅 패키지(모듈)
-- 저명한 파이썬 라이브러리 개발자인 John Hunter에 의해 개발됨
-- 2003년 version 0.1이 발표된 이후 현재까지 꾸준히 발전해온 약 20년의 역사를 가진 패키지
-- 산업, 교육계에서 널리 쓰이는 수치해석 소프트웨어인 MATLAB과 유사한 사용자 인터페이스를 가지고 있어 각 업계에서 쉽게 접근 가능
+- **데이터 시각화의 필요성**
+  - 인간은 시력을 통해 얻는 정보양은 다른 기관의 정보보다 훨씬 많음
+  - 지나치게 많은 데이터로 인해 이를 관리하고 이해하는 어려움이 계속해서 증가
+  - 대부분의 사람들은 통계 데이터에 대해 잘 알지 못하며, 기본적인 통계 방법(평균, 중위수, 범위 등)은 인간의 인지적 성격과 맞지 않음
+  - 통계 방법에 따라 규칙을 보는 것은 어렵지만, 데이터가 시각화되면 규칙은 매우 명확히 인지 가능(예: 안스콤비의 4중주)
 
-### 1.2 Matplotlib의 장점
+<div class="insert-image">
+    <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-001.png">
+</div>
 
-- 동작하는 OS를 가리지 않음
-- 다양한 그래프와 그 구성요소에 대하여 상세한 서식을 설정 가능
-- 다양한 출력형식(PNG, SVG, JPG 등) 지원
-- MATLAB과 유사한 사용자 인터페이스
 
-### 1.3 데이터 시각화
+## 2. Matplotlib 개요
 
-- 정보와 데이터를 그래프로 나타내는 것
-- 차트, 그래프, 맵과 같은 시각적 요소를 사용하여
-- 데이터에서 추세, 이상 값 및 패턴을 보고 이해할 수 있도록 해 주며
-- 데이터 분석에 쉽게 접근할 수 있도록 하는 방법
-- 특히 빅 데이터의 세계에서, 데이터 시각화 도구와 기술은 막대한 양의 정보를 분석하고 데이터 기반 의사 결정을 내리는 데에 필수적
+- **Matplotlib란?**
 
-### 1.4 데이터 시각화의 필요성
+  - 파이썬에서 플롯(그래프)을 그릴 때 주로 쓰이는 2D, 3D 플롯팅 패키지(모듈)
+  - 저명한 파이썬 라이브러리 개발자인 John Hunter에 의해 개발됨
+  - 2003년 version 0.1이 발표된 이후 현재까지 꾸준히 발전해온 약 20년의 역사를 가진 패키지
+  - 산업, 교육계에서 널리 쓰이는 수치해석 소프트웨어인 MATLAB과 유사한 사용자 인터페이스를 가지고 있어 각 업계에서 쉽게 접근 가능
 
-- 인간은 시력을 통해 얻는 정보양은 다른 기관의 정보보다 훨씬 많음
-- 지나치게 많은 데이터로 인해 이를 관리하고 이해하는 어려움이 계속해서 증가
-- 대부분의 사람들은 통계 데이터에 대해 잘 알지 못하며, 기본적인 통계 방법(평균, 중위수, 범위 등)은 인간의 인지적 성격과 맞지 않음
-- 통계 방법에 따라 규칙을 보는 것은 어렵지만, 데이터가 시각화되면 규칙은 매우 명확히 인지 가능(예: 안스콤비의 4중주)
+- **Matplotlib의 장점**
 
-<p style="text-align: center;"><img src='/materials/images/python/S01-01-04-04_01-001.png' width="600"/></p>
+  - 동작하는 OS를 가리지 않음
+  - 다양한 그래프와 그 구성요소에 대하여 상세한 서식을 설정 가능
+  - 다양한 출력형식(PNG, SVG, JPG 등) 지원
+  - MATLAB과 유사한 사용자 인터페이스
 
-## 2. 환경설정
 
-### 2.1 모듈 임포트
+## 3. 환경설정
 
-```python
-import matplotlib.pyplot as plt
-```
+- **모듈 임포트**
 
-### 2.2 그래프를 그리기 위한 데이터 설정
+  ```python
+  import matplotlib.pyplot as plt
+  ```
 
-```python
-x = [-3, -2, -1, 0, 1, 2, 3, 4, 5]
-y = [3, 2, -1, 1, 0, -2, -1, 3, 1]
+- **그래프를 그리기 위한 데이터 설정**
 
-plt.figure(figsize=(8,4))
-plt.title('오늘도 즐거운 하루', fontsize=20)
-plt.scatter(x, y)
-plt.show()
-```
+  ```python
+  x = [-3, -2, -1, 0, 1, 2, 3, 4, 5]
+  y = [3, 2, -1, 1, 0, -2, -1, 3, 1]
 
-<img src='/materials/images/python/S01-01-04-04_01-002.png' width="900"/>
+  plt.figure(figsize=(8,4))
+  plt.title('오늘도 즐거운 하루', fontsize=20)
+  plt.scatter(x, y)
+  plt.show()
+  ```
 
-### 2.3 warning메시지 무시
+  <div class="insert-image">
+      <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-002.png">
+  </div>
 
-- 쓸데없는 경고가 많이 나오는 문제
+
+- **warning메시지 무시하기**
+  - 쓸데없는 경고가 많이 나오는 문제
 
     ```python
     import warnings
@@ -79,11 +84,13 @@ plt.show()
     plt.show()
     ```
 
-<img src='/materials/images/python/S01-01-04-04_01-003.png' width="600"/>
+    <div class="insert-image">
+        <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-003.png">
+    </div>
 
-### 2.4 한글이 깨지는 문제
 
-- 이유: 한글 폰트가 설치되어 있지 않기 때문
+- **한글이 깨지는 문제**
+  - 이유: 한글 폰트가 설치되어 있지 않기 때문
 
     ```python
     # 현재 사용중인 폰트 확인
@@ -99,7 +106,9 @@ plt.show()
     plt.rcParams['font.family'] = "NanumBarunGothic"
     ```
 
-<img src='/materials/images/python/S01-01-04-04_01-004.png' width="600"/>
+    <div class="insert-image">
+        <img style="width: 700px;" src="/materials/python/images/S01-01-04-04_01-004.png">
+    </div>
 
     ```python
     plt.figure(figsize=(8,4))
@@ -108,11 +117,12 @@ plt.show()
     plt.show()
     ```
 
-<img src='/materials/images/python/S01-01-04-04_01-005.png' width="600"/>
+    <div class="insert-image">
+        <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-005.png">
+    </div>
 
-### 2.5 갑자기 음수 부호(-)가 표시되지 않음
-
-- 한글폰트와 유니코드의 음수 부호가 충돌을 일으키기 때문
+- **갑자기 음수 부호(-)가 표시되지 않음**
+  - 한글폰트와 유니코드의 음수 부호가 충돌을 일으키기 때문
 
     ```python
     # 마이너스(음수)부호 설정
@@ -124,26 +134,28 @@ plt.show()
     plt.show()
     ```
     
-<img src='/materials/images/python/S01-01-04-04_01-006.png' width="600"/>
+    <div class="insert-image">
+        <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-006.png">
+    </div>
 
-### 2.6 그래프를 그릴때 별도의 창이 열리고 그 위에서 그려지는 문제
-
-- Colab을 이용하는 경우
+- **그래프를 그릴때 별도의 창이 열리고 그 위에서 그려지는 문제**
+  - Colab을 이용하는 경우
     - Colab은 기본적으로 현재 창에서 그래프가 그려지므로 따로 조치할 필요가 없음
 
-- 개인 환경에서 Jupyter Notebook/Lab을 이용하는 경우
+  - 개인 환경에서 Jupyter Notebook/Lab을 이용하는 경우
     - %matplotlib inline 명령어를 통해서 해결 가능
 
-        ```python
-        %matplotlib inline
-        ```
-
-
-## 3. 그래프의 기본 구성
-
-<p style="text-align: center;"><img src='/materials/images/python/S01-01-04-04_01-007.png' width="600"/></p>
+      ```python
+      %matplotlib inline
+      ```
 
 ## 4. 기본 그래프 그리기
+
+- **그래프의 기본 구성**
+
+  <div class="insert-image">
+      <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-007.png">
+  </div>
 
 ### 4-1. Figure
 
@@ -166,25 +178,25 @@ plt.show()
     plt.show()
     ```
 
-<img src='/materials/images/python/S01-01-04-04_01-008.png' width="400"/>
+<div class="insert-image">
+    <img style="width: 400px;" src="/materials/python/images/S01-01-04-04_01-008.png">
+</div>
+
 
 ### 4-2. 그래프 여러 개 그리기
 
-1. Figure 객체와 axes를 직접 생성 후 생성된 axes에 대한 plot 멤버를 직접 호출하는 방법
-
-    > fig = plt.figure()  
-    > axs = fig.subplots(1,2)
-
-2. pyplot.subplots 으로 Figure와 axes를 생성하는 방법
-
-    > fig, axs = plt.subplots(1,2)
-
-3. Figure 객체 생성 후, axes 추가하는 방법
-
-    > fig = plt.figure()  
-    > ax1 = fig.add_subplot(1, 2, 1)  
-    > ax2 = fig.add_subplot(1, 2, 2)
-
+> 1. Figure 객체와 axes를 직접 생성 후 생성된 axes에 대한 plot 멤버를 직접 호출하는 방법
+>   > fig = plt.figure()  
+>   > axs = fig.subplots(1,2)
+>
+> 2. pyplot.subplots 으로 Figure와 axes를 생성하는 방법
+>   > fig, axs = plt.subplots(1,2)
+>
+> 3. Figure 객체 생성 후, axes 추가하는 방법
+>   > fig = plt.figure()  
+>   > ax1 = fig.add_subplot(1, 2, 1)  
+>   > ax2 = fig.add_subplot(1, 2, 2)
+{: .common-quote}
 
 - $$-5 < x < 5$$ (x의 간격은 0.1), &nbsp;&nbsp;&nbsp;&nbsp; $$y_1 = x^2 + 3$$ , &nbsp;&nbsp;&nbsp;&nbsp; $$y_2 = x + 2$$
 
@@ -278,7 +290,10 @@ plt.show()
         plt.show()
         ```
 
-<img src='/materials/images/python/S01-01-04-04_01-009.png' width="500"/>
+<div class="insert-image">
+    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-009.png">
+</div>
+
 
 - 2행 1열의 axes에 $$sin(x)$$ 그래프와 $$cos(x)$$ 그래프 그려보기
     - x축을 표시하시오
@@ -303,11 +318,17 @@ plt.show()
         plt.show()
         ```
 
-<img src='/materials/images/python/S01-01-04-04_01-010.png' width="900"/>
+<div class="insert-image">
+    <img style="width: 900px;" src="/materials/python/images/S01-01-04-04_01-010.png">
+</div>
+
 
 ### 3-3. Axis
 
-<p style="text-align: center;"><img src='/materials/images/python/S01-01-04-04_01-011.png' width="600"/></p>
+<div class="insert-image">
+    <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-011.png">
+</div>
+
 
 #### 3.3.1 xlim, ylim
 
@@ -381,7 +402,10 @@ ax.legend(loc='center')
 plt.show()
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-012.png' width="500"/>
+<div class="insert-image">
+    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-012.png">
+</div>
+
 
 ```python
 # [참고] pyplot API 방식. 위 그래프와 같다
@@ -399,7 +423,10 @@ plt.show()
 ```
 
 - 범례(Legend) 위치 표시 코드<br>
-<img src='/materials/images/python/S01-01-04-04_01-013.png' width="270"/>
+<div class="insert-image">
+    <img style="width: 300px;" src="/materials/python/images/S01-01-04-04_01-013.png">
+</div>
+
 
 ### 3-5. Text
 
@@ -485,7 +512,10 @@ for x_, y_ in zip(x, y):
     ax.text(x_+0.1, y_+0.1,t)
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-014.png' width="500"/>
+<div class="insert-image">
+    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-014.png">
+</div>
+
 
 #### 3.5.4 annotate
 
@@ -501,11 +531,14 @@ ax.set_ylim(-10,2)
 plt.show()
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-015.png' width="500"/>
+<div class="insert-image">
+    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-015.png">
+</div>
+
 
 ### 3-6.color
 
-- 참고: [https://matplotlib.org/stable/api/colors_api.html](https://matplotlib.org/stable/api/colors_api.html)
+- 참고: [https://matplotlib.org/stable/api/colors_api.html](https://matplotlib.org/stable/api/colors_api.html){: target="_blank"}
 
 ```python
 x = np.arange(-np.pi, np.pi, 0.02)
@@ -524,7 +557,7 @@ plt.show()
 
 ### 3-7. facecolor
 
-- 참고: [https://matplotlib.org/stable/api/colors_api.html](https://matplotlib.org/stable/api/colors_api.html)
+- 참고: [https://matplotlib.org/stable/api/colors_api.htm](https://matplotlib.org/stable/api/colors_api.html){: target="_blank"}
 
 ```python
 #ax.set_facecolor()
@@ -572,16 +605,19 @@ ax.grid(color='r', linestyle='--', linewidth=0.5)
 plt.show()
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-016.png' width="500"/>
+<div class="insert-image">
+    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-016.png">
+</div>
+
 
 ## **5.여러가지 그래프**
 
-- 참고: [https://matplotlib.org/stable/tutorials/pyplot.html](https://matplotlib.org/stable/tutorials/pyplot.html)
+- 참고: [https://matplotlib.org/stable/tutorials/pyplot.html](https://matplotlib.org/stable/tutorials/pyplot.html){: target="_blank"}
 
 ### 5-1.Line Plot
 
-- marker 참고: [https://matplotlib.org/stable/api/markers_api.html](https://matplotlib.org/stable/api/markers_api.html)
-- line style 참고: [https://matplotlib.org/stable/gallery/lines_bars_and_markers/linestyles.html](https://matplotlib.org/stable/gallery/lines_bars_and_markers/linestyles.html)
+- marker 참고: [https://matplotlib.org/stable/api/markers_api.html](https://matplotlib.org/stable/api/markers_api.html){: target="_blank"}
+- line style 참고: [https://matplotlib.org/stable/gallery/lines_bars_and_markers/linestyles.html](https://matplotlib.org/stable/gallery/lines_bars_and_markers/linestyles.html){: target="_blank"}
 
 ```python
 x = np.arange(-5, 5, 0.5)
@@ -672,7 +708,10 @@ ax.set_title('오래된 영화 평점', fontsize=20, color = 'b')
 plt.show()
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-017.png' width="500"/>
+<div class="insert-image">
+    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-017.png">
+</div>
+
 
 ### 5-3.Histogram
 
@@ -714,7 +753,10 @@ ax.scatter(x, y, s=area, marker='o', c=area)
 plt.show()
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-018.png' width="500"/>
+<div class="insert-image">
+    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-018.png">
+</div>
+
 
 ### 5-5.heatmap
 
@@ -761,7 +803,10 @@ fig.tight_layout()
 plt.show()
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-019.png' width="600"/>
+<div class="insert-image">
+    <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-019.png">
+</div>
+
 
 ```python
 harvest = np.array([[0.8, 2.4, 2.5, 3.9, 0.0, 4.0, 0.0],
@@ -812,19 +857,27 @@ cctv = pd.read_csv('https://github.com/SkyLectures/LectureMaterials/raw/refs/hea
 cctv.head()
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-020.png' width="900"/>
+<div class="insert-image">
+    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-020.png">
+</div>
 
 ```python
 cctv.info()
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-021.png' width="300"/>
+<div class="insert-image">
+    <img style="width: 300px;" src="/materials/python/images/S01-01-04-04_01-021.png">
+</div>
+
 
 ```python
 cctv.describe()
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-022.png' width="500"/>
+<div class="insert-image">
+    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-022.png">
+</div>
+
 
 ```python
 # x축은 카메라 화소수, y축은 카메라 대수
@@ -1081,7 +1134,10 @@ ax.grid(color='r', linestyle='--', linewidth=1)
 plt.show()
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-023.png' width="500"/>
+<div class="insert-image">
+    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-023.png">
+</div>
+
 
 ## **7. 지도에 표시해보기**
 
@@ -1092,14 +1148,19 @@ mymap = folium.Map(location=[36.6208541,127.2849716], zoom_start=13) # 위도, �
 mymap
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-024.png' width="900"/>
+<div class="insert-image">
+    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-024.png">
+</div>
 
 ```python
 folium.Marker([36.6208541,127.2849716], popup="Hongik Uni").add_to(mymap)
 mymap
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-025.png' width="900"/>
+<div class="insert-image">
+    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-025.png">
+</div>
+
 
 ```python
 cctv.info()
@@ -1114,7 +1175,10 @@ for loc in cctv[['위도','경도']].values:
 mymap
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-026.png' width="900"/>
+<div class="insert-image">
+    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-026.png">
+</div>
+
 
 ```python
 mymap = folium.Map(location=[36.6208541,127.2849716], zoom_start=11) # 위도, 경도, 축척
@@ -1125,7 +1189,10 @@ for loc in cctv[['위도','경도']].values:
 mymap
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-027.png' width="900"/>
+<div class="insert-image">
+    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-027.png">
+</div>
+
 
 ```python
 light = pd.read_csv('https://github.com/SkyLectures/LectureMaterials/raw/refs/heads/main/datasets/S01-01-04-04_01-DaejeonTrafficLight.csv', encoding='cp949')
@@ -1142,7 +1209,10 @@ for loc in light[['위도','경도','교차로명']].values:
 mymap
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-028.png' width="900"/>
+<div class="insert-image">
+    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-028.png">
+</div>
+
 
 ```python
 trans = pd.read_csv('https://github.com/SkyLectures/LectureMaterials/raw/refs/heads/main/datasets/S01-01-04-04_01-PohangRSE.csv', encoding='cp949')
@@ -1153,4 +1223,6 @@ for loc in trans[['위도', '경도', '시설물 위치']].values:
 mymap
 ```
 
-<img src='/materials/images/python/S01-01-04-04_01-029.png' width="900"/>
+<div class="insert-image">
+    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-029.png">
+</div>

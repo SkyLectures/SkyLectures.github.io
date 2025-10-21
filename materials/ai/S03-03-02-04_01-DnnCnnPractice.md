@@ -1,8 +1,8 @@
 ---
 layout: page
-title:  "파이썬 중급: 내장함수"
-date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S01-02-09-01_01-BuiltInFunctions
+title:  "DNN + CNN 모델 실습"
+date:   2025-07-29 10:00:00 +0900
+permalink: /materials/S03-03-02-04_01-DnnCnnPractice
 categories: materials
 ---
 * toc

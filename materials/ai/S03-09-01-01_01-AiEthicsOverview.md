@@ -105,8 +105,6 @@ categories: materials
 
     - 데이터 품질 기준의 중요성이 강조됨
 
-<center>
-
 <table style="width:770px;">
     <tr>
         <td style="text-align: center; border: 1px solid lightgray; width:130px;"><b>데이터의 특성</b></td>
@@ -150,9 +148,6 @@ categories: materials
         </td>
     </tr>
 </table>
-
-</center>
-
 
 - **개인 정보 보호 (Privacy Protection)**
     - AI 시스템 개발 및 활용 과정에서 개인 정보를 안전하게 보호해야 함
