@@ -262,7 +262,7 @@ description: >
 
 ---
 
-## 9. [Project](/materials/09_Project)
+## 9. [Project 기획 및 관리](/materials/09_ProjectManagement)
 - 프로젝트 기획 및 설계
 - 프로젝트 구현
 - 프로젝트 테스트 및 디버깅

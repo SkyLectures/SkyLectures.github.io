@@ -30,7 +30,7 @@ categories: lectlog
 >   - 강화학습: 가치기반·정책기반 알고리즘
 >   - 컴퓨터 비전: OpenCV, 객체 탐지(Object Detection)
 >   - 프로젝트 응용: 모빌리티 데이터 분석 및 AI 모델 개발
-
+{: .common-quote}
 
 
 ## [강의 내용]

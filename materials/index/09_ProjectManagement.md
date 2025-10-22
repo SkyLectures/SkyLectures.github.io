@@ -2,7 +2,7 @@
 layout: page
 title:  "9. Project"
 date:   2025-02-27 09:00:00 +0900
-permalink: /materials/09_Project
+permalink: /materials/09_ProjectManagement
 categories: materials
 ---
 * toc

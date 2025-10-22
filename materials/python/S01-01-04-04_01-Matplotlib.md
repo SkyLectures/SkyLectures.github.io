@@ -157,7 +157,7 @@ categories: materials
       <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-007.png">
   </div>
 
-### 4-1. Figure
+### 4.1 Figure
 
 - 데이터 설정
     - $$-5 < x < 5$$ (x의 간격은 0.1), &nbsp;&nbsp;&nbsp;&nbsp; $$y_1 = x^2 + 3$$
@@ -183,7 +183,7 @@ categories: materials
 </div>
 
 
-### 4-2. 그래프 여러 개 그리기
+### 4.2 그래프 여러 개 그리기
 
 > 1. Figure 객체와 axes를 직접 생성 후 생성된 axes에 대한 plot 멤버를 직접 호출하는 방법
 >   > fig = plt.figure()  
@@ -323,68 +323,68 @@ categories: materials
 </div>
 
 
-### 3-3. Axis
+### 4.3 Axis
 
 <div class="insert-image">
     <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-011.png">
 </div>
 
 
-#### 3.3.1 xlim, ylim
+- **xlim, ylim**
 
-```python
-ax.set_xlim([0, 10])
-ax.set_ylim([0, 20])
-```
+  ```python
+  ax.set_xlim([0, 10])
+  ax.set_ylim([0, 20])
+  ```
 
-```python
-# x값은 0~10, 1단위로
-# y값은 x+10
+  ```python
+  # x값은 0~10, 1단위로
+  # y값은 x+10
 
-x = np.arange(10)
-y = x+10 # yticks에는 [0,1,2,...9,10,11,12...,19]
+  x = np.arange(10)
+  y = x+10 # yticks에는 [0,1,2,...9,10,11,12...,19]
 
-fig, axs = plt.subplots()
-axs.plot(x, y)
-axs.set_xlim([0, 10])
-axs.set_ylim([0, 20])
+  fig, axs = plt.subplots()
+  axs.plot(x, y)
+  axs.set_xlim([0, 10])
+  axs.set_ylim([0, 20])
 
-plt.show()
-```
+  plt.show()
+  ```
 
-```python
-# [참고] pyplot API 방식. 위 그래프와 같다
+  ```python
+  # [참고] pyplot API 방식. 위 그래프와 같다
 
-plt.plot(x,y)
-#plt.axis([0, 10, 0, 20])
-plt.xlim([0, 10])
-plt.ylim([0, 20])
-plt.show()
-```
+  plt.plot(x,y)
+  #plt.axis([0, 10, 0, 20])
+  plt.xlim([0, 10])
+  plt.ylim([0, 20])
+  plt.show()
+  ```
 
-#### 3.3.2 ticks
+- **xticks, yticks**
 
-```python
-# x값은 0~10, 1단위로
-# y값은 x+10
+  ```python
+  # x값은 0~10, 1단위로
+  # y값은 x+10
 
-x = np.arange(10)
-y = x+10 # yticks에는 [0,1,2,...9,10,11,12...,19]
+  x = np.arange(10)
+  y = x+10 # yticks에는 [0,1,2,...9,10,11,12...,19]
 
-fig, axs = plt.subplots()
-axs.plot(x, y)
-axs.set_xlim([0, 10])
-axs.set_ylim([0, 20])
+  fig, axs = plt.subplots()
+  axs.plot(x, y)
+  axs.set_xlim([0, 10])
+  axs.set_ylim([0, 20])
 
-axs.set_xticks([0,2,4,6,8,10])
-axs.set_yticks(range(0,20))
+  axs.set_xticks([0,2,4,6,8,10])
+  axs.set_yticks(range(0,20))
 
-axs.set_xticklabels(['A','B','C','D','E','F'])
+  axs.set_xticklabels(['A','B','C','D','E','F'])
 
-plt.show()
-```
+  plt.show()
+  ```
 
-### 3-4. Legend
+### 4.4 Legend
 
 ```python
 x = np.arange(-np.pi, np.pi, 0.02)
@@ -428,193 +428,193 @@ plt.show()
 </div>
 
 
-### 3-5. Text
+### 4.5 Text
 
-#### 3.5.1 fig와 axes의 title
+- **fig와 axes의 title**
 
-```python
-x = np.arange(-np.pi, np.pi, 0.02)
-y1 = np.sin(x)
-y2 = np.cos(x)
+  ```python
+  x = np.arange(-np.pi, np.pi, 0.02)
+  y1 = np.sin(x)
+  y2 = np.cos(x)
 
-fig,axs = plt.subplots(1,2)
+  fig,axs = plt.subplots(1,2)
 
-axs[0].plot(x, y1)
-axs[1].plot(x, y2)
+  axs[0].plot(x, y1)
+  axs[1].plot(x, y2)
 
-axs[0].set_title('sin')
-axs[1].set_title('cos')
-fig.suptitle('삼각함수')
+  axs[0].set_title('sin')
+  axs[1].set_title('cos')
+  fig.suptitle('삼각함수')
 
-plt.show()
-```
+  plt.show()
+  ```
 
-#### 3.5.2 x, y label
+- **x, y label**
 
-```python
-# [참고] pyplot API 방식. label 달기
+  ```python
+  # [참고] pyplot API 방식. label 달기
 
-plt.plot([1, 2, 3, 4], [2, 3, 5, 10])
-plt.xlabel('X-Axis')
-plt.ylabel('Y-Axis')
-plt.show()
+  plt.plot([1, 2, 3, 4], [2, 3, 5, 10])
+  plt.xlabel('X-Axis')
+  plt.ylabel('Y-Axis')
+  plt.show()
 
-x = np.arange(-np.pi, np.pi, 0.02)
-y1 = np.sin(x)
-y2 = np.cos(x)
+  x = np.arange(-np.pi, np.pi, 0.02)
+  y1 = np.sin(x)
+  y2 = np.cos(x)
 
-fig,axs = plt.subplots(1,2)
-axs[0].plot(x, y1)
-axs[1].plot(x, y2)
+  fig,axs = plt.subplots(1,2)
+  axs[0].plot(x, y1)
+  axs[1].plot(x, y2)
 
-axs[0].set_title('sin')
-axs[1].set_title('cos')
-fig.suptitle('삼각함수')
+  axs[0].set_title('sin')
+  axs[1].set_title('cos')
+  fig.suptitle('삼각함수')
 
-axs[0].set_xlabel('x값', ha='left', va = 'top')
-axs[1].set_xlabel('x값')
+  axs[0].set_xlabel('x값', ha='left', va = 'top')
+  axs[1].set_xlabel('x값')
 
-axs[0].set_ylabel('sin값')
-axs[1].set_ylabel('cos값')
+  axs[0].set_ylabel('sin값')
+  axs[1].set_ylabel('cos값')
 
-plt.show()
-```
+  plt.show()
+  ```
 
-```python
-# label 위치 바꾸기
+  ```python
+  # label 위치 바꾸기
 
-import matplotlib.pyplot as plt
-import numpy as np
+  import matplotlib.pyplot as plt
+  import numpy as np
 
-fig, ax = plt.subplots()
-ax.set_xticks(np.arange(0,6,1))
+  fig, ax = plt.subplots()
+  ax.set_xticks(np.arange(0,6,1))
 
-label = ax.set_xlabel('Xlabel', horizontalalignment='left', fontsize = 20)
-#label = ax.set_xlabel('Xlabel', ha='right', fontsize = 20)
+  label = ax.set_xlabel('Xlabel', horizontalalignment='left', fontsize = 20)
+  #label = ax.set_xlabel('Xlabel', ha='right', fontsize = 20)
 
-ax.xaxis.set_label_coords(1,1) # 0~1
-#ax.xaxis.set_label_position('bottom')
+  ax.xaxis.set_label_coords(1,1) # 0~1
+  #ax.xaxis.set_label_position('bottom')
 
-plt.show()
-```
+  plt.show()
+  ```
 
-#### 3.5.3 text
+- **text**
 
-```python
-x = np.arange(8)
-y = x**2
+  ```python
+  x = np.arange(8)
+  y = x**2
 
-fig, ax = plt.subplots()
-ax.plot(x, y, 'ro')
+  fig, ax = plt.subplots()
+  ax.plot(x, y, 'ro')
 
-for x_, y_ in zip(x, y):
-    t = '(%d, %d)'%(int(x_), int(y_))
-    ax.text(x_+0.1, y_+0.1,t)
-```
+  for x_, y_ in zip(x, y):
+      t = '(%d, %d)'%(int(x_), int(y_))
+      ax.text(x_+0.1, y_+0.1,t)
+  ```
 
-<div class="insert-image">
-    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-014.png">
-</div>
-
-
-#### 3.5.4 annotate
-
-```python
-x = np.arange(-1, 3, 0.01)
-y = -x**4+4*x**3-4*x**2
-
-fig, ax = plt.subplots()
-ax.plot(x, y, lw=2)
-ax.annotate('local mininmum', xy=(1, -1), xytext=(0, -3.5),
-            arrowprops=dict(facecolor='red'))
-ax.set_ylim(-10,2)
-plt.show()
-```
-
-<div class="insert-image">
-    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-015.png">
-</div>
+  <div class="insert-image">
+      <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-014.png">
+  </div>
 
 
-### 3-6.color
+- **annotate**
 
-- 참고: [https://matplotlib.org/stable/api/colors_api.html](https://matplotlib.org/stable/api/colors_api.html){: target="_blank"}
+  ```python
+  x = np.arange(-1, 3, 0.01)
+  y = -x**4+4*x**3-4*x**2
 
-```python
-x = np.arange(-np.pi, np.pi, 0.02)
-y1 = np.sin(x)
-y2 = np.cos(x)
+  fig, ax = plt.subplots()
+  ax.plot(x, y, lw=2)
+  ax.annotate('local mininmum', xy=(1, -1), xytext=(0, -3.5),
+              arrowprops=dict(facecolor='red'))
+  ax.set_ylim(-10,2)
+  plt.show()
+  ```
 
-fig, ax = plt.subplots()
-
-ax.plot(x, y1, label = 'sin', color= (0.1, 0.3, 0.5)) # RGB
-ax.plot(x, y2, label = 'cos', color='c') # one of {'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'}
-
-ax.legend(loc='upper right')
-
-plt.show()
-```
-
-### 3-7. facecolor
-
-- 참고: [https://matplotlib.org/stable/api/colors_api.htm](https://matplotlib.org/stable/api/colors_api.html){: target="_blank"}
-
-```python
-#ax.set_facecolor()
-x = np.arange(-np.pi, np.pi, 0.02)
-y1 = np.sin(x)
-y2 = np.cos(x)
+  <div class="insert-image">
+      <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-015.png">
+  </div>
 
 
-fig,axs = plt.subplots(1,2)
+- **color**
 
-axs[0].plot(x, y1)
-axs[1].plot(x, y2)
-axs[0].set_title('sin')
-axs[1].set_title('cos')
-fig.suptitle('삼각함수')
+  - 참고: [https://matplotlib.org/stable/api/colors_api.html](https://matplotlib.org/stable/api/colors_api.html){: target="_blank"}
 
-axs[0].set_xlabel('x값', ha='left', va = 'top')
-axs[1].set_xlabel('x값')
+  ```python
+  x = np.arange(-np.pi, np.pi, 0.02)
+  y1 = np.sin(x)
+  y2 = np.cos(x)
 
-axs[0].set_ylabel('sin값')
-axs[1].set_ylabel('cos값')
+  fig, ax = plt.subplots()
 
-axs[0].set_facecolor('pink')
-axs[1].set_facecolor('skyblue')
-fig.set_facecolor("g")
+  ax.plot(x, y1, label = 'sin', color= (0.1, 0.3, 0.5)) # RGB
+  ax.plot(x, y2, label = 'cos', color='c') # one of {'b', 'g', 'r', 'c', 'm', 'y', 'k', 'w'}
 
-plt.show()
-```
+  ax.legend(loc='upper right')
 
-### 3-8. grid
+  plt.show()
+  ```
 
-```python
-x = np.arange(-np.pi, np.pi, 0.02)
-y1 = np.sin(x)
-y2 = np.cos(x)
+- **facecolor**
 
-fig, ax = plt.subplots()
+  - 참고: [https://matplotlib.org/stable/api/colors_api.htm](https://matplotlib.org/stable/api/colors_api.html){: target="_blank"}
 
-ax.plot(x, y1, label = 'sin')
-ax.plot(x, y2, label = 'cos')
-
-ax.legend(loc='upper right')
-
-ax.grid(color='r', linestyle='--', linewidth=0.5)
-plt.show()
-```
-
-<div class="insert-image">
-    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-016.png">
-</div>
+  ```python
+  #ax.set_facecolor()
+  x = np.arange(-np.pi, np.pi, 0.02)
+  y1 = np.sin(x)
+  y2 = np.cos(x)
 
 
-## **5.여러가지 그래프**
+  fig,axs = plt.subplots(1,2)
+
+  axs[0].plot(x, y1)
+  axs[1].plot(x, y2)
+  axs[0].set_title('sin')
+  axs[1].set_title('cos')
+  fig.suptitle('삼각함수')
+
+  axs[0].set_xlabel('x값', ha='left', va = 'top')
+  axs[1].set_xlabel('x값')
+
+  axs[0].set_ylabel('sin값')
+  axs[1].set_ylabel('cos값')
+
+  axs[0].set_facecolor('pink')
+  axs[1].set_facecolor('skyblue')
+  fig.set_facecolor("g")
+
+  plt.show()
+  ```
+
+- **grid**
+
+  ```python
+  x = np.arange(-np.pi, np.pi, 0.02)
+  y1 = np.sin(x)
+  y2 = np.cos(x)
+
+  fig, ax = plt.subplots()
+
+  ax.plot(x, y1, label = 'sin')
+  ax.plot(x, y2, label = 'cos')
+
+  ax.legend(loc='upper right')
+
+  ax.grid(color='r', linestyle='--', linewidth=0.5)
+  plt.show()
+  ```
+
+  <div class="insert-image">
+      <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-016.png">
+  </div>
+
+
+## 5. 여러가지 그래프
 
 - 참고: [https://matplotlib.org/stable/tutorials/pyplot.html](https://matplotlib.org/stable/tutorials/pyplot.html){: target="_blank"}
 
-### 5-1.Line Plot
+### 5.1 Line Plot
 
 - marker 참고: [https://matplotlib.org/stable/api/markers_api.html](https://matplotlib.org/stable/api/markers_api.html){: target="_blank"}
 - line style 참고: [https://matplotlib.org/stable/gallery/lines_bars_and_markers/linestyles.html](https://matplotlib.org/stable/gallery/lines_bars_and_markers/linestyles.html){: target="_blank"}
@@ -634,7 +634,7 @@ ax.plot(x, y4, linestyle='dotted')
 plt.show()
 ```
 
-###  5-2.Bar Plot
+### 5.2 Bar Plot
 
 ```python
 fruits = {'사과': 21, '바나나': 15, '배': 5, '키위': 20}
@@ -713,7 +713,7 @@ plt.show()
 </div>
 
 
-### 5-3.Histogram
+### 5.3 Histogram
 
 ```python
 data = np.random.rand(10000) # [0, 1) 범위에서 균일한 분포를 갖는 난수 10000개 생성
@@ -737,7 +737,7 @@ ax.hist(x, 10,  density=True, facecolor='g', histtype='barstacked')
 plt.show()
 ```
 
-### 5-4.Scatter Plot
+### 5.4 Scatter Plot
 
 ```python
 N = 50
@@ -758,7 +758,7 @@ plt.show()
 </div>
 
 
-### 5-5.heatmap
+### 5.5 heatmap
 
 ```python
 import numpy as np
@@ -781,18 +781,18 @@ harvest = np.array([[0.8, 2.4, 2.5, 3.9, 0.0, 4.0, 0.0],
 fig, ax = plt.subplots()
 im = ax.imshow(harvest)
 
-# We want to show all ticks...
+# 모든 틱(눈금) 보여주기
 ax.set_xticks(np.arange(len(farmers)))
 ax.set_yticks(np.arange(len(vegetables)))
-# ... and label them with the respective list entries
+# 각 해당 목록의 항목으로 라벨 지정
 ax.set_xticklabels(farmers)
 ax.set_yticklabels(vegetables)
 
-# Rotate the tick labels and set their alignment.
+# 틱 라벨을 보기 좋게 회전하고 정렬 설정
 plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
          rotation_mode="anchor")
 
-# Loop over data dimensions and create text annotations.
+# 데이터에 따라 텍스트 지정 생성 반복
 for i in range(len(vegetables)):
     for j in range(len(farmers)):
         text = ax.text(j, i, harvest[i, j],
@@ -806,7 +806,6 @@ plt.show()
 <div class="insert-image">
     <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-019.png">
 </div>
-
 
 ```python
 harvest = np.array([[0.8, 2.4, 2.5, 3.9, 0.0, 4.0, 0.0],
@@ -822,9 +821,11 @@ ax.imshow(harvest)
 plt.show()
 ```
 
-## **6.저장 (savefig)**
 
-- 참고: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html?highlight=savefig
+## 6.저장 (savefig)
+
+- 참고: [https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html?highlight=savefig](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.savefig.html?highlight=savefig){: target="_blank"}
+
 
 ```python
 savefile_path = './scatter.jpg'
@@ -846,300 +847,300 @@ print(img)
 img
 ```
 
-## **4. 실제 데이터로 그려보기**
+## 7. 실제 데이터로 그려보기
 
-- csv 파일을 읽어서 그 데이터를 그래프로 그려보자
+- **csv 파일을 읽어서 그 데이터를 그래프로 그려보자.**
 
-```python
-import pandas as pd
+  ```python
+  import pandas as pd
 
-cctv = pd.read_csv('https://github.com/SkyLectures/LectureMaterials/raw/refs/heads/main/datasets/S01-01-04-04_01-SejongCCTV.csv', encoding='cp949')
-cctv.head()
-```
+  cctv = pd.read_csv('https://github.com/SkyLectures/LectureMaterials/raw/refs/heads/main/datasets/S01-01-04-04_01-SejongCCTV.csv', encoding='cp949')
+  cctv.head()
+  ```
 
-<div class="insert-image">
-    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-020.png">
-</div>
+  <div class="insert-image">
+      <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-020.png">
+  </div>
 
-```python
-cctv.info()
-```
+  ```python
+  cctv.info()
+  ```
 
-<div class="insert-image">
-    <img style="width: 300px;" src="/materials/python/images/S01-01-04-04_01-021.png">
-</div>
-
-
-```python
-cctv.describe()
-```
-
-<div class="insert-image">
-    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-022.png">
-</div>
+  <div class="insert-image">
+      <img style="width: 400px;" src="/materials/python/images/S01-01-04-04_01-021.png">
+  </div>
 
 
-```python
-# x축은 카메라 화소수, y축은 카메라 대수
-# 카메라화소수가 얼마얼마 있는지 unique한 값을 찾아서 오름차순으로 정렬 ==> x
+  ```python
+  cctv.describe()
+  ```
 
-cctv['카메라화소수'].unique()
-cctv['카메라화소수'].value_counts()
-data = cctv['카메라화소수'].value_counts().sort_index()
+  <div class="insert-image">
+      <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-022.png">
+  </div>
 
-x = data.index
-y = data.values
 
-fig, ax = plt.subplots()
-ax.plot(x, y)
-plt.show()
-```
+  ```python
+  # x축은 카메라 화소수, y축은 카메라 대수
+  # 카메라화소수가 얼마얼마 있는지 unique한 값을 찾아서 오름차순으로 정렬 ==> x
 
-- x는 0부터 400까지, y는 0부터 1000까지로 그래프 범위를 지정해보자
+  cctv['카메라화소수'].unique()
+  cctv['카메라화소수'].value_counts()
+  data = cctv['카메라화소수'].value_counts().sort_index()
 
-```python
-fig, axs = plt.subplots()
-axs.plot(data.index, data.values)
+  x = data.index
+  y = data.values
 
-axs.set_xlim([0, 400])
-axs.set_ylim([0, 1000])
+  fig, ax = plt.subplots()
+  ax.plot(x, y)
+  plt.show()
+  ```
 
-plt.show()
-```
+- **x는 0부터 400까지, y는 0부터 1000까지로 그래프 범위를 지정해보자.**
 
-- 화소 수를 100만 단위로 Tick을 지정해보자
+  ```python
+  fig, axs = plt.subplots()
+  axs.plot(data.index, data.values)
 
-```python
-fig, axs = plt.subplots()
-axs.plot(data.index, data.values)
+  axs.set_xlim([0, 400])
+  axs.set_ylim([0, 1000])
 
-axs.set_xlim([0,400])
-axs.set_ylim([0,1000])
-axs.set_xticks([0,100,200,300,400])
-axs.set_xticklabels(['0화소','100만화소','200만화소','300만화소','400만화소'])
+  plt.show()
+  ```
 
-plt.show()
-```
+- **화소 수를 100만 단위로 Tick을 지정해보자.**
 
-- 범례 위치를 옮겨보자
+  ```python
+  fig, axs = plt.subplots()
+  axs.plot(data.index, data.values)
 
-```python
-fig, axs = plt.subplots()
-axs.plot(data.index, data.values, label='카메라 화소')
+  axs.set_xlim([0,400])
+  axs.set_ylim([0,1000])
+  axs.set_xticks([0,100,200,300,400])
+  axs.set_xticklabels(['0화소','100만화소','200만화소','300만화소','400만화소'])
 
-axs.set_xlim([0, 400])
-axs.set_ylim([0, 1000])
+  plt.show()
+  ```
 
-axs.set_xticks([0,100,200,300,400])
-axs.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
+- **범례 위치를 옮겨보자.**
 
-axs.legend(loc='upper right')
+  ```python
+  fig, axs = plt.subplots()
+  axs.plot(data.index, data.values, label='카메라 화소')
 
-plt.show()
-```
+  axs.set_xlim([0, 400])
+  axs.set_ylim([0, 1000])
 
-- 그래프에 figure와 axes의 Title을 달아보자
+  axs.set_xticks([0,100,200,300,400])
+  axs.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
 
-```python
-fig, axs = plt.subplots()
+  axs.legend(loc='upper right')
 
-axs.set_title('카메라화소')
-fig.suptitle('화소')
+  plt.show()
+  ```
 
-axs.plot(data.index, data.values, label='카메라 화소')
-axs.set_xlim([0, 400])
-axs.set_ylim([0, 1000])
-axs.set_xticks([0,100,200,300,400])
-axs.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
-axs.legend(loc='upper right')
-plt.show()
-```
+- **그래프에 figure와 axes의 Title을 달아보자.**
 
-- CCTV 그래프에 x축, y축의 label을 달아보자.
+  ```python
+  fig, axs = plt.subplots()
+
+  axs.set_title('카메라화소')
+  fig.suptitle('화소')
+
+  axs.plot(data.index, data.values, label='카메라 화소')
+  axs.set_xlim([0, 400])
+  axs.set_ylim([0, 1000])
+  axs.set_xticks([0,100,200,300,400])
+  axs.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
+  axs.legend(loc='upper right')
+  plt.show()
+  ```
+
+- **CCTV 그래프에 x축, y축의 label을 달아보자.**
   - x축: CCTV 화소수
   - y축: CCTV 대수
 
-```python
-fig, axs = plt.subplots()
-axs.plot(data.index, data.values, label='카메라 화소')
+  ```python
+  fig, axs = plt.subplots()
+  axs.plot(data.index, data.values, label='카메라 화소')
 
-# title
-fig.suptitle('화소')
-axs.set_title('카메라화소')
+  # title
+  fig.suptitle('화소')
+  axs.set_title('카메라화소')
 
-# xlim, ylim
-axs.set_xlim([0, 400])
-axs.set_ylim([0, 1000])
+  # xlim, ylim
+  axs.set_xlim([0, 400])
+  axs.set_ylim([0, 1000])
 
-# xticks, xticklabels
-axs.set_xticks([0,100,200,300,400])
-axs.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
+  # xticks, xticklabels
+  axs.set_xticks([0,100,200,300,400])
+  axs.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
 
-# legend
-axs.legend(loc='upper right')
+  # legend
+  axs.legend(loc='upper right')
 
-# xlabel, ylabel
-axs.set_xlabel('CCTV 화소수')
-axs.set_ylabel('CCTV 대수')
+  # xlabel, ylabel
+  axs.set_xlabel('CCTV 화소수')
+  axs.set_ylabel('CCTV 대수')
 
-plt.show()
-```
+  plt.show()
+  ```
 
-- 그래프에 text를 달아보자
+- **그래프에 text를 달아보자.**
 
-```python
-fig, ax = plt.subplots()
-ax.plot(data.index, data.values, label='카메라 화소')
+  ```python
+  fig, ax = plt.subplots()
+  ax.plot(data.index, data.values, label='카메라 화소')
 
-ax.set_xlim([0, 400])
-ax.set_ylim([0, 1000])
+  ax.set_xlim([0, 400])
+  ax.set_ylim([0, 1000])
 
-ax.set_xticks([0,100,200,300,400])
-ax.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
+  ax.set_xticks([0,100,200,300,400])
+  ax.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
 
-ax.legend(loc='upper right')
+  ax.legend(loc='upper right')
 
-ax.set_xlabel('CCTV 화소수')
-ax.set_ylabel('CCTV 대수')
+  ax.set_xlabel('CCTV 화소수')
+  ax.set_ylabel('CCTV 대수')
 
-for x_, y_ in zip(data.index, data.values):
-  ax.text(x_+1, y_, '%d대'%(int(y_)))
+  for x_, y_ in zip(data.index, data.values):
+    ax.text(x_+1, y_, '%d대'%(int(y_)))
 
-plt.show()
-```
+  plt.show()
+  ```
 
-```python
-fig, axs = plt.subplots()
+  ```python
+  fig, axs = plt.subplots()
 
-axs.plot(data.index, data.values, label='카메라 화소')
+  axs.plot(data.index, data.values, label='카메라 화소')
 
-axs.set_xlim([0, 400])
-axs.set_ylim([0, 1000])
+  axs.set_xlim([0, 400])
+  axs.set_ylim([0, 1000])
 
-axs.set_xticks([0,100,200,300,400])
-axs.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
+  axs.set_xticks([0,100,200,300,400])
+  axs.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
 
-axs.legend(loc='upper right')
+  axs.legend(loc='upper right')
 
-axs.set_xlabel('CCTV 화소수')
-axs.set_ylabel('CCTV 대수')
+  axs.set_xlabel('CCTV 화소수')
+  axs.set_ylabel('CCTV 대수')
 
-for x_, y_ in zip(data.index, data.values):
-    axs.text(x_+1, y_,'%d, %d' % (int(x_), int(y_)))
+  for x_, y_ in zip(data.index, data.values):
+      axs.text(x_+1, y_,'%d, %d' % (int(x_), int(y_)))
 
-plt.show()
-```
+  plt.show()
+  ```
 
-- 그래프에 화살표를 달아보자. 그 외에도 다른 annotation이 있는지 더 찾아보고 달아보자
+- **그래프에 화살표를 달아보자. 그 외에도 다른 annotation이 있는지 더 찾아보고 달아보자.**
 
-```python
-# 707 위치에 '가장 많음'이라고 달아보자
+  ```python
+  # 707 위치에 '가장 많음'이라고 달아보자.
 
-fig, ax = plt.subplots()
-ax.plot(data.index, data.values, label='카메라 화소')
+  fig, ax = plt.subplots()
+  ax.plot(data.index, data.values, label='카메라 화소')
 
-ax.set_xlim([0, 400])
-ax.set_ylim([0, 1000])
+  ax.set_xlim([0, 400])
+  ax.set_ylim([0, 1000])
 
-ax.set_xticks([0,100,200,300,400])
-ax.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
+  ax.set_xticks([0,100,200,300,400])
+  ax.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
 
-ax.legend(loc='upper right')
+  ax.legend(loc='upper right')
 
-ax.set_xlabel('CCTV 화소수')
-ax.set_ylabel('CCTV 대수')
+  ax.set_xlabel('CCTV 화소수')
+  ax.set_ylabel('CCTV 대수')
 
-for x_, y_ in zip(data.index, data.values):
-  ax.text(x_+1, y_, '%d대'%(int(y_)))
+  for x_, y_ in zip(data.index, data.values):
+    ax.text(x_+1, y_, '%d대'%(int(y_)))
 
-ax.annotate('가장 많음', xy=(200,707), xytext=(100,700),arrowprops=dict(facecolor='red'))
+  ax.annotate('가장 많음', xy=(200,707), xytext=(100,700),arrowprops=dict(facecolor='red'))
 
-plt.show()
-```
+  plt.show()
+  ```
 
-- 그래프의 색상을 바꿔보자
+- **그래프의 색상을 바꿔보자.**
 
-```python
-fig, ax = plt.subplots()
-ax.plot(data.index, data.values, label='카메라 화소', color='r')
+  ```python
+  fig, ax = plt.subplots()
+  ax.plot(data.index, data.values, label='카메라 화소', color='r')
 
-ax.set_xlim([0, 400])
-ax.set_ylim([0, 1000])
+  ax.set_xlim([0, 400])
+  ax.set_ylim([0, 1000])
 
-ax.set_xticks([0,100,200,300,400])
-ax.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
+  ax.set_xticks([0,100,200,300,400])
+  ax.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
 
-ax.legend(loc='upper right')
+  ax.legend(loc='upper right')
 
-ax.set_xlabel('CCTV 화소수')
-ax.set_ylabel('CCTV 대수')
+  ax.set_xlabel('CCTV 화소수')
+  ax.set_ylabel('CCTV 대수')
 
-for x_, y_ in zip(data.index, data.values):
-  ax.text(x_+1, y_+20, '%d대'%int(y_))
+  for x_, y_ in zip(data.index, data.values):
+    ax.text(x_+1, y_+20, '%d대'%int(y_))
 
-ax.annotate('가장 많음', xy=(200,707), xytext=(100,700),arrowprops=dict(facecolor='blue'))
+  ax.annotate('가장 많음', xy=(200,707), xytext=(100,700),arrowprops=dict(facecolor='blue'))
 
-plt.show()
-```
+  plt.show()
+  ```
 
-- 그래프의 배경색상을 바꿔보자
+- **그래프의 배경색상을 바꿔보자.**
 
-```python
-fig, ax = plt.subplots()
+  ```python
+  fig, ax = plt.subplots()
 
-ax.plot(data.index, data.values, label='카메라 화소', color='r')
+  ax.plot(data.index, data.values, label='카메라 화소', color='r')
 
-ax.set_xlim([0, 400])
-ax.set_ylim([0, 1000])
+  ax.set_xlim([0, 400])
+  ax.set_ylim([0, 1000])
 
-ax.set_xticks([0,100,200,300,400])
-ax.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
+  ax.set_xticks([0,100,200,300,400])
+  ax.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
 
-ax.legend(loc='upper right')
+  ax.legend(loc='upper right')
 
-ax.set_xlabel('CCTV 화소수')
-ax.set_ylabel('CCTV 대수')
+  ax.set_xlabel('CCTV 화소수')
+  ax.set_ylabel('CCTV 대수')
 
-for x_, y_ in zip(data.index, data.values):
-  ax.text(x_+1, y_+20, '%d대'%int(y_))
+  for x_, y_ in zip(data.index, data.values):
+    ax.text(x_+1, y_+20, '%d대'%int(y_))
 
-ax.annotate('가장 많음', xy=(200,707), xytext=(100,700),arrowprops=dict(facecolor='blue'))
+  ax.annotate('가장 많음', xy=(200,707), xytext=(100,700),arrowprops=dict(facecolor='blue'))
 
-ax.set_facecolor('c')
-fig.set_facecolor('y')
+  ax.set_facecolor('c')
+  fig.set_facecolor('y')
 
-plt.show()
-```
+  plt.show()
+  ```
 
-- 그래프에 그리드(grid)를 넣어보자.
+- **그래프에 그리드(grid)를 넣어보자.**
 
-```python
-fig, ax = plt.subplots()
-ax.plot(data.index, data.values, label='카메라 화소', color='r')
-ax.set_xlim([0, 400])
-ax.set_ylim([0, 1000])
-ax.set_xticks([0,100,200,300,400])
-ax.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
-ax.legend(loc='upper right')
-ax.set_xlabel('CCTV 화소수')
-ax.set_ylabel('CCTV 대수')
+  ```python
+  fig, ax = plt.subplots()
+  ax.plot(data.index, data.values, label='카메라 화소', color='r')
+  ax.set_xlim([0, 400])
+  ax.set_ylim([0, 1000])
+  ax.set_xticks([0,100,200,300,400])
+  ax.set_xticklabels(['0화소','1백만화소','2백만화소','3백만화소','4백만화소'])
+  ax.legend(loc='upper right')
+  ax.set_xlabel('CCTV 화소수')
+  ax.set_ylabel('CCTV 대수')
 
-for x_, y_ in zip(data.index, data.values):
-  ax.text(x_+1, y_+20, '%d대'%int(y_))
+  for x_, y_ in zip(data.index, data.values):
+    ax.text(x_+1, y_+20, '%d대'%int(y_))
 
-ax.annotate('가장 많음', xy=(200,707), xytext=(100,700),arrowprops=dict(facecolor='blue'))
-ax.set_facecolor('cyan')
-fig.set_facecolor('pink')
-ax.grid(color='r', linestyle='--', linewidth=1)
-plt.show()
-```
+  ax.annotate('가장 많음', xy=(200,707), xytext=(100,700),arrowprops=dict(facecolor='blue'))
+  ax.set_facecolor('cyan')
+  fig.set_facecolor('pink')
+  ax.grid(color='r', linestyle='--', linewidth=1)
+  plt.show()
+  ```
 
-<div class="insert-image">
-    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-023.png">
-</div>
+  <div class="insert-image">
+      <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-023.png">
+  </div>
 
 
-## **7. 지도에 표시해보기**
+## 8. 지도에 표시해보기
 
 ```python
 import folium
