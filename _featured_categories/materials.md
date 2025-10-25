@@ -118,6 +118,7 @@ description: >
         - [K-최근접이웃(K-Nearest Neighbors, KNN)](/materials/S03-02-02-01_03-KNearestNeighbors)
         - [의사결정나무(Decision Tree)](/materials/S03-02-02-01_04-DecisionTree)
         - [서포트 벡터 머신(Support Vector Machine, SVM)](/materials/S03-02-02-01_05-SupportVectorMachine)
+
     - 심화모델(앙상블 모델)
         - [앙상블 러닝 개요(Bagging, Boosting)](/materials/S03-02-02-02_01-EnsembleLearningOverview)
         - [랜덤 포레스트(Random Forest)](/materials/S03-02-02-02_02-RandomForest)
@@ -125,7 +126,15 @@ description: >
         - [XGBoost(Extream Gradient Boost)](/materials/S03-02-02-02_04-ExtreamGradientBoost)
         - [LightGBM(Light Gradient Boosting Machine)](/materials/S03-02-02-02_05-LightGbm)
         - [CatBoost](/materials/S03-02-02-02_06-CatBoost)
+
     - [인공신경망(Artificial Neural Network, ANN)](/materials/S03-02-02-02_07-ArtificialNeuralNetwork)
+
+    - OpenCV 기반 영상처리
+        - [디지털 이미지의 구조](/materials/S03-02-03-01_01-DigitalImageStructure)
+        - [OpenCV 기초](/materials/S03-02-03-02_01-OpenCv)
+        - [영상 전처리 및 필터링](/materials/S03-02-03-03_01-ImagePreprocessingFiltering)
+        - [엣지 검출 및 기하학적 변환](/materials/S03-02-03-04_01-EdgeDetectionTransform)
+        - [특징점 검출 및 추적 기초](/materials/S03-02-03-05_01-FeatureDtectionTracking)
 
 ### 3.3 딥러닝(DL) 
 - [딥러닝 개요](/materials/S03-03-01-01_01-DeepLearningOverview)
@@ -203,8 +212,12 @@ description: >
 ---
 
 ## [5. Single Board Computer(SBC)](/materials/05_SBC)
+- SBC 개요
+
 - 아두이노(Arduino)
 - 라즈베리파이(Raspberry Pi)
+    - [라즈베리파이 OS 설치 및 개발 환경 설정](/materials/S05-03-01-01_01-RaspberryPiSetup)
+    - [라즈베리파이 제어 기초](/materials/S05-03-02-01_01-RaspberryPiControl)
 - NVIDIA 젯슨 나노(Jetson Nano)
 
 ---
@@ -269,5 +282,33 @@ description: >
 - 깃허브를 통한 코드 리뷰 및 최적화
 - 프로젝트 발표 준비 및 최종 업데이트
 
+---
+
+## 10. Project-based
+
+### 10.1 인공지능 기반 자율주행 자동차
+- 모빌리티 AI의 이해
+    - [모빌리티 AI 개요](/materials/S10-01-01-01_01-MobilityAiOverview)
+
+- 자율주행 기술의 원리 및 요소
+    - [자율주행 레벨(Level)의 이해](/materials/S10-01-02-01_01-AutonomousDrivingLevels)
+    - [인지-판단-제어 프로세스 소개](/materials/S10-01-02-01_02-CognitionJudgmentControlProcess)
+    - [자율주행 센서의 종류와 역할](/materials/S10-01-02-01_03-AutonomousDrivingSensors)
+
+- 자율주행 구현
+    - [자율주행 키트 조립](/materials/S10-01-02-02_01-AssemblingKit)
+    - [라즈베리파이-카메라 실시간 영상 처리](/materials/S10-01-03-06_01-RealtimeImageProcessing)
+    - [딥러닝 기반 객체 탐지](S10-01-04-04_01-DeepLearningBasedObjectDetection)
+    - [딥러닝 기반 차선 인식](/materials/S10-01-04-05_01-DeepLearningBasedLaneRecognition)
+    - [도로 표지판 및 신호등 인식](/materials/S10-01-04-06_01-RoadSignTrafficLightRecognition)
+    - [자율주행 인지 모델 구현](/materials/S10-01-04-07_01-AutonomousDrivingCognitiveModelImplementation)
+    - [인지 결과 기반 판단 전략](/materials/S10-01-05-01_01-DecisionStrategy)
+    - [자율주행 제어의 기초 및 PID 제어](/materials/S10-01-05-02_01-AutonomousDrivingControlPidControl)
+    - [라즈베리파이 기반 차량 제어](/materials/S10-01-05-03_01-RaspberryPiBasedVehicleControl)
+    - [영상 인식을 통한 자율주행 제어 구현](/materials/S10-01-05-04_01-AutonomousDrivingControlImplementation)
+                
+- 음성인식 기반 제어
+    - [음성 명령어 기반 차량 제어](/materials/S10-01-06-03_01-VoiceCommandBasedVehicleControl)
+    - [LLM 기반 차량 제어](/materials/S10-01-06-04_01-LlmBasedVehicleControl)
 
 [&nbsp;](/materials/99_Test)

@@ -9,7 +9,7 @@ description: >
 {:toc .large-only .toc-sticky:true}
 
 ## 2025
-- [**[11.00~12.00]** 모빌리티 AI 산업 프로젝트 과정(160H)](/lectlog/2025-11-03-ICT_Mobility_AI_Project)
+- [**[11.17~12.12]** 모빌리티 AI 산업 프로젝트 과정(80H)](/lectlog/2025-11-17-ICT_Mobility_AI_Project)
 <!-- (잠정보류)- [**[10.21~10.31]** 스마트팩토리 품질경쟁력 기반DX경영(45H)](/lectlog/2025-10-21-SmartFactory_QA_DX) -->
 - [**[09.09/09.23]** SSAFY 13기 특화프로젝트 전문가 리뷰 1~2차(7H)](/lectlog/2025-09-09-SSAFY)
 - [**[06.19~06.20]** 수도권ICT이노베이션스퀘어교육사업 멘토링(3H)](/lectlog/2025-06-19-ICT_Mentoring)
