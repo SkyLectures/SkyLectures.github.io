@@ -31,6 +31,8 @@ categories: materials
 > </div>
 {: .expert-quote}
 
+- [<span style="color: #0A0;font-weight: bold;">Colab에서 실습파일 열기</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/ai/notebooks/S03-03-02-04_01-DnnCnn.ipynb)
+
 ## 1. 첫번째 파이썬 프로그램
 
 <div class="insert-image" style="text-align: left;">
@@ -62,8 +64,6 @@ categories: materials
 - 이렇게 하나의 프로그램 코드가 완성되었습니다.<br>
 위의 방법이 프로그래밍의 가장 기본적인 방법입니다.<br><br>
 
-
-<span style="color: #0A0">(여기부터는 실행 결과 없이 코드만 제시합니다. 직접 실행해 보시기 바랍니다.)</span>
 
 ## 2. 자료형 (Data Type)
 
@@ -712,7 +712,17 @@ categories: materials
     Windows 10과 같은 OS를 포함해서... 아무리 큰 프로그램이라도 각 기능별로 하나하나 쪼개나가면 그 밑바닥에는 결국 위의 4가지 정도가 기본이 되어 구현됩니다.<br>
     그 이후에는 더 고차원적인 연산, 기능을 구현하기 위해서 점점 코드를 확장하고 키워나가는것입니다.<br><br>
 
+### 4.3 문제 풀어보기
 
+- 구구단 출력해보기
+
+    ```python
+    for dan in range(2, 10):
+        print(dan, "단")
+        for hang in range(2, 10):
+            print(dan , "*", hang, "=", dan*hang)
+        print()
+    ```
 
 ## 5. 문자열 처리
 
@@ -924,6 +934,12 @@ else:
 
             result = add_number(30)
             print(result)
+
+            result = add_number(20, 30)
+            print(result)
+
+            result = add_number()
+            print(result)            
             ```
 
             ```python
@@ -951,6 +967,12 @@ else:
 
         a, b, c = reverse(10, 20, 30)
         print(a, b, c)
+        ```
+
+        ```python
+        result = reverse(10, 20, 30)
+        print(result)
+        print(type(result))
         ```
 
         ```python
