@@ -19,9 +19,9 @@ categories: materials
     <table>
         <caption>(자료출처: 정보통신기획평가원, ICT R&D 기술로드맵 2025 보고서 - 4. 인공지능·SW·자율주행자동차)</caption>
         <thead>
-            <th style="width: 70px;">단계</th>
-            <th style="width: 160px;">특징</th>
-            <th style="width: 720px;">자율주행차 기능 및 내용</th>
+            <th style="width: 60px;">단계</th>
+            <th style="width: 150px;">특징</th>
+            <th style="width: 740px;">자율주행차 기능 및 내용</th>
         </thead>
         <tbody>
             <tr>
@@ -40,8 +40,7 @@ categories: materials
                 <td rowspan="2" class="td-rowheader">1단계</td>
                 <td rowspan="2">운전자 지원<br>Driver Assistance</td>
                 <td class="td-left">
-                    운전자는 차의 속도와 방향을 통제하며, 시스템은 특정 주행모드에서 일시 강제운전으로 개입하여 조향 또는 감가속 중 하나의 기능을 수행<br>
-                    (예: 전방충돌방지 보조, 후측방 충돌경고, 차선유지보조, 속도조절기능 등)
+                    운전자는 차의 속도와 방향을 통제하며, 시스템은 특정 주행모드에서 일시 강제운전으로 개입하여 조향 또는 감가속 중 하나의 기능을 수행 (예: 전방충돌방지 보조, 후측방 충돌경고, 차선유지보조, 속도조절기능 등)
                 </td>
             </tr>
             <tr>
