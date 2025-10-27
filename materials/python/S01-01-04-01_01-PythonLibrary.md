@@ -8,6 +8,10 @@ categories: materials
 * toc
 {:toc .large-only .toc-sticky:true}
 
+<div class="colab-link">
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/python/notebooks/S01-01-04-01_01-PythonLibrary.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+</div>
+
 > - 파이썬에는 수많은 표준 라이브러리가 기본적으로 내장되어 있습니다.
 > - 그 중에서 자주 사용할만한 몇 개의 라이브러리의 예시를 살펴보겠습니다.
 > - 그 외의 필요한 라이브러리들은 파이썬 공식 사이트의 레퍼런스를 참고하시기 바랍니다.<br><br>

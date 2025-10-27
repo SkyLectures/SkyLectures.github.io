@@ -8,6 +8,10 @@ categories: materials
 * toc
 {:toc .large-only .toc-sticky:true}
 
+<div class="colab-link">
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/python/notebooks/S01-01-03-01_01-PythonBasic.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+</div>
+
 > 본 페이지에 한하여 직접 설명하는 식으로 작성되었습니다.<br>
 > <span style="color: #C00">프로그래밍을 처음 접하는 사람</span>을 대상으로 설명합니다.<br>
 > 천천히 읽으면서 실습을 하고 다음 단계로 넘어가세요.
@@ -30,8 +34,6 @@ categories: materials
 >   <a href="https://blog.naver.com/aida-smart/223744963918" target="_blank">(참고) 그럼 왜 그렇게 어렵게 보일까요?</a>
 > </div>
 {: .expert-quote}
-
-- [<span style="color: #0A0;font-weight: bold;">Colab에서 실습파일 열기</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/ai/notebooks/S03-03-02-04_01-DnnCnn.ipynb)
 
 ## 1. 첫번째 파이썬 프로그램
 

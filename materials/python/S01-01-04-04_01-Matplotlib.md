@@ -1,12 +1,16 @@
 ---
 layout: page
-title:  "파이썬 기초: 라이브러리-Matplotlib"
+title:  "파이썬 라이브러리: Matplotlib"
 date:   2025-03-01 10:00:00 +0900
 permalink: /materials/S01-01-04-04_01-Matplotlib
 categories: materials
 ---
 * toc
 {:toc .large-only .toc-sticky:true}
+
+<div class="colab-link">
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/python/notebooks/S01-01-04-04_01-Matplotlib.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+</div>
 
 ## 1. 데이터 시각화
 
@@ -42,7 +46,6 @@ categories: materials
   - 다양한 그래프와 그 구성요소에 대하여 상세한 서식을 설정 가능
   - 다양한 출력형식(PNG, SVG, JPG 등) 지원
   - MATLAB과 유사한 사용자 인터페이스
-
 
 ## 3. 환경설정
 
@@ -517,7 +520,7 @@ plt.show()
   </div>
 
 
-- **annotate**
+### 4.6 Annotate
 
   ```python
   x = np.arange(-1, 3, 0.01)
@@ -536,7 +539,7 @@ plt.show()
   </div>
 
 
-- **color**
+### 4.7 Color
 
   - 참고: [https://matplotlib.org/stable/api/colors_api.html](https://matplotlib.org/stable/api/colors_api.html){: target="_blank"}
 
@@ -555,7 +558,7 @@ plt.show()
   plt.show()
   ```
 
-- **facecolor**
+### 4.8 FaceColor
 
   - 참고: [https://matplotlib.org/stable/api/colors_api.htm](https://matplotlib.org/stable/api/colors_api.html){: target="_blank"}
 
@@ -587,7 +590,7 @@ plt.show()
   plt.show()
   ```
 
-- **grid**
+### 4.9 Grid
 
   ```python
   x = np.arange(-np.pi, np.pi, 0.02)

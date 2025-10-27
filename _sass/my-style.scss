@@ -170,6 +170,16 @@ blockquote.summary-quote {
   color: #555;
 }
 
+.colab-link {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: right;
+  
+  a:link, a:visited{
+    color: green;    
+  }
+}
+
 /* _sass/my-style.scss 또는 적절한 SCSS 파일 */
 
 .nav-group-separator {
