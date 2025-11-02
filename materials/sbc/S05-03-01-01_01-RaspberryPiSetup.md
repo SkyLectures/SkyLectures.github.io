@@ -176,22 +176,6 @@ categories: materials
             <img style="width: 700px;" src="/materials/sbc/images/S05-03-01-01_01-023.png">
         </div>
 
-- **원격 접속 서버(Ubuntu 기준) 의 GUI환경을 사용하고 싶다면..**
-    - 다양한 프로그램을 사용하여 원격 접속 서버의 GUI환경을 사용할 수 있음
-        - RealVNC (VNC Viewer)
-        - TightVNC
-        - Xrdp 등
-    - 어떤 프로그램을 사용해도 무방함. 자기에게 편한 것을 선택하여 사용
-
-    - VNC Viewer를 이용한 예시 (원격서버는 Ubuntu 기준)
-        - [VNC Viewer 다운로드 후 설치](https://www.realvnc.com/en/connect/download/viewer/)
-        - VNC Viewer 실행 **→** IP 입력 **→** 접속
-
-            <div class="insert-image" style="text-align: center;">
-                <img style="width: 800px;" src="/materials/sbc/images/S05-03-01-01_01-024.jpg"><br><br>
-                <img style="width: 800px;" src="/materials/sbc/images/S05-03-01-01_01-025.jpg">
-            </div>
-
 ## 3. 원격 접속으로 라즈베리파이 사용하기
 
 - **라즈베리파이를 사용하여 개발하는 방법**
@@ -216,4 +200,21 @@ categories: materials
 
             <div class="insert-image" style="text-align: center;">
                 <img style="width: 600px;" src="/materials/sbc/images/S05-03-01-01_01-026.png">
+            </div>
+
+
+- **원격 접속 서버(Ubuntu 기준) 의 GUI환경을 사용하고 싶다면..**
+    - 다양한 프로그램을 사용하여 원격 접속 서버의 GUI환경을 사용할 수 있음
+        - RealVNC (VNC Viewer)
+        - TightVNC
+        - Xrdp 등
+    - 어떤 프로그램을 사용해도 무방함. 자기에게 편한 것을 선택하여 사용
+
+    - VNC Viewer를 이용한 예시 (원격서버는 Ubuntu 기준)
+        - [VNC Viewer 다운로드 후 설치](https://www.realvnc.com/en/connect/download/viewer/){: target="blank"}
+        - VNC Viewer 실행 **→** IP 입력 **→** 접속
+
+            <div class="insert-image" style="text-align: center;">
+                <img style="width: 800px;" src="/materials/sbc/images/S05-03-01-01_01-024.jpg"><br><br>
+                <img style="width: 800px;" src="/materials/sbc/images/S05-03-01-01_01-025.jpg">
             </div>

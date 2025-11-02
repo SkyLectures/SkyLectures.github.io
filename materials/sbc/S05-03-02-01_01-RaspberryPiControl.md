@@ -84,11 +84,6 @@ categories: materials
     </table>
 </div>
 
-> - 라즈베리파이는 2012년 3월 1일(또는 2월 29일) 모델 B가 정식 출시가 되었으며, 이 제품을 최초로 인식함
-> - 그러나 제품화 이전의 모델은 2011년 8월 12일 알파보드가 공개되었음
-> - 실제로 본인이 소장하고 있는 라즈베리파이 모델 B는 보드에 2011.12 라는 라즈베리파이의 초기 디자인이 완성된 저작권 일자가 인쇄되어 있음
-{: .expert-quote}
-
 ## 2. 라즈베리파이 개요
 
 - **대표적인 Single Board Computer(SBC)**
@@ -152,7 +147,7 @@ categories: materials
 
 ## 3. 라즈베리파이 제어 기초
 
-### 3.1 GPIO
+### 3.1 GPIO 개요
 
 - **GPIO(General Purpose Input/Output)**
     - 라즈베리파이 model A/B를 제외하고 모든 모델은 40핀 규격을 사용함
@@ -164,3 +159,154 @@ categories: materials
         </div>
 
 
+### 3.2 LED로 전조등 구현하기
+
+- 전조등 LED 제어용 GPIO 핀
+    - 전방 좌측: 26
+    - 전방 우측: 16
+    - 후방 좌측: 21
+    - 후방 우측: 20
+
+- 
+
+```python
+#//file: "control_LED.py"
+import RPi.GPIO as GPIO
+import time
+
+LED1 = 26
+LED2 = 16
+LED3 = 20
+LED4 = 21
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(LED1,GPIO.OUT)
+GPIO.setup(LED2,GPIO.OUT)
+GPIO.setup(LED3,GPIO.OUT)
+GPIO.setup(LED4,GPIO.OUT)
+
+try:
+    while True:
+        GPIO.output(LED1,GPIO.HIGH)
+        GPIO.output(LED2,GPIO.HIGH)
+        GPIO.output(LED3,GPIO.HIGH)
+        GPIO.output(LED4,GPIO.HIGH)
+        time.sleep(1.0)
+        GPIO.output(LED1,GPIO.LOW)
+        GPIO.output(LED2,GPIO.LOW)
+        GPIO.output(LED3,GPIO.LOW)
+        GPIO.output(LED4,GPIO.LOW)
+        time.sleep(1.0)
+
+except KeyboardInterrupt:
+    pass
+
+GPIO.cleanup()
+```
+
+### 3.3 버튼 입력받기
+
+```python
+#//file: "input_Button.py"
+import RPi.GPIO as GPIO
+import time
+
+LED_PIN = 33
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(LED_PIN, GPIO.OUT)
+
+GPIO.output(LED_PIN, True)
+print("LED turn on")
+
+time.sleep(5.0)
+
+GPIO.output(LED_PIN, False)
+print("LED turn off")
+
+GPIO.cleanup()
+```
+
+### 3.4 부저로 경적기능 구현하기
+
+```python
+#//file: "control_Buzzer.py"
+import RPi.GPIO as GPIO
+import time
+
+LED_PIN = 33
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(LED_PIN, GPIO.OUT)
+
+GPIO.output(LED_PIN, True)
+print("LED turn on")
+
+time.sleep(5.0)
+
+GPIO.output(LED_PIN, False)
+print("LED turn off")
+
+GPIO.cleanup()
+```
+
+### 3.5 모터를 구동하여 자동차 움직이기
+
+```python
+#//file: "control_Motor.py"
+import RPi.GPIO as GPIO
+import time 
+
+DUTY_MIN = 3   # 서보모터가 입력받을 수 있는 듀티의 최소값
+DUTY_MAX = 12  # 서보모터가 입력받을 수 있는 듀티의 최대값
+i=0
+
+servo_pin = 25  # PWM 출력을 서보모터에 보내줄 pin번호
+
+GPIO.setmode(GPIO.BCM) 
+GPIO.setup(servo_pin, OUTPUT)
+
+servo = GPIO.PWM(servo_pin, 50) # PWM을 50Hz(==20ms)로 셋업
+servo.start(0) # 듀티 0에서 시작
+
+def posContDeg(deg):
+  # 입력받은 각도를 듀티로 변환
+  duty = DUTY_MIN+(deg*(DUTY_MAX - DUTY_MIN)/180) 
+
+  # 듀티에 따라 서보모터 제어
+  servo.ChangeDutyCycle(duty)
+  print("%d Degree Rotated" deg)
+
+if __name__ = "__main__":
+  for i in range (0,180):
+    posContDeg(i)
+    sleep(0.5)
+    i++
+
+  servo.stop()
+  GPIO.cleanup()
+```
+
+### 3.6 스위치를 입력받아 자동차 조종해보기
+
+```python
+#//file: "control_Car.py"
+import RPi.GPIO as GPIO
+import time
+
+LED_PIN = 33
+
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(LED_PIN, GPIO.OUT)
+
+GPIO.output(LED_PIN, True)
+print("LED turn on")
+
+time.sleep(5.0)
+
+GPIO.output(LED_PIN, False)
+print("LED turn off")
+
+GPIO.cleanup()
+```
