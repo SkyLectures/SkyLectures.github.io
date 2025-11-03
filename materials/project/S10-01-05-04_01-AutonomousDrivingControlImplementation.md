@@ -55,17 +55,11 @@ categories: materials
     3. 최종적으로 제어 모듈이 차량을 움직이는 연속적인 과정
 
 #### 1.2. 전체 시스템 흐름도
-아래 흐름도를 통해 각 모듈이 어떻게 연결되는지 한눈에 파악할 수 있습니다.
 
-```mermaid
-graph TD
-    A[카메라 영상 입력] --> B{인지 모듈: 딥러닝 모델}
-    B -- 차선, 객체, 신호등 정보 --> C{판단 모듈: 주행 전략 수립}
-    C -- 목표 조향각, 목표 속도 --> D{제어 모듈: PID 컨트롤러}
-    D -- 좌/우 모터 PWM Duty Cycle --> E[모터 드라이버 & 모터]
-    E -- 차량 움직임 --> F[실제 환경 변화]
-    F -- 카메라 재인식 --> A
-```
+<div class="insert-image" style="text-align: left;">
+    <img style="width: 500px;" src="/materials/project/images/S10-01-05-04_01-001.png"><br>
+    자료출처: 아이다랩(AiDALab)
+</div>
 
 **단계별 상세 설명:**
 
