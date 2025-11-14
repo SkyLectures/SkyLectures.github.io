@@ -2,7 +2,7 @@
 layout: page
 title:  "모빌리티 AI 산업 프로젝트 과정(80H)"
 date:   2025-11-03 13:00:00 +0900
-permalink: /lectlog/2025-11-17-ICT_Mobility_AI_Project
+permalink: /lectlog/2025-11-17-IPA_Mobility_AI_Project
 categories: lectlog
 ---
 * toc
@@ -15,15 +15,16 @@ categories: lectlog
 > - **강의기간:** 2025.11.17 ~ 2025.12.12
 > - **강의시간:** 18:30 ~ 22:30
 > - **강의시수:** 80H
+> - **교재경로:** https://skylectures.github.io/lectlog/2025-11-17-IPA_Mobility_AI_Project
 
 > - **학습목표**
 >   - 모빌리티 산업에서 사용되는 AI기술에 대하여 이해하고 이를 실제 개발 및 적용하는 프로젝트를 통해 실제 활용가능한 역량을 확보
 > - **SW융합요소**
 >   - 프로그래밍 언어: Python
->   - 데이터 처리: Pandas, NumPy, 데이터 전처리(결측치·이상치 처리, 스케일링)
->   - 시각화 도구: Matplotlib
->   - 딥러닝 프레임워크 및 모델: TensorFlow, PyTorch, CNN
->   - 컴퓨터 비전: OpenCV, 객체 탐지(Object Detection)
+>   - 데이터 처리: Pandas, NumPy, 데이터 전처리
+>   - 시각화 도구: Matplotlib / OpenCV
+>   - 딥러닝 프레임워크 및 모델: TensorFlow / PyTorch, CNN
+>   - 컴퓨터 비전: OpenCV, 객체 탐지(Object Detection) 등
 >   - 기기 제어: Raspberry Pi
 >   - 프로젝트 응용: 모빌리티 데이터 분석 및 AI 모델 개발
 {: .common-quote}
