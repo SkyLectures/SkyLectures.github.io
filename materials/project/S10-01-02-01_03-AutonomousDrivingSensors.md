@@ -15,6 +15,11 @@ categories: materials
 
 ### 1.1 카메라(Camera) 센서
 
+<div class="insert-image" style="width: 500px;">
+    <img src="/materials/project/images/S10-01-02-01_03-001.png" style="width: 300px;"><br>
+    <div style="width: 400px; text-align: right;">(사진출처: 디바이스마트)</div>
+</div>
+
 - **역할과 특징**
     - 자율주행차의 '눈' 역할을 담당함
         - 실제 사람이 보는 것과 가장 유사한 시각적 정보 제공
@@ -37,6 +42,11 @@ categories: materials
 
 - LiDAR: Light Detection And Ranging
 
+<div class="insert-image" style="width: 500px;">
+    <img src="/materials/project/images/S10-01-02-01_03-002.png" style="width: 300px;"><br>
+    <div style="width: 400px; text-align: right;">(사진출처: 디바이스마트)</div>
+</div>
+
 - **역할과 특징**
     - 레이저 펄스를 발사하고 반사되어 돌아오는 시간을 측정하여 주변 환경의 정밀한 3D 맵 생성
     - 수백만 개의 포인트 클라우드(Point Cloud)를 생성하여 주변 물체의 정확한 형태와 거리 파악
@@ -58,6 +68,11 @@ categories: materials
 
 - Radar: Radio Detection And Ranging
 
+<div class="insert-image" style="width: 500px;">
+    <img src="/materials/project/images/S10-01-02-01_03-003.png" style="width: 300px;"><br>
+    <div style="width: 400px; text-align: right;">(사진출처: 디바이스마트)</div>
+</div>
+
 - **역할과 특징**
     - 전파(라디오파)를 발사하고 물체에 반사되어 돌아오는 신호를 분석하여 거리, 속도, 방향 측정
     - 주로 전방 충돌 방지, 적응형 크루즈 컨트롤, 사각지대 감지 등에 활용
@@ -74,6 +89,11 @@ categories: materials
     - 근거리에서의 정확도가 상대적으로 낮음
 
 ### 1.4 초음파(Ultrasonic) 센서
+
+<div class="insert-image" style="width: 500px;">
+    <img src="/materials/project/images/S10-01-02-01_03-004.png" style="width: 300px;"><br>
+    <div style="width: 400px; text-align: right;">(사진출처: 디바이스마트)</div>
+</div>
 
 - **역할과 특징**
     - 초음파를 발사하고 반사되어 돌아오는 시간을 측정하여 근거리 물체와의 거리 파악
@@ -96,6 +116,11 @@ categories: materials
 - GNSS: Global Navigation Satellite System(위성항법시스템, 각국)
 - KPS: Korean Positioning System(한국위성항법시스템)
 - IMU: Inertial Measurement Unit(관성 측정 장치)
+
+<div class="insert-image" style="width: 700px;">
+    <img src="/materials/project/images/S10-01-02-01_03-005.png" style="width: 500px;"><br>
+    <div style="width: 600px; text-align: right;">(사진출처: 디바이스마트)</div>
+</div>
 
 - **역할과 특징**
     - GPS/GNSS: 위성 신호를 통해 차량의 절대 위치 파악
@@ -133,6 +158,11 @@ categories: materials
 
 ### 1.7. 열화상 카메라(Thermal Camera)
 
+<div class="insert-image" style="width: 500px;">
+    <img src="/materials/project/images/S10-01-02-01_03-006.png" style="width: 300px;"><br>
+    <div style="width: 400px; text-align: right;">(사진출처: GMarket)</div>
+</div>
+
 - **역할과 특징**
     - 물체에서 방출되는 열(적외선)을 감지하여 이미지화
     - 야간이나 악천후 시 보행자, 동물 등 열을 발산하는 물체의 탐지에 효과적
@@ -150,6 +180,11 @@ categories: materials
 
 ### 1.8. 이벤트 기반 카메라(Event Camera)
 
+<div class="insert-image">
+    <img src="/materials/project/images/S10-01-02-01_03-007.png" style="width: 900px;"><br>
+    <div style="width: 950px; text-align: right;">(그림출처: 이벤트 카메라 기반 시각 지능을 위한 컴퓨터 비전 알고리즘 연구 보고서, 2022, KAIST)</div>
+</div>
+
 - **역할과 특징**
     - 전통적인 프레임 기반 카메라와 달리, 픽셀 단위로 밝기 변화가 발생할 때만 데이터 생성
     - 매우 빠른 움직임도 놓치지 않고 포착 가능
@@ -166,7 +201,13 @@ categories: materials
     - 정적 장면에서는 정보를 거의 생성하지 않음
     - 아직 상대적으로 신기술로 비용이 높고 개발 중인 부분이 많음
 
-### 1.9 휠 엔코더 및 차량 내부 센서
+### 1.9 휠 인코더 및 차량 내부 센서
+
+<div class="insert-image" style="width: 800px;">
+    <img src="/materials/project/images/S10-01-02-01_03-008.jpg" style="width: 300px;">&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="/materials/project/images/S10-01-02-01_03-009.png" style="width: 300px;"><br>
+    휠 인코더(사진출처: 가치창조기술 온라인)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자이로 가속도 센서(사진출처: 디바이스마트)
+</div>
 
 - **역할과 특징**
     - 차량 바퀴의 회전을 측정하여 이동 거리와 속도 계산

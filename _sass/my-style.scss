@@ -200,14 +200,15 @@ blockquote.summary-quote {
 
 // 인라인 수식 스타일 수정
 .katex {
-  font-size: 1.1em; // 수식 폰트 크기 조정
+  font-size: 1.2em; // 수식 폰트 크기 조정
   font-weight: bold;
   color: #1049c5; // 수식 색상 변경
 }
 
 // 블록 수식 스타일 수정
 .katex-display {
-  padding: 1rem 0; // 상하 여백 추가
+  padding: 0.75rem 0; // 상하 여백 추가
+  font-size: 1.2em; // 수식 폰트 크기 조정
   overflow-x: auto; // 긴 수식 스크롤 가능하게
   background-color: #f9f9f9; // 배경색 추가
   border-radius: 4px; // 모서리 둥글게

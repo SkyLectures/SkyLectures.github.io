@@ -399,7 +399,7 @@ categories: materials
                 - 이는 신경망 학습에서 중요한 성질로, 기울기가 0이 되지 않는 덕분에 신경망이 올바르게 학습할 수 있다.
 
                 <div class="insert-image" style="text-align: center;">
-                    <img src="/materials/ai/images/S03-03-01-01_01-028.png" style="width: 30%;">
+                    <img src="/materials/ai/images/S03-03-01-01_01-028.png" style="width: 80%;">
                 </div>
 
 - **가중치의 조정(=최적화, Optimizing)**

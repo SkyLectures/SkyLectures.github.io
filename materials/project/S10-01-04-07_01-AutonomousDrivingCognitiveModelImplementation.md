@@ -16,39 +16,41 @@ categories: materials
 
 
 
+> - **딥러닝 기반 자율주행 인지 모델**
+>   - 자율주행 자동차의 인지 시스템은 **차량이 주변 환경을 이해하고 상황을 파악**하는 핵심 요소
+{: .common-quote}
 
+## 1. 자율주행 인지 모델 구현 실습 개요
 
-안녕하세요, 스카이님! 자율주행 인지 모델 구현에 대한 예제 코드를 준비했습니다. 텐서플로우와 파이토치 두 가지 버전으로 작성했으며, 비전공자 학생들이 이해하기 쉽도록 상세한 설명을 포함했습니다.
+- **실습 내용**
+    - 카메라 영상을 입력으로 받아 세 가지 핵심 인지 기능을 동시에 수행하는 통합 인지 모델 구현
+        1. **차선 인식**: 도로 위 차선을 감지하여 주행 가능한 영역을 파악
+        2. **객체 탐지**: 차량, 보행자, 자전거 등 도로 위의 다양한 객체를 감지
+        3. **도로 상태 이해**: 도로 표면, 주행 가능 영역 등을 세그멘테이션하여 파악
+    - 세 가지 기능을 하나의 통합 모델로 구현하는 멀티태스크 학습 접근법 사용
 
-# 딥러닝 기반 자율주행 인지 모델 구현
+- **데이터셋**
+    - 자율주행 인지 모델 학습을 위한 대표적인 데이터셋: BDD100K, Cityscapes, KITTI 등
+        - 실습에서는 Berkeley DeepDrive Dataset(BDD100K)을 기준으로 진행
+            - [BDD100K 데이터셋 다운로드](https://bdd-data.berkeley.edu/){: target="_blank"}
 
-## 1. 개요
+> - 국내 환경에서 사용하기 위해서는 국내용으로 개발된 데이터셋을 찾아서(또는 직접 구축) 적용해야 함
+{: .expert-quote}
+        
 
-자율주행 자동차의 인지 시스템은 차량이 주변 환경을 이해하고 상황을 파악하는 핵심 요소입니다. 이 예제에서는 카메라 영상을 입력으로 받아 다음과 같은 세 가지 핵심 인지 기능을 동시에 수행하는 통합 인지 모델을 구현합니다:
+## 2. TensorFlow 기반 구현
 
-1. **차선 인식**: 도로 위 차선을 감지하여 주행 가능한 영역을 파악합니다.
-2. **객체 탐지**: 차량, 보행자, 자전거 등 도로 위의 다양한 객체를 감지합니다.
-3. **도로 상태 이해**: 도로 표면, 주행 가능 영역 등을 세그멘테이션하여 파악합니다.
-
-이 세 가지 기능을 하나의 통합 모델로 구현하는 멀티태스크 학습 접근법을 사용할 것입니다.
-
-## 2. 데이터셋
-
-자율주행 인지 모델 학습을 위한 대표적인 데이터셋으로는 BDD100K, Cityscapes, KITTI 등이 있습니다. 이 예제에서는 Berkeley DeepDrive Dataset(BDD100K)을 기준으로 설명하겠습니다.
-
-BDD100K 데이터셋 다운로드: https://bdd-data.berkeley.edu/
-
-## 3. 텐서플로우(TensorFlow) 구현
-
-### 3.1 필요 라이브러리 설치
+### 2.1 필요 라이브러리 설치
 
 ```bash
+#// file: "Terminal"
 pip install tensorflow==2.15.0 opencv-python numpy matplotlib scikit-learn segmentation-models
 ```
 
-### 3.2 멀티태스크 인지 모델 구현 (TensorFlow)
+### 2.2 멀티태스크 인지 모델 구현
 
 ```python
+#// file: "Tensorflow_Multitask_Perception_Model.py"
 import os
 import cv2
 import numpy as np
@@ -135,16 +137,6 @@ def load_and_preprocess_data(data_dir, image_size=(384, 640)):
                     y1 = box['y1'] / img.shape[0]
                     x2 = box['x2'] / img.shape[1]
                     y2 = box['y2'] / img.shape[0]
-                    cls = obj.get('category', 'car')
-
-
-
-
-
-
-네, 스카이님! 딥러닝 기반 자율주행 인지 모델 구현 코드를 이어서 설명해 드리겠습니다.
-
-```python
                     cls = obj.get('category', 'car') # 객체 클래스 (예: 'car', 'pedestrian')
                     boxes.append([x1, y1, x2, y2, cls]) # 예시: [x_min, y_min, x_max, y_max, class_name]
         
@@ -479,20 +471,19 @@ if __name__ == "__main__":
     # 실시간 처리 부분은 복잡도가 높아 본 코드에서는 제외 (아래 PyTorch 부분 참고)
 ```
 
+## 3. PyTorch 기반 구현
 
+### 3.1 필요 라이브러리 설치
 
+```bash
+#// file: "Terminal"
+pip install torch torchvision opencv-python numpy matplotlib scikit-learn segmentation-models
+```
 
-
-
-
-
-네, 스카이님! 자율주행 인지 모델 구현에 대한 PyTorch 버전 코드를 이어서 설명해 드리겠습니다.
+### 3.2 멀티태스크 인지 모델 구현
 
 ```python
-## 4. 파이토치(PyTorch) 구현
-
-### 4.1 필요 라이브러리 설치
-
+#// file: "PyTorch_Multitask_Perception_Model.py"
 import os
 import cv2
 import numpy as np
@@ -508,8 +499,6 @@ import torchvision.transforms as transforms
 # GPU 사용 설정
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
-
-### 4.2 멀티태스크 인지 모델 구현 (PyTorch)
 
 # 데이터셋 클래스 정의
 class PerceptionDataset(Dataset):
@@ -619,20 +608,6 @@ def train_multitask_model_torch(data_dir, image_size=(384, 640), batch_size=8, e
     print("실제 학습을 위해서는 데이터셋을 미리 준비해야 합니다.")
     print("여기서는 모델 구조 확인을 위해 더미 데이터로 대체합니다.")
     
-    # 더미 데이터 생성
-    num_samples = 100
-    X_dummy = torch.rand(num_samples, 3, image_size[0], image_size[1]).float()
-    y_
-
-
-
-
-
-
-
-네, 스카이님! 자율주행 인지 모델 구현에 대한 PyTorch 버전 코드를 이어서 설명해 드리겠습니다.
-
-```python
     # 더미 데이터 생성
     num_samples = 100
     X_dummy = torch.rand(num_samples, 3, image_size[0], image_size[1]).float()
@@ -760,21 +735,6 @@ def train_multitask_model_torch(data_dir, image_size=(384, 640), batch_size=8, e
         if total_val_loss < best_val_loss:
             best_val_loss = total_val_loss
             torch.save(model.state_dict(), f'perception_model_pt_epoch{epoch+1}.pth')
-            print(f"최고
-
-
-
-
-
-
-
-네, 스카이님! 자율주행 인지 모델 구현에 대한 PyTorch 버전 코드를 이어서 설명해 드리겠습니다.
-
-```python
-        # 모델 저장
-        if total_val_loss < best_val_loss:
-            best_val_loss = total_val_loss
-            torch.save(model.state_dict(), f'perception_model_pt_epoch{epoch+1}.pth')
             print(f"최고 검증 손실 달성: {best_val_loss:.4f}. 모델 저장됨.")
     
     return model
@@ -895,19 +855,6 @@ def realtime_perception_processing(model_path, camera_index=0, image_size=(384, 
     while True:
         ret, frame = cap.read()
         if not ret:
-            print("카
-
-
-
-
-
-
-네, 스카이님! 실시간 자율주행 인지 처리 구현 코드를 이어서 설명해 드리겠습니다.
-
-```python
-    while True:
-        ret, frame = cap.read()
-        if not ret:
             print("카메라에서 프레임을 읽을 수 없습니다.")
             break
             
@@ -1014,20 +961,7 @@ def realtime_perception_processing(model_path, camera_index=0, image_size=(384, 
     cv2.destroyAllWindows()
     print("실시간 인지 처리를 종료합니다.")
 
-# 메인 실행 코드 (PyTorch)
-if __name__ == "__main__":
-    # 데이터 경로 설정
-    data_dir = "path/to/BDD100K_dataset"  # BDD100
 
-
-
-
-
-
-
-네, 스카이님! 메인 실행 코드 부분부터 이어서 설명해 드리겠습니다.
-
-```python
 # 메인 실행 코드 (PyTorch)
 if __name__ == "__main__":
     # 데이터 경로 설정
@@ -1058,13 +992,15 @@ if __name__ == "__main__":
     realtime_perception_processing(model_path_pt, camera_index=0, framework='pytorch')
 ```
 
-## 5. 라즈베리파이에서의 최적화 방법
+## 4. 라즈베리파이에서의 최적화 방법
 
-자율주행 인지 모델은 매우 복잡하고 연산 부하가 큰 모델이므로, 라즈베리파이와 같은 임베디드 디바이스에서 실행하기 위해서는 다양한 최적화 기법이 필요합니다.
+- 자율주행 인지 모델은 매우 복잡하고 연산 부하가 큰 모델이므로,
+- 라즈베리파이와 같은 임베디드 디바이스에서 실행하기 위해서는 다양한 최적화 기법이 필요함
 
-### 5.1. 모델 경량화 (Model Optimization)
+### 4.1. 모델 경량화
 
-**1. 모델 양자화 (Quantization)**
+- **모델 양자화 (Quantization)**
+
 ```python
 # TensorFlow Lite 양자화 예제
 import tensorflow as tf
@@ -1088,7 +1024,8 @@ with open('perception_model_quantized.tflite', 'wb') as f:
     f.write(tflite_model)
 ```
 
-**2. 모델 가지치기 (Pruning)**
+- **모델 가지치기 (Pruning)**
+
 ```python
 # PyTorch 모델 가지치기 예제
 import torch.nn.utils.prune as prune
@@ -1099,7 +1036,8 @@ for name, module in model.named_modules():
         prune.l1_unstructured(module, name='weight', amount=0.2)
 ```
 
-**3. 지식 증류 (Knowledge Distillation)**
+- **지식 증류 (Knowledge Distillation)**
+
 ```python
 # 작은 학생 모델이 큰 교사 모델의 지식을 학습
 def knowledge_distillation_loss(student_outputs, teacher_outputs, true_labels, temperature=5.0, alpha=0.5):
@@ -1123,16 +1061,18 @@ def knowledge_distillation_loss(student_outputs, teacher_outputs, true_labels, t
     return alpha * hard_loss + (1 - alpha) * soft_loss
 ```
 
-### 5.2. 추론 최적화 (Inference Optimization)
+### 4.2. 추론 최적화
 
-**1. 이미지 크기 및 프레임 레이트 조정**
+- **이미지 크기 및 프레임 레이트 조정**
+
 ```python
 # 더 작은 해상도로 처리
 image_size = (192, 320)  # 기존의 절반 크기
 frame_skip = 2  # 매 2프레임마다 1프레임만 처리
 ```
 
-**2. 작업 분산 처리**
+- **작업 분산 처리**
+
 ```python
 # 스레드 기반 병렬 처리
 import threading
@@ -1165,25 +1105,9 @@ inference_thread.daemon = True
 inference_thread.start()
 ```
 
-## 6. 자율주행 키트에 적용하기
+## 5. 자율주행 키트에 적용하기
 
-### 6.1. 인지 결과를 제어 시스템에 연결
-
-```python
-class AutonomousDrivingSystem:
-    def __init__(self, perception_model_path, control_pins=None):
-        """
-        자율주행 시스템 초기화
-        - perception_model_path: 인지 모델 경로
-        - control_
-
-
-
-
-
-
-
-네, 스카이님! 자율주행 인지 모델 구현에 대한 코드를 이어서 설명해 드리겠습니다.
+### 5.1. 인지 결과를 제어 시스템에 연결
 
 ```python
 class AutonomousDrivingSystem:
@@ -1321,29 +1245,6 @@ class AutonomousDrivingSystem:
                 cls_score = np.max(obj_heatmap[:, :, cls])
                 danger_score = max(danger_score, cls_score)
         
-        # 위험 점수가 임
-
-
-
-
-
-
-
-네, 스카이님! 자율주행 인지 모델 구현에 대한 코드를 이어서 설명해 드리겠습니다.
-
-```python
-    def _check_danger_from_objects(self, obj_heatmap):
-        """객체 탐지 결과에서 위험 상황 확인"""
-        # 위험 객체 클래스 (예: 사람, 자전거, 다른 차량)
-        danger_classes = [12, 14, 18]  # person, car, motorcycle 클래스 인덱스
-        
-        # 위험 객체 클래스의 스코어맵에서 최대값 확인
-        danger_score = 0
-        for cls in danger_classes:
-            if cls < obj_heatmap.shape[2]:
-                cls_score = np.max(obj_heatmap[:, :, cls])
-                danger_score = max(danger_score, cls_score)
-        
         # 위험 점수가 임계값을 초과하면 위험 상황으로 판단
         return danger_score > 0.7  # 임계값 0.7 (조정 가능)
     
@@ -1458,25 +1359,7 @@ class AutonomousDrivingSystem:
         # GPIO 정리
         self.GPIO.cleanup()
 
-# 메인 실행 코드
-if __name__ == "__main__":
-    # 모델 경로 설정
-    model_path = 'perception_model_tf_dummy.h5'  # 또는 'perception_model_pt_dummy.pth'
-    
-    # 자율주행 시스템 초기화 및 실행
-    try:
-        # GPIO 사용을 위해 라즈베리파이에서 실행 필요
-        # 라즈베리
 
-
-
-
-
-
-
-네, 스카이님! 자율주행 시스템 코드를 이어서 설명해 드리겠습니다.
-
-```python
 # 메인 실행 코드
 if __name__ == "__main__":
     # 모델 경로 설정
@@ -1523,86 +1406,67 @@ if __name__ == "__main__":
         print(f"오류 발생: {e}")
 ```
 
-## 7. 프로젝트 응용 및 확장 아이디어
+## 6. 프로젝트 응용 및 확장 아이디어
 
-이 자율주행 인지 모델 구현은 다양한 방식으로 확장하고 개선할 수 있습니다. 비전공자 학생들을 위한 교육용 프로젝트로서, 다음과 같은 확장 아이디어를 고려해 볼 수 있습니다:
+### 6.1. 모델 개선 및 확장
 
-### 7.1. 모델 개선 및 확장
-
-1. **경량화된 실시간 객체 탐지 통합**
+- **경량화된 실시간 객체 탐지 통합**
    - YOLOv5-nano나 MobileNet-SSD와 같은 경량 객체 탐지 모델을 통합하여 더 정확한 객체 인식 구현
    - 객체의 위치와 크기를 정확히 파악하여 충돌 회피 기능 개선
 
-2. **시간적 일관성(Temporal Consistency) 추가**
+- **시간적 일관성(Temporal Consistency) 추가**
    - 연속된 프레임 간의 정보를 활용하여 인지 결과의 안정성 향상
    - 칼만 필터와 같은 추적 알고리즘을 통합하여 객체 추적 및 예측 기능 추가
 
-3. **깊이 추정(Depth Estimation) 통합**
+- **깊이 추정(Depth Estimation) 통합**
    - 단안 카메라에서도 깊이 정보를 추정하여 3D 공간 인식 기능 추가
    - 모노큘러 깊이 추정 모델(예: MiDaS)을 활용하여 거리 정보 파악
 
-### 7.2. 하드웨어 확장
+### 6.2. 하드웨어 확장
 
-1. **다중 센서 통합**
+- **다중 센서 통합**
    - 초음파 센서를 추가하여 근거리 장애물 감지 보완
    - IMU(관성 측정 장치)를 추가하여 차량의 움직임 및 자세 정보 활용
 
-2. **통신 모듈 추가**
+- **통신 모듈 추가**
    - Wi-Fi나 블루투스 모듈을 통해 원격 모니터링 및 제어 기능 구현
    - 여러 자율주행 차량 간의 통신을 통한 협력 주행 시뮬레이션
 
-3. **GPS 모듈 통합**
+- **GPS 모듈 통합**
    - 실외 주행 시 GPS 정보를 활용한 위치 인식 및 경로 계획 기능 추가
 
-### 7.3. 교육적 활용 방안
+### 6.3. 교육적 활용 방안
 
-1. **단계별 학습 모듈화**
+- **단계별 학습 모듈화**
    - 차선 인식 → 객체 탐지 → 세그멘테이션 → 통합 시스템 순으로 단계적 학습
    - 각 모듈별 성능 측정 및 비교 실험을 통한 이해도 향상
 
-2. **시나리오 기반 학습**
+- **시나리오 기반 학습**
    - 다양한 주행 시나리오(도심, 고속도로, 교차로 등)에 맞는 인지 모델 적용
    - 악천후, 야간 등 도전적인 환경에서의 인지 성능 테스트
 
-3. **게임화(Gamification) 요소 추가**
+- **게임화(Gamification) 요소 추가**
    - 장애물 코스 완주, 목표 지점 도달 등의 미션 수행을 통한 학습 동기 부여
    - 팀 대항전 형식으로 알고리즘 성능 경쟁을 통한 협력 학습
 
-## 8. 결론 및 학습 포인트
+## 7. 결론 및 학습 포인트
 
-이 자율주행 인지 모델 구현 프로젝트는 딥러닝과 컴퓨터 비전 기술이 어떻게 실제 자율주행 시스템에 적용되는지 직접 체험할 수 있는 기회를 제공합니다. 비전공자 학생들에게 중요한 학습 포인트는 다음과 같습니다:
-
-1. **멀티태스크 학습의 이해**
+- **멀티태스크 학습의 이해**
    - 하나의 모델이 여러 작업(차선 인식, 세그멘테이션, 객체 탐지)을 동시에 수행하는 방식
    - 공유 특징 추출기를 통한 효율적인 학습 및 추론 과정
 
-2. **인지-판단-제어 파이프라인**
+- **인지-판단-제어 파이프라인**
    - 자율주행의 핵심 구조인 인지-판단-제어 파이프라인의 구현 및 이해
    - 각 단계가 어떻게 유기적으로 연결되어 작동하는지 체험
 
-3. **임베디드 시
-
-
-
-
-
-
-네, 스카이님! 자율주행 인지 모델 구현에 대한 내용을 이어서 설명해 드리겠습니다.
-
-## 8. 결론 및 학습 포인트 (이어서)
-
-3. **임베디드 시스템에서의 최적화**
+- **임베디드 시스템에서의 최적화**
    - 제한된 컴퓨팅 자원을 가진 라즈베리파이에서 딥러닝 모델을 효율적으로 실행하는 방법
    - 모델 경량화, 양자화, 병렬 처리 등 최적화 기법의 실제 적용
 
-4. **실시간 처리의 중요성**
+- **실시간 처리의 중요성**
    - 자율주행에서 실시간 처리가 왜 중요한지, 그리고 이를 위한 다양한 기법
    - 지연 시간(latency)과 처리 속도(throughput) 사이의 균형 맞추기
 
-5. **인공지능 기술의 실생활 응용**
+- **인공지능 기술의 실생활 응용**
    - 딥러닝 모델이 어떻게 실제 하드웨어와 결합하여 물리적 세계에 영향을 미치는지 체험
    - 인지 모델의 예측 결과가 어떻게 실제 차량 제어로 이어지는지 이해
-
-이 프로젝트는 비전공자 학생들에게 자율주행 기술의 핵심 원리를 실습을 통해 경험할 수 있는 기회를 제공합니다. 특히 인지-판단-제어의 전체 파이프라인을 직접 구현해봄으로써, 자율주행 기술에 대한 종합적인 이해를 도울 수 있을 것입니다.
-
-스카이님께서 준비하시는 80시간의 모빌리티 AI 강의에서 이 프로젝트를 활용하시면, 학생들이 이론과 실습을 균형 있게 경험하면서 자율주행 기술의 기초를 탄탄히 다질 수 있을 것입니다. 필요하시면 특정 부분에 대한 더 자세한 설명이나 추가 코드 예제를 제공해 드릴 수 있으니 언제든지 말씀해 주세요!

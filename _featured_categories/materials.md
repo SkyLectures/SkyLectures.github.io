@@ -311,4 +311,90 @@ description: >
     - [음성 명령어 기반 차량 제어](/materials/S10-01-06-03_01-VoiceCommandBasedVehicleControl)
     - [LLM 기반 차량 제어](/materials/S10-01-06-04_01-LlmBasedVehicleControl)
 
+
+### 10.2 AI/LLM Agent 개발
+
+- AI 및 LLM 기초 이해 (10H)
+    - AI, 머신러닝, 딥러닝 개념 이해 (3H)
+        - 인공지능(AI)의 개요: 역사와 미래
+        - 머신러닝과 딥러닝의 기본 원리 및 차이점
+        - 데이터의 중요성: 양질의 데이터와 모델 성능
+        - 파이썬 개발 환경 설정 (아나콘다, VS Code 등)
+        - 실습: 파이썬 기초 문법 복습 및 개발 환경 확인 (간단한 코드 실행)
+
+    - 자연어 처리(NLP)와 LLM (3H)
+        - 자연어 처리(NLP)란 무엇인가? 기본 개념 소개
+        - 텍스트 데이터의 처리: 토큰화, 임베딩 등
+        - 순환 신경망(RNN), 트랜스포머(Transformer) 아키텍처 개요 (개념 위주 설명)
+        - 거대 언어 모델(LLM)의 등장 배경 및 파급 효과
+        - 실습: Hugging Face transformers 라이브러리 설치 및 간단한 텍스트 처리 예제
+
+    - 주요 LLM 소개 및 활용 맛보기 (4H)
+        - ChatGPT, GPT-4, Llama, Gemini 등 주요 LLM 특징 비교
+        - LLM의 응용 분야 (챗봇, 요약, 번역, 코드 생성 등)
+        - API를 통한 LLM과의 상호작용 (OpenAI API 키 발급 및 기본 사용법)
+        - 실습: OpenAI Playground(또는 유사 환경)에서 다양한 프롬프트로 LLM 체험, 간단한 API 호출 예제 실습
+
+- LLM 에이전트의 핵심 구성 요소 (10H)
+    - 프롬프트 엔지니어링의 기본 (4H)
+        - 프롬프트 엔지니어링이란? 왜 중요한가?
+        - 좋은 프롬프트 작성 원칙 (명확성, 구체성, 제약 조건 등)
+        - In-context Learning (few-shot, one-shot) 기법
+        - -of-Thought (CoT) 및 Tree-of-Thought (ToT) (개념 소개)
+        - 실습: 다양한 프롬프트 기법을 적용하여 LLM 응답 품질 개선 실습
+
+    - 에이전트 아키텍처 이해 (3H)
+        - LLM 기반 에이전트의 개념 및 필요성
+        - 기본적인 에이전트 구조: Planner, Memory, Tool Use (개념 위주)
+        - RAG(Retrieval-Augmented Generation)의 개념과 중요성
+        - 실습: 에이전트가 처리할 작업 정의 및 흐름도 설계 (페이퍼 프로토타이핑)
+
+    - Tool 사용 및 외부 연동의 기초 (3H)
+        - LLM이 외부 도구를 사용하는 이유
+        - 간단한 도구(함수) 정의 및 LLM에게 도구 사용 지시
+        - Function Calling의 기본 원리 (OpenAI Function Calling 위주 설명)
+        - 실습: LLM이 날씨 API 호출 또는 계산기 함수를 사용하도록 유도하는 간단한 예제
+
+- LLM 에이전트 개발 라이브러리 및 프로젝트 (10H)
+    - LangChain 소개 및 기초 사용법 (4H)
+        - LangChain이란 무엇인가? 주요 구성 요소 (Models, Prompts, Parsers)
+        - Chain의 개념: 순차적 프롬프트 연결
+        - LLM 모델 연동 및 환경 설정
+        - 실습: LangChain을 활용하여 간단한 챗봇 구현 (질의응답 체인)
+
+    - LangChain Tools 및 Agent 활용 (3H)
+        - LangChain에서 Tool을 정의하고 사용하는 방법
+        - Agent의 개념과 Agent Executor
+        - ReAct(Reasoning and Acting) 프레임워크 이해
+        - 실습: LangChain Agent가 정의된 Tool (예: 검색 엔진)을 활용하도록 구현
+
+    - RAG(Retrieval-Augmented Generation)의 이해와 구현 (3H)
+        - RAG의 필요성: LLM의 한계 극복 (환각 현상, 최신 정보 부족)
+        - 문서 로더(Document Loader), 텍스트 스플리터(Text Splitter), 임베딩(Embeddings)
+        - 벡터 스토어(Vector Store)의 개념 및 활용 (ChromaDB 또는 FAISS)
+        - 실습: 간단한 로컬 문서 기반 Q&A RAG 시스템 구축
+
+- 미니 프로젝트 및 고급 개념 (10H)
+    - 미니 프로젝트: 나만의 LLM 기반 문서 분석 에이전트 개발 (5H)
+        - 프로젝트 개요: 
+            - 특정 문서(예: 회사 보고서, 블로그 게시물)를 업로드하면
+            - 내용을 분석하고 요약, 특정 질문에 답변하며
+            - 필요 시 외부 검색 도구를 사용하는 에이전트 개발
+        - 구현 요소: LangChain의 RAG 기능 활용, Tool (검색 API) 연동, 프롬프트 엔지니어링
+        - 실습: 프로젝트 요구사항 정의, 단계별 구현 및 디버깅
+
+    - 고급 에이전트 개념 및 확장 (3H)
+        - 에이전트의 Memory 관리: ConversationBufferMemory, ConversationSummaryMemory
+        - Long-term Memory와 Short-term Memory (개념 위주)
+        - LangChain 외 에이전트 프레임워크 소개 (CrewAI, AutoGen 등)
+        - 실습: 기존 미니 프로젝트에 대화 기록(Memory) 추가 및 관리 기능 구현
+
+    - 배포 및 추가 학습 가이드 (2H)
+        - 개발한 에이전트를 간단하게 배포하는 방법 (Streamlit 또는 Flask 연동 개념 소개)
+        - LLM 에이전트 개발 시 윤리적 고려 사항 및 보안
+        - 최신 LLM 연구 동향 및 향후 학습 로드맵
+        - Q&A 및 수료 소감 나누기
+
+
+
 [&nbsp;](/materials/99_Test)

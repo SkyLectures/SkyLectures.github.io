@@ -9,48 +9,48 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 
-<div class="insert-image" style="text-align: center;">
-    <img style="width: 400px;" src="/assets/img/PagePreparing.png">
-</div>
+> - **딥러닝 기반 도로 표지판 및 신호등 인식 시스템**
+>   - 도로 표지판과 신호등 인식은 자율주행 시스템의 핵심 기능 중 하나
+>   - 차량이 **도로 규칙을 준수**하고 안전하게 주행하기 위한 필수적인 요소
+>   - 기능
+>       - 카메라로 촬영된 영상에서 표지판과 신호등 감지
+>       - 표지판과 신호등의 종류와 의미 해석
+>       - 자율주행 차량이 적절한 주행 결정을 내릴 수 있도록 함
+{: .common-quote}
+
+## 1. 도로 표지판 및 신호등 인식 실습 개요
+
+- **실습 내용**
+    - 도로 표지판 분류 (교통 표지판의 종류 식별)
+    - 신호등 상태 인식 (빨간불, 노란불, 초록불 감지)
+
+- **데이터셋**
+    - **도로 표지판 데이터셋**
+        - 표지판 인식을 위한 대표적인 공개 데이터셋: German Traffic Sign Recognition Benchmark(GTSRB)
+        - 실습에서는 GTSRB 데이터셋을 기준으로 진행
+            - [GTSRB 데이터셋 다운로드](https://benchmark.ini.rub.de/gtsrb_dataset.html){: target="_blank"}
+    - **신호등 데이터셋**
+    - 신호등 인식을 위한 대표적인 공개 데이터셋: LISA Traffic Light Dataset, Bosch Small Traffic Lights Dataset 등
+    - 실습에서는 LISA 데이터셋을 기준으로 진행
+        - [LISA 데이터셋 다운로드](https://www.kaggle.com/datasets/mbornoe/lisa-traffic-light-dataset){: target="_blank"}
+
+> - 국내 환경에서 사용하기 위해서는 국내용으로 개발된 데이터셋을 찾아서(또는 직접 구축) 적용해야 함
+{: .expert-quote}
 
 
+## 2. TensorFlow 기반 구현
 
-
-안녕하세요, 스카이님! 도로 표지판 및 신호등 인식에 대한 예제를 텐서플로우와 파이토치 두 가지 버전으로 준비해 보았습니다. 자율주행 강의에 활용하시면 좋을 것 같네요.
-
-# 딥러닝 기반 도로 표지판 및 신호등 인식 시스템
-
-## 1. 개요
-
-도로 표지판과 신호등 인식은 자율주행 시스템의 핵심 기능 중 하나로, 차량이 도로 규칙을 준수하고 안전하게 주행하기 위한 필수적인 요소입니다. 이 시스템은 카메라로 촬영된 영상에서 표지판과 신호등을 감지하고, 그 종류와 의미를 해석하여 자율주행 차량이 적절한 주행 결정을 내릴 수 있도록 합니다.
-
-이번 예제에서는 두 가지 주요 기능을 구현합니다:
-1. 도로 표지판 분류 (교통 표지판의 종류 식별)
-2. 신호등 상태 인식 (빨간불, 노란불, 초록불 감지)
-
-## 2. 데이터셋
-
-### 2.1 도로 표지판 데이터셋
-표지판 인식을 위한 대표적인 공개 데이터셋으로는 German Traffic Sign Recognition Benchmark(GTSRB)가 있습니다.
-
-GTSRB 데이터셋 다운로드: https://benchmark.ini.rub.de/gtsrb_dataset.html
-
-### 2.2 신호등 데이터셋
-신호등 인식을 위해서는 LISA Traffic Light Dataset이나 Bosch Small Traffic Lights Dataset 등을 활용할 수 있습니다.
-
-LISA 데이터셋: https://www.kaggle.com/datasets/mbornoe/lisa-traffic-light-dataset
-
-## 3. 텐서플로우(TensorFlow) 구현
-
-### 3.1 필요 라이브러리 설치
+### 2.1 필요 라이브러리 설치
 
 ```bash
+#// file: "Terminal"
 pip install tensorflow==2.15.0 opencv-python numpy matplotlib scikit-learn pandas
 ```
 
-### 3.2 도로 표지판 분류 모델 (TensorFlow)
+### 2.2 도로 표지판 분류
 
 ```python
+#// file: "Tensorflow_RoadSign_TrafficLight_Recognition.py"
 import os
 import cv2
 import numpy as np
@@ -166,17 +166,6 @@ def train_traffic_sign_model(data_dir, batch_size=32, epochs=30):
     y_one_hot = to_categorical(y, num_classes=43)
     
     # 학습/검증 데이터 분리
-
-
-
-
-
-
-
-네, 스카이님! 도로 표지판 및 신호등 인식 예제를 이어서 설명해 드리겠습니다.
-
-```python
-    # 학습/검증 데이터 분리
     X_train, X_val, y_train, y_val = train_test_split(X, y_one_hot, test_size=0.2, random_state=42)
     
     # 모델 구축
@@ -260,9 +249,10 @@ def get_traffic_sign_class_names():
     }
 ```
 
-### 3.3 신호등 상태 인식 모델 (TensorFlow)
+### 2.3 신호등 상태 인식 모델
 
 ```python
+#// file: "Tensorflow_RoadSign_TrafficLight_Recognition.py"
 # 신호등 상태 인식 모델 구축 (빨간불, 노란불, 초록불 구분)
 def build_traffic_light_model(input_shape=(64, 64, 3), num_classes=3):
     """신호등 상태 인식을 위한 CNN 모델 구축"""
@@ -335,19 +325,6 @@ def load_lisa_traffic_light_data(data_dir, target_size=(64, 64)):
 # 신호등 상태 인식 모델 학습 함수
 def train_traffic_light_model(data_dir, batch_size=32, epochs=30):
     """신호등 상태 인식 모델을 학습하는 함수"""
-    #
-
-
-
-
-
-
-
-네, 스카이님! 신호등 상태 인식 모델 학습 함수부터 이어서 설명해 드리겠습니다.
-
-```python
-def train_traffic_light_model(data_dir, batch_size=32, epochs=30):
-    """신호등 상태 인식 모델을 학습하는 함수"""
     # 데이터 로드
     X, y = load_lisa_traffic_light_data(data_dir)
     
@@ -395,9 +372,10 @@ def get_traffic_light_class_names():
     }
 ```
 
-### 3.4 실시간 표지판 및 신호등 인식 구현 (TensorFlow)
+### 2.4 실시간 표지판 및 신호등 인식 구현
 
 ```python
+#// file: "Tensorflow_RoadSign_TrafficLight_Recognition.py"
 import tensorflow as tf
 import cv2
 import numpy as np
@@ -499,21 +477,6 @@ def detect_and_classify_traffic_signs_and_lights(
                             (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
         
         # FPS 계산 및 표시
-        cv2.putText(result_frame, f"F
-
-
-
-
-
-
-
-
-네, 스카이님! 도로 표지판 및 신호등 인식 예제를 이어서 설명해 드리겠습니다.
-
-### 3.4 실시간 표지판 및 신호등 인식 구현 (TensorFlow) (계속)
-
-```python
-        # FPS 계산 및 표시
         fps_start_time = time.time() if not hasattr(detect_and_classify_traffic_signs_and_lights, 'fps_start_time') else detect_and_classify_traffic_signs_and_lights.fps_start_time
         fps_frame_count = 0 if not hasattr(detect_and_classify_traffic_signs_and_lights, 'fps_frame_count') else detect_and_classify_traffic_signs_and_lights.fps_frame_count
         
@@ -583,17 +546,19 @@ if __name__ == "__main__":
 
 ```
 
-## 4. 파이토치(PyTorch) 구현
+## 3. PyTorch 기반 구현
 
-### 4.1 필요 라이브러리 설치
+### 3.1 필요 라이브러리 설치
 
 ```bash
+#// file: "Terminal"
 pip install torch torchvision opencv-python numpy matplotlib scikit-learn pandas
 ```
 
-### 4.2 도로 표지판 및 신호등 모델 (PyTorch)
+### 3.2 도로 표지판 및 신호등 모델
 
 ```python
+#// file: "PyTorch_RoadSign_TrafficLight_Recognition.py"
 import os
 import cv2
 import numpy as np
@@ -798,9 +763,10 @@ def get_traffic_light_class_names():
     }
 ```
 
-### 4.3 실시간 표지판 및 신호등 인식 구현 (PyTorch)
+### 3.3 실시간 표지판 및 신호등 인식 구현
 
 ```python
+#// file: "PyTorch_RoadSign_TrafficLight_Recognition.py"
 def detect_and_classify_traffic_signs_and_lights_torch(
     sign_model_state_dict_path, 
     light_model_state_dict_path, 
@@ -972,15 +938,18 @@ if __name__ == "__main__":
 
 ```
 
-## 5. 라즈베리파이에서의 최적화 방법
+## 4. 라즈베리파이에서의 최적화 방법
 
-이전 차선 인식 예제와 마찬가지로, 라즈베리파이와 같은 임베디드 디바이스에서는 모델 경량화(양자화, 가지치기) 및 추론 속도 향상(이미지 크기 축소, 프레임 건너뛰기, 스레드 분리) 기법이 중요합니다.
+- 라즈베리파이와 같은 임베디드 디바이스에서는 모델 경량화(양자화, 가지치기) 및 추론 속도 향상(이미지 크기 축소, 프레임 건너뛰기, 스레드 분리) 기법이 중요함
 
-특히 이 예제에서는 도로 표지판 및 신호등을 '검출'하는 부분에 OpenCV의 `CascadeClassifier`를 사용했습니다. 이는 비교적 가볍게 객체 후보 영역을 찾는 데 유용하지만, 최신 딥러닝 기반 객체 탐지 모델(예: YOLO-Nano, MobileNet-SSD)만큼 정확하지는 않습니다. 라즈베리파이에서도 TensorRT나 OpenVINO와 같은 최적화 툴을 사용하면 경량화된 딥러닝 객체 탐지 모델을 효율적으로 실행할 수 있습니다.
+- 본 실습에서는 도로 표지판 및 신호등을 '검출'하는 부분에 OpenCV의 `CascadeClassifier`를 사용
+    - 이는 비교적 가볍게 객체 후보 영역을 찾는 데 유용하지만,
+    - 최신 딥러닝 기반 객체 탐지 모델(예: YOLO-Nano, MobileNet-SSD)만큼 정확하지 않음
 
-### 최적화된 추론 예시 (TensorFlow Lite 이용)
+- 라즈베리파이에서도 TensorRT나 OpenVINO와 같은 최적화 툴을 사용하면 경량화된 딥러닝 객체 탐지 모델을 효율적으로 실행할 수 있음
 
-텐서플로우 모델을 TFLite로 변환하여 라즈베리파이에서 효율적으로 실행할 수 있습니다.
+- **최적화된 추론 예시 (TensorFlow Lite 이용)**
+    - 텐서플로우 모델을 TFLite로 변환하여 라즈베리파이에서 효율적으로 실행할 수 있음
 
 ```python
 # TFLite 모델 로드 및 추론 함수 예시
@@ -1011,11 +980,13 @@ def run_tflite_inference(interpreter, input_details, output_details, image_data)
 # ...
 ```
 
-## 6. 실제 자율주행 키트에 적용하기
+## 5. 실제 자율주행 키트에 적용하기
 
-*   **제어 로직**: 인식된 표지판이나 신호등 정보에 따라 차량의 주행 속도, 방향, 정지 여부 등을 제어하는 로직을 추가합니다.
-    *   예: '정지' 표지판 또는 '빨간불' 인식 시 `motor_controller.stop()`.
-    *   예: '속도 제한 (50km/h)' 표지판 인식 시 `motor_controller.set_max_speed(50)`.
-*   **다중 센서 융합**: 차선 인식 결과와 표지판/신호등 인식 결과를 종합하여 더 안전하고 정확한 주행 판단을 내리도록 시스템을 구축합니다. 예를 들어, 차선 인식이 불안정할 때 표지판 정보가 주행 방향 결정에 중요한 보조 역할을 할 수 있습니다.
+- **제어 로직**
+    - 인식된 표지판이나 신호등 정보에 따라 차량의 주행 속도, 방향, 정지 여부 등을 제어하는 로직 추가
+        - 예: '정지' 표지판 또는 '빨간불' 인식 시 `motor_controller.stop()`.
+        - 예: '속도 제한 (50km/h)' 표지판 인식 시 `motor_controller.set_max_speed(50)`.
 
-스카이님, 이 도로 표지판 및 신호등 인식 예제가 비전공자 학생들에게 딥러닝이 실제 자율주행 시스템에 어떻게 적용되는지를 보여주는 좋은 자료가 되기를 바랍니다. 특히 경량화된 모델과 하드웨어 제어 연결을 통해 학생들이 실제 '자율주행차'의 작동 원리를 직관적으로 이해할 수 있을 것입니다.
+- **다중 센서 융합**
+    - 차선 인식 결과와 표지판/신호등 인식 결과를 종합하여 더 안전하고 정확한 주행 판단을 내리도록 시스템 구축
+        - 예: 차선 인식이 불안정할 때 표지판 정보가 주행 방향 결정에 중요한 보조 역할을 할 수 있음

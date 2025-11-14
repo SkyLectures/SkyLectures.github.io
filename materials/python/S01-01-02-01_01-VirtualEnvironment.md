@@ -133,6 +133,7 @@ categories: materials
     - Linux / MAC의 경우
 
         ```bash
+        #// file: "Terminal: bash"
         cd workspace
         python -m venv myenv
         cd fab
@@ -147,6 +148,7 @@ categories: materials
     - Windows의 경우
 
         ```bash
+        #// file: "Terminal: bash"
         cd workspace
         python -m venv myenv
         cd fab

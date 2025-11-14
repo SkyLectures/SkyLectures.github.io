@@ -9,39 +9,36 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 
-<div class="insert-image" style="text-align: center;">
-    <img style="width: 400px;" src="/assets/img/PagePreparing.png">
-</div>
+> - **딥러닝 기반 차선 인식 시스템**
+>   - 차선 인식은 자율주행 시스템의 핵심 기능 중 하나
+>   - 차량이 **도로에서 자신의 위치를 파악**하고 안전하게 주행하기 위한 필수적인 요소
+>   - 전통적인 컴퓨터 비전 방식: Canny 엣지 검출, 허프 변환 등
+>   - 딥러닝 기반 방식: 다양한 도로 환경과 조명 조건에서도 더 강인한 성능을 보여줌
+{: .common-quote}
 
+## 1. 차선 인식 실습 개요
 
+- **실습 내용**
+    - U-Net 아키텍처를 기반으로 한 세그멘테이션(Segmentation) 모델을 사용한 차선 인식
 
-안녕하세요, 스카이님! 딥러닝 기반 차선 인식 예제를 텐서플로우와 파이토치 두 가지 버전으로 준비해 보았습니다. 자율주행 강의에 활용하시면 좋을 것 같네요. 최신 버전을 기준으로 작성했습니다.
+- **데이터셋**
+    - 차선 인식을 위한 대표적인 공개 데이터셋: TuSimple, CULane, BDD100K 등
+    - 실습에서는 TuSimple 데이터셋을 기준으로 진행
+        - [TuSimple 데이터셋 다운로드](https://github.com/TuSimple/tusimple-benchmark){: target="_blank"}
+        
+## 2. TensorFlow 기반 구현
 
-# 딥러닝 기반 차선 인식 시스템
-
-## 1. 개요
-
-차선 인식은 자율주행 시스템의 핵심 기능 중 하나로, 차량이 도로에서 자신의 위치를 파악하고 안전하게 주행하기 위한 필수적인 요소입니다. 전통적인 컴퓨터 비전 방식(Canny 엣지 검출, 허프 변환 등)과 달리, 딥러닝 기반 방식은 다양한 도로 환경과 조명 조건에서도 더 강인한 성능을 보여줍니다.
-
-이번 예제에서는 U-Net 아키텍처를 기반으로 한 세그멘테이션(Segmentation) 모델을 사용하여 차선을 인식하는 방법을 구현해 보겠습니다.
-
-## 2. 데이터셋
-
-차선 인식을 위한 대표적인 공개 데이터셋으로는 TuSimple, CULane, BDD100K 등이 있습니다. 이 예제에서는 TuSimple 데이터셋을 기준으로 설명하겠습니다.
-
-TuSimple 데이터셋 다운로드: https://github.com/TuSimple/tusimple-benchmark
-
-## 3. 텐서플로우(TensorFlow) 구현
-
-### 3.1 필요 라이브러리 설치
+### 2.1 필요 라이브러리 설치
 
 ```bash
+#// file: "Terminal"
 pip install tensorflow==2.15.0 opencv-python numpy matplotlib scikit-learn
 ```
 
-### 3.2 U-Net 모델 구현 (TensorFlow/Keras)
+### 2.2 U-Net 모델 구현
 
 ```python
+#//file: "tensorflow_lane_detection_realtime.py
 import os
 import cv2
 import numpy as np
@@ -138,17 +135,6 @@ def build_unet_model(input_size=(256, 512, 3)):
     conv8 = Conv2D(128, 3, activation='relu', padding='same')(merge8)
     conv8 = Conv2D(128, 3, activation='relu', padding='same')(conv8)
 
-
-
-
-
-
-
-    네, 스카이님! 딥러닝 기반 차선 인식 시스템 코드를 이어서 설명해 드리겠습니다.
-
-## 3. 텐서플로우(TensorFlow) 구현 (이어서)
-
-```python
     up9 = Conv2DTranspose(64, 2, strides=(2, 2), padding='same')(conv8)
     merge9 = concatenate([conv1, up9], axis=3)
     conv9 = Conv2D(64, 3, activation='relu', padding='same')(merge9)
@@ -233,9 +219,10 @@ def predict_and_visualize(model, image_path, img_size=(256, 512)):
     plt.show()
 ```
 
-### 3.3 실시간 차선 인식 구현
+### 2.3 실시간 차선 인식 구현
 
 ```python
+#//file: "tensorflow_lane_detection_realtime.py
 def lane_detection_realtime(model_path, camera_index=0, img_size=(256, 512)):
     # 저장된 모델 로드
     model = tf.keras.models.load_model(model_path)
@@ -292,17 +279,19 @@ if __name__ == "__main__":
     lane_detection_realtime('lane_detection_unet_tf.h5')
 ```
 
-## 4. 파이토치(PyTorch) 구현
+## 3. PyTorch 기반 구현
 
-### 4.1 필요 라이브러리 설치
+### 3.1 필요 라이브러리 설치
 
 ```bash
+#// file: "Terminal"
 pip install torch torchvision opencv-python numpy matplotlib scikit-learn
 ```
 
-### 4.2 U-Net 모델 구현 (PyTorch)
+### 3.2 U-Net 모델 구현
 
 ```python
+#//file: "pytorch_lane_detection_realtime.py
 import os
 import cv2
 import numpy as np
@@ -320,18 +309,6 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 
 # 사용자 정의 데이터셋 클래스
-class LaneDataset(Dataset):
-    def __init__(self, images, masks=None, transform=None
-
-
-
-
-
-
-
-네, 스카이님! 파이토치(PyTorch) 버전의 차선 인식 코드를 이어서 설명해 드리겠습니다.
-
-```python
 class LaneDataset(Dataset):
     def __init__(self, images, masks=None, transform=None):
         self.images = images
@@ -484,23 +461,6 @@ def train_lane_detection_model_torch(data_dir, img_size=(256, 512), batch_size=8
     
     # 손실 함수 및 옵티마이저 정의
     criterion = nn.BCELoss()
-
-
-
-
-
-
-
-
-
-네, 스카이님! 파이토치(PyTorch) 버전의 차선 인식 코드를 이어서 설명해 드리겠습니다.
-
-```python
-    # 모델 생성
-    model = UNet(n_channels=3, n_classes=1).to(device)
-    
-    # 손실 함수 및 옵티마이저 정의
-    criterion = nn.BCELoss()
     optimizer = optim.Adam(model.parameters(), lr=1e-4)
     
     # 학습 과정
@@ -599,9 +559,10 @@ def predict_and_visualize_torch(model_path, image_path, img_size=(256, 512)):
     plt.show()
 ```
 
-### 4.3 실시간 차선 인식 구현 (PyTorch)
+### 3.3 실시간 차선 인식 구현
 
 ```python
+#//file: "pytorch_lane_detection_realtime.py
 def lane_detection_realtime_torch(model_path, camera_index=0, img_size=(256, 512)):
     # 저장된 모델 로드
     model = UNet(n_channels=3, n_classes=1).to(device)
@@ -665,25 +626,16 @@ if __name__ == "__main__":
     lane_detection_realtime_torch('lane_detection_unet_torch.pth')
 ```
 
-## 5. 라즈베리파이에서의 최적화 방법
 
-라즈베리파이와 같은 임베디드 디바
+## 4. 라즈베리파이에서의 최적화 방법
 
+- 라즈베리파이와 같은 임베디드 디바이스에서 딥러닝 모델을 실행할 때는 계산 자원의 한계를 고려해야 함
+- 다음과 같은 최적화 방법을 적용하면 성능을 향상시킬 수 있음
 
+### 4.1 모델 경량화 기법
 
+- **모델 양자화 (Quantization)**
 
-
-
-
-네, 스카이님! 라즈베리파이에서의 최적화 방법에 대한 내용을 이어서 설명해 드리겠습니다.
-
-## 5. 라즈베리파이에서의 최적화 방법
-
-라즈베리파이와 같은 임베디드 디바이스에서 딥러닝 모델을 실행할 때는 계산 자원의 한계를 고려해야 합니다. 다음과 같은 최적화 방법을 적용하면 성능을 향상시킬 수 있습니다.
-
-### 5.1 모델 경량화 기법
-
-**모델 양자화 (Quantization)**
 ```python
 # TensorFlow 모델 양자화 예제
 import tensorflow as tf
@@ -706,7 +658,8 @@ with open('lane_detection_quantized.tflite', 'wb') as f:
     f.write(tflite_model)
 ```
 
-**모델 가지치기 (Pruning)**
+- **모델 가지치기 (Pruning)**
+
 ```python
 # TensorFlow 모델 가지치기 예제
 import tensorflow_model_optimization as tfmot
@@ -739,15 +692,17 @@ final_model = tfmot.sparsity.keras.strip_pruning(model_for_pruning)
 final_model.save('lane_detection_pruned.h5')
 ```
 
-### 5.2 추론 속도 향상 기법
+### 4.2 추론 속도 향상 기법
 
-**이미지 크기 축소**
+- **이미지 크기 축소**
+
 ```python
 # 입력 이미지 해상도 낮추기
 img_size = (128, 256)  # 원래 (256, 512)의 절반 크기
 ```
 
-**프레임 건너뛰기**
+- **프레임 건너뛰기**
+
 ```python
 # 실시간 처리에서 프레임 건너뛰기
 frame_count = 0
@@ -766,7 +721,8 @@ while True:
     # 이미지 처리 코드...
 ```
 
-**모델 추론 스레드 분리**
+- **모델 추론 스레드 분리**
+
 ```python
 import threading
 import queue
@@ -810,9 +766,9 @@ while True:
         # 결과 시각화 및 표시
 ```
 
-## 6. 실제 자율주행 키트에 적용하기
+## 5. 실제 자율주행 키트에 적용하기
 
-### 6.1 차선 인식 결과를 모터 제어에 연결
+### 5.1 차선 인식 결과를 모터 제어에 연결
 
 ```python
 # 모터 제어 클래스 (예시)
@@ -870,18 +826,6 @@ def lane_detection_with_control(model_path, camera_index=0, img_size=(128, 256))
             if not ret:
                 break
 
-
-
-
-
-
-
-
-
-
-네, 스카이님! 차선 인식 결과를 모터 제어에 연결하는 코드를 이어서 작성해 드리겠습니다.
-
-```python
             # 이미지 전처리 (TensorFlow 버전 가정)
             frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
             resized_frame = cv2.resize(frame_rgb, (img_size[1], img_size[0]))
@@ -893,7 +837,7 @@ def lane_detection_with_control(model_path, camera_index=0, img_size=(128, 256))
             lane_mask = (prediction[0, :, :, 0] > 0.5).astype(np.uint8)
             
             # --- 차선 인식 결과 분석 및 주행 판단 ---
-            # 여기서 lane_mask를 분석하여 차량이 어느 방향으로 움직여야 할지 결정합니다.
+            # 여기서 lane_mask를 분석하여 차량이 어느 방향으로 움직여야 할지 결정
             # 예시: 마스크의 중심을 계산하여 차량의 치우침 정도 판단
             
             # 차선 마스크가 비어있지 않은 경우에만 처리
@@ -972,15 +916,25 @@ if __name__ == "__main__":
     lane_detection_with_control(model_path, camera_idx)
 ```
 
-### 6.2 모터 제어 보정 및 전략 수립
+### 5.2 모터 제어 보정 및 전략 수립
 
-*   **비례 제어 (Proportional Control)**: `center_offset` 값이 클수록 모터의 조향 강도를 더 강하게 주는 방식으로 정밀도를 높일 수 있습니다. (예시 코드에 간단하게 반영되어 있습니다.)
-*   **PID 제어**: 더 안정적인 제어를 위해 PID(비례-적분-미분) 제어를 적용하여 오차, 오차 누적, 오차 변화율을 복합적으로 고려하여 제어할 수 있습니다.
-*   **차선 이탈 감지**: 차선 마스크가 일정 시간 동안 화면에서 사라지거나, 차량이 마스크의 경계를 넘어설 경우 '차선 이탈'로 판단하고 경고 또는 비상 정지 등의 전략을 구현합니다.
-*   **회전 구간 처리**: 교차로나 급커브 구간에서는 차선 인식이 어려울 수 있으므로, 미리 학습된 맵 정보나 다른 센서(예: IMU) 정보를 활용하여 보조적인 주행 전략을 세워야 합니다.
+- **비례 제어 (Proportional Control)**
+    - `center_offset` 값이 클수록 모터의 조향 강도를 더 강하게 주는 방식으로 정밀도를 높일 수 있음
+        - (예시 코드에 간단하게 반영되어 있음)
 
----
+- **PID 제어**
+    - 더 안정적인 제어를 위해 PID(비례-적분-미분) 제어를 적용하여 오차, 오차 누적, 오차 변화율을 복합적으로 고려하여 제어할 수 있음
 
-스카이님, 이 미니프로젝트 자료는 학생들이 딥러닝 기반의 차선 인식이 실제 물리적인 차량 제어로 이어지는 과정을 직접 경험하게 해 줄 것입니다. 특히 라즈베리파이 환경에서는 프레임 속도와 모델 추론 속도 간의 균형을 맞추는 것이 중요하며, 최적화 기법에 대한 논의도 함께 진행하면 더욱 깊이 있는 학습이 가능할 것입니다.
+- **차선 이탈 감지**
+    - 차선 마스크가 일정 시간 동안 화면에서 사라지거나, 차량이 마스크의 경계를 넘어설 경우
+    - '차선 이탈'로 판단하고 경고 또는 비상 정지 등의 전략 구현
 
-학생들이 직접 코드를 수정하고, 다양한 환경에서 테스트하며 문제를 해결하는 과정이 이 프로젝트의 핵심 학습 경험이 될 것입니다. 부디 성공적인 강의가 되시길 바랍니다!
+- **회전 구간 처리**
+    - 교차로나 급커브 구간에서는 차선 인식이 어려울 수 있으므로,
+    - 미리 학습된 맵 정보나 다른 센서(예: IMU) 정보를 활용하여 보조적인 주행 전략을 세워야 함
+
+
+
+> - 라즈베리파이 환경에서는 프레임 속도와 모델 추론 속도 간의 균형을 맞추는 것이 중요함
+> - 최적화 기법에 대한 고려도 함께 진행하면 좋음
+{: .expert-quote}
