@@ -20,7 +20,7 @@ categories: materials
 ### 1.1 AI 개요
 
 <div class="insert-image" style="text-align: center;">
-    <img style="width: 600px;" src="/materials/ai/images/S03-01-01-01_01-001.png"><br>
+    <img style="width: 500px;" src="/materials/ai/images/S03-01-01-01_01-001.png"><br>
     <div style="text-align: right;">그림출처: 아이다랩(AiDALab)</div>
 </div>
 
