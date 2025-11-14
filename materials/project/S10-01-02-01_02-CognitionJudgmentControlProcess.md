@@ -124,7 +124,7 @@ categories: materials
 >       - 제어 과정: 결정된 방향으로 모터를 움직이는 것
 {: .expert-quote}
 
-> - **참고 자료 **
+> - **참고 자료**
 >   - [한국정보통신기술협회: 자율주행 알고리즘](https://tta.or.kr/data/androReport/ttaJnal/197-1-3-6.pdf){: target="blank"}
 >   - [자율주행 차량의 인지 기능과 인지 SW 평가](https://blog.naver.com/suresofttech/222380512373){: target="blank"}
 >   - [자율주행 인지, 판단, 제어 알고리즘의 중요한 역할](https://divinetechnology.tistory.com/65){: target="blank"}
