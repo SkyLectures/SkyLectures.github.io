@@ -66,7 +66,6 @@ categories: materials
         **→** <span style="color: #00D">C/C++/C#/Java 등 다른 언어의 특징을 모두 신경 써야 할 지도 모름</span>
 - 엄격한 들여쓰기, 탭, 스페이스…<br>
         **→** <span style="color: #00D">알려진 것과 다르게 코드의 형태를 매우 엄격하게 관리</span>
-- 등등…
 
 
 ### 2.3 시작부터 겁을 주는 이유는?
@@ -103,9 +102,9 @@ categories: materials
 
 > - 책장에서 발견한 옛 파이썬 도서 (1998.01.17 발행) 대학생때 사 놓고 거의 보지 않음
 > <div class="insert-image" style="margin-bottom: 1em;">
->   <img src="/materials/python/images/S01-01-01-01_01-002.jpg" style="width: 302px; height: 320px;">
+>   <img src="/materials/python/images/S01-01-01-01_01-002.jpg" style="width: 300px; height: 310px;">
 >   &nbsp;&nbsp;
->   <img src="/materials/python/images/S01-01-01-01_01-003.png" style="width: 200px; height: 312px;">
+>   <img src="/materials/python/images/S01-01-01-01_01-003.png" style="width: 198px; height: 308px;">
 > </div>
 {: .common-quote}
 

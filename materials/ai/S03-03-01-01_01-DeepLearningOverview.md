@@ -49,7 +49,7 @@ categories: materials
 - 1943년 워런 맥컬록, 월터 피트의 최초의 신경망 모델이 시초
 
 <div class="insert-image" style="text-align: center;">
-    <img src="/materials/ai/images/S03-03-01-01_01-001.png" style="width: 90%;"><br>
+    <img src="/materials/ai/images/S03-03-01-01_01-001.png" style="width: 80%;"><br>
 </div>
 
 - 헵의 규칙이 신경망 모델의 동작을 정의하는 기반이 됨
@@ -57,18 +57,12 @@ categories: materials
 
 ### 2.3 신경세포/신경망의 구조와 작동
 
-- **신경세포의 구조**
+- **신경세포의 구조와 연결 형태**
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/ai/images/S03-03-01-01_01-002.png" style="width: 80%;"><br>
-    </div>
-
-<br>
-
-- **신경세포의 연결 형태**
-
-    <div class="insert-image" style="text-align: center;">
-        <img src="/materials/ai/images/S03-03-01-01_01-003.png" style="width: 50%;"><br>
+        <img src="/materials/ai/images/S03-03-01-01_01-002.png" style="width: 50%;">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <img src="/materials/ai/images/S03-03-01-01_01-003.png" style="width: 45%;">
     </div>
 
     - 신호의 전달은 전기로 이루어짐
@@ -89,7 +83,6 @@ categories: materials
     6. 이웃 신경세포는 신경전달물질을 수용하면서 이온화 작용, 화학작용을 통하여 전기 신호 발생
     7. 처리 단계 반복
 
-<br>
 
 ### 2.4 신경세포, 신경망의 모델링
 
@@ -138,7 +131,7 @@ categories: materials
     >   - 당시의 신경망 모델은 기계적으로 구성되었기 때문에 각 가중치 업데이트는 전기모터를 이용하여 직접 조정해 주었음
     >   - 정확하게는 학습을 위한 개념은 연구에서도 도입되었고, Backpropagation이라는 알고리즘도 나왔지만 기술 부족으로 적용하지 못했음
     >   <div class="insert-image" style="text-align: center;">
-    >       <img src="/materials/ai/images/S03-03-01-01_01-007.png" style="width: 40%;"><br>
+    >       <img src="/materials/ai/images/S03-03-01-01_01-007.png" style="width: 35%;"><br>
     >       <caption>당시의 신경망 기계</caption>
     >   </div>    
     {: .expert-quote}
@@ -154,7 +147,7 @@ categories: materials
     - <span style="color: darkred;">**직선의 수를 늘림으로써 다양한 패턴의 분류가 가능해 짐 → XOR 문제의 원인 제거 성공 → 다층 퍼셉트론 등장**</span>
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/ai/images/S03-03-01-01_01-009.png" style="width: 80%;"><br>
+        <img src="/materials/ai/images/S03-03-01-01_01-009.png" style="width: 70%;"><br>
     </div>
 
     > 일설에 따르면 ‘Perceptrons’를 발표한 민스키, 패퍼트도 다층 퍼펏셉트론이 XOR 연산을 해결할 수 있음을 알고 있었다고 함
