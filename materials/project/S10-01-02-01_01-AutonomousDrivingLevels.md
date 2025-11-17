@@ -14,14 +14,14 @@ categories: materials
 - 자율주행 레벨(Level)은 자동화 항목, 운전 주시, 시스템 오류 대응 등의 행위 주체와 자동화 구간 등에 따라 6단계로 구성됨
     - 국제표준 J3016, SAE(Society of Automotive Engineers, 미국자동차공학회) 2019 제정
 
-<div style="text-align:center; width: 840px;"><h4>자율 주행차의 레벨(Level, 단계)</h4></div>
-<div class="info-table" style="width: 840px;">
+<div style="text-align:center; width: 80%;"><h4>자율 주행차의 레벨(Level, 단계)</h4></div>
+<div class="info-table" style="width: 80%;">
     <table>
         <caption>(자료출처: 정보통신기획평가원, ICT R&D 기술로드맵 2025 보고서 - 4. 인공지능·SW·자율주행자동차)</caption>
         <thead>
             <th style="width: 60px;">단계</th>
             <th style="width: 150px;">특징</th>
-            <th style="width: 590px;">자율주행차 기능 및 내용</th>
+            <th>자율주행차 기능 및 내용</th>
         </thead>
         <tbody>
             <tr>
@@ -140,6 +140,6 @@ categories: materials
 >       - 특히 B형 셔틀버스는 운전석이 없는 형태로 설계되어 있으며, 안전요원 1명을 포함해 총 11명이 탑승할 수 있습니다.
 >       - 또한 이 자율주행 버스는 96%라는 높은 국산화율을 달성했다는 점에서도 주목받고 있습니다.
 >       <div class="insert-image" style="text-align: center;">
->           <img style="width: 500px;" src="/materials/project/images/S10-01-02-01_01-001.jpg">
+>           <img style="width: 400px;" src="/materials/project/images/S10-01-02-01_01-001.jpg">
 >       </div>
 {: .common-quote}

@@ -8,8 +8,11 @@ categories: materials
 * toc
 {:toc .large-only .toc-sticky:true}
 
+<div class="colab-link">
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/python/notebooks/S03-02-03-03_01-ImagePreprocessingFiltering.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+</div>
 
-## **1. 영상 전처리 개요**
+## 1. 영상 전처리 개요
 
 ### 1.1. 영상 전처리란?
 - **정의**: 본격적인 영상 분석이나 객체 인식 전에 영상의 품질을 개선하거나 특정 특징을 강조하는 과정
@@ -21,17 +24,31 @@ categories: materials
 - **인식 정확도 향상**: 노이즈 제거 및 중요 특징 강조를 통해 객체 인식, 차선 검출 등의 정확도 향상
 
 
-## **2. 기본적인 영상 전처리 기법**
+## 2. 기본적인 영상 전처리 기법
 
-### 2.1. 그레이스케일 변환
+### 2.1. 색상 공간 변환
 
 - **내용**
-    - RGB 컬러 영상을 흑백 영상으로 변환(Color to Grayscale)
-    - 일반적으로 R, G, B 채널에 각각 다른 가중치를 적용함
-    - 그레이스케일 = 0.299×R + 0.587×G + 0.114×B
+    - 이미지를 다른 색상 공간으로 변환
+        - 예: BGR **→** 그레이스케일, BGR **→** HSV
+    - 그레이스케일 변환
+        - RGB 컬러 영상을 흑백 영상으로 변환(Color to Grayscale)
+        - 일반적으로 R, G, B 채널에 각각 다른 가중치를 적용함
+        - 그레이스케일 = 0.299×R + 0.587×G + 0.114×B
+
+- **사용함수**: `cv2.cvtColor()`
+    - cv2.cvtColor()는 이미지의 색상 공간(Color Space)을 변환하는 데 사용되는 OpenCV의 핵심 함수
+    - 주로 BGR (OpenCV가 이미지를 읽는 기본 형식) 이미지와 RGB (Matplotlib이나 웹 등에서 일반적으로 사용하는 형식)의 변환에 사용
+    - 변환코드
+        - cv2.COLOR_BGR2RGB: BGR **→** RGB
+        - cv2.COLOR_RGB2BGR: RGB **→** BGR
+        - cv2.COLOR_BGR2GRAY: BGR **→** 그레이스케일
+        - cv2.COLOR_GRAY2BGR: 그레이스케일 **→** BGR
+        - cv2.COLOR_BGR2HSV: BGR **→** HSV (Hue, Saturation, Value)
+        - cv2.COLOR_HSV2BGR: HSV **→** BGR 등        
 
 - **용도**
-    - 처리 속도 향상, 색상 정보가 불필요한 경우(에지 검출, 형태 인식 등)에 사용
+    - 자율주행에서 특정 색상을 강조하거나, 색상 정보가 불필요한 연산(에지 검출, 형태 인식 등)에서 속도 향상을 위해 사용됨
 
 ```python
 #// file: "image_preprocess.py"
@@ -39,17 +56,26 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-# 이미지 불러오기
-img = cv2.imread('road_image.jpg')
+img_color = cv2.imread('./images/traffic_light.jpg')
 
-# BGR을 그레이스케일로 변환
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+if img_color is not None:
+    # 원본 이미지 표시
+    cv2.imshow('Original Image', img_color)
+    cv2.waitKey(0)
 
-# 결과 표시
-plt.figure(figsize=(10, 5))
-plt.subplot(121), plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB)), plt.title('원본 이미지')
-plt.subplot(122), plt.imshow(gray, cmap='gray'), plt.title('그레이스케일 이미지')
-plt.show()
+    # BGR을 그레이스케일로 변환
+    img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
+    cv2.imshow('Grayscale Image', img_gray)
+    print(f"그레이스케일 이미지 형태: {img_gray.shape}") # 예: (480, 640)
+    cv2.waitKey(0)
+
+    # BGR을 HSV로 변환
+    img_hsv = cv2.cvtColor(img_color, cv2.COLOR_BGR2HSV)
+    cv2.imshow('HSV Image', img_hsv)
+    print(f"HSV 이미지 형태: {img_hsv.shape}") # 예: (480, 640, 3)
+    cv2.waitKey(0)
+
+    cv2.destroyAllWindows()
 ```
 
 
@@ -58,62 +84,185 @@ plt.show()
 - **내용**
     - 이미지의 가로와 세로 크기를 변경하는 작업 (Resizing)
 
-- **보간법(Interpolation)**
-    - 크기 변경 시 새로운 픽셀 값을 계산하는 방법
-    - 종류
-        - **최근접 이웃(Nearest Neighbor)**: 가장 가까운 픽셀 값 사용 (빠르지만 품질 낮음)
-        - **선형(Linear)**: 주변 픽셀 값의 가중 평균 사용 (중간 속도와 품질)
-        - **큐빅(Cubic)**: 더 넓은 범위의 픽셀 값을 사용 (느리지만 품질 좋음)
+- **사용함수**: `cv2.resize()`
+    - `interpolation` (보간법) 파라미터: 이미지를 늘리거나 줄일 때 픽셀 값을 어떻게 채울지 결정
+        - 크기 변경 시 새로운 픽셀 값을 계산하는 방법
+        - 종류
+            - **최근접 이웃(Nearest Neighbor)**: 가장 가까운 픽셀 값 사용 (빠르지만 품질 낮음)
+            - **선형(Linear)**: 주변 픽셀 값의 가중 평균 사용 (중간 속도와 품질)
+            - **큐빅(Cubic)**: 더 넓은 범위의 픽셀 값을 사용 (느리지만 품질 좋음)
 
 - **용도**
     - 처리 속도 향상, 메모리 사용량 감소, 딥러닝 모델 입력 크기 통일 등에 활용
 
 ```python
 #// file: "image_preprocess.py"
-# 이미지 크기 조정 (너비 320px, 높이 240px)
-resized = cv2.resize(img, (320, 240))
+if img_color is not None:
+    #이미지 크기 조정 (너비 320px, 높이 240px)
+    resized = cv2.resize(img_color, (320, 240))
+    cv2.imshow('320x240 Resized Image', resized)
+    cv2.waitKey(0) # 키 입력이 있을 때까지 무한정 대기
 
-# 다양한 보간법 적용
-resized_nearest = cv2.resize(img, (320, 240), interpolation=cv2.INTER_NEAREST)
-resized_linear = cv2.resize(img, (320, 240), interpolation=cv2.INTER_LINEAR)  # 기본값
-resized_cubic = cv2.resize(img, (320, 240), interpolation=cv2.INTER_CUBIC)
+    # 이미지 절반 크기로 줄이기 (가로/세로 0.5배)
+    img_resized_half = cv2.resize(img_color, (0, 0), fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)
+    cv2.imshow('Resized Half', img_resized_half)
+    print(f"절반 크기 이미지 형태: {img_resized_half.shape}")
+    cv2.waitKey(0)
 
-# 결과 표시
-plt.figure(figsize=(15, 10))
-plt.subplot(221), plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB)), plt.title('원본 이미지')
-plt.subplot(222), plt.imshow(cv2.cvtColor(resized_nearest, cv2.COLOR_BGR2RGB)), plt.title('최근접 이웃 보간법')
-plt.subplot(223), plt.imshow(cv2.cvtColor(resized_linear, cv2.COLOR_BGR2RGB)), plt.title('선형 보간법')
-plt.subplot(224), plt.imshow(cv2.cvtColor(resized_cubic, cv2.COLOR_BGR2RGB)), plt.title('큐빅 보간법')
-plt.show()
+    # 이미지 두 배 크기로 늘리기 (가로/세로 2배)
+    img_resized_double = cv2.resize(img_color, (0, 0), fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
+    cv2.imshow('Resized Double', img_resized_double)
+    print(f"두 배 크기 이미지 형태: {img_resized_double.shape}")
+    cv2.waitKey(0)
+
+    # 다양한 보간법 적용
+    resized_nearest = cv2.resize(img_color, (320, 240), interpolation=cv2.INTER_NEAREST)
+    cv2.imshow('Nearest-neighbor Interpolation', resized_nearest)   # 최근접 이웃 보간법/근접 보간겁
+    cv2.waitKey(0) # 키 입력이 있을 때까지 무한정 대기
+
+    resized_linear = cv2.resize(img_color, (320, 240), interpolation=cv2.INTER_LINEAR)  # 기본값
+    cv2.imshow('Linear Interpolation', resized_linear)   # 선형 보간법
+    cv2.waitKey(0) # 키 입력이 있을 때까지 무한정 대기
+
+    resized_cubic = cv2.resize(img_color, (320, 240), interpolation=cv2.INTER_CUBIC)
+    cv2.imshow('Cubic Interpolation', resized_cubic)    # 큐빅 보간법/삼차 보간법
+    cv2.waitKey(0) # 키 입력이 있을 때까지 무한정 대기
+    
+    cv2.destroyAllWindows() # 모든 창 닫기
 ```
 
 
-### 2.3. 관심 영역 설정
+### 2.3. 관심영역 설정/ 추출
 
 - **내용**
-    - 전체 이미지에서 분석이 필요한 특정 영역만 선택하여 처리
+    - 이미지의 특정 관심 영역(Region of Interest, ROI)만 선택하여 처리
+    - 불필요한 영역을 제외하고 처리함으로써 연산 효율 향상
+    - 자율주행 시에는 주로 도로 영역만 선택하여 차선이나 장애물 인식을 수행하는 데 사용
 
 - **용도**
     - 처리 효율성 향상, 불필요한 영역 제외, 특정 영역(예: 도로, 차선)에 집중할 때 사용
 
 ```python
 #// file: "image_preprocess.py"
-# 이미지 하단 절반을 ROI로 설정 (도로 영역이라고 가정)
-height, width = img.shape[:2]
-roi_start_y = int(height * 0.5)  # 이미지 높이의 절반부터 시작
-roi = img[roi_start_y:height, 0:width]
+if img_color is not None:
+    # 이미지 하단 절반을 ROI로 설정 (도로 영역이라고 가정)
+    height, width = img_color.shape[:2]
+    roi_start_y = int(height * 0.5) # 이미지 높이의 절반부터 시작
+    roi_end_y = height
+    roi_start_x = 0
+    roi_end_x = width
 
-# 결과 표시
-plt.figure(figsize=(10, 8))
-plt.subplot(211), plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB)), plt.title('원본 이미지')
-plt.subplot(212), plt.imshow(cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)), plt.title('관심 영역 (ROI)')
-plt.show()
+    roi = img_color[roi_start_y:roi_end_y, roi_start_x:roi_end_x]
+    
+    cv2.imshow('Original Image', img_color)
+    cv2.imshow('Region of Interest (ROI)', roi)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 ```
 
 
-## **3. 이미지 품질 향상 기법**
+### 2.4 픽셀 접근 및 수정
 
-### 3.1. 히스토그램 평활화 
+- **내용**
+    - NumPy 배열의 인덱싱을 사용하여 특정 픽셀의 값에 접근하거나 수정할 수 있음
+    - 컬러 이미지의 경우 `[y좌표, x좌표, 채널]` 형태로 접근 (채널 순서: BGR)
+
+```python
+#// file: "image_preprocess.py"
+if img_color is not None:
+    # (높이-1, 너비-1) 픽셀의 BGR 값 확인 (우측 하단)
+    # y좌표: img_color.shape[0] - 1, x좌표: img_color.shape[1] - 1
+    # Note: NumPy 배열 인덱싱은 [행, 열] 또는 [y, x] 순서
+    bottom_right_pixel = img_color[img_color.shape[0] - 1, img_color.shape[1] - 1]
+    print(f"우측 하단 픽셀 (BGR): {bottom_right_pixel}") # 예: [120, 100, 80]
+
+    # 특정 픽셀 (예: 이미지 중앙)의 색상을 빨간색으로 변경
+    center_y, center_x = img_color.shape[0] // 2, img_color.shape[1] // 2
+    # B=0, G=0, R=255 (OpenCV는 BGR 순서이므로 R 값을 마지막에 넣음)
+    img_color[center_y, center_x] = [0, 0, 255] # B=0, G=0, R=255 (순수한 빨간색)
+
+    # 수정된 이미지를 확인
+    cv2.imshow('Modified Image', img_color)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+```
+
+
+## 3. OpenCV를 이용한 기본 영상 처리
+
+### 3.1 이미지 이진화
+
+- 이미지의 픽셀 값을 특정 기준(임계값)에 따라 흑 또는 백으로 만드는 과정
+- 배경과 객체를 분리하거나, 특정 특징을 강조할 때 사용
+    - 예: 어두운 도로에서 밝은 차선 추출
+
+- **사용함수**: `cv2.threshold()`
+
+```python
+#// file: "image_process.py"
+if img_color is not None:
+    img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
+
+    # 전역 이진화: 127을 임계값으로 사용
+    # 127보다 크면 255(흰색), 작거나 같으면 0(검은색)
+    ret, img_binary = cv2.threshold(img_gray, 127, 255, cv2.THRESH_BINARY)
+    cv2.imshow('Binary Image', img_binary)
+
+    # 이진화 결과도 종종 유용한 정보를 포함함
+    print(f"이진화 반환 값 (ret): {ret}") 
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+```
+
+### 3.2 이미지 블러링
+
+- 이미지를 부드럽게 만들어 노이즈를 줄이는 필터링 작업
+- 미세한 노이즈로 인한 오작동 방지
+- 에지 검출 등의 전처리 단계로 자주 사용
+
+- **사용함수**: `cv2.GaussianBlur()`
+
+```python
+#// file: "image_process.py"
+if img_color is not None:
+    # 가우시안 블러 (5x5 커널 크기)
+    img_blur = cv2.GaussianBlur(img_color, (5, 5), 0)
+    cv2.imshow('Original Image', img_color)
+    cv2.imshow('Blurred Image', img_blur)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+```
+
+### 3.3 에지(Edge) 검출
+
+- 이미지에서 밝기 변화가 급격한 부분을 찾아 선(경계선)으로 표시
+- 객체의 윤곽선을 추출하여 자율주행 시 차량, 도로 경계 등을 파악하는 데 활용
+- Canny 에지 검출은 노이즈 억제, 에지 방향 찾기, 이력 임계값 적용 등 여러 단계로 구성되어 있어 매우 강력함
+
+- **사용함수**: `cv2.Canny()`
+
+```python
+#// file: "image_process.py"
+if img_color is not None:
+    img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
+    img_blur = cv2.GaussianBlur(img_gray, (5, 5), 0) # 노이즈 제거 후 에지 검출
+
+    # Canny 에지 검출 (하위 임계값=50, 상위 임계값=150)
+    edges = cv2.Canny(img_blur, 50, 150)
+    cv2.imshow('Original Image', img_color)
+    cv2.imshow('Edges Image', edges)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+```
+
+
+## 4. 이미지 품질 향상 기법
+
+### 4.1. 히스토그램 평활화 
 
 - **내용**
     - 이미지의 픽셀 값 분포(히스토그램)를 균등하게 재분배하여 명암 대비를 향상시키는 기법(Histogram Equalization)
@@ -124,17 +273,16 @@ plt.show()
 ```python
 #// file: "image_preprocess.py"
 # 그레이스케일 이미지에 적용
-gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-equalized_img = cv2.equalizeHist(gray_img)
+img_equalized = cv2.equalizeHist(img_gray)
+combined_image = np.hstack((img_gray, img_equalized))
+cv2.imshow('Grayscale Image and Equalized Image', combined_image)
+cv2.waitKey(0)
 
-plt.figure(figsize=(10, 5))
-plt.subplot(121), plt.imshow(gray_img, cmap='gray'), plt.title('원본 그레이스케일')
-plt.subplot(122), plt.imshow(equalized_img, cmap='gray'), plt.title('히스토그램 평활화')
-plt.show()
+cv2.destroyAllWindows()
 ```
 
 
-### 3.2 노이즈 제거 필터링
+### 4.2 노이즈 제거 필터링
 
 - **노이즈(Noise)란?**
     - **정의**
@@ -162,12 +310,11 @@ plt.show()
             ```python
             #// file: "image_preprocess.py"
             # 5x5 커널을 사용한 평균 블러
-            blur_avg = cv2.blur(img, (5, 5))
-
-            plt.figure(figsize=(10, 5))
-            plt.subplot(121), plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB)), plt.title('원본 이미지')
-            plt.subplot(122), plt.imshow(cv2.cvtColor(blur_avg, cv2.COLOR_BGR2RGB)), plt.title('평균 블러 (5x5)')
-            plt.show()
+            img_blur_avg = cv2.blur(img_color, (5, 5))
+            combined_image = np.hstack((img_color, img_blur_avg))
+            cv2.imshow('Original Image and Averaging Blur Image', combined_image)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
             ```
 
         - **가우시안 블러 (Gaussian Blur, `cv2.GaussianBlur()`)**
@@ -183,12 +330,11 @@ plt.show()
             ```python
             #// file: "image_preprocess.py"
             # 5x5 커널, 시그마 X/Y = 0을 사용한 가우시안 블러
-            blur_gaussian = cv2.GaussianBlur(img, (5, 5), 0)
-
-            plt.figure(figsize=(10, 5))
-            plt.subplot(121), plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB)), plt.title('원본 이미지')
-            plt.subplot(122), plt.imshow(cv2.cvtColor(blur_gaussian, cv2.COLOR_BGR2RGB)), plt.title('가우시안 블러 (5x5)')
-            plt.show()
+            img_blur_gaussian = cv2.GaussianBlur(img_color, (5, 5), 0)
+            combined_image = np.hstack((img_color, img_blur_gaussian))
+            cv2.imshow('Original Image and Gaussian Blur Image', combined_image)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
             ```
 
         - **미디언 블러 (Median Blur, `cv2.medianBlur()`)**
@@ -202,26 +348,24 @@ plt.show()
             ```python
             #// file: "image_preprocess.py"
             # 소금-후추 노이즈를 가진 이미지 생성 (테스트용)
-            noisy_img = img.copy()
-            num_salt = int(img.size * 0.005) # 0.5% 소금 노이즈
+            noisy_img = img_color.copy()
+            num_salt = int(img_color.size * 0.005) # 0.5% 소금 노이즈
             coords = [np.random.randint(0, i - 1, num_salt) for i in noisy_img.shape]
             noisy_img[coords[0], coords[1], :] = 255
-            num_pepper = int(img.size * 0.005) # 0.5% 후추 노이즈
+            num_pepper = int(img_color.size * 0.005) # 0.5% 후추 노이즈
             coords = [np.random.randint(0, i - 1, num_pepper) for i in noisy_img.shape]
             noisy_img[coords[0], coords[1], :] = 0
 
             # 5x5 커널을 사용한 미디언 블러
-            blur_median = cv2.medianBlur(noisy_img, 5) # 커널 크기는 홀수여야 함
-
-            plt.figure(figsize=(15, 5))
-            plt.subplot(131), plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB)), plt.title('원본 이미지')
-            plt.subplot(132), plt.imshow(cv2.cvtColor(noisy_img, cv2.COLOR_BGR2RGB)), plt.title('노이즈 이미지')
-            plt.subplot(133), plt.imshow(cv2.cvtColor(blur_median, cv2.COLOR_BGR2RGB)), plt.title('미디언 블러 (5)')
-            plt.show()
+            img_blur_median = cv2.medianBlur(noisy_img, 5) # 커널 크기는 홀수여야 함
+            combined_image = np.hstack((noisy_img, img_blur_median))
+            cv2.imshow('Noisy Image and Median Blur Image', combined_image)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
             ```
 
 
-### 3.3 이미지 선명화
+### 4.3 이미지 선명화
 
 - **선명화(Sharpening) 필터의 필요성**
     - **원리**
@@ -241,21 +385,18 @@ plt.show()
 
     ```python
     #// file: "image_preprocess.py"
-    # 5x5 커널, 시그마 X/Y = 0을 사용한 가우시안 블러 (흐린 이미지 생성)
-    blurred = cv2.GaussianBlur(img, (5, 5), 0)
-
+    # 5x5 커널, 시그마 X/Y = 0을 사용한 가우시안 블러 (흐린 이미지 생성) 대상
     # 원본 - 흐린 이미지 = 엣지 강조 이미지 (마스크)
     # 이미지 데이터 타입이 uint8이므로 연산 시 주의 (np.float32로 변환 후 연산)
-    unsharp_mask = cv2.addWeighted(img, 1.5, blurred, -0.5, 0) # 원본에 1.5배, 블러된 이미지에 -0.5배 가중치를 주고 0을 더함
-
-    plt.figure(figsize=(10, 5))
-    plt.subplot(121), plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB)), plt.title('원본 이미지')
-    plt.subplot(122), plt.imshow(cv2.cvtColor(unsharp_mask, cv2.COLOR_BGR2RGB)), plt.title('선명화 (Unsharp Masking)')
-    plt.show()
+    img_unsharp_mask = cv2.addWeighted(img_color, 1.5, img_blur_gaussian, -0.5, 0) # 원본에 1.5배, 블러된 이미지에 -0.5배 가중치를 주고 0을 더함
+    combined_image = np.hstack((img_blur_gaussian, img_unsharp_mask))
+    cv2.imshow('Gaussian Blur Image and Unsharp Mask Image', combined_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows() 
     ```
 
 
-## **4. 자율주행에서의 적용 사례**
+## 5. 자율주행에서의 적용 사례
 
 - **노이즈 제거**
     - 악천후, 저조도 환경에서 획득된 센서 데이터(카메라, 라이다)의 노이즈를

@@ -9,6 +9,9 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 
+<div class="colab-link">
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/python/notebooks/S03-02-03-04_01-EdgeDetectionTransform.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+</div>
 
 ## 1. 엣지 검출의 기본 개념
 
@@ -24,7 +27,7 @@ categories: materials
     - **도로 경계 인식**: 도로와 비도로 영역을 구분하는 경계 탐지
 
 
-## **2. 주요 엣지 검출 알고리즘**
+## 2. 주요 엣지 검출 알고리즘
 
 ### 2.1. 기본 원리: 미분과 그래디언트
 
@@ -62,29 +65,33 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 이미지 불러오기
-img = cv2.imread('road_image.jpg', cv2.IMREAD_GRAYSCALE)
+img_gray = cv2.imread('./images/road_image.jpg', cv2.IMREAD_GRAYSCALE)
 
-# Sobel 엣지 검출 (x방향, y방향)
-sobelx = cv2.Sobel(img, cv2.CV_64F, 1, 0, ksize=3)  # x방향 미분
-sobely = cv2.Sobel(img, cv2.CV_64F, 0, 1, ksize=3)  # y방향 미분
+if img_gray is not None:
+    # Sobel 엣지 검출 (x방향, y방향)
+    sobelx = cv2.Sobel(img_gray, cv2.CV_64F, 1, 0, ksize=3)  # x방향 미분
+    sobely = cv2.Sobel(img_gray, cv2.CV_64F, 0, 1, ksize=3)  # y방향 미분
 
-# 절대값 변환 및 8비트 이미지로 변환
-sobelx = np.absolute(sobelx)
-sobely = np.absolute(sobely)
-sobelx = np.uint8(255 * sobelx / np.max(sobelx))
-sobely = np.uint8(255 * sobely / np.max(sobely))
+    # 절대값 변환 및 8비트 이미지로 변환
+    sobelx = np.absolute(sobelx)
+    sobely = np.absolute(sobely)
+    sobelx = np.uint8(255 * sobelx / np.max(sobelx))
+    sobely = np.uint8(255 * sobely / np.max(sobely))
 
-# x방향과 y방향 그래디언트 결합
-sobel_combined = cv2.bitwise_or(sobelx, sobely)
+    # x방향과 y방향 그래디언트 결합
+    sobel_combined = cv2.bitwise_or(sobelx, sobely)
 
-# 결과 시각화
-plt.figure(figsize=(15, 10))
-plt.subplot(221), plt.imshow(img, cmap='gray'), plt.title('원본 이미지')
-plt.subplot(222), plt.imshow(sobelx, cmap='gray'), plt.title('Sobel X 방향')
-plt.subplot(223), plt.imshow(sobely, cmap='gray'), plt.title('Sobel Y 방향')
-plt.subplot(224), plt.imshow(sobel_combined, cmap='gray'), plt.title('Sobel 결합')
-plt.tight_layout()
-plt.show()
+    cv2.putText(sobelx, "SobelX Image", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3, cv2.LINE_AA)
+    cv2.putText(sobely, "SobelY Image", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3, cv2.LINE_AA)
+    cv2.putText(sobel_combined, "Sobel Combined Image", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3, cv2.LINE_AA)
+
+    row1 = np.hstack((img_gray, sobelx))
+    row2 = np.hstack((sobely, sobel_combined))
+    final_display_image = np.vstack((row1, row2))
+
+    cv2.imshow('Sobel Edge Detection Results', final_display_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 ```
 
 ### 2.3. Canny 엣지 검출기
@@ -107,24 +114,23 @@ plt.show()
 
 ```python
 #// file: "edge_detection.py"
-# 이미지 불러오기 (이미 위에서 로드됨)
-# img = cv2.imread('road_image.jpg', cv2.IMREAD_GRAYSCALE)
+if img_gray is not None:
+    # 가우시안 블러로 노이즈 제거 후 Canny 엣지 검출 (전처리 과정 포함)
+    blurred_img = cv2.GaussianBlur(img_gray, (5, 5), 0)
+    canny_edges = cv2.Canny(blurred_img, 50, 150)  # 하위 임계값 50, 상위 임계값 150
 
-# 가우시안 블러로 노이즈 제거 후 Canny 엣지 검출 (전처리 과정 포함)
-blurred_img = cv2.GaussianBlur(img, (5, 5), 0)
-canny_edges = cv2.Canny(blurred_img, 50, 150)  # 하위 임계값 50, 상위 임계값 150
+    cv2.putText(blurred_img, "Gaussian Blur Image", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3, cv2.LINE_AA)
+    cv2.putText(canny_edges, "Canny Edge Image", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3, cv2.LINE_AA)
 
-# 결과 시각화
-plt.figure(figsize=(10, 8))
-plt.subplot(131), plt.imshow(img, cmap='gray'), plt.title('원본 이미지')
-plt.subplot(132), plt.imshow(blurred_img, cmap='gray'), plt.title('가우시안 블러')
-plt.subplot(133), plt.imshow(canny_edges, cmap='gray'), plt.title('Canny 엣지')
-plt.tight_layout()
-plt.show()
+    final_display_image = np.hstack((img_gray, blurred_img, canny_edges))
+
+    cv2.imshow('Canny Edge Detection Results', final_display_image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 ```
 
 
-## **3. 기하학적 변환**
+## 3. 기하학적 변환
 
 - Geometric Transformation
 - 이미지의 픽셀 위치를 변경하여 형태를 바꾸는 작업
@@ -149,16 +155,7 @@ plt.show()
 
 ```python
 #// file: "edge_detection.py"
-# 이미 위에서 로드된 컬러 이미지 사용
-color_img = cv2.imread('road_image_color.jpg') # 컬러 이미지로 불러오기
-
-# 만약 컬러 이미지가 로드되지 않았다면 새로 로드 (예시)
-if color_img is None:
-    print("road_image_color.jpg 파일을 찾을 수 없습니다. 테스트용 이미지 경로를 확인해주세요.")
-    # 대체 이미지 사용 (직접 그리는 예시)
-    color_img = np.zeros((300, 400, 3), dtype=np.uint8)
-    cv2.putText(color_img, 'Test Image', (50, 150), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-
+img_color = cv2.imread('./images/road_image.jpg') # 컬러 이미지로 불러오기
 
 # 1. 원본 이미지에서 4개의 점 선택 (도로의 사다리꼴 영역)
 # 일반적으로 화면 하단 넓게, 상단 좁게 설정하여 도로 영역을 추출
@@ -185,31 +182,29 @@ M = cv2.getPerspectiveTransform(src_points, dst_points)
 
 # 4. 이미지에 변환 적용
 # 출력 이미지 크기를 원본과 동일하게 설정하거나, 원하는 크기로 지정
-output_size = (color_img.shape[1], color_img.shape[0]) 
-warped_img = cv2.warpPerspective(color_img, M, output_size, flags=cv2.INTER_LINEAR)
+output_size = (img_color.shape[1], img_color.shape[0]) 
+warped_img = cv2.warpPerspective(img_color, M, output_size, flags=cv2.INTER_LINEAR)
 
 # 결과 시각화
-plt.figure(figsize=(15, 8))
-plt.subplot(121), plt.imshow(cv2.cvtColor(color_img, cv2.COLOR_BGR2RGB))
-plt.title('원본 이미지 (선택된 점 표시)')
+
 # 원본 이미지에 선택된 점 표시 (실습을 위해)
 for point in src_points:
-    cv2.circle(color_img, (int(point[0]), int(point[1])), 5, (0, 255, 0), -1) # 녹색 원
-
-plt.subplot(122), plt.imshow(cv2.cvtColor(warped_img, cv2.COLOR_BGR2RGB))
-plt.title('투시 변환된 이미지 (Bird\'s Eye View)')
-plt.tight_layout()
-plt.show()
+    cv2.circle(img_color, (int(point[0]), int(point[1])), 5, (0, 255, 0), -1) # 녹색 원
 
 # 추가: 변환된 이미지에서 Canny 엣지 검출 적용
+# Canny 함수를 적용한 결과 이미지는 3채널로 변환하여 원본과 나란히 표시
 gray_warped = cv2.cvtColor(warped_img, cv2.COLOR_BGR2GRAY)
 edges_warped = cv2.Canny(gray_warped, 50, 150)
+edges_warped = cv2.cvtColor(edges_warped, cv2.COLOR_GRAY2BGR)
 
-plt.figure(figsize=(8, 6))
-plt.imshow(edges_warped, cmap='gray')
-plt.title('Bird\'s Eye View Canny Edges')
-plt.axis('off')
-plt.show()
+cv2.putText(warped_img, "Bird\'s Eye View", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3, cv2.LINE_AA)
+cv2.putText(edges_warped, "Bird\'s Eye View Canny Edges", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3, cv2.LINE_AA)
+
+final_display_image = np.hstack((img_color, warped_img, edges_warped))
+
+cv2.imshow('Canny Edge Detection Results', final_display_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 ```
 
 
@@ -231,29 +226,23 @@ plt.show()
 
 ```python
 #// file: "edge_detection.py"
-# 이미지 불러오기 (컬러 이미지 사용)
-# img_affine = cv2.imread('road_image_color.jpg')
+img_affine = img_color.copy()
+height, width = img_affine.shape[:2]
 
-# 이미지가 없다면 위의 color_img 사용
-img_affine = color_img.copy()
+# 이미지 중앙을 기준으로 45도 회전, 크기 변화 없음, 스케일 1.0
+rotation_matrix = cv2.getRotationMatrix2D((width / 2, height / 2), 45, 1)
 
-if img_affine is None:
-    print("오류: 이미지를 불러올 수 없습니다.")
-else:
-    height, width = img_affine.shape[:2]
+# 이미지에 변환 적용
+rotated_img = cv2.warpAffine(img_affine, rotation_matrix, (width, height))
 
-    # 이미지 중앙을 기준으로 45도 회전, 크기 변화 없음, 스케일 1.0
-    rotation_matrix = cv2.getRotationMatrix2D((width / 2, height / 2), 45, 1)
+# 결과 시각화
+cv2.putText(rotated_img, "45 Degree Rotated Image", (10, 40), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 255, 255), 3, cv2.LINE_AA)
 
-    # 이미지에 변환 적용
-    rotated_img = cv2.warpAffine(img_affine, rotation_matrix, (width, height))
+display_image = np.hstack((img_color, rotated_img))
 
-    # 결과 시각화
-    plt.figure(figsize=(10, 5))
-    plt.subplot(121), plt.imshow(cv2.cvtColor(img_affine, cv2.COLOR_BGR2RGB)), plt.title('원본 이미지')
-    plt.subplot(122), plt.imshow(cv2.cvtColor(rotated_img, cv2.COLOR_BGR2RGB)), plt.title('45도 회전 이미지')
-    plt.tight_layout()
-    plt.show()
+cv2.imshow('Canny Edge Detection Results', display_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 ```
 
 

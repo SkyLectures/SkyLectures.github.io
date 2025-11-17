@@ -8,6 +8,9 @@ categories: materials
 * toc
 {:toc .large-only .toc-sticky:true}
 
+<div class="colab-link">
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/python/notebooks/S03-02-03-05_01-FeatureDtectionTracking.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+</div>
 
 ## 1. 특징점의 개요
 
@@ -66,32 +69,28 @@ categories: materials
 - **실습 코드 (해리스 코너 검출)**
 
 ```python
-#// file: "harris_corner_detection.py"
+#// file: "feature_detection.py"
 import cv2
 import numpy as np
-import matplotlib.pyplot as plt
 
 # 이미지 불러오기
-img = cv2.imread('road_image.jpg')
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+img_color = cv2.imread('./images/road_image.jpg')
+img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
 
 # 해리스 코너 검출
-gray = np.float32(gray)
-dst = cv2.cornerHarris(gray, blockSize=2, ksize=3, k=0.04)
+img_gray = np.float32(img_gray)
+img_gray_dst = cv2.cornerHarris(img_gray, blockSize=2, ksize=3, k=0.04)
 
 # 코너 강화 (dilate)
-dst = cv2.dilate(dst, None)
+dst = cv2.dilate(img_gray_dst, None)
 
 # 임계값 이상인 부분을 빨간색으로 표시 (코너)
 threshold = 0.01 * dst.max()
-img[dst > threshold] = [0, 0, 255]  # 빨간색으로 표시
+img_color[dst > threshold] = [0, 0, 255]  # 빨간색으로 표시
 
-# 결과 시각화
-plt.figure(figsize=(10, 8))
-plt.imshow(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))
-plt.title('Harris Corner Detection')
-plt.axis('off')
-plt.show()
+cv2.imshow('Harris Corner Detection', img_color)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 # 코너 개수 출력
 corner_count = np.sum(dst > threshold)
@@ -111,35 +110,27 @@ print(f"검출된 코너 개수: {corner_count}")
 
 - **단점**
     - 계산 비용이 높고
-    - 특허 문제가 있었음(현재는 해결됨)
+    - 특허 문제가 있었음(현재는 해결되어 OpenCV에 포함됨)
 
 **실습 코드 (SIFT 특징점 검출)**
 
 ```python
-#// file: "sift_feature_detection.py"
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-
-# 이미지 불러오기
-img = cv2.imread('road_image.jpg')
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#// file: "feature_detection.py"
+img_color = cv2.imread('./images/road_image.jpg')
+img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
 
 # SIFT 객체 생성
 sift = cv2.SIFT_create()
 
 # 특징점 검출 및 디스크립터 계산
-keypoints, descriptors = sift.detectAndCompute(gray, None)
+keypoints, descriptors = sift.detectAndCompute(img_gray, None)
 
 # 특징점 그리기
-img_sift = cv2.drawKeypoints(img, keypoints, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+img_sift = cv2.drawKeypoints(img_color, keypoints, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-# 결과 시각화
-plt.figure(figsize=(10, 8))
-plt.imshow(cv2.cvtColor(img_sift, cv2.COLOR_BGR2RGB))
-plt.title(f'SIFT Features (검출된 특징점 개수: {len(keypoints)})')
-plt.axis('off')
-plt.show()
+cv2.imshow(f'SIFT Features (Features count: {len(keypoints)}', img_sift)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 # 디스크립터 정보 출력
 if descriptors is not None:
@@ -162,12 +153,12 @@ if descriptors is not None:
 
 - **단점**
     - 여전히 계산 비용이 높고,
-    - 특허 문제가 있었음(현재는 SIFT와 마찬가지로 해결됨)
+    - <span style="color: red;">특허 문제가 있음(현재는 해결되었다고 하지만 몇 가지 조건이 있으며, OpenCV 설정을 수정하여 직접 빌드하여야 함)</span>
     - OpenCV에서 SURF를 사용하려면 `xfeatures2d` 모듈을 설치해야 함
 
 - **실습 코드 (SURF 특징점 검출)**
 
-(참고: SURF는 `opencv-contrib-python` 패키지에 포함되어 있으므로, 설치가 필요할 수 있습니다: `pip install opencv-contrib-python`)
+(참고: SURF는 `opencv-contrib-python` 패키지에 포함되어 있으므로, 설치가 필요할 수 있음: `pip install opencv-contrib-python`)
 
 ```python
 #// file: "surf_feature_detection.py"
@@ -176,26 +167,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 이미지 불러오기
-img = cv2.imread('road_image.jpg')
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+img_color = cv2.imread('./images/road_image.jpg')
+img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
 
 try:
     # SURF 객체 생성 (xfeatures2d 모듈 필요)
     surf = cv2.xfeatures2d.SURF_create()
 
     # 특징점 검출 및 디스크립터 계산
-    keypoints_surf, descriptors_surf = surf.detectAndCompute(gray, None)
+    keypoints_surf, descriptors_surf = surf.detectAndCompute(img_gray, None)
 
     # 특징점 그리기
-    img_surf = cv2.drawKeypoints(img, keypoints_surf, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+    img_surf = cv2.drawKeypoints(img_color, keypoints_surf, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
     # 결과 시각화
-    plt.figure(figsize=(10, 8))
-    plt.imshow(cv2.cvtColor(img_surf, cv2.COLOR_BGR2RGB))
-    plt.title(f'SURF Features (검출된 특징점 개수: {len(keypoints_surf)})')
-    plt.axis('off')
-    plt.show()
+    cv2.imshow(f'SURF Features (Features count: {len(keypoints_surf)}', img_surf)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
+    # 디스크립터 정보 출력
     if descriptors_surf is not None:
         print(f"SURF 특징점 개수: {len(keypoints_surf)}")
         print(f"SURF 디스크립터 형태: {descriptors_surf.shape}")
@@ -204,7 +194,7 @@ except AttributeError:
     print("SURF를 사용하려면 `opencv-contrib-python`을 설치하고, `cv2.xfeatures2d` 모듈을 불러와야 합니다.")
     print("pip install opencv-contrib-python")
 except Exception as e:
-    print(f"SURF 실행 중 오류 발생: {e}")
+    print(f"SURF 실행 중 오류 발생: {e}")  
 
 ```
 
@@ -239,24 +229,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 이미지 불러오기
-img = cv2.imread('road_image.jpg')
-gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+img_color = cv2.imread('./images/road_image.jpg')
+img_gray = cv2.cvtColor(img_color, cv2.COLOR_BGR2GRAY)
 
 # ORB 객체 생성 (최대 특징점 개수, 스케일 팩터 등 설정 가능)
 orb = cv2.ORB_create(nfeatures=500, scaleFactor=1.2, nlevels=8)
 
 # 특징점 검출 및 디스크립터 계산
-keypoints_orb, descriptors_orb = orb.detectAndCompute(gray, None)
+keypoints_orb, descriptors_orb = orb.detectAndCompute(img_gray, None)
 
 # 특징점 그리기
-img_orb = cv2.drawKeypoints(img, keypoints_orb, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+img_orb = cv2.drawKeypoints(img_color, keypoints_orb, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
 # 결과 시각화
-plt.figure(figsize=(10, 8))
-plt.imshow(cv2.cvtColor(img_orb, cv2.COLOR_BGR2RGB))
-plt.title(f'ORB Features (검출된 특징점 개수: {len(keypoints_orb)})')
-plt.axis('off')
-plt.show()
+cv2.imshow(f'ORB Features (Features count: {len(keypoints_orb)}', img_orb)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 if descriptors_orb is not None:
     print(f"ORB 특징점 개수: {len(keypoints_orb)}")
@@ -293,8 +281,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # 매칭을 위한 두 번째 이미지 로드 (첫 번째 이미지와 유사하지만 약간 다른 시점/객체)
-img1 = cv2.imread('road_image.jpg', cv2.IMREAD_GRAYSCALE) # 원본 이미지 (gray1)
-img2 = cv2.imread('road_image_shifted.jpg', cv2.IMREAD_GRAYSCALE) # 약간 이동된 이미지 (gray2)
+img1 = cv2.imread('./images/road_image2.jpg', cv2.IMREAD_GRAYSCALE) # 원본 이미지 (gray1)
+img2 = cv2.imread('./images/road_image2_shifted.jpg', cv2.IMREAD_GRAYSCALE) # 약간 이동된 이미지 (gray2)
 
 if img1 is None or img2 is None:
     print("두 번째 이미지를 찾을 수 없습니다. 'road_image_shifted.jpg' 파일을 확인하거나 생성하세요.")
@@ -321,10 +309,9 @@ num_matches_to_draw = min(50, len(matches))
 img_matches = cv2.drawMatches(img1, kp1, img2, kp2, matches[:num_matches_to_draw], None, flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
 
 # 결과 시각화
-plt.figure(figsize=(15, 10))
-plt.imshow(img_matches), plt.title(f'ORB Feature Matching ({num_matches_to_draw} 매치)')
-plt.axis('off')
-plt.show()
+cv2.imshow(f'ORB Feature Matching ({num_matches_to_draw} matched)', img_matches)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
 
 print(f"총 매치된 특징점 개수: {len(matches)}")
 print(f"상위 {num_matches_to_draw}개 매치 그리기.")
