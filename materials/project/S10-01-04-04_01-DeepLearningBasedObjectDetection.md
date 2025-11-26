@@ -210,135 +210,160 @@ categories: materials
 import tensorflow as tf
 import tensorflow_hub as hub
 import numpy as np
-import cv2
-import matplotlib.pyplot as plt
+import cv2 # 이미지 처리 및 드로잉에 여전히 사용
+import matplotlib.pyplot as plt # Colab 시각화를 위해 필요
+import os
 
-print("TensorFlow Version:", tf.__version__)
-print("TensorFlow Hub Version:", hub.__version__)
+# --------------------------------------------------------------------------
+# TensorFlow Hub 모델 로드
+# --------------------------------------------------------------------------
+model_url = "https://tfhub.dev/tensorflow/ssd_mobilenet_v2/fpnlite_320x320/1"
 
-# --- 1. 사전 학습된 객체 탐지 모델 로드 ---
-# TensorFlow Hub에서 SSD MobileNet V2 FPNLite 320x320 모델 로드
-# 이 모델은 COCO 데이터셋으로 학습되었으며, 다양한 객체(자동차, 사람, 신호등 등)를 탐지할 수 있음
-# 라즈베리파이와 같은 엣지 디바이스에서는 TFLite 모델을 사용하는 것이 더 효율적임
-# model = hub.load("https://tfhub.dev/tensorflow/ssd_mobilenet_v2/fpnlite_320x320/1")
-# 대신 로컬에 다운로드된 모델 또는 간단한 로컬 더미 모델을 사용함
-# 실제 환경에서는 TFLite 변환 모델을 사용하도록 함
+print(f"TensorFlow Hub 모델을 로드 중입니다: {model_url}")
+detector = hub.load(model_url)
+print("TensorFlow Hub 모델 로드 완료.")
 
-class DummyObjectDetectorTF:
-    """TensorFlow Hub 모델의 인터페이스를 흉내내는 더미 객체 탐지기"""
-    def __init__(self, target_image_size):
-        self.target_image_size = target_image_size
-        self.categories = [
-            {'id': 1, 'name': 'person'}, {'id': 2, 'name': 'bicycle'}, {'id': 3, 'name': 'car'},
-            {'id': 4, 'name': 'motorcycle'}, {'id': 5, 'name': 'airplane'}, {'id': 6, 'name': 'bus'},
-            {'id': 7, 'name': 'train'}, {'id': 8, 'name': 'truck'}, {'id': 9, 'name': 'boat'},
-            {'id': 10, 'name': 'traffic light'}, {'id': 11, 'name': 'fire hydrant'}, {'id': 13, 'name': 'stop sign'},
-        ] # COCO 데이터셋 클래스 일부
-        self.category_index = {cat['id']: cat for cat in self.categories}
+# 모델이 학습된 COCO 데이터셋의 클래스 이름 (실제 모델 출력을 기반으로)
+COCO_CLASSES = [
+    '__background__', 'person', 'bicycle', 'car', 'motorcycle', 'airplane', 'bus',
+    'train', 'truck', 'boat', 'traffic light', 'fire hydrant', 'N/A', 'stop sign',
+    'parking meter', 'bench', 'bird', 'cat', 'dog', 'horse', 'sheep', 'cow',
+    'elephant', 'bear', 'zebra', 'giraffe', 'N/A', 'backpack', 'umbrella', 'N/A',
+    'N/A', 'handbag', 'tie', 'suitcase', 'frisbee', 'skis', 'snowboard', 'sports ball',
+    'kite', 'baseball bat', 'baseball glove', 'skateboard', 'surfboard', 'tennis racket',
+    'bottle', 'N/A', 'wine glass', 'cup', 'fork', 'knife', 'spoon', 'bowl',
+    'banana', 'apple', 'sandwich', 'orange', 'broccoli', 'carrot', 'hot dog', 'pizza',
+    'donut', 'cake', 'chair', 'couch', 'potted plant', 'bed', 'N/A', 'dining table',
+    'N/A', 'N/A', 'toilet', 'N/A', 'tv', 'laptop', 'mouse', 'remote', 'keyboard',
+    'cell phone', 'microwave', 'oven', 'toaster', 'sink', 'refrigerator', 'N/A', 'book',
+    'clock', 'vase', 'scissors', 'teddy bear', 'hair drier', 'toothbrush'
+]
+# 클래스 ID와 이름을 매핑하는 딕셔너리 생성 (1-based index)
+category_index = {i + 1: {'id': i + 1, 'name': name} for i, name in enumerate(COCO_CLASSES[1:])}
 
-    def __call__(self, input_tensor):
-        # 입력 텐서는 (1, H, W, 3) 형태의 0-1 float 이미지
-        h, w = self.target_image_size
-        num_detections = tf.random.uniform(shape=[1], minval=1, maxval=5, dtype=tf.int32)[0] # 1~4개 객체 랜덤
-        
-        detection_boxes = tf.random.uniform(shape=[1, num_detections, 4], minval=0.1, maxval=0.9) # [ymin, xmin, ymax, xmax]
-        detection_scores = tf.random.uniform(shape=[1, num_detections], minval=0.6, maxval=0.99)
-        detection_classes_raw = tf.random.uniform(shape=[1, num_detections], minval=1, maxval=len(self.categories), dtype=tf.int32)
-        
-        # COCO 클래스 인덱스로 매핑 (실제 클래스 id 10이 신호등이라면 10으로)
-        # BDD100K는 COCO와 클래스가 다를 수 있으므로 매핑 필요
-        
-        output = {
-            'detection_boxes': detection_boxes, # [1, num_detections, 4]
-            'detection_scores': detection_scores, # [1, num_detections]
-            'detection_classes': detection_classes_raw, # [1, num_detections]
-            'num_detections': tf.constant([float(num_detections)])
-        }
-        return output
 
-# 모델 로드 (실제 모델 대신 더미 사용)
-# 실제 TF Hub 모델을 사용하려면 다음 주석을 해제할 것
-# detector = hub.load("https://tfhub.dev/tensorflow/ssd_mobilenet_v2/fpnlite_320x320/1")
-detector = DummyObjectDetectorTF(target_image_size=(320, 320))
-category_index = detector.category_index
-
-# --- 2. 이미지 로드 및 전처리 함수 ---
+# --------------------------------------------------------------------------
+# 이미지 로드 및 전처리 함수
+# --------------------------------------------------------------------------
 def load_and_preprocess_image_tf(image_path, target_size=(320, 320)):
+    # tf.io와 tf.image를 사용하여 이미지 로드 및 전처리
     img = tf.io.read_file(image_path)
-    img = tf.image.decode_jpeg(img, channels=3)
-    original_image = np.copy(img.numpy()) # 원본 이미지 저장 (시각화용)
-    
-    img = tf.image.convert_image_dtype(img, tf.float32) # 0-1로 정규화
-    img = tf.image.resize(img, target_size) # 모델 입력 크기로 조정
-    
-    # 배치 차원 추가: (H, W, C) -> (1, H, W, C)
-    input_tensor = img[tf.newaxis, ...]
-    return input_tensor, original_image
+    img = tf.image.decode_jpeg(img, channels=3) # JPEG 디코딩, TensorFlow는 기본적으로 RGB 순서
 
-# --- 3. 탐지 결과 시각화 함수 ---
-def visualize_detections_tf(image_np, detections, category_index, threshold=0.5):
-    image_with_detections = image_np.copy()
+    # 원본 이미지를 numpy 배열로 복사 (시각화를 위해)
+    # tf.Tensor는 기본적으로 RGB 채널 순서로 읽어오므로, original_image_rgb_tf도 RGB
+    original_image_rgb_tf = np.copy(img.numpy())
+
+    # 모델 입력 형식에 맞게 이미지 크기 조정
+    # 모델은 uint8 입력을 기대하므로, float32 변환을 제거합니다.
+    img = tf.image.resize(img, target_size) # (height, width)
+    img = tf.cast(img, tf.uint8) # 모델이 uint8을 기대하므로 명시적으로 캐스팅
+
+    # 모델은 [batch, height, width, channels] 형태의 텐서를 기대하므로 배치 차원 추가
+    input_tensor = img[tf.newaxis, ...]
+
+    return input_tensor, original_image_rgb_tf
+
+# --------------------------------------------------------------------------
+# 검출 결과 시각화 함수 (OpenCV 그리기 -> Matplotlib으로 최종 출력)
+# --------------------------------------------------------------------------
+def visualize_detections_tf(image_np_rgb, detections, category_index, threshold=0.5):
+    # image_np_rgb는 원본 이미지 (RGB numpy array)
+    image_with_detections = image_np_rgb.copy() # 원본 이미지 복사 (RGB 유지)
     h, w, _ = image_with_detections.shape
 
-    num_detections = int(detections.pop('num_detections'))
+    # detections 딕셔너리에서 필요한 정보 추출
+    num_detections = int(detections['num_detections'][0].numpy())
     
-    detection_boxes = detections['detection_boxes'][0].numpy()
+    detection_boxes = detections['detection_boxes'][0].numpy() # (ymin, xmin, ymax, xmax) (0.0~1.0)
     detection_classes = detections['detection_classes'][0].numpy().astype(np.int32)
     detection_scores = detections['detection_scores'][0].numpy()
 
     for i in range(num_detections):
         score = detection_scores[i]
         if score > threshold:
-            box = detection_boxes[i] # [ymin, xmin, ymax, xmax] (normalized)
+            box = detection_boxes[i] # [ymin, xmin, ymax, xmax]
             class_id = detection_classes[i]
 
+            # 바운딩 박스 좌표를 원본 이미지 크기에 맞게 스케일링
+            # Tensorflow 모델은 일반적으로 (ymin, xmin, ymax, xmax) 순서 사용
             ymin, xmin, ymax, xmax = int(box[0] * h), int(box[1] * w), int(box[2] * h), int(box[3] * w)
 
-            class_name = category_index[class_id]['name'] if class_id in category_index else 'N/A'
-            label = f'{class_name}: {score:.2f}'
-            color = tuple(np.random.randint(0, 255, 3).tolist()) # 랜덤 색상
-
-            # 바운딩 박스 그리기
-            cv2.rectangle(image_with_detections, (xmin, ymin), (xmax, ymax), color, 2)
-            # 라벨 텍스트 배경 그리기
-            cv2.rectangle(image_with_detections, (xmin, ymin - 20), (xmin + len(label)*10, ymin), color, -1)
-            # 라벨 텍스트 쓰기
-            cv2.putText(image_with_detections, label, (xmin, ymin - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
+            # 클래스 이름 매핑
+            class_name = category_index[class_id]['name'] if class_id in category_index else f'Unknown({class_id})'
+            label_text = f'{class_name}: {score:.2f}'
             
-    return image_with_detections
+            # 바운딩 박스 및 텍스트 색상 (image_with_detections가 RGB이므로, 색상도 RGB로 지정)
+            color_rgb = (int(np.random.randint(0, 255)), int(np.random.randint(0, 255)), int(np.random.randint(0, 255)))
 
-# --- 4. 메인 실행 ---
+            # 바운딩 박스 그리기 (OpenCV 함수는 BGR을 기대하지만, RGB 이미지에 RGB 색상을 넘겨도 내부적으로 처리함)
+            # image_with_detections가 RGB이므로 color_rgb를 그대로 사용합니다.
+            cv2.rectangle(image_with_detections, (xmin, ymin), (xmax, ymax), color_rgb, 2)
+            
+            # 라벨 텍스트 배경 그리기
+            (text_width, text_height), baseline = cv2.getTextSize(label_text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+            cv2.rectangle(image_with_detections, (xmin, ymin - text_height - baseline - 5), (xmin + text_width, ymin), color_rgb, -1)
+            
+            # 라벨 텍스트 쓰기 (검은색 글씨는 (0,0,0) RGB이므로 문제 없음)
+            cv2.putText(image_with_detections, label_text, (xmin, ymin - baseline - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
+            
+    return image_with_detections # RGB numpy 배열 반환
+
+# --------------------------------------------------------------------------
+# 메인 실행 블록
+# --------------------------------------------------------------------------
 if __name__ == '__main__':
-    # BDD100K 샘플 이미지 또는 기타 도로 이미지 경로
-    # (실제 BDD100K 이미지를 다운로드하여 사용하거나, 테스트용 더미 이미지를 생성)
-    sample_image_path_tf = 'bdd100k_sample.jpg'
+    # Colab에서 이미지를 업로드하거나 GDrive를 마운트하여 사용할 수 있습니다.
+    # 여기서는 예시로 로컬 경로를 사용하지만, Colab에서는 직접 업로드해야 할 수 있습니다.
+    sample_image_path_tf = './images/road_image.jpg' # 실제 이미지 경로로 변경 필요
     
-    # 더미 이미지 생성 (파일이 없을 경우)
-    if not tf.io.gfile.exists(sample_image_path_tf):
-        dummy_img = np.zeros((480, 640, 3), dtype=np.uint8)
-        cv2.putText(dummy_img, "Dummy Image for Object Detection", (50, 240), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-        cv2.putText(dummy_img, "A car is passing by!", (150, 300), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
-        # 대략적인 바운딩 박스와 함께 텍스트만 표시
-        cv2.rectangle(dummy_img, (300, 250), (500, 400), (0, 0, 255), 2) # 빨간색 상자 (자동차 역할)
-        cv2.circle(dummy_img, (100, 350), 30, (0, 255, 0), -1) # 초록색 원 (사람 역할)
-        cv2.imwrite(sample_image_path_tf, dummy_img)
+    # Colab에서 이미지를 업로드할 경우 '/content/' 경로에 저장될 수 있습니다.
+    # if not os.path.exists(sample_image_path_tf):
+    #    # Colab 환경에서 이미지 파일이 없다면, 사용자에게 업로드 지시
+    #    from google.colab import files
+    #    uploaded = files.upload()
+    #    for fn in uploaded.keys():
+    #        sample_image_path_tf = '/content/' + fn # 업로드된 파일 경로 사용
+    #        print(f"'{fn}'이(가) '{sample_image_path_tf}' 경로에 업로드되었습니다.")
+    #        break # 첫 번째 업로드된 파일만 사용
+
+    # 더미 이미지 생성 (Colab에서 파일이 없을 경우)
+    if not os.path.exists(sample_image_path_tf):
+        print(f"이미지 파일 '{sample_image_path_tf}'이(가) 없습니다. 더미 이미지를 생성합니다.")
+        # Colab 환경은 matplotlib이 주로 RGB를 기대하므로, 더미 생성 시 RGB 컬러를 사용
+        dummy_img = np.zeros((480, 640, 3), dtype=np.uint8) # RGB 형태의 검은색 이미지
+        cv2.putText(dummy_img, "Dummy Image for Object Detection (TensorFlow)", (50, 240), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        cv2.putText(dummy_img, "Please replace with a real image!", (100, 300), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
+        cv2.rectangle(dummy_img, (300, 50), (350, 150), (255, 0, 0), 2) # 파란색 사각형 (BGR) -> 여기서는 (R,G,B)=(0,0,255)인 파란색으로 그려짐
+        cv2.imwrite(sample_image_path_tf, cv2.cvtColor(dummy_img, cv2.COLOR_RGB2BGR)) # 저장 시에는 BGR로 변환
         print(f"더미 이미지 '{sample_image_path_tf}'를 생성했습니다.")
 
     print("\n--- TensorFlow 기반 객체 탐지 시작 ---")
-    input_tensor_tf, original_image_tf = load_and_preprocess_image_tf(sample_image_path_tf)
+    
+    try:
+        # load_and_preprocess_image_tf 함수는 original_image_rgb_tf를 RGB로 반환합니다.
+        input_tensor_tf, original_image_rgb_tf = load_and_preprocess_image_tf(sample_image_path_tf, target_size=(320, 320))
+        
+        # 실제 모델 추론 (TensorFlow Hub 모델)
+        detections_tf = detector(input_tensor_tf)
 
-    # 추론 실행
-    detections_tf = detector(input_tensor_tf)
+        # visualize_detections_tf 함수에 RGB 이미지를 전달하고, RGB 이미지를 반환받습니다.
+        result_image_tf_rgb = visualize_detections_tf(original_image_rgb_tf, detections_tf, category_index, threshold=0.5)
 
-    # 결과 시각화
-    result_image_tf = visualize_detections_tf(original_image_tf, detections_tf, category_index, threshold=0.4)
+        # Matplotlib 시각화
+        plt.figure(figsize=(10, 8))
+        # 이미 RGB이므로 cv2.cvtColor(..., cv2.COLOR_BGR2RGB) 변환이 필요 없습니다.
+        plt.imshow(result_image_tf_rgb)
+        plt.title('TensorFlow Object Detection Results')
+        plt.axis('off') # 축(axis) 표시 제거
+        plt.show() # 이미지 출력
 
-    plt.figure(figsize=(10, 8))
-    plt.imshow(cv2.cvtColor(result_image_tf, cv2.COLOR_BGR2RGB)) # OpenCV는 BGR, Matplotlib는 RGB
-    plt.title('TensorFlow Object Detection Results')
-    plt.axis('off')
-    plt.show()
-    print("--- TensorFlow 기반 객체 탐지 완료 ---")
+        print("--- TensorFlow 기반 객체 탐지 완료 ---")
+
+    except FileNotFoundError as e:
+        print(e)
+    except Exception as e:
+        print(f"오류 발생: {e}")
 ```
 
 ### **5.2. PyTorch 버전**
@@ -348,7 +373,7 @@ if __name__ == '__main__':
     - 뛰어난 정확도를 가지며, ResNet50-FPN (Feature Pyramid Network) 백본을 사용하여 다양한 크기의 객체 탐지에 강함
 
 ```python
-#//file: "faster_rcnn_resnet50_fpn.py"
+#//file: "object_detection_torch.py"
 import torch
 from torchvision import transforms
 from torchvision.models.detection import fasterrcnn_resnet50_fpn_v2, FasterRCNN_ResNet50_FPN_V2_Weights
@@ -356,110 +381,155 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-print("PyTorch Version:", torch.__version__)
+import os
+from PIL import Image
 
-# --- 1. 사전 학습된 객체 탐지 모델 로드 ---
-# `FasterRCNN_ResNet50_FPN_V2_Weights.COCO_V1`를 사용하여 COCO 데이터셋으로 학습된 가중치 로드
-# 이 모델은 이미지넷 데이터로 사전 학습된 ResNet50 백본을 사용하고, FPN(Feature Pyramid Network)으로 보강되었음
+# --------------------------------------------------------------------------
+# 1. GPU (CUDA) 사용을 위한 device 정의 및 확인
+# --------------------------------------------------------------------------
+if torch.cuda.is_available():
+    device = torch.device('cuda')
+    print(f"CUDA (GPU)를 사용합니다: {torch.cuda.get_device_name(0)}")
+else:
+    device = torch.device('cpu')
+    print("CUDA (GPU)를 사용할 수 없어 CPU를 사용합니다.")
+# --------------------------------------------------------------------------
+
+
+# --------------------------------------------------------------------------
+# 2. 모델 로드 및 device 이동, eval 모드 설정
+# --------------------------------------------------------------------------
+# 가중치 객체 생성
 weights = FasterRCNN_ResNet50_FPN_V2_Weights.DEFAULT
+# 모델 로드 (pretrained=True는 weights=weights와 동일하며, progress=True로 다운로드 진행 상황 표시)
 model_pt = fasterrcnn_resnet50_fpn_v2(weights=weights, progress=True)
-model_pt.eval() # 모델을 평가 모드로 설정
 
-# 클래스 레이블 매핑
-# COCO 데이터셋의 클래스 이름과 인덱스 매핑 (Faster R-CNN 모델은 COCO로 학습)
-coco_class_names = weights.COCO_CATEGORIES
-print(f"COCO 클래스 수: {len(coco_class_names)}")
-print(f"일부 COCO 클래스: {coco_class_names[0]}, {coco_class_names[1]}, {coco_class_names[2]}, {coco_class_names[3]}, {coco_class_names[5]}, {coco_class_names[7]}") # 0:__background__, 1:person, 2:bicycle, 3:car, 5:bus, 7:traffic light
-
-
-# GPU 사용 가능 시 모델을 GPU로 이동
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+# !!! 중요: 모델을 정의된 device로 이동해야 함
+# 모델 정의 후 eval() 모드 설정 전에 이동하는 것이 일반적
 model_pt.to(device)
 
+# 모델을 추론 모드로 설정
+model_pt.eval()
+# --------------------------------------------------------------------------
 
-# --- 2. 이미지 로드 및 전처리 함수 ---
-# PyTorch 모델에 맞게 이미지 전처리
-# ToTensor(): PIL Image나 numpy 배열을 Tensor로 변환하고 0-1 범위로 정규화
+
+# COCO 클래스 이름 로드
+coco_class_names = weights.meta["categories"]
+print(f"COCO 클래스 수: {len(coco_class_names)}")
+print(f"일부 COCO 클래스: {coco_class_names[0]}, {coco_class_names[1]}, {coco_class_names[2]}, {coco_class_names[3]}, {coco_class_names[5]}, {coco_class_names[7]}")
+
+# 이미지 전처리를 위한 변환 파이프라인 로드
 preprocess = weights.transforms()
 
+# --------------------------------------------------------------------------
+# 3. 이미지 로드 및 전처리 함수
+# --------------------------------------------------------------------------
 def load_and_preprocess_image_pt(image_path):
     img_bgr = cv2.imread(image_path)
     if img_bgr is None:
         raise FileNotFoundError(f"이미지 파일을 찾을 수 없습니다: {image_path}")
-    
+
     # OpenCV는 BGR, torchvision은 RGB를 기대하므로 변환
     img_rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
-    
-    # 원본 이미지는 시각화를 위해 저장
+
+    # 원본 이미지는 시각화를 위해 저장 (np.copy()를 사용하여 원본 보존)
     original_image_np = np.copy(img_rgb)
-    
-    # PyTorch 모델 입력 형식으로 변환
-    input_tensor_pt = preprocess(img_rgb)
+
+    # numpy.ndarray를 PIL.Image 객체로 변환 (transforms가 PIL Image를 기대)
+    img_pil = Image.fromarray(img_rgb)
+
+    # PyTorch 모델 입력 형식으로 변환 (PIL Image -> Tensor)
+    input_tensor_pt = preprocess(img_pil)
     return input_tensor_pt, original_image_np
+# --------------------------------------------------------------------------
 
-# --- 3. 탐지 결과 시각화 함수 ---
-def visualize_detections_pt(image_np, detections, class_names, threshold=0.7):
+
+# --------------------------------------------------------------------------
+# 4. 검출 결과 시각화 함수
+# --------------------------------------------------------------------------
+def visualize_detections_pt(image_np, detections_output, class_names, threshold=0.7):
+    # image_np는 RGB 포맷의 numpy 배열이어야 합니다.
     image_with_detections = image_np.copy()
-    
-    # NMS는 모델 내부에서 이미 처리되었을 수 있으므로, 여기서는 임계값으로 필터링
-    boxes = detections[0]['boxes'].cpu().numpy()
-    labels = detections[0]['labels'].cpu().numpy()
-    scores = detections[0]['scores'].cpu().numpy()
 
+    # 모델 출력에서 결과 추출
+    # detections_output은 list[dict] 형태이며, 우리는 batch_size=1이므로 첫 번째 dict를 사용함
+    boxes = detections_output['boxes'].cpu().numpy()
+    labels = detections_output['labels'].cpu().numpy()
+    scores = detections_output['scores'].cpu().numpy()
+
+    # OpenCV의 바운딩 박스 그리기
     for i in range(len(boxes)):
         score = scores[i]
         if score > threshold:
-            box = boxes[i].astype(int) # [xmin, ymin, xmax, ymax]
+            box = boxes[i].astype(int) # 바운딩 박스 좌표 [xmin, ymin, xmax, ymax]
             class_id = labels[i]
 
             xmin, ymin, xmax, ymax = box[0], box[1], box[2], box[3]
 
-            class_name = class_names[class_id] if class_id < len(class_names) else 'N/A'
-            label = f'{class_name}: {score:.2f}'
-            color = tuple(np.random.randint(0, 255, 3).tolist()) # 랜덤 색상
+            # 클래스 이름 확인 (안전한 인덱싱)
+            class_name = class_names[class_id] if class_id < len(class_names) else f'Unknown({class_id})'
+            label_text = f'{class_name}: {score:.2f}'
+
+            # 랜덤 색상 (매번 동일한 색상을 사용하려면 np.random.seed()를 설정하거나 미리 정의된 색상을 사용)
+            color = (int(np.random.randint(0, 255)), int(np.random.randint(0, 255)), int(np.random.randint(0, 255)))
 
             # 바운딩 박스 그리기
             cv2.rectangle(image_with_detections, (xmin, ymin), (xmax, ymax), color, 2)
+
             # 라벨 텍스트 배경 그리기
-            cv2.rectangle(image_with_detections, (xmin, ymin - 20), (xmin + len(label)*10, ymin), color, -1)
-            # 라벨 텍스트 쓰기
-            cv2.putText(image_with_detections, label, (xmin, ymin - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
+            # 텍스트 크기를 미리 계산하여 배경 사각형 크기를 맞춤
+            (text_width, text_height), baseline = cv2.getTextSize(label_text, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 1)
+            cv2.rectangle(image_with_detections, (xmin, ymin - text_height - baseline - 5), (xmin + text_width, ymin), color, -1)
             
+            # 라벨 텍스트 쓰기 (배경색과 반대되는 색상이 좋음)
+            cv2.putText(image_with_detections, label_text, (xmin, ymin - baseline - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 1, cv2.LINE_AA)
+
     return image_with_detections
+# --------------------------------------------------------------------------
 
 
-# --- 4. 메인 실행 ---
 if __name__ == '__main__':
     # BDD100K 샘플 이미지 또는 기타 도로 이미지 경로
-    # (실제 BDD100K 이미지를 다운로드하여 사용하거나, 테스트용 더미 이미지를 생성)
-    sample_image_path_pt = 'bdd100k_sample.jpg'
+    sample_image_path_pt = './images/road_image.jpg' # 이미지 이름을 변경했습니다 (bdd10k_sample.jpg -> road_image.jpg)
 
     # 더미 이미지 생성 (파일이 없을 경우)
     if not os.path.exists(sample_image_path_pt):
+        print(f"이미지 파일 '{sample_image_path_pt}'이(가) 없습니다. 더미 이미지를 생성합니다.")
         dummy_img = np.zeros((480, 640, 3), dtype=np.uint8)
-        cv2.putText(dummy_img, "Dummy Image for Object Detection (PyTorch)", (50, 240), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-        cv2.putText(dummy_img, "A traffic light is up there!", (100, 300), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
-        # 대략적인 바운딩 박스와 함께 텍스트만 표시
+        cv2.putText(dummy_img, "Dummy Image for Object Detection", (50, 240), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        cv2.putText(dummy_img, "A traffic light here!", (100, 300), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 255), 2)
         cv2.rectangle(dummy_img, (300, 50), (350, 150), (255, 0, 0), 2) # 파란색 상자 (신호등 역할)
         cv2.imwrite(sample_image_path_pt, dummy_img)
         print(f"더미 이미지 '{sample_image_path_pt}'를 생성했습니다.")
-
-    print("\n--- PyTorch 기반 객체 탐지 시작 ---")
-    input_tensor_pt, original_image_np_pt = load_and_preprocess_image_pt(sample_image_path_pt)
     
-    # 추론 실행 (입력 텐서를 배치 차원과 함께 디바이스로 이동)
-    with torch.no_grad():
-        detections_pt = model_pt([input_tensor_pt.to(device)])
+    print("\n--- PyTorch 기반 객체 탐지 시작 ---")
+    
+    try:
+        input_tensor_pt, original_image_np_pt = load_and_preprocess_image_pt(sample_image_path_pt)
 
-    # 결과 시각화
-    result_image_pt = visualize_detections_pt(original_image_np_pt, detections_pt, coco_class_names, threshold=0.7)
+        # 추론 실행 (입력 텐서를 배치 차원과 함께 디바이스로 이동)
+        with torch.no_grad():
+            # input_tensor_pt는 [C, H, W] 형태
+            # 모델은 배치 차원을 [N, C, H, W] 형태로 기대하므로 unsqueeze(0)를 통해 추가해줌
+            detections_pt = model_pt([input_tensor_pt.to(device)]) # 수정: input_tensor_pt를 [input_tensor_pt.to(device)]로 감쌈
 
-    plt.figure(figsize=(10, 8))
-    plt.imshow(result_image_pt) # 이미 RGB로 변환되어 있으므로 그대로 사용
-    plt.title('PyTorch Object Detection Results')
-    plt.axis('off')
-    plt.show()
-    print("--- PyTorch 기반 객체 탐지 완료 ---")
+        # 결과 시각화
+        # detections_pt는 모델의 출력으로, list[dict] 형태 (배치 크기만큼).
+        # 우리 배치는 1이므로, detections_pt[0]이 실제 이미지의 결과 딕셔너리임
+        result_image_pt = visualize_detections_pt(original_image_np_pt, detections_pt[0], coco_class_names, threshold=0.7)
+
+        plt.figure(figsize=(10, 8))
+        # 이미 RGB로 변환되어 있으므로 Matplotlib에서 바로 표시 가능
+        plt.imshow(result_image_pt)
+        plt.title('PyTorch Object Detection Results')
+        plt.axis('off')
+        plt.show()
+        print("--- PyTorch 기반 객체 탐지 완료 ---")
+
+    except FileNotFoundError as e:
+        print(e)
+    except Exception as e:
+        print(f"오류 발생: {e}")
 ```
 
 
