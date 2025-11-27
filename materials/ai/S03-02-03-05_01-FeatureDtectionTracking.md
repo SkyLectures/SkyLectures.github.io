@@ -9,7 +9,7 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 <div class="colab-link">
-    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/python/notebooks/S03-02-03-05_01-FeatureDtectionTracking.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/ai/notebooks/S03-02-03-05_01-FeatureDtectionTracking.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 </div>
 
 ## 1. 특징점의 개요
