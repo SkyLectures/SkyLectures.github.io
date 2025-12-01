@@ -38,7 +38,7 @@ pip install tensorflow==2.15.0 opencv-python numpy matplotlib scikit-learn
 ### 2.2 U-Net 모델 구현
 
 ```python
-#//file: "tensorflow_lane_detection_realtime.py
+#// file: "tensorflow_lane_detection_realtime.py"
 import os
 import cv2
 import numpy as np
@@ -222,7 +222,7 @@ def predict_and_visualize(model, image_path, img_size=(256, 512)):
 ### 2.3 실시간 차선 인식 구현
 
 ```python
-#//file: "tensorflow_lane_detection_realtime.py
+#//file: "tensorflow_lane_detection_realtime.py"
 def lane_detection_realtime(model_path, camera_index=0, img_size=(256, 512)):
     # 저장된 모델 로드
     model = tf.keras.models.load_model(model_path)
@@ -291,7 +291,7 @@ pip install torch torchvision opencv-python numpy matplotlib scikit-learn
 ### 3.2 U-Net 모델 구현
 
 ```python
-#//file: "pytorch_lane_detection_realtime.py
+#//file: "pytorch_lane_detection_realtime.py"
 import os
 import cv2
 import numpy as np
@@ -562,7 +562,7 @@ def predict_and_visualize_torch(model_path, image_path, img_size=(256, 512)):
 ### 3.3 실시간 차선 인식 구현
 
 ```python
-#//file: "pytorch_lane_detection_realtime.py
+#//file: "pytorch_lane_detection_realtime.py"
 def lane_detection_realtime_torch(model_path, camera_index=0, img_size=(256, 512)):
     # 저장된 모델 로드
     model = UNet(n_channels=3, n_classes=1).to(device)
