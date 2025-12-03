@@ -8,6 +8,9 @@ categories: materials
 * toc
 {:toc .large-only .toc-sticky:true}
 
+<div class="colab-link">
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/project/notebooks/S10-01-04-05_01-DeepLearningBasedLaneRecognition.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+</div>
 
 > - **딥러닝 기반 차선 인식 시스템**
 >   - 차선 인식은 자율주행 시스템의 핵심 기능 중 하나
@@ -26,613 +29,566 @@ categories: materials
     - 실습에서는 TuSimple 데이터셋을 기준으로 진행
         - [TuSimple 데이터셋 다운로드](https://github.com/TuSimple/tusimple-benchmark){: target="_blank"}
         
-## 2. TensorFlow 기반 구현
+## 2. PyTorch 기반 구현
 
 ### 2.1 필요 라이브러리 설치
 
 ```bash
 #// file: "Terminal"
-pip install tensorflow==2.15.0 opencv-python numpy matplotlib scikit-learn
+pip install torch torchvision opencv-python numpy matplotlib Pillow tqdm
 ```
 
-### 2.2 U-Net 모델 구현
-
-```python
-#// file: "tensorflow_lane_detection_realtime.py"
-import os
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-
-import tensorflow as tf
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Input, Conv2D, MaxPooling2D, Dropout, concatenate, Conv2DTranspose
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
-
-# GPU 메모리 설정
-physical_devices = tf.config.list_physical_devices('GPU')
-if len(physical_devices) > 0:
-    tf.config.experimental.set_memory_growth(physical_devices[0], True)
-
-# 이미지 전처리 함수
-def preprocess_image(img_path, mask_path=None, img_size=(256, 512)):
-    # 이미지 로드 및 리사이징
-    img = cv2.imread(img_path)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = cv2.resize(img, img_size)
-    img = img / 255.0  # 정규화
-    
-    if mask_path:
-        mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
-        mask = cv2.resize(mask, img_size)
-        mask = mask / 255.0  # 정규화
-        return img, mask
-    return img
-
-# 데이터 로딩 함수 (예시)
-def load_data(data_dir, img_size=(256, 512)):
-    images = []
-    masks = []
-    
-    # 실제 구현에서는 TuSimple 데이터셋 구조에 맞게 수정 필요
-    img_dir = os.path.join(data_dir, 'images')
-    mask_dir = os.path.join(data_dir, 'masks')
-    
-    for filename in os.listdir(img_dir):
-        if filename.endswith('.jpg'):
-            img_path = os.path.join(img_dir, filename)
-            mask_path = os.path.join(mask_dir, filename.replace('.jpg', '.png'))
-            
-            if os.path.exists(mask_path):
-                img, mask = preprocess_image(img_path, mask_path, img_size)
-                images.append(img)
-                masks.append(mask)
-    
-    return np.array(images), np.array(masks)[..., np.newaxis]
-
-# U-Net 모델 구현
-def build_unet_model(input_size=(256, 512, 3)):
-    inputs = Input(input_size)
-    
-    # 인코더 (다운샘플링)
-    conv1 = Conv2D(64, 3, activation='relu', padding='same')(inputs)
-    conv1 = Conv2D(64, 3, activation='relu', padding='same')(conv1)
-    pool1 = MaxPooling2D(pool_size=(2, 2))(conv1)
-    
-    conv2 = Conv2D(128, 3, activation='relu', padding='same')(pool1)
-    conv2 = Conv2D(128, 3, activation='relu', padding='same')(conv2)
-    pool2 = MaxPooling2D(pool_size=(2, 2))(conv2)
-    
-    conv3 = Conv2D(256, 3, activation='relu', padding='same')(pool2)
-    conv3 = Conv2D(256, 3, activation='relu', padding='same')(conv3)
-    pool3 = MaxPooling2D(pool_size=(2, 2))(conv3)
-    
-    conv4 = Conv2D(512, 3, activation='relu', padding='same')(pool3)
-    conv4 = Conv2D(512, 3, activation='relu', padding='same')(conv4)
-    drop4 = Dropout(0.5)(conv4)
-    pool4 = MaxPooling2D(pool_size=(2, 2))(drop4)
-    
-    # 병목 부분
-    conv5 = Conv2D(1024, 3, activation='relu', padding='same')(pool4)
-    conv5 = Conv2D(1024, 3, activation='relu', padding='same')(conv5)
-    drop5 = Dropout(0.5)(conv5)
-    
-    # 디코더 (업샘플링)
-    up6 = Conv2DTranspose(512, 2, strides=(2, 2), padding='same')(drop5)
-    merge6 = concatenate([drop4, up6], axis=3)
-    conv6 = Conv2D(512, 3, activation='relu', padding='same')(merge6)
-    conv6 = Conv2D(512, 3, activation='relu', padding='same')(conv6)
-    
-    up7 = Conv2DTranspose(256, 2, strides=(2, 2), padding='same')(conv6)
-    merge7 = concatenate([conv3, up7], axis=3)
-    conv7 = Conv2D(256, 3, activation='relu', padding='same')(merge7)
-    conv7 = Conv2D(256, 3, activation='relu', padding='same')(conv7)
-    
-    up8 = Conv2DTranspose(128, 2, strides=(2, 2), padding='same')(conv7)
-    merge8 = concatenate([conv2, up8], axis=3)
-    conv8 = Conv2D(128, 3, activation='relu', padding='same')(merge8)
-    conv8 = Conv2D(128, 3, activation='relu', padding='same')(conv8)
-
-    up9 = Conv2DTranspose(64, 2, strides=(2, 2), padding='same')(conv8)
-    merge9 = concatenate([conv1, up9], axis=3)
-    conv9 = Conv2D(64, 3, activation='relu', padding='same')(merge9)
-    conv9 = Conv2D(64, 3, activation='relu', padding='same')(conv9)
-    
-    # 출력층 - 이진 세그멘테이션(차선 vs 비차선)
-    outputs = Conv2D(1, 1, activation='sigmoid')(conv9)
-    
-    model = Model(inputs=inputs, outputs=outputs)
-    return model
-
-# 모델 학습 함수
-def train_lane_detection_model(data_dir, img_size=(256, 512), batch_size=8, epochs=50):
-    # 데이터 로드
-    X, y = load_data(data_dir, img_size)
-    
-    # 학습/검증 데이터 분리
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    # 모델 구축
-    model = build_unet_model(input_size=(img_size[0], img_size[1], 3))
-    model.compile(optimizer=Adam(learning_rate=1e-4), 
-                  loss='binary_crossentropy',
-                  metrics=['accuracy', tf.keras.metrics.MeanIoU(num_classes=2)])
-    
-    # 모델 저장 콜백
-    model_checkpoint = ModelCheckpoint(
-        'lane_detection_unet_tf.h5',
-        monitor='val_loss',
-        verbose=1,
-        save_best_only=True
-    )
-    
-    # 조기 종료 콜백
-    early_stopping = EarlyStopping(
-        monitor='val_loss',
-        patience=10,
-        verbose=1
-    )
-    
-    # 모델 학습
-    history = model.fit(
-        X_train, y_train,
-        batch_size=batch_size,
-        epochs=epochs,
-        validation_data=(X_val, y_val),
-        callbacks=[model_checkpoint, early_stopping]
-    )
-    
-    return model, history
-
-# 예측 및 시각화 함수
-def predict_and_visualize(model, image_path, img_size=(256, 512)):
-    # 이미지 로드 및 전처리
-    img = preprocess_image(image_path, img_size=img_size)
-    img_batch = np.expand_dims(img, axis=0)
-    
-    # 예측
-    pred_mask = model.predict(img_batch)[0]
-    
-    # 시각화
-    plt.figure(figsize=(12, 6))
-    plt.subplot(1, 3, 1)
-    plt.imshow(img)
-    plt.title('원본 이미지')
-    
-    plt.subplot(1, 3, 2)
-    plt.imshow(pred_mask[:, :, 0], cmap='gray')
-    plt.title('예측된 차선 마스크')
-    
-    plt.subplot(1, 3, 3)
-    # 원본 이미지에 예측 마스크 오버레이
-    overlay = img.copy()
-    mask = (pred_mask[:, :, 0] > 0.5).astype(np.uint8)
-    overlay_mask = np.zeros_like(overlay)
-    overlay_mask[:, :, 1] = mask * 255  # 초록색으로 마스크 표시
-    blended = cv2.addWeighted(overlay, 0.7, overlay_mask, 0.3, 0)
-    plt.imshow(blended)
-    plt.title('차선 인식 결과')
-    
-    plt.tight_layout()
-    plt.show()
-```
-
-### 2.3 실시간 차선 인식 구현
-
-```python
-#//file: "tensorflow_lane_detection_realtime.py"
-def lane_detection_realtime(model_path, camera_index=0, img_size=(256, 512)):
-    # 저장된 모델 로드
-    model = tf.keras.models.load_model(model_path)
-    
-    # 카메라 열기
-    cap = cv2.VideoCapture(camera_index)
-    
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-            
-        # 이미지 전처리
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        resized_frame = cv2.resize(frame_rgb, (img_size[1], img_size[0]))
-        normalized_frame = resized_frame / 255.0
-        
-        # 예측
-        input_tensor = np.expand_dims(normalized_frame, axis=0)
-        prediction = model.predict(input_tensor)
-        
-        # 예측 결과 처리
-        lane_mask = (prediction[0, :, :, 0] > 0.5).astype(np.uint8) * 255
-        lane_mask_resized = cv2.resize(lane_mask, (frame.shape[1], frame.shape[0]))
-        
-        # 차선 영역 표시
-        lane_overlay = np.zeros_like(frame)
-        lane_overlay[:, :, 1] = lane_mask_resized  # 초록색으로 차선 표시
-        result = cv2.addWeighted(frame, 1, lane_overlay, 0.5, 0)
-        
-        # 결과 표시
-        cv2.imshow('Lane Detection (TensorFlow)', result)
-        
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-            
-    cap.release()
-    cv2.destroyAllWindows()
-
-# 메인 실행 코드
-if __name__ == "__main__":
-    # 학습 데이터 경로
-    data_dir = "tusimple_dataset_path"
-    
-    # 모델 학습 (또는 저장된 모델 사용)
-    try:
-        model = tf.keras.models.load_model('lane_detection_unet_tf.h5')
-        print("저장된 모델을 불러왔습니다.")
-    except:
-        print("모델을 학습합니다...")
-        model, history = train_lane_detection_model(data_dir)
-    
-    # 실시간 차선 인식 실행
-    lane_detection_realtime('lane_detection_unet_tf.h5')
-```
-
-## 3. PyTorch 기반 구현
-
-### 3.1 필요 라이브러리 설치
-
-```bash
-#// file: "Terminal"
-pip install torch torchvision opencv-python numpy matplotlib scikit-learn
-```
-
-### 3.2 U-Net 모델 구현
+### 2.2 필요한 라이브러리 가져오기
 
 ```python
 #//file: "pytorch_lane_detection_realtime.py"
+
 import os
-import cv2
+import random
+import time
+
 import numpy as np
+from PIL import Image
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
+
+from tqdm.notebook import tqdm
 
 import torch
+from torch.utils.data import Dataset, DataLoader
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader
-import torchvision.transforms as transforms
+import torch.nn.functional as F
+from torchvision import transforms
+import torchvision.transforms.functional as TF
+from torch.optim import lr_scheduler
+```
 
-# GPU 사용 설정
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"Using device: {device}")
+### 2.3 데이터셋 디렉토리 정의
 
-# 사용자 정의 데이터셋 클래스
-class LaneDataset(Dataset):
-    def __init__(self, images, masks=None, transform=None):
-        self.images = images
-        self.masks = masks
+```python
+train_image_dir = './train'
+train_mask_dir = './train_label'
+val_image_dir = './val'
+val_mask_dir = './val_label'
+```
+
+### 2.4 데이터셋 확인
+
+- 이미지 속성 분석
+
+```python
+def analyze_image_properties(image_dir):
+    image_files = os.listdir(image_dir)
+    resolutions = []
+    channels = []
+    missing_files = []
+
+    for img_file in image_files:
+        img_path = os.path.join(image_dir, img_file)
+        try:
+            with Image.open(img_path) as img:
+                # 해상도(너비, 높이) 수집
+                resolutions.append(img.size)  # (너비, 높이)
+                
+                # 채널 수 수집
+                channels.append(len(img.getbands()))  # RGB = 3, Grayscale = 1
+                
+        except Exception as e:
+            print(f"Error loading image {img_file}: {e}")
+            missing_files.append(img_file)
+
+    return resolutions, channels, missing_files
+
+# 학습용 이미지와 마스크의 속성 분석
+train_img_resolutions, train_img_channels, train_img_missing_files = analyze_image_properties(train_image_dir)
+train_label_resolutions, train_label_channels, train_label_missing_files = analyze_image_properties(train_mask_dir)
+
+# 검증 이미지와 마스크의 속성 분석
+val_img_resolutions, val_img_channels, val_img_missing_files = analyze_image_properties(val_image_dir)
+val_label_resolutions, val_label_channels, val_label_missing_files = analyze_image_properties(val_mask_dir)
+
+# 결과 표시
+print(f"Analysis of Train image dataset")
+print(f"List of resolutions: {set(train_img_resolutions)}")
+print(f"List of channels: {set(train_img_channels)}")
+print(f"Missing files: {train_img_missing_files}")
+
+print(f"\nAnalysis of Train mask dataset")
+print(f"List of resolutions: {set(train_label_resolutions)}")
+print(f"List of channels: {set(train_label_channels)}")
+print(f"Missing files: {train_label_missing_files}")
+
+print(f"\nAnalysis of Validation image dataset")
+print(f"List of resolutions: {set(val_img_resolutions)}")
+print(f"List of channels: {set(val_img_channels)}")
+print(f"Missing files: {val_img_missing_files}")
+
+print(f"\nAnalysis of Validation mask dataset")
+print(f"List of resolutions: {set(val_label_resolutions)}")
+print(f"List of channels: {set(val_label_channels)}")
+print(f"Missing files: {val_label_missing_files}")
+```
+
+- 마스크 파일의 고유 클래스 분석
+
+```python
+def get_unique_classes_from_dir(mask_dir):
+    mask_files = os.listdir(mask_dir)
+    all_unique_classes = set()
+
+    for mask_file in mask_files:
+        mask_path = os.path.join(mask_dir, mask_file)
+        try:
+            with Image.open(mask_path) as mask:
+                mask_array = np.array(mask)
+                
+                # 고유 클래스 확인
+                unique_classes = np.unique(mask_array)
+                
+                # 모든 고유 클래스 업데이트
+                all_unique_classes.update(unique_classes)
+        except Exception as e:
+            print(f"Error loading mask {mask_file}: {e}")
+    
+    return all_unique_classes
+
+train_unique_classes = get_unique_classes_from_dir(train_mask_dir)
+val_unique_classes = get_unique_classes_from_dir(val_mask_dir)
+
+# 고유 클래스 출력
+print(f"Unique classes in Train masks: {train_unique_classes}")
+print(f"Number of classes in Train masks: {len(train_unique_classes)}")
+
+print(f"Unique classes in Val masks: {val_unique_classes}")
+print(f"Number of classes in Val masks: {len(val_unique_classes)}")
+```
+
+### 2.5 영역분할용 데이터셋 생성
+
+- 영역분할 작업을 위한 사용자 정의 데이터셋 클래스 정의
+
+```python
+class SegmentationDataset(Dataset):
+    def __init__(self, image_dir, label_dir, transform=None):
+        self.image_dir = image_dir
+        self.label_dir = label_dir
         self.transform = transform
-        
+        self.images = os.listdir(image_dir)
+    
     def __len__(self):
         return len(self.images)
-        
+    
     def __getitem__(self, idx):
-        image = self.images[idx]
+        image_path = os.path.join(self.image_dir, self.images[idx])
+        label_name = self.images[idx].replace('.png', '_label.png')
+        label_path = os.path.join(self.label_dir, label_name)
         
+        # 이미지와 마스크 읽기
+        image = Image.open(image_path).convert('RGB')
+        mask = Image.open(label_path).convert('L')  # 그레이스케일 마스크
+        
+        # 이미지와 마스크 모두에 변환 적용
         if self.transform:
             image = self.transform(image)
+            mask = TF.resize(mask, (256, 256), interpolation=Image.NEAREST)
         
-        if self.masks is not None:
-            mask = self.masks[idx]
-            if self.transform:
-                mask = self.transform(mask)
-            return image, mask
-        return image
-
-# U-Net 모델 구현
-class DoubleConv(nn.Module):
-    def __init__(self, in_channels, out_channels):
-        super().__init__()
-        self.double_conv = nn.Sequential(
-            nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1),
-            nn.BatchNorm2d(out_channels),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=1),
-            nn.BatchNorm2d(out_channels),
-            nn.ReLU(inplace=True)
-        )
+        mask = torch.from_numpy(np.array(mask)).long()  # 마스크를 텐서로 변환
         
-    def forward(self, x):
-        return self.double_conv(x)
+        return image, mask
+```
 
+- 변환 정의
+
+```python
+train_transform = transforms.Compose([
+    transforms.Resize((256, 256)),
+    transforms.ToTensor(),
+])
+```
+
+- 데이터 로더 생성
+
+```python
+train_dataset = SegmentationDataset(image_dir=train_image_dir, label_dir=train_mask_dir, transform=train_transform)
+train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
+
+val_dataset = SegmentationDataset(image_dir=val_image_dir, label_dir=val_mask_dir, transform=train_transform)
+val_loader = DataLoader(val_dataset, batch_size=16, shuffle=False)
+```
+
+### 2.6 U-Net 아키텍처 정의
+
+- U-Net 아키텍처 정의
+
+```python
 class UNet(nn.Module):
-    def __init__(self, n_channels=3, n_classes=1):
+    def __init__(self, num_classes):
         super(UNet, self).__init__()
-        # 인코더 (다운샘플링)
-        self.inc = DoubleConv(n_channels, 64)
-        self.down1 = nn.Sequential(nn.MaxPool2d(2), DoubleConv(64, 128))
-        self.down2 = nn.Sequential(nn.MaxPool2d(2), DoubleConv(128, 256))
-        self.down3 = nn.Sequential(nn.MaxPool2d(2), DoubleConv(256, 512))
-        self.down4 = nn.Sequential(nn.MaxPool2d(2), DoubleConv(512, 1024))
         
-        # 디코더 (업샘플링)
-        self.up1 = nn.ConvTranspose2d(1024, 512, kernel_size=2, stride=2)
-        self.up_conv1 = DoubleConv(1024, 512)
+        # Contracting path
+        self.encoder1 = self.conv_block(3, 64)
+        self.encoder2 = self.conv_block(64, 128)
+        self.encoder3 = self.conv_block(128, 256)
+        self.encoder4 = self.conv_block(256, 512)
+        self.encoder5 = self.conv_block(512, 1024)
         
-        self.up2 = nn.ConvTranspose2d(512, 256, kernel_size=2, stride=2)
-        self.up_conv2 = DoubleConv(512, 256)
+        # Bottleneck
+        self.bottleneck = self.conv_block(1024, 2048)
         
-        self.up3 = nn.ConvTranspose2d(256, 128, kernel_size=2, stride=2)
-        self.up_conv3 = DoubleConv(256, 128)
+        # Expanding path
+        self.upconv5 = nn.ConvTranspose2d(2048, 1024, kernel_size=2, stride=2)
+        self.decoder5 = self.conv_block(2048, 1024)
         
-        self.up4 = nn.ConvTranspose2d(128, 64, kernel_size=2, stride=2)
-        self.up_conv4 = DoubleConv(128, 64)
+        self.upconv4 = nn.ConvTranspose2d(1024, 512, kernel_size=2, stride=2)
+        self.decoder4 = self.conv_block(1024, 512)
         
-        # 출력층
-        self.outc = nn.Conv2d(64, n_classes, kernel_size=1)
-        self.sigmoid = nn.Sigmoid()
+        self.upconv3 = nn.ConvTranspose2d(512, 256, kernel_size=2, stride=2)
+        self.decoder3 = self.conv_block(512, 256)
         
+        self.upconv2 = nn.ConvTranspose2d(256, 128, kernel_size=2, stride=2)
+        self.decoder2 = self.conv_block(256, 128)
+        
+        self.upconv1 = nn.ConvTranspose2d(128, 64, kernel_size=2, stride=2)
+        self.decoder1 = self.conv_block(128, 64)
+        
+        # Final output layer for multi-class segmentation
+        self.conv_last = nn.Conv2d(64, num_classes, kernel_size=1)
+    
+    def conv_block(self, in_channels, out_channels):
+        block = nn.Sequential(
+            nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=1),
+            nn.ReLU()
+        )
+        return block
+    
     def forward(self, x):
-        # 인코더 경로
-        x1 = self.inc(x)
-        x2 = self.down1(x1)
-        x3 = self.down2(x2)
-        x4 = self.down3(x3)
-        x5 = self.down4(x4)
+        # Contracting path
+        enc1 = self.encoder1(x)
+        enc2 = self.encoder2(F.max_pool2d(enc1, kernel_size=2))
+        enc3 = self.encoder3(F.max_pool2d(enc2, kernel_size=2))
+        enc4 = self.encoder4(F.max_pool2d(enc3, kernel_size=2))
+        enc5 = self.encoder5(F.max_pool2d(enc4, kernel_size=2))
         
-        # 디코더 경로 + 스킵 연결
-        x = self.up1(x5)
-        x = torch.cat([x, x4], dim=1)
-        x = self.up_conv1(x)
+        # Bottleneck
+        bottleneck = self.bottleneck(F.max_pool2d(enc5, kernel_size=2))
         
-        x = self.up2(x)
-        x = torch.cat([x, x3], dim=1)
-        x = self.up_conv2(x)
+        # Expanding path
+        dec5 = self.upconv5(bottleneck)
+        dec5 = torch.cat((enc5, dec5), dim=1)
+        dec5 = self.decoder5(dec5)
         
-        x = self.up3(x)
-        x = torch.cat([x, x2], dim=1)
-        x = self.up_conv3(x)
+        dec4 = self.upconv4(dec5)
+        dec4 = torch.cat((enc4, dec4), dim=1)
+        dec4 = self.decoder4(dec4)
         
-        x = self.up4(x)
-        x = torch.cat([x, x1], dim=1)
-        x = self.up_conv4(x)
+        dec3 = self.upconv3(dec4)
+        dec3 = torch.cat((enc3, dec3), dim=1)
+        dec3 = self.decoder3(dec3)
         
-        x = self.outc(x)
-        x = self.sigmoid(x)
+        dec2 = self.upconv2(dec3)
+        dec2 = torch.cat((enc2, dec2), dim=1)
+        dec2 = self.decoder2(dec2)
         
-        return x
+        dec1 = self.upconv1(dec2)
+        dec1 = torch.cat((enc1, dec1), dim=1)
+        dec1 = self.decoder1(dec1)
+        
+        # Final output layer (logits)
+        return self.conv_last(dec1)
+```
 
-# 이미지 전처리 함수
-def preprocess_image_torch(img_path, mask_path=None, img_size=(256, 512)):
-    # 이미지 로드 및 리사이징
-    img = cv2.imread(img_path)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img = cv2.resize(img, img_size)
-    img = img.transpose(2, 0, 1) / 255.0  # PyTorch 형식 (C, H, W)로 변환 및 정규화
-    
-    if mask_path:
-        mask = cv2.imread(mask_path, cv2.IMREAD_GRAYSCALE)
-        mask = cv2.resize(mask, img_size)
-        mask = np.expand_dims(mask, axis=0) / 255.0  # (1, H, W) 형태로 변환
-        return torch.FloatTensor(img), torch.FloatTensor(mask)
-    
-    return torch.FloatTensor(img)
+- 3개 클래스에 대한 U-Net 모델 초기화
 
-# 데이터 로딩 함수 (예시)
-def load_data_torch(data_dir, img_size=(256, 512)):
-    images = []
-    masks = []
+```python
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+model = UNet(num_classes=3).to(device)
+#model.load_state_dict(torch.load('best_model.pth'))
+```
+
+### 2.7 손실함수 및 최적화 함수 정의
+
+```python
+# 손실함수
+criterion = nn.CrossEntropyLoss()
+
+# 최적화 함수
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+```
+
+### 2.8 매트릭 정의: IoU 및 Dice 계수
+
+- IoU 계산 함수
+
+```python
+def calculate_iou(preds, masks, num_classes):
+    ious = []
+    preds = torch.argmax(preds, dim=1)  # 각 픽셀에 대한 예측 클래스 가져오기
+    for cls in range(num_classes):
+        pred_cls = (preds == cls).float()
+        mask_cls = (masks == cls).float()
+        
+        intersection = torch.sum(pred_cls * mask_cls)
+        union = torch.sum(pred_cls) + torch.sum(mask_cls) - intersection
+        
+        if union == 0:
+            ious.append(1.0)  # 합집합이 없다면 IoU는 완전한 것으로 간주
+        else:
+            ious.append((intersection / union).item())
     
-    # 실제 구현에서는 TuSimple 데이터셋 구조에 맞게 수정 필요
-    img_dir = os.path.join(data_dir, 'images')
-    mask_dir = os.path.join(data_dir, 'masks')
+    return sum(ious) / len(ious)  # 모든 클래스의 평균 IoU 반환
+```
+
+- Dice 계수 계산 함수
+
+```python
+def calculate_dice(preds, masks, num_classes):
+    dices = []
+    preds = torch.argmax(preds, dim=1)  # 각 픽셀에 대한 예측 클래스 가져오기
+    for cls in range(num_classes):
+        pred_cls = (preds == cls).float()
+        mask_cls = (masks == cls).float()
+        
+        intersection = torch.sum(pred_cls * mask_cls)
+        dice = (2 * intersection) / (torch.sum(pred_cls) + torch.sum(mask_cls))
+        
+        if torch.sum(pred_cls) + torch.sum(mask_cls) == 0:
+            dices.append(1.0)
+        else:
+            dices.append(dice.item())
     
-    for filename in os.listdir(img_dir):
-        if filename.endswith('.jpg'):
-            img_path = os.path.join(img_dir, filename)
-            mask_path = os.path.join(mask_dir, filename.replace('.jpg', '.png'))
+    return sum(dices) / len(dices)  # 모든 클래스의 평균 Dice 계수를 반환
+```
+
+### 2.9 모델 훈련 및 검증
+
+```python
+num_epochs = 50
+train_loss_list = []
+val_loss_list = []
+iou_list = []
+dice_list = []
+
+num_classes = 3  # 분할 클래스의 개수
+
+# 학습률 스케줄러(검증 손실이 정점에 도달하면 LR을 줄임)
+scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=2)
+save_path = 'best_model.pth'
+
+# 조기 종료 설정
+early_stopping_patience = 5
+early_stopping_counter = 0
+best_val_loss = float('inf')
+
+for epoch in range(num_epochs):
+    model.train()
+    running_loss = 0.0
+    
+    # 훈련(학습) 루프
+    for images, masks in tqdm(train_loader, desc=f"Epoch {epoch+1} [Training]"):
+        images = images.to(device)
+        masks = masks.to(device).long()
+        
+        optimizer.zero_grad()
+        outputs = model(images)
+        loss = criterion(outputs, masks)
+        loss.backward()
+        optimizer.step()
+        
+        running_loss += loss.item()
+
+    # 검증 루프
+    model.eval()
+    val_loss = 0.0
+    iou_total = 0.0
+    dice_total = 0.0
+    with torch.no_grad():
+        for images, masks in tqdm(val_loader, desc=f"Epoch {epoch+1} [Validation]"):
+            images = images.to(device)
+            masks = masks.to(device).long()
             
-            if os.path.exists(mask_path):
-                img, mask = preprocess_image_torch(img_path, mask_path, img_size)
-                images.append(img)
-                masks.append(mask)
+            outputs = model(images)
+            loss = criterion(outputs, masks)
+            val_loss += loss.item()
+            
+            iou = calculate_iou(outputs, masks, num_classes=num_classes)
+            dice = calculate_dice(outputs, masks, num_classes=num_classes)
+            
+            iou_total += iou
+            dice_total += dice
     
-    return images, masks
+    # 평균값 계산
+    avg_train_loss = running_loss / len(train_loader)
+    avg_val_loss = val_loss / len(val_loader)
+    avg_iou = iou_total / len(val_loader)
+    avg_dice = dice_total / len(val_loader)
+    
+    train_loss_list.append(avg_train_loss)
+    val_loss_list.append(avg_val_loss)
+    iou_list.append(avg_iou)
+    dice_list.append(avg_dice)
+    
+    print(f"Epoch [{epoch+1}/{num_epochs}]")
+    print(f"Training Loss: {avg_train_loss:.4f}, Validation Loss: {avg_val_loss:.4f}")
+    print(f"MIoU: {avg_iou:.4f}, Dice Coefficient: {avg_dice:.4f}")
 
-# 모델 학습 함수
-def train_lane_detection_model_torch(data_dir, img_size=(256, 512), batch_size=8, epochs=50):
-    # 데이터 로드
-    images, masks = load_data_torch(data_dir, img_size)
+    # 학습률 스케줄러 업데이트
+    scheduler.step(avg_val_loss)
+
+    # 조기 종료 로직
+    if avg_val_loss < best_val_loss:
+        best_val_loss = avg_val_loss
+        torch.save(model.state_dict(), save_path)
+        early_stopping_counter = 0
+        print("Validation loss improved, resetting early stopping counter.")
+    else:
+        early_stopping_counter += 1
+        print(f"Validation loss did not improve for {early_stopping_counter} epochs.")
+        if early_stopping_counter >= early_stopping_patience:
+            print(f"Early stopping triggered at epoch {epoch+1}.")
+            break
+```
+
+### 2.10 결과 표시
+
+```python
+# 훈련 및 검증 손실, MIoU 및 Dice 메트릭을 플로팅하는 함수
+def plot_metrics(train_loss_list, val_loss_list, iou_list, dice_list):
+    epochs = range(1, len(train_loss_list) + 1)
+
+    # 손실 값 플로팅
+    plt.figure(figsize=(10, 5))
+    plt.plot(epochs, train_loss_list, label='Train Loss')
+    plt.plot(epochs, val_loss_list, label='Validation Loss')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.title('Training and Validation Loss')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
+    # MIoU 와 Dice 계수 플로팅
+    plt.figure(figsize=(10, 5))
+    plt.plot(epochs, iou_list, label='Mean IoU', color='blue', alpha=0.5)
+    plt.plot(epochs, dice_list, label='Dice Coefficient', color='green', alpha=0.5)
+    plt.xlabel('Epochs')
+    plt.ylabel('Metric Value')
+    plt.title('MIoU and Dice Coefficient Over Epochs')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+```
+
+### 2.11 예측 시각화
+
+```python
+def visualize_random_predictions(model, dataloader, device, num_images=5):
+    model.eval()  # 모델을 평가 모드로 설정
     
-    # 학습/검증 데이터 분리
-    X_train, X_val, y_train, y_val = train_test_split(images, masks, test_size=0.2, random_state=42)
+    dataset_size = len(dataloader.dataset)
+    random_indices = random.sample(range(dataset_size), num_images)
     
-    # 데이터셋 및 데이터로더 생성
-    train_dataset = LaneDataset(X_train, y_train)
-    val_dataset = LaneDataset(X_val, y_val)
+    images_so_far = 0
+    fig, ax = plt.subplots(num_images, 3, figsize=(10, num_images * 5))
     
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size)
-    
-    # 모델 생성
-    model = UNet(n_channels=3, n_classes=1).to(device)
-    
-    # 손실 함수 및 옵티마이저 정의
-    criterion = nn.BCELoss()
-    optimizer = optim.Adam(model.parameters(), lr=1e-4)
-    
-    # 학습 과정
-    best_val_loss = float('inf')
-    for epoch in range(epochs):
-        # 학습 모드
-        model.train()
-        train_loss = 0.0
-        
-        for images, masks in train_loader:
+    with torch.no_grad():
+        for batch_idx, (images, masks) in enumerate(dataloader):
+            batch_size = images.size(0)
+            start_idx = batch_idx * batch_size
+            end_idx = start_idx + batch_size
+
+            valid_indices = [i for i in random_indices if start_idx <= i < end_idx]
+            
+            if len(valid_indices) == 0:
+                continue
+            
             images = images.to(device)
             masks = masks.to(device)
             
-            # 그래디언트 초기화
-            optimizer.zero_grad()
-            
-            # 순전파
+            # 예측
             outputs = model(images)
+            preds = torch.argmax(outputs, dim=1)
             
-            # 손실 계산
-            loss = criterion(outputs, masks)
-            
-            # 역전파 및 옵티마이저 스텝
-            loss.backward()
-            optimizer.step()
-            
-            train_loss += loss.item()
-        
-        # 검증 모드
-        model.eval()
-        val_loss = 0.0
-        with torch.no_grad():
-            for images, masks in val_loader:
-                images = images.to(device)
-                masks = masks.to(device)
+            for i in valid_indices:
+                local_idx = i - start_idx
                 
-                outputs = model(images)
-                loss = criterion(outputs, masks)
-                val_loss += loss.item()
-        
-        # 에폭별 평균 손실 계산
-        train_loss /= len(train_loader)
-        val_loss /= len(val_loader)
-        
-        print(f'Epoch {epoch+1}/{epochs}, Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}')
-        
-        # 최적 모델 저장
-        if val_loss < best_val_loss:
-            best_val_loss = val_loss
-            torch.save(model.state_dict(), 'lane_detection_unet_torch.pth')
-            print(f'Epoch {epoch+1}: 개선된 모델을 저장했습니다.')
-    
-    return model
+                pred_mask = preds[local_idx].cpu().numpy()
+                true_mask = masks[local_idx].cpu().numpy()
+                
+                ax[images_so_far, 0].imshow(images[local_idx].cpu().permute(1, 2, 0))
+                ax[images_so_far, 0].set_title('Input Image')
+                
+                ax[images_so_far, 1].imshow(true_mask, cmap='gray')
+                ax[images_so_far, 1].set_title('True Mask')
+                
+                ax[images_so_far, 2].imshow(pred_mask, cmap='gray')
+                ax[images_so_far, 2].set_title('Predicted Mask')
+                
+                images_so_far += 1
+                
+                if images_so_far == num_images:
+                    plt.tight_layout()
+                    plt.show()
+                    return
 
-# 예측 및 시각화 함수
-def predict_and_visualize_torch(model_path, image_path, img_size=(256, 512)):
-    # 모델 로드
-    model = UNet(n_channels=3, n_classes=1).to(device)
-    model.load_state_dict(torch.load(model_path))
-    model.eval()
-    
-    # 이미지 로드 및 전처리
-    img = cv2.imread(image_path)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    img_resized = cv2.resize(img, img_size)
-    
-    # PyTorch 텐서로 변환
-    img_tensor = torch.from_numpy(img_resized.transpose(2, 0, 1) / 255.0).float().unsqueeze(0).to(device)
-    
-    # 예측
-    with torch.no_grad():
-        pred_mask = model(img_tensor)
-        pred_mask = pred_mask.cpu().squeeze().numpy()
-    
-    # 시각화
-    plt.figure(figsize=(12, 6))
-    plt.subplot(1, 3, 1)
-    plt.imshow(img_resized)
-    plt.title('원본 이미지')
-    
-    plt.subplot(1, 3, 2)
-    plt.imshow(pred_mask, cmap='gray')
-    plt.title('예측된 차선 마스크')
-    
-    plt.subplot(1, 3, 3)
-    # 원본 이미지에 예측 마스크 오버레이
-    overlay = img_resized.copy()
-    mask = (pred_mask > 0.5).astype(np.uint8)
-    overlay_mask = np.zeros_like(overlay)
-    overlay_mask[:, :, 1] = mask * 255  # 초록색으로 마스크 표시
-    blended = cv2.addWeighted(overlay, 0.7, overlay_mask, 0.3, 0)
-    plt.imshow(blended)
-    plt.title('차선 인식 결과')
-    
     plt.tight_layout()
     plt.show()
+
+visualize_random_predictions(model, val_loader, device, num_images=5)
 ```
 
-### 3.3 실시간 차선 인식 구현
+### 2.12 추론 속도 및 추정 FPS 측정
+
+- FPS(Frames Per Second, 초당 프레임 수)
+    - 비디오 스트리밍, 자율주행 또는 기타 시간에 민감한 작업 등 실시간 애플리케이션에 중요한 지표
+    - 모델이 동적이고 빠르게 변화하는 환경에서 얼마나 효율적으로 예측을 제공할 수 있는지를 보여줌
+
+- 추론 속도와 추정 FPS 를 측정해야 하는 이유
+    - 이 단계에서는 훈련된 모델이 데이터 세트의 단일 이미지에 대해 추론을 수행하는 데 걸리는 평균 시간을 평가함
+    - 이를 통해 배포 과정에서 모델의 성능을 명확하게 파악할 수 있음
+    - 추론 시간을 기반으로 모델이 1초에 처리할 수 있는 이미지 수를 정량화하는 초당 프레임 수(FPS)를 계산
 
 ```python
-#//file: "pytorch_lane_detection_realtime.py"
-def lane_detection_realtime_torch(model_path, camera_index=0, img_size=(256, 512)):
-    # 저장된 모델 로드
-    model = UNet(n_channels=3, n_classes=1).to(device)
-    model.load_state_dict(torch.load(model_path))
-    model.eval()
+# 이미지당 추론 시간 측정
+def measure_inference_speed(model, dataloader, device, num_images=10):
+    model.eval()  # 모델을 평가 모드로 설정
+    total_time = 0.0
+    images_processed = 0
     
-    # 카메라 열기
-    cap = cv2.VideoCapture(camera_index)
+    with torch.no_grad():
+        for images, _ in dataloader:
+            images = images.to(device)
+            
+            start_time = time.time()
+            outputs = model(images)
+            end_time = time.time()
+            
+            inference_time = end_time - start_time
+            total_time += inference_time
+            images_processed += len(images)
+            
+            if images_processed >= num_images:
+                break
     
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-            
-        # 이미지 전처리
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        resized_frame = cv2.resize(frame_rgb, (img_size[1], img_size[0]))
-        
-        # PyTorch 텐서로 변환
-        input_tensor = torch.from_numpy(resized_frame.transpose(2, 0, 1) / 255.0).float().unsqueeze(0).to(device)
-        
-        # 예측
-        with torch.no_grad():
-            prediction = model(input_tensor)
-            prediction = prediction.cpu().squeeze().numpy()
-        
-        # 예측 결과 처리
-        lane_mask = (prediction > 0.5).astype(np.uint8) * 255
-        lane_mask_resized = cv2.resize(lane_mask, (frame.shape[1], frame.shape[0]))
-        
-        # 차선 영역 표시
-        lane_overlay = np.zeros_like(frame)
-        lane_overlay[:, :, 1] = lane_mask_resized  # 초록색으로 차선 표시
-        result = cv2.addWeighted(frame, 1, lane_overlay, 0.5, 0)
-        
-        # 결과 표시
-        cv2.imshow('Lane Detection (PyTorch)', result)
-        
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-            
-    cap.release()
-    cv2.destroyAllWindows()
+    avg_inference_time = total_time / images_processed
+    print(f"Average inference time per image: {avg_inference_time:.4f} seconds")
+    
+    return avg_inference_time
 
-# 메인 실행 코드
-if __name__ == "__main__":
-    # 학습 데이터 경로
-    data_dir = "tusimple_dataset_path"
-    
-    # 모델 학습 (또는 저장된 모델 사용)
-    try:
-        model_state_dict = torch.load('lane_detection_unet_torch.pth')
-        model = UNet(n_channels=3, n_classes=1).to(device)
-        model.load_state_dict(model_state_dict)
-        print("저장된 모델을 불러왔습니다.")
-    except:
-        print("모델을 학습합니다...")
-        model = train_lane_detection_model_torch(data_dir)
-    
-    # 실시간 차선 인식 실행
-    lane_detection_realtime_torch('lane_detection_unet_torch.pth')
+# 검증 세트에서 추론 속도 측정
+avg_inference_time = measure_inference_speed(model, val_loader, device, num_images=10)
+
+fps = 1 / avg_inference_time  # FPS(초당 프레임 수) 계산
+print(f"Estimated FPS (Frames Per Second): {fps:.2f} FPS")
 ```
 
-
-## 4. 라즈베리파이에서의 최적화 방법
+## 3. 라즈베리파이에서의 최적화 방법
 
 - 라즈베리파이와 같은 임베디드 디바이스에서 딥러닝 모델을 실행할 때는 계산 자원의 한계를 고려해야 함
 - 다음과 같은 최적화 방법을 적용하면 성능을 향상시킬 수 있음
 
-### 4.1 모델 경량화 기법
+### 3.1 모델 경량화 기법
 
 - **모델 양자화 (Quantization)**
 
@@ -692,7 +648,7 @@ final_model = tfmot.sparsity.keras.strip_pruning(model_for_pruning)
 final_model.save('lane_detection_pruned.h5')
 ```
 
-### 4.2 추론 속도 향상 기법
+### 3.2 추론 속도 향상 기법
 
 - **이미지 크기 축소**
 
@@ -766,9 +722,9 @@ while True:
         # 결과 시각화 및 표시
 ```
 
-## 5. 실제 자율주행 키트에 적용하기
+## 4. 실제 자율주행 키트에 적용하기
 
-### 5.1 차선 인식 결과를 모터 제어에 연결
+### 4.1 차선 인식 결과를 모터 제어에 연결
 
 ```python
 # 모터 제어 클래스 (예시)
@@ -916,7 +872,7 @@ if __name__ == "__main__":
     lane_detection_with_control(model_path, camera_idx)
 ```
 
-### 5.2 모터 제어 보정 및 전략 수립
+### 4.2 모터 제어 보정 및 전략 수립
 
 - **비례 제어 (Proportional Control)**
     - `center_offset` 값이 클수록 모터의 조향 강도를 더 강하게 주는 방식으로 정밀도를 높일 수 있음
