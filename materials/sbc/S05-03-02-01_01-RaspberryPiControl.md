@@ -9,12 +9,6 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 
-<div class="insert-image" style="text-align: center;">
-    <img style="width: 400px;" src="/assets/img/PagePreparing.png">
-</div>
-
-
-
 ## 1. 오픈소스 하드웨어(OSHW)
 
 - **OSHW (Open Source HardWare)**
@@ -167,146 +161,259 @@ categories: materials
     - 후방 좌측: 21
     - 후방 우측: 20
 
-- 
-
 ```python
 #//file: "control_LED.py"
-import RPi.GPIO as GPIO
+from gpiozero import LED
 import time
 
-LED1 = 26
-LED2 = 16
-LED3 = 20
-LED4 = 21
-
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(LED1,GPIO.OUT)
-GPIO.setup(LED2,GPIO.OUT)
-GPIO.setup(LED3,GPIO.OUT)
-GPIO.setup(LED4,GPIO.OUT)
+led1 = LED(26)
+led2 = LED(16)
+led3 = LED(20)
+led4 = LED(21)
 
 try:
     while True:
-        GPIO.output(LED1,GPIO.HIGH)
-        GPIO.output(LED2,GPIO.HIGH)
-        GPIO.output(LED3,GPIO.HIGH)
-        GPIO.output(LED4,GPIO.HIGH)
+        led1.on()
+        led2.on()
+        led3.on()
+        led4.on()
         time.sleep(1.0)
-        GPIO.output(LED1,GPIO.LOW)
-        GPIO.output(LED2,GPIO.LOW)
-        GPIO.output(LED3,GPIO.LOW)
-        GPIO.output(LED4,GPIO.LOW)
+        led1.off()
+        led2.off()
+        led3.off()
+        led4.off()
         time.sleep(1.0)
 
 except KeyboardInterrupt:
     pass
 
-GPIO.cleanup()
+led1.off()
+led2.off()
+led3.off()
+led4.off()
 ```
 
 ### 3.3 버튼 입력받기
 
 ```python
 #//file: "input_Button.py"
-import RPi.GPIO as GPIO
+from gpiozero import Button
 import time
 
-LED_PIN = 33
+SW1 = Button(5, pull_up=False )
+SW2 = Button(6, pull_up=False )
+SW3 = Button(13, pull_up=False )
+SW4 = Button(19, pull_up=False )
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(LED_PIN, GPIO.OUT)
+oldSw = [0,0,0,0]
+newSw = [0,0,0,0]
+cnt = [0,0,0,0]
 
-GPIO.output(LED_PIN, True)
-print("LED turn on")
+try:
+    while True:
+        newSw[0] = SW1.is_pressed
+        if newSw[0] != oldSw[0]:
+            oldSw[0] = newSw[0]
+            
+            if newSw[0] == 1:
+                cnt[0] = cnt[0] + 1
+                print("SW1 click",cnt[0])
+            
+            time.sleep(0.2)
+        
+        newSw[1] = SW2.is_pressed
+        if newSw[1] != oldSw[1]:
+            oldSw[1] = newSw[1]
+            
+            if newSw[1] == 1:
+                cnt[1] = cnt[1] + 1
+                print("SW2 click",cnt[1])
+            
+            time.sleep(0.2)
+            
+        newSw[2] = SW3.is_pressed
+        if newSw[2] != oldSw[2]:
+            oldSw[2] = newSw[2]
+            
+            if newSw[2] == 1:
+                cnt[2] = cnt[2] + 1
+                print("SW3 click",cnt[2])
+            
+            time.sleep(0.2)
+            
+        newSw[3] = SW4.is_pressed
+        if newSw[3] != oldSw[3]:
+            oldSw[3] = newSw[3]
+            
+            if newSw[3] == 1:
+                cnt[3] = cnt[3] + 1
+                print("SW4 click",cnt[3])
+            
+            time.sleep(0.2)
 
-time.sleep(5.0)
-
-GPIO.output(LED_PIN, False)
-print("LED turn off")
-
-GPIO.cleanup()
+except KeyboardInterrupt:
+    pass
 ```
 
 ### 3.4 부저로 경적기능 구현하기
 
 ```python
 #//file: "control_Buzzer.py"
-import RPi.GPIO as GPIO
+from gpiozero import  TonalBuzzer,Button
 import time
 
-LED_PIN = 33
+BUZZER = TonalBuzzer(12)
+SW1 = Button(5, pull_up=False )
+SW2 = Button(6, pull_up=False )
+SW3 = Button(13, pull_up=False )
+SW4 = Button(19, pull_up=False )
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(LED_PIN, GPIO.OUT)
+try:
+    while True:
+        if SW1.is_pressed == True:
+            BUZZER.play(261)
+        elif SW2.is_pressed == True:
+            BUZZER.play(293)
+        elif SW3.is_pressed == True:
+            BUZZER.play(329)
+        elif SW4.is_pressed == True:
+            BUZZER.play(349)
+        else:
+            BUZZER.stop()
+            
+        
+except KeyboardInterrupt:
+    pass
 
-GPIO.output(LED_PIN, True)
-print("LED turn on")
-
-time.sleep(5.0)
-
-GPIO.output(LED_PIN, False)
-print("LED turn off")
-
-GPIO.cleanup()
+BUZZER.stop()
 ```
 
 ### 3.5 모터를 구동하여 자동차 움직이기
 
 ```python
 #//file: "control_Motor.py"
-import RPi.GPIO as GPIO
-import time 
+from gpiozero import DigitalOutputDevice
+from gpiozero import PWMOutputDevice
+import time
 
-DUTY_MIN = 3   # 서보모터가 입력받을 수 있는 듀티의 최소값
-DUTY_MAX = 12  # 서보모터가 입력받을 수 있는 듀티의 최대값
-i=0
+PWMA = PWMOutputDevice(18)
+AIN1 = DigitalOutputDevice(22)
+AIN2 = DigitalOutputDevice(27)
 
-servo_pin = 25  # PWM 출력을 서보모터에 보내줄 pin번호
+PWMB = PWMOutputDevice(23)
+BIN1 = DigitalOutputDevice(25)
+BIN2 = DigitalOutputDevice(24)
 
-GPIO.setmode(GPIO.BCM) 
-GPIO.setup(servo_pin, OUTPUT)
+try:
+    while True:
+        AIN1.value = 0
+        AIN2.value = 1
+        PWMA.value = 0.5 # 0.0~1.0 speed
+        BIN1.value = 0
+        BIN2.value = 1
+        PWMB.value = 0.5 # 0.0~1.0 speed
+        time.sleep(1.0)
+        
+        AIN1.value = 0
+        AIN2.value = 1
+        PWMA.value = 0.0 # 0.0~1.0 speed
+        BIN1.value = 0
+        BIN2.value = 1
+        PWMB.value = 0.0 # 0.0~1.0 speed
+        time.sleep(1.0)
+        
+except KeyboardInterrupt:
+    pass
 
-servo = GPIO.PWM(servo_pin, 50) # PWM을 50Hz(==20ms)로 셋업
-servo.start(0) # 듀티 0에서 시작
-
-def posContDeg(deg):
-  # 입력받은 각도를 듀티로 변환
-  duty = DUTY_MIN+(deg*(DUTY_MAX - DUTY_MIN)/180) 
-
-  # 듀티에 따라 서보모터 제어
-  servo.ChangeDutyCycle(duty)
-  print("%d Degree Rotated" deg)
-
-if __name__ = "__main__":
-  for i in range (0,180):
-    posContDeg(i)
-    sleep(0.5)
-    i++
-
-  servo.stop()
-  GPIO.cleanup()
+PWMA.value = 0.0
+PWMB.value = 0.0
 ```
 
 ### 3.6 스위치를 입력받아 자동차 조종해보기
 
 ```python
-#//file: "control_Car.py"
-import RPi.GPIO as GPIO
+#//file: "sw_control_Car.py"
+from gpiozero import Button
+from gpiozero import DigitalOutputDevice
+from gpiozero import PWMOutputDevice
 import time
 
-LED_PIN = 33
+SW1 = Button(5, pull_up=False )
+SW2 = Button(6, pull_up=False )
+SW3 = Button(13, pull_up=False )
+SW4 = Button(19, pull_up=False )
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(LED_PIN, GPIO.OUT)
+PWMA = PWMOutputDevice(18)
+AIN1 = DigitalOutputDevice(22)
+AIN2 = DigitalOutputDevice(27)
 
-GPIO.output(LED_PIN, True)
-print("LED turn on")
+PWMB = PWMOutputDevice(23)
+BIN1 = DigitalOutputDevice(25)
+BIN2 = DigitalOutputDevice(24)
 
-time.sleep(5.0)
+def motor_go(speed):
+    AIN1.value = 0
+    AIN2.value = 1
+    PWMA.value = speed
+    BIN1.value = 0
+    BIN2.value = 1
+    PWMB.value = speed
 
-GPIO.output(LED_PIN, False)
-print("LED turn off")
+def motor_back(speed):
+    AIN1.value = 1
+    AIN2.value = 0
+    PWMA.value = speed
+    BIN1.value = 1
+    BIN2.value = 0
+    PWMB.value = speed
+    
+def motor_left(speed):
+    AIN1.value = 1
+    AIN2.value = 0
+    PWMA.value = speed
+    BIN1.value = 0
+    BIN2.value = 1
+    PWMB.value = speed
+    
+def motor_right(speed):
+    AIN1.value = 0
+    AIN2.value = 1
+    PWMA.value = speed
+    BIN1.value = 1
+    BIN2.value = 0
+    PWMB.value = speed
 
-GPIO.cleanup()
+def motor_stop():
+    AIN1.value = 0
+    AIN2.value = 1
+    PWMA.value = 0.0
+    BIN1.value = 0
+    BIN2.value = 1
+    PWMB.value = 0.0
+
+try:
+    while True:
+        if SW1.is_pressed == True:
+            print("go")
+            motor_go(0.5)
+        elif SW2.is_pressed == True:
+            print("right")
+            motor_right(0.5)
+        elif SW3.is_pressed == True:
+            print("left")
+            motor_left(0.5)
+        elif SW4.is_pressed == True:
+            print("back")
+            motor_back(0.5)
+        else:
+            print("stop")
+            motor_stop()
+        
+        time.sleep(0.1)
+            
+except KeyboardInterrupt:
+    pass
+
+PWMA.value = 0.0
+PWMB.value = 0.0
 ```
