@@ -70,9 +70,10 @@ categories: lectlog
 #### 4.1 자율주행 키트 조립 및 환경 설정
 - [자율주행 키트 조립](/materials/S10-01-02-02_01-AssemblingKit)
 - [라즈베리파이 OS 설치 및 개발 환경 설정](/materials/S05-03-01-01_01-RaspberryPiSetup)
-- [라즈베리파이 제어 기초](/materials/S05-03-02-01_01-RaspberryPiControl)
-- [자동차 무선조종 기능 구현](/materials/S05-03-03-01_01-RaspberryPiRemoteControl)
-- [카메라를 활용한 자율주행 자동차 구현(OpenCV)](/materials/S05-03-04-01_01-AutoDrivingUsingCameraOpenCv)
+- [라즈베리파이 개요](/materials/S05-03-02-01_01-RaspberryPiOverview)
+- [라즈베리파이 제어 기초](/materials/S10-01-02-03_01-RaspberryPiControl)
+- [자동차 무선조종 기능 구현](/materials/S10-01-02-03_02-RaspberryPiRemoteControl)
+- [카메라를 활용한 자율주행 자동차 구현(OpenCV)](/materials/S10-01-02-03_03-AutoDrivingUsingCameraOpenCv)
 - [라즈베리파이-카메라 실시간 영상 처리](/materials/S10-01-03-06_01-RealtimeImageProcessing)
             
 #### 4.2 딥러닝 기반 자율주행 인지

@@ -292,7 +292,7 @@ categories: materials
             - 각자 시스템에 맞게 선택할 것
             - 우분투 계열의 경우, DEB X64 버전을 선택함
                 - [VNC Viewer 다운로드](https://www.realvnc.com/en/connect/download/viewer/?lai_vid=wARqGjMagFP9n&lai_sr=5-9&lai_sl=l){: target="blank"}
-            - 설치 후, VNC Viewer 실행 **→** IP 입력 **→** 접속
+            - 설치 후, VNC Viewer 실행 ➜ IP 입력 ➜ 접속
 
                 <div class="insert-image" style="text-align: center;">
                     <img style="width: 800px;" src="/materials/sbc/images/S05-03-01-01_01-020.png"><br><br>

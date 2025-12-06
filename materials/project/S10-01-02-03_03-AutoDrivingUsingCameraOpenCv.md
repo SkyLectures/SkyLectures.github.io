@@ -2,7 +2,7 @@
 layout: page
 title:  "카메라를 활용한 자율주행 자동차 구현(OpenCV)"
 date:   2025-07-29 10:00:00 +0900
-permalink: /materials/S05-03-04-01_01-AutoDrivingUsingCameraOpenCv
+permalink: /materials/S10-01-02-03_03-AutoDrivingUsingCameraOpenCv
 categories: materials
 ---
 * toc

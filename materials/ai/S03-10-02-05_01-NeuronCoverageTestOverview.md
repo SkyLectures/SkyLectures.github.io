@@ -67,7 +67,7 @@ categories: materials
 - **복제 연구를 통한 검증**
     - "Correlations between deep neural network model coverage criteria and model quality(심층 신경망 모델 커버리지 기준과 모델 품질 간의 상관관계)"라는 연구논문에서 뉴런 커버리지 테스트의 관계 제시
         - [Correlations between deep neural network model coverage criteria and model quality(심층 신경망 모델 커버리지 기준과 모델 품질 간의 상관관계)](https://dl.acm.org/doi/10.1145/3368089.3409671)
-    - 해당 연구 결과를 의심하여 연구를 복제하고 더 깊은 분석을 위해 실험을 확장한 연구 진행 **→** 이 분야에 대한 추가적인 검증이 진행 중
+    - 해당 연구 결과를 의심하여 연구를 복제하고 더 깊은 분석을 위해 실험을 확장한 연구 진행 ➜ 이 분야에 대한 추가적인 검증이 진행 중
         - [Revisiting Neuron Coverage Metrics and Quality of Deep Neural Networks(뉴런 커버리지 지표 및 심층 신경망 품질 재검토)](https://arxiv.org/pdf/2201.00191)
 
 ### 1.5 뉴런 커버리지 테스트 vs 메타모픽 테스트

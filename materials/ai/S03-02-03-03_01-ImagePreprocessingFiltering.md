@@ -30,7 +30,7 @@ categories: materials
 
 - **내용**
     - 이미지를 다른 색상 공간으로 변환
-        - 예: BGR **→** 그레이스케일, BGR **→** HSV
+        - 예: BGR ➜ 그레이스케일, BGR ➜ HSV
     - 그레이스케일 변환
         - RGB 컬러 영상을 흑백 영상으로 변환(Color to Grayscale)
         - 일반적으로 R, G, B 채널에 각각 다른 가중치를 적용함
@@ -40,12 +40,12 @@ categories: materials
     - cv2.cvtColor()는 이미지의 색상 공간(Color Space)을 변환하는 데 사용되는 OpenCV의 핵심 함수
     - 주로 BGR (OpenCV가 이미지를 읽는 기본 형식) 이미지와 RGB (Matplotlib이나 웹 등에서 일반적으로 사용하는 형식)의 변환에 사용
     - 변환코드
-        - cv2.COLOR_BGR2RGB: BGR **→** RGB
-        - cv2.COLOR_RGB2BGR: RGB **→** BGR
-        - cv2.COLOR_BGR2GRAY: BGR **→** 그레이스케일
-        - cv2.COLOR_GRAY2BGR: 그레이스케일 **→** BGR
-        - cv2.COLOR_BGR2HSV: BGR **→** HSV (Hue, Saturation, Value)
-        - cv2.COLOR_HSV2BGR: HSV **→** BGR 등        
+        - cv2.COLOR_BGR2RGB: BGR ➜ RGB
+        - cv2.COLOR_RGB2BGR: RGB ➜ BGR
+        - cv2.COLOR_BGR2GRAY: BGR ➜ 그레이스케일
+        - cv2.COLOR_GRAY2BGR: 그레이스케일 ➜ BGR
+        - cv2.COLOR_BGR2HSV: BGR ➜ HSV (Hue, Saturation, Value)
+        - cv2.COLOR_HSV2BGR: HSV ➜ BGR 등        
 
 - **용도**
     - 자율주행에서 특정 색상을 강조하거나, 색상 정보가 불필요한 연산(에지 검출, 형태 인식 등)에서 속도 향상을 위해 사용됨

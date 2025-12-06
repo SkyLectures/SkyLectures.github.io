@@ -9,11 +9,6 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 
-<div class="insert-image" style="text-align: center;">
-    <img style="width: 400px;" src="/assets/img/PagePreparing.png">
-</div>
-
-
 ## 1. 메인보드 확인
 
 <div class="insert-image" style="text-align: center;">

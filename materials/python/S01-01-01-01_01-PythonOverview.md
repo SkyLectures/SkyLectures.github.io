@@ -41,31 +41,31 @@ categories: materials
 
 - **귀도 반 로섬**
     - 취미로 프로그래밍 언어를 만들 정도의 엄청난 능력자<br>
-        **→** <span style="color: #00D">쉽다는 기준이 일반인과 다름</span>
+        ➜ <span style="color: #00D">쉽다는 기준이 일반인과 다름</span>
 
 - **기존 개발자**
     - 개발 경험이 풍부하므로 C/C++/C#, Java 등과 비교하면 당연히 쉬움<br>
-        **→** <span style="color: #00D">쉽다는 기준이 일반인과 다름</span>
+        ➜ <span style="color: #00D">쉽다는 기준이 일반인과 다름</span>
 
 - **영어권 일반인**
     - "평이한 영어로 이해할 수 있는 코드”가 개발 기준 → 당연히 접근하기 쉬움<br>
-        **→** <span style="color: #00D">쉽다는 기준이 <span style="color: #C00">한국인</span>과 다름</span>
+        ➜ <span style="color: #00D">쉽다는 기준이 <span style="color: #C00">한국인</span>과 다름</span>
 
 - **비 영어권 일반인**
     - <span style="color: #00D">"무슨 소린지 하나도 모르겠다!!!"</span>라는 반응이 생각보다 많음
-        **→** <span style="color: #C00">**진짜 쉽나??**</span>
+        ➜ <span style="color: #C00">**진짜 쉽나??**</span>
 
 
 ### 2.2 입문자에게 파이썬은...
 
 - 파이썬의 특징이자 장점인 동적 언어<br>
-        **→** <span style="color: #00D">입문자에겐 의미를 알 수 없는 특징</span>
+        ➜ <span style="color: #00D">입문자에겐 의미를 알 수 없는 특징</span>
 - 자료형을 신경 쓰지 않아도 됨<br>
-        **→** <span style="color: #00D">나중에 꼬이기 시작하면 답이 없음</span>
+        ➜ <span style="color: #00D">나중에 꼬이기 시작하면 답이 없음</span>
 - 객체지향, 절차지향, 함수형 언어의 특징을 모두 지원<br>
-        **→** <span style="color: #00D">C/C++/C#/Java 등 다른 언어의 특징을 모두 신경 써야 할 지도 모름</span>
+        ➜ <span style="color: #00D">C/C++/C#/Java 등 다른 언어의 특징을 모두 신경 써야 할 지도 모름</span>
 - 엄격한 들여쓰기, 탭, 스페이스…<br>
-        **→** <span style="color: #00D">알려진 것과 다르게 코드의 형태를 매우 엄격하게 관리</span>
+        ➜ <span style="color: #00D">알려진 것과 다르게 코드의 형태를 매우 엄격하게 관리</span>
 
 
 ### 2.3 시작부터 겁을 주는 이유는?
@@ -79,20 +79,20 @@ categories: materials
 ### 2.4 그러면 다시 한 번.. 파이썬의 언어적 특징
 
 - **플랫폼 독립적인 언어**
-    - 어떤 운영체제든 상관없이 사용할 수 있는 언어 **→** <span style="color: #00D">글쎄..</span>
+    - 어떤 운영체제든 상관없이 사용할 수 있는 언어 ➜ <span style="color: #00D">글쎄..</span>
 
 - **인터프리터 언어**
     - 컴파일러 언어와 달리 소스코드 자체가 바로 실행되는 언어<br>
-        **→** <span style="color: #00D">속도는 느리지만, 간편하게 사용 가능</span>
+        ➜ <span style="color: #00D">속도는 느리지만, 간편하게 사용 가능</span>
 
 - **객체 지향 언어** : 
     - 해당 프로그램이 해결해야 할 문제의 구성요소를 요소 별로 정의한 뒤
     - 각 요소의 기능(메서드)과 정보(속성)를 정의하여 요소들을 결합하고, 프로그램을 작성하는 방식<br>
-        **→** <span style="color: #00D">그냥 클래스라는 것을 지원하는 언어</span>
+        ➜ <span style="color: #00D">그냥 클래스라는 것을 지원하는 언어</span>
 
 - **동적 타이핑 언어**
     - 프로그램의 실행 시점에서 각 프로그램 변수의 타입을 결정하는 언어<br>
-        **→** <span style="color: #00D">적어도 코딩할 때는 크게 신경 쓰지 않아도 됨</span>
+        ➜ <span style="color: #00D">적어도 코딩할 때는 크게 신경 쓰지 않아도 됨</span>
 
 
 ## 3. AI/데이터 과학 분야에서는 왜 파이썬을 많이 사용할까?
