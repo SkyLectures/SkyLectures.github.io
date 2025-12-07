@@ -74,7 +74,6 @@ categories: lectlog
 - [라즈베리파이 제어 기초](/materials/S10-01-02-03_01-RaspberryPiControl)
 - [자동차 무선조종 기능 구현](/materials/S10-01-02-03_02-RaspberryPiRemoteControl)
 - [카메라를 활용한 자율주행 자동차 구현(OpenCV)](/materials/S10-01-02-03_03-AutoDrivingUsingCameraOpenCv)
-- [라즈베리파이-카메라 실시간 영상 처리](/materials/S10-01-03-06_01-RealtimeImageProcessing)
             
 #### 4.2 딥러닝 기반 자율주행 인지
 - [딥러닝 기반 객체 탐지](/materials/S10-01-04-04_01-DeepLearningBasedObjectDetection)
@@ -86,6 +85,7 @@ categories: lectlog
 - [인지 결과 기반 판단 전략](/materials/S10-01-05-01_01-DecisionStrategy)
 - [자율주행 제어의 기초 및 PID 제어](/materials/S10-01-05-02_01-AutonomousDrivingControlPidControl)
 - [라즈베리파이 기반 차량 제어](/materials/S10-01-05-03_01-RaspberryPiBasedVehicleControl)
+- [라즈베리파이-카메라 실시간 영상 처리](/materials/S10-01-03-06_01-RealtimeImageProcessing)
 
 ### 5. 실전 프로젝트
 - [영상 인식을 통한 자율주행 제어 구현](/materials/S10-01-05-04_01-AutonomousDrivingControlImplementation)

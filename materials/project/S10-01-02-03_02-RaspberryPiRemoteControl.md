@@ -170,6 +170,9 @@ bleSerial.close()
 
 ## 2. 시리얼 데이터를 분석하여 명령어 해석하기
 
+- 시리얼 통신 데이터를 한 줄씩 받아 출력하기
+    - 받은 값은 bytes형이므로 일반적으로 사용할 수 있는 문자열로 변경하여 처리
+
 ```python
 #// file: "serial_command.py"
 import serial
@@ -199,6 +202,19 @@ bleSerial.close()
 ```
 
 ## 3. 쓰레드를 활용하여 통신기능 분리하기
+
+- 라즈베리파이에서 블루투스 통신을 할 때, 
+    - 데이터가 도착할 때까지 대기하거나, 
+    - Timeout으로 설정한 시간이 지나면
+    - 다음 코드로 넘어감
+- 이러한 대기 시간은 while문으로 반복할 때, 동작 시간이 시리얼 통신에 의해 주기가 틀어질 수 있음
+    - 통신 부분만 추출하여 별도의 모델을 만들고
+    - 쓰레드를 이용하여 다수의 동작을 수행할 수 있도록 함
+        - 쓰레드(Thread)
+            - 컴퓨터 프로그램이 작업을 수행하는 가장 작은 단위
+            - 하나의 프로그램(프로세스) 안에서 여러 작업을 동시에 처리할 수 있게 해주는 기능
+            - 여러 쓰레드가 같은 메모리 영역에 동시 접근할 경우, 데드락(DeadLock)과 같은 문제가 발생할 수 있음
+                - 동기화(Synchronization) 기술이 요구됨
 
 ```python
 #// file: "thread_comm.py"
@@ -235,6 +251,13 @@ if __name__ == '__main__':
 ```
 
 ## 4. 블루투스 시리얼 통신으로 조종하는 자동차 만들기
+
+- **프로세스**
+    - 블루투스 시리얼 통신을 이용하여 명령어 데이터를 수신
+    - 명령어 부분만 해석
+    - 명령어에 해당하는 제어 함수 호출
+
+- 스마트폰 앱에서 각 명령을 버튼에 할당
 
 ```python
 #// file: "bluetooth_control.py"
@@ -342,6 +365,10 @@ if __name__ == '__main__':
 
 ## 5. 스위치를 이용하여 비상 정지기능 만들기
 
+- 무선통신은 항상 접속이 끊어짐을 주의해야 함
+- 통신이 끊어지더라도 차량의 스위치를 누르면 차량이 멈추도록 제어함
+
+
 ```python
 #// file: "emergency_stop.py"
 import threading
@@ -355,10 +382,10 @@ bleSerial = serial.Serial("/dev/ttyAMA0", baudrate=9600, timeout=1.0)
 
 gData = ""
 
-SW1 = Button(5, pull_up=False )
-SW2 = Button(6, pull_up=False )
-SW3 = Button(13, pull_up=False )
-SW4 = Button(19, pull_up=False )
+SW1 = Button(5, pull_up=False)
+SW2 = Button(6, pull_up=False)
+SW3 = Button(13, pull_up=False)
+SW4 = Button(19, pull_up=False)
 
 PWMA = PWMOutputDevice(18)
 AIN1 = DigitalOutputDevice(22)
@@ -606,6 +633,10 @@ if __name__ == '__main__':
 
 ## 7. 부저를 이용하여 경적기능 추가하기
 
+- **프로세스**
+    - 부저에 사용할 핀 추가
+    - bz_on, bz_off 명령어를 입력받아서 제어
+
 ```python
 #// file: "buzzer.py"
 import threading
@@ -764,11 +795,4 @@ if __name__ == '__main__':
     LED3.off()
     LED4.off()
     BUZZER.stop()
-```
-
-## 8. 라즈베리파이 부팅 시 자동으로 코드 실행하기
-
-```python
-#// file: ".py"
-
 ```
