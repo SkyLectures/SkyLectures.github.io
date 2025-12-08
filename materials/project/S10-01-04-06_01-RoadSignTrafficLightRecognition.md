@@ -8,6 +8,9 @@ categories: materials
 * toc
 {:toc .large-only .toc-sticky:true}
 
+<div class="colab-link">
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/project/notebooks/S10-01-04-06_01-RoadSignTrafficLightRecognition.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+</div>
 
 > - **딥러닝 기반 도로 표지판 및 신호등 인식 시스템**
 >   - 도로 표지판과 신호등 인식은 자율주행 시스템의 핵심 기능 중 하나
@@ -38,907 +41,342 @@ categories: materials
 {: .expert-quote}
 
 
-## 2. TensorFlow 기반 구현
+## 2. YOLOv8을 이용한 교통 표지판 인식
 
-### 2.1 필요 라이브러리 설치
+### 2.1 필수 라이브러리 설치
 
-```bash
-#// file: "Terminal"
-pip install tensorflow==2.15.0 opencv-python numpy matplotlib scikit-learn pandas
-```
-
-### 2.2 도로 표지판 분류
-
-```python
-#// file: "Tensorflow_RoadSign_TrafficLight_Recognition.py"
-import os
-import cv2
-import numpy as np
-import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-
-import tensorflow as tf
-from tensorflow.keras.models import Sequential, Model
-from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout, BatchNormalization, Input
-from tensorflow.keras.optimizers import Adam
-from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping
-
-# GPU 메모리 설정
-physical_devices = tf.config.list_physical_devices('GPU')
-if len(physical_devices) > 0:
-    tf.config.experimental.set_memory_growth(physical_devices[0], True)
-
-# 이미지 전처리 함수
-def preprocess_image(img, target_size=(32, 32)):
-    """이미지를 전처리하는 함수"""
-    # 이미지 크기 조정
-    img_resized = cv2.resize(img, target_size)
-    # 정규화 (0-1 범위로)
-    img_normalized = img_resized / 255.0
-    return img_normalized
-
-# GTSRB 데이터 로드 함수
-def load_gtsrb_data(data_dir, target_size=(32, 32)):
-    """GTSRB 데이터셋을 로드하는 함수"""
-    images = []
-    labels = []
-    
-    # 각 클래스 폴더 순회
-    for class_id in range(43):  # GTSRB에는 43개의 클래스가 있음
-        class_dir = os.path.join(data_dir, str(class_id))
-        if not os.path.isdir(class_dir):
-            continue
-            
-        # 클래스 내의 모든 이미지 파일 로드
-        for img_file in os.listdir(class_dir):
-            if not img_file.endswith('.ppm'):  # GTSRB는 .ppm 형식 사용
-                continue
-                
-            img_path = os.path.join(class_dir, img_file)
-            img = cv2.imread(img_path)
-            if img is None:
-                continue
-                
-            # BGR을 RGB로 변환
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            
-            # 이미지 전처리
-            img_processed = preprocess_image(img, target_size)
-            
-            images.append(img_processed)
-            labels.append(class_id)
-    
-    return np.array(images), np.array(labels)
-
-# CNN 모델 구축 (도로 표지판 분류용)
-def build_traffic_sign_model(input_shape=(32, 32, 3), num_classes=43):
-    """교통 표지판 분류를 위한 CNN 모델 구축"""
-    model = Sequential([
-        # 첫 번째 컨볼루션 블록
-        Conv2D(32, (3, 3), padding='same', activation='relu', input_shape=input_shape),
-        BatchNormalization(),
-        Conv2D(32, (3, 3), padding='same', activation='relu'),
-        BatchNormalization(),
-        MaxPooling2D(pool_size=(2, 2)),
-        Dropout(0.2),
-        
-        # 두 번째 컨볼루션 블록
-        Conv2D(64, (3, 3), padding='same', activation='relu'),
-        BatchNormalization(),
-        Conv2D(64, (3, 3), padding='same', activation='relu'),
-        BatchNormalization(),
-        MaxPooling2D(pool_size=(2, 2)),
-        Dropout(0.3),
-        
-        # 세 번째 컨볼루션 블록
-        Conv2D(128, (3, 3), padding='same', activation='relu'),
-        BatchNormalization(),
-        Conv2D(128, (3, 3), padding='same', activation='relu'),
-        BatchNormalization(),
-        MaxPooling2D(pool_size=(2, 2)),
-        Dropout(0.4),
-        
-        # 분류기
-        Flatten(),
-        Dense(512, activation='relu'),
-        BatchNormalization(),
-        Dropout(0.5),
-        Dense(num_classes, activation='softmax')
-    ])
-    
-    model.compile(
-        optimizer=Adam(learning_rate=0.001),
-        loss='categorical_crossentropy',
-        metrics=['accuracy']
-    )
-    
-    return model
-
-# 모델 학습 함수
-def train_traffic_sign_model(data_dir, batch_size=32, epochs=30):
-    """교통 표지판 분류 모델을 학습하는 함수"""
-    # 데이터 로드
-    X, y = load_gtsrb_data(data_dir)
-    
-    # 클래스 레이블을 원-핫 인코딩으로 변환
-    y_one_hot = to_categorical(y, num_classes=43)
-    
-    # 학습/검증 데이터 분리
-    X_train, X_val, y_train, y_val = train_test_split(X, y_one_hot, test_size=0.2, random_state=42)
-    
-    # 모델 구축
-    model = build_traffic_sign_model(input_shape=(32, 32, 3), num_classes=43)
-    
-    # 모델 저장 콜백
-    checkpoint = ModelCheckpoint(
-        'traffic_sign_model_tf.h5',
-        monitor='val_accuracy',
-        verbose=1,
-        save_best_only=True,
-        mode='max'
-    )
-    
-    # 조기 종료 콜백
-    early_stopping = EarlyStopping(
-        monitor='val_accuracy',
-        patience=10,
-        verbose=1,
-        mode='max'
-    )
-    
-    # 모델 학습
-    history = model.fit(
-        X_train, y_train,
-        batch_size=batch_size,
-        epochs=epochs,
-        validation_data=(X_val, y_val),
-        callbacks=[checkpoint, early_stopping]
-    )
-    
-    return model, history
-
-# 표지판 클래스 이름 매핑 (GTSRB 기준)
-def get_traffic_sign_class_names():
-    """GTSRB 데이터셋의 클래스 이름 반환"""
-    return {
-        0: '속도 제한 (20km/h)',
-        1: '속도 제한 (30km/h)',
-        2: '속도 제한 (50km/h)',
-        3: '속도 제한 (60km/h)',
-        4: '속도 제한 (70km/h)',
-        5: '속도 제한 (80km/h)',
-        6: '속도 제한 종료 (80km/h)',
-        7: '속도 제한 (100km/h)',
-        8: '속도 제한 (120km/h)',
-        9: '추월 금지',
-        10: '3.5톤 이상 차량 추월 금지',
-        11: '교차로 우선권',
-        12: '우선 도로',
-        13: '양보',
-        14: '정지',
-        15: '차량 통행 금지',
-        16: '3.5톤 이상 차량 통행 금지',
-        17: '진입 금지',
-        18: '일반 주의',
-        19: '위험한 좌회전',
-        20: '위험한 우회전',
-        21: '연속 커브',
-        22: '도로 상태 불량',
-        23: '미끄러운 도로',
-        24: '우측 도로 폭 감소',
-        25: '도로 공사',
-        26: '교통 신호',
-        27: '보행자 주의',
-        28: '어린이 보호 구역',
-        29: '자전거 통행',
-        30: '눈 또는 빙판 주의',
-        31: '야생 동물 주의',
-        32: '속도 제한 및 추월 제한 종료',
-        33: '우회전 필수',
-        34: '좌회전 필수',
-        35: '직진 필수',
-        36: '직진 또는 우회전',
-        37: '직진 또는 좌회전',
-        38: '우측 통행',
-        39: '좌측 통행',
-        40: '회전 교차로',
-        41: '추월 제한 종료',
-        42: '3.5톤 이상 차량 추월 금지 종료'
-    }
-```
-
-### 2.3 신호등 상태 인식 모델
-
-```python
-#// file: "Tensorflow_RoadSign_TrafficLight_Recognition.py"
-# 신호등 상태 인식 모델 구축 (빨간불, 노란불, 초록불 구분)
-def build_traffic_light_model(input_shape=(64, 64, 3), num_classes=3):
-    """신호등 상태 인식을 위한 CNN 모델 구축"""
-    inputs = Input(shape=input_shape)
-    
-    # 첫 번째 컨볼루션 블록
-    x = Conv2D(32, (3, 3), activation='relu', padding='same')(inputs)
-    x = BatchNormalization()(x)
-    x = Conv2D(32, (3, 3), activation='relu', padding='same')(x)
-    x = BatchNormalization()(x)
-    x = MaxPooling2D(pool_size=(2, 2))(x)
-    x = Dropout(0.25)(x)
-    
-    # 두 번째 컨볼루션 블록
-    x = Conv2D(64, (3, 3), activation='relu', padding='same')(x)
-    x = BatchNormalization()(x)
-    x = Conv2D(64, (3, 3), activation='relu', padding='same')(x)
-    x = BatchNormalization()(x)
-    x = MaxPooling2D(pool_size=(2, 2))(x)
-    x = Dropout(0.25)(x)
-    
-    # 분류기
-    x = Flatten()(x)
-    x = Dense(256, activation='relu')(x)
-    x = BatchNormalization()(x)
-    x = Dropout(0.5)(x)
-    outputs = Dense(num_classes, activation='softmax')(x)
-    
-    model = Model(inputs=inputs, outputs=outputs)
-    model.compile(
-        optimizer=Adam(learning_rate=0.001),
-        loss='categorical_crossentropy',
-        metrics=['accuracy']
-    )
-    
-    return model
-
-# LISA 데이터셋 로드 함수 (예시)
-def load_lisa_traffic_light_data(data_dir, target_size=(64, 64)):
-    """LISA 교통 신호등 데이터셋 로드 함수"""
-    images = []
-    labels = []
-    
-    # LISA 데이터셋 구조에 맞게 수정 필요
-    classes = {'red': 0, 'yellow': 1, 'green': 2}
-    
-    for class_name, class_id in classes.items():
-        class_dir = os.path.join(data_dir, class_name)
-        if not os.path.isdir(class_dir):
-            continue
-            
-        for img_file in os.listdir(class_dir):
-            if not img_file.lower().endswith(('.png', '.jpg', '.jpeg')):
-                continue
-                
-            img_path = os.path.join(class_dir, img_file)
-            img = cv2.imread(img_path)
-            if img is None:
-                continue
-                
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            img_resized = cv2.resize(img, target_size)
-            img_normalized = img_resized / 255.0
-            
-            images.append(img_normalized)
-            labels.append(class_id)
-    
-    return np.array(images), to_categorical(np.array(labels), num_classes=3)
-
-# 신호등 상태 인식 모델 학습 함수
-def train_traffic_light_model(data_dir, batch_size=32, epochs=30):
-    """신호등 상태 인식 모델을 학습하는 함수"""
-    # 데이터 로드
-    X, y = load_lisa_traffic_light_data(data_dir)
-    
-    # 학습/검증 데이터 분리
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    # 모델 구축
-    model = build_traffic_light_model(input_shape=(64, 64, 3), num_classes=3)
-    
-    # 모델 저장 콜백
-    checkpoint = ModelCheckpoint(
-        'traffic_light_model_tf.h5',
-        monitor='val_accuracy',
-        verbose=1,
-        save_best_only=True,
-        mode='max'
-    )
-    
-    # 조기 종료 콜백
-    early_stopping = EarlyStopping(
-        monitor='val_accuracy',
-        patience=5,
-        verbose=1,
-        mode='max'
-    )
-    
-    # 모델 학습
-    history = model.fit(
-        X_train, y_train,
-        batch_size=batch_size,
-        epochs=epochs,
-        validation_data=(X_val, y_val),
-        callbacks=[checkpoint, early_stopping]
-    )
-    
-    return model, history
-
-# 신호등 클래스 이름 매핑
-def get_traffic_light_class_names():
-    """신호등 상태 클래스 이름 반환"""
-    return {
-        0: '빨간불 (정지)',
-        1: '노란불 (주의)',
-        2: '초록불 (진행)'
-    }
-```
-
-### 2.4 실시간 표지판 및 신호등 인식 구현
-
-```python
-#// file: "Tensorflow_RoadSign_TrafficLight_Recognition.py"
-import tensorflow as tf
-import cv2
-import numpy as np
-import time
-
-def detect_and_classify_traffic_signs_and_lights(
-    sign_model_path, 
-    light_model_path, 
-    camera_index=0, 
-    sign_size=(32, 32), 
-    light_size=(64, 64)
-):
-    """실시간 도로 표지판 및 신호등 인식"""
-    # 모델 로드
-    sign_model = tf.keras.models.load_model(sign_model_path)
-    light_model = tf.keras.models.load_model(light_model_path)
-    
-    # 클래스 이름 가져오기
-    sign_class_names = get_traffic_sign_class_names()
-    light_class_names = get_traffic_light_class_names()
-    
-    # 표지판 검출을 위한 캐스케이드 분류기 (예시)
-    # 실제로는 더 정교한 객체 검출 모델(예: YOLO, SSD)을 사용하는 것이 좋습니다.
-    sign_cascade = cv2.CascadeClassifier('haarcascade_traffic_sign.xml')
-    light_cascade = cv2.CascadeClassifier('haarcascade_traffic_light.xml')
-    
-    # 카메라 열기
-    cap = cv2.VideoCapture(camera_index)
-    
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-            
-        # 원본 프레임 복사
-        result_frame = frame.copy()
-        
-        # 그레이스케일 변환
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        
-        # 표지판 검출
-        signs = sign_cascade.detectMultiScale(gray, 1.1, 5)
-        
-        for (x, y, w, h) in signs:
-            # 검출된 표지판 영역 추출
-            sign_roi = frame[y:y+h, x:x+w]
-            
-            # 표지판 분류를 위한 전처리
-            sign_roi_resized = cv2.resize(sign_roi, sign_size)
-            sign_roi_normalized = sign_roi_resized / 255.0
-            sign_roi_batch = np.expand_dims(sign_roi_normalized, axis=0)
-            
-            # 표지판 분류
-            sign_predictions = sign_model.predict(sign_roi_batch)
-            sign_class_id = np.argmax(sign_predictions[0])
-            sign_confidence = np.max(sign_predictions[0])
-            
-            # 신뢰도가 일정 임계값 이상일 경우에만 결과 표시
-            if sign_confidence > 0.7:
-                sign_label = sign_class_names.get(sign_class_id, "알 수 없음")
-                
-                # 결과 표시
-                cv2.rectangle(result_frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
-                cv2.putText(result_frame, f"{sign_label} ({sign_confidence:.2f})", 
-                            (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
-        
-        # 신호등 검출
-        lights = light_cascade.detectMultiScale(gray, 1.1, 5)
-        
-        for (x, y, w, h) in lights:
-            # 검출된 신호등 영역 추출
-            light_roi = frame[y:y+h, x:x+w]
-            
-            # 신호등 상태 분류를 위한 전처리
-            light_roi_resized = cv2.resize(light_roi, light_size)
-            light_roi_normalized = light_roi_resized / 255.0
-            light_roi_batch = np.expand_dims(light_roi_normalized, axis=0)
-            
-            # 신호등 상태 분류
-            light_predictions = light_model.predict(light_roi_batch)
-            light_class_id = np.argmax(light_predictions[0])
-            light_confidence = np.max(light_predictions[0])
-            
-            # 신뢰도가 일정 임계값 이상일 경우에만 결과 표시
-            if light_confidence > 0.7:
-                light_label = light_class_names.get(light_class_id, "알 수 없음")
-                
-                # 색상 설정 (빨간불: 빨강, 노란불: 노랑, 초록불: 초록)
-                if light_class_id == 0:  # 빨간불
-                    color = (0, 0, 255)
-                elif light_class_id == 1:  # 노란불
-                    color = (0, 255, 255)
-                else:  # 초록불
-                    color = (0, 255, 0)
-                
-                # 결과 표시
-                cv2.rectangle(result_frame, (x, y), (x+w, y+h), color, 2)
-                cv2.putText(result_frame, f"{light_label} ({light_confidence:.2f})", 
-                            (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-        
-        # FPS 계산 및 표시
-        fps_start_time = time.time() if not hasattr(detect_and_classify_traffic_signs_and_lights, 'fps_start_time') else detect_and_classify_traffic_signs_and_lights.fps_start_time
-        fps_frame_count = 0 if not hasattr(detect_and_classify_traffic_signs_and_lights, 'fps_frame_count') else detect_and_classify_traffic_signs_and_lights.fps_frame_count
-        
-        fps_frame_count += 1
-        if time.time() - fps_start_time >= 1.0:
-            current_fps = fps_frame_count / (time.time() - fps_start_time)
-            fps_start_time = time.time()
-            fps_frame_count = 0
-            # print(f"FPS: {current_fps:.2f}")
-            
-            # 다음 프레임부터 사용할 값 저장 (정적 변수처럼 활용)
-            detect_and_classify_traffic_signs_and_lights.fps_start_time = fps_start_time
-            detect_and_classify_traffic_signs_and_lights.fps_frame_count = fps_frame_count
-        
-        cv2.putText(result_frame, f"FPS: {current_fps:.2f}", (10, 30), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2) # 노란색 텍스트
-        
-        cv2.imshow('Traffic Sign/Light Detection (TensorFlow)', result_frame)
-        
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-            
-    cap.release()
-    cv2.destroyAllWindows()
-    print("실시간 인식 종료.")
-
-
-# 메인 실행 코드 (TensorFlow)
-if __name__ == "__main__":
-    # ----------------------------------------------------
-    # 데이터 경로 설정 (GTSRB와 LISA 데이터셋 경로를 여기에 지정)
-    # 실제 데이터셋이 없다면 이 부분은 학습 없이 모델 로드만 시도
-    gtsrb_data_dir = "path/to/GTSRB/Training" # GTSRB 학습 데이터셋 경로
-    lisa_data_dir = "path/to/LISA_Traffic_Light_Dataset" # LISA 학습 데이터셋 경로
-
-    # 경고: `haarcascade_traffic_sign.xml` 및 `haarcascade_traffic_light.xml` 파일이 필요합니다.
-    # OpenCV 설치 경로에서 찾아오거나 직접 웹에서 다운로드해야 합니다.
-    # 예를 들어, OpenCV 설치 폴더/data/haarcascades 에 있을 수 있습니다.
-    # 이 예제는 이 캐스케이드 파일이 현재 작업 디렉토리에 있다고 가정합니다.
-    # ----------------------------------------------------
-
-    # 1. 교통 표지판 분류 모델 학습 또는 로드
-    traffic_sign_model_path = 'traffic_sign_model_tf.h5'
-    try:
-        sign_model = tf.keras.models.load_model(traffic_sign_model_path)
-        print("TensorFlow 교통 표지판 모델을 불러왔습니다.")
-    except:
-        print("TensorFlow 교통 표지판 모델을 학습합니다...")
-        sign_model, sign_history = train_traffic_sign_model(gtsrb_data_dir)
-        sign_model.save(traffic_sign_model_path) # 학습 후 저장
-
-    # 2. 신호등 상태 분류 모델 학습 또는 로드
-    traffic_light_model_path = 'traffic_light_model_tf.h5'
-    try:
-        light_model = tf.keras.models.load_model(traffic_light_model_path)
-        print("TensorFlow 신호등 모델을 불러왔습니다.")
-    except:
-        print("TensorFlow 신호등 모델을 학습합니다...")
-        light_model, light_history = train_traffic_light_model(lisa_data_dir)
-        light_model.save(traffic_light_model_path) # 학습 후 저장
-    
-    # 3. 실시간 인식 실행
-    print("\n--- 실시간 도로 표지판 및 신호등 인식을 시작합니다 (TensorFlow) ---")
-    # 카메라 인덱스 0번, 표지판 크기 (32,32), 신호등 크기 (64,64)
-    detect_and_classify_traffic_signs_and_lights(traffic_sign_model_path, traffic_light_model_path, 
-                                                camera_index=0, sign_size=(32, 32), light_size=(64, 64))
-
-```
-
-## 3. PyTorch 기반 구현
-
-### 3.1 필요 라이브러리 설치
+- ultralytics 설치
+    - ultralytics: YOLO 패키지 지원 패키지
 
 ```bash
 #// file: "Terminal"
-pip install torch torchvision opencv-python numpy matplotlib scikit-learn pandas
+pip install ultralytics
 ```
 
-### 3.2 도로 표지판 및 신호등 모델
+- 기본 패키지
+    - pathlib
+        - 파일이나 디렉터리(폴더) 경로를 다루는 데 사용하는 모듈
+        - os.path 모듈과 달리 경로를 객체 형태로 조작할 수 있게 해주는 것이 가장 큰 특징
+    - glob
+        - 파이썬 코드 안에서 파일들을 검색하고 목록으로 가져올 수 있게 해주는 모듈
+        - 특정 패턴을 가진 파일 경로를 찾을 때 흔히 사용되는 편리한 도구
 
 ```python
-#// file: "PyTorch_RoadSign_TrafficLight_Recognition.py"
 import os
-import cv2
+import pathlib
+import glob
+import random
+```
+
+- 데이터 처리용 패키지
+
+```python
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
-
-import torch
-import torch.nn as nn
-import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader
-import torchvision.transforms as transforms
-import torch.nn.functional as F
-
-# GPU 사용 설정
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"Using device: {device}")
-
-# 이미지 전처리 및 데이터 로드 헬퍼 함수
-def preprocess_image_torch(img, target_size=(32, 32)):
-    """PyTorch용 이미지 전처리 함수"""
-    img_resized = cv2.resize(img, target_size)
-    img_normalized = img_resized / 255.0
-    # PyTorch는 (C, H, W) 형식이므로 차원 변경
-    img_tensor = torch.from_numpy(img_normalized).permute(2, 0, 1).float()
-    return img_tensor
-
-def load_gtsrb_data_torch(data_dir, target_size=(32, 32)):
-    """GTSRB 데이터셋을 PyTorch 텐서로 로드하는 함수"""
-    images = []
-    labels = []
-    for class_id in range(43):
-        class_dir = os.path.join(data_dir, str(class_id))
-        if not os.path.isdir(class_dir): continue
-        for img_file in os.listdir(class_dir):
-            if not img_file.endswith('.ppm'): continue
-            img_path = os.path.join(class_dir, img_file)
-            img = cv2.imread(img_path)
-            if img is None: continue
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            images.append(preprocess_image_torch(img, target_size))
-            labels.append(class_id)
-    return torch.stack(images), torch.tensor(labels, dtype=torch.long)
-
-def load_lisa_traffic_light_data_torch(data_dir, target_size=(64, 64)):
-    """LISA 교통 신호등 데이터셋을 PyTorch 텐서로 로드하는 함수"""
-    images = []
-    labels = []
-    classes = {'red': 0, 'yellow': 1, 'green': 2}
-    for class_name, class_id in classes.items():
-        class_dir = os.path.join(data_dir, class_name)
-        if not os.path.isdir(class_dir): continue
-        for img_file in os.listdir(class_dir):
-            if not img_file.lower().endswith(('.png', '.jpg', '.jpeg')): continue
-            img_path = os.path.join(class_dir, img_file)
-            img = cv2.imread(img_path)
-            if img is None: continue
-            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            images.append(preprocess_image_torch(img, target_size))
-            labels.append(class_id)
-    return torch.stack(images), torch.tensor(labels, dtype=torch.long)
-
-# 사용자 정의 데이터셋 클래스
-class TrafficDataset(Dataset):
-    def __init__(self, images, labels):
-        self.images = images
-        self.labels = labels
-        
-    def __len__(self):
-        return len(self.images)
-        
-    def __getitem__(self, idx):
-        return self.images[idx], self.labels[idx]
-
-# CNN 모델 구축 (교통 표지판 및 신호등 공용)
-class SimpleCNN(nn.Module):
-    def __init__(self, num_classes=43):
-        super(SimpleCNN, self).__init__()
-        self.conv_layers = nn.Sequential(
-            nn.Conv2d(3, 32, kernel_size=3, padding=1),
-            nn.BatchNorm2d(32),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(32, 32, kernel_size=3, padding=1),
-            nn.BatchNorm2d(32),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Dropout(0.2),
-
-            nn.Conv2d(32, 64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(64, 64, kernel_size=3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Dropout(0.3),
-
-            nn.Conv2d(64, 128, kernel_size=3, padding=1),
-            nn.BatchNorm2d(128),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(128, 128, kernel_size=3, padding=1),
-            nn.BatchNorm2d(128),
-            nn.ReLU(inplace=True),
-            nn.MaxPool2d(kernel_size=2, stride=2),
-            nn.Dropout(0.4)
-        )
-        self.classifier = nn.Sequential(
-            nn.Flatten(),
-            nn.Linear(128 * 4 * 4, 512), # 입력 크기 (예: 32x32 -> 4x4, 64x64 -> 8x8)에 따라 조절 필요
-            nn.BatchNorm1d(512),
-            nn.ReLU(inplace=True),
-            nn.Dropout(0.5),
-            nn.Linear(512, num_classes)
-        )
-
-    def forward(self, x):
-        x = self.conv_layers(x)
-        x = self.classifier(x)
-        return x
-
-# 모델 학습 함수 (PyTorch)
-def train_classification_model_torch(model, train_loader, val_loader, criterion, optimizer, epochs=30):
-    """PyTorch 분류 모델을 학습하는 함수"""
-    best_val_accuracy = 0.0
-    
-    for epoch in range(epochs):
-        model.train()
-        running_loss = 0.0
-        correct_train = 0
-        total_train = 0
-        
-        for images, labels in train_loader:
-            images, labels = images.to(device), labels.to(device)
-            
-            optimizer.zero_grad()
-            outputs = model(images)
-            loss = criterion(outputs, labels)
-            loss.backward()
-            optimizer.step()
-            
-            running_loss += loss.item()
-            _, predicted = torch.max(outputs.data, 1)
-            total_train += labels.size(0)
-            correct_train += (predicted == labels).sum().item()
-            
-        train_accuracy = 100 * correct_train / total_train
-        
-        # 검증
-        model.eval()
-        val_loss = 0.0
-        correct_val = 0
-        total_val = 0
-        with torch.no_grad():
-            for images, labels in val_loader:
-                images, labels = images.to(device), labels.to(device)
-                outputs = model(images)
-                loss = criterion(outputs, labels)
-                val_loss += loss.item()
-                _, predicted = torch.max(outputs.data, 1)
-                total_val += labels.size(0)
-                correct_val += (predicted == labels).sum().item()
-        
-        val_accuracy = 100 * correct_val / total_val
-        
-        print(f'Epoch {epoch+1}/{epochs}, '
-              f'Train Loss: {running_loss/len(train_loader):.4f}, Train Acc: {train_accuracy:.2f}%, '
-              f'Val Loss: {val_loss/len(val_loader):.4f}, Val Acc: {val_accuracy:.2f}%')
-        
-        # 모델 저장
-        if val_accuracy > best_val_accuracy:
-            best_val_accuracy = val_accuracy
-            torch.save(model.state_dict(), f'best_traffic_model_epoch{epoch+1}.pth')
-            print(f"최고 검증 정확도 달성: {best_val_accuracy:.2f}%. 모델 저장됨.")
-            
-    return model
-
-
-# 표지판 클래스 이름 매핑 (GTSRB 기준)
-def get_traffic_sign_class_names():
-    """GTSRB 데이터셋의 클래스 이름 반환"""
-    return {
-        0: '속도 제한 (20km/h)', 1: '속도 제한 (30km/h)', 2: '속도 제한 (50km/h)', 3: '속도 제한 (60km/h)',
-        4: '속도 제한 (70km/h)', 5: '속도 제한 (80km/h)', 6: '속도 제한 종료 (80km/h)', 7: '속도 제한 (100km/h)',
-        8: '속도 제한 (120km/h)', 9: '추월 금지', 10: '3.5톤 이상 차량 추월 금지', 11: '교차로 우선권',
-        12: '우선 도로', 13: '양보', 14: '정지', 15: '차량 통행 금지', 16: '3.5톤 이상 차량 통행 금지',
-        17: '진입 금지', 18: '일반 주의', 19: '위험한 좌회전', 20: '위험한 우회전', 21: '연속 커브',
-        22: '도로 상태 불량', 23: '미끄러운 도로', 24: '우측 도로 폭 감소', 25: '도로 공사',
-        26: '교통 신호', 27: '보행자 주의', 28: '어린이 보호 구역', 29: '자전거 통행',
-        30: '눈 또는 빙판 주의', 31: '야생 동물 주의', 32: '속도 제한 및 추월 제한 종료',
-        33: '우회전 필수', 34: '좌회전 필수', 35: '직진 필수', 36: '직진 또는 우회전',
-        37: '직진 또는 좌회전', 38: '우측 통행', 39: '좌측 통행', 40: '회전 교차로',
-        41: '추월 제한 종료', 42: '3.5톤 이상 차량 추월 금지 종료'
-    }
-
-# 신호등 클래스 이름 매핑
-def get_traffic_light_class_names():
-    """신호등 상태 클래스 이름 반환"""
-    return {
-        0: '빨간불 (정지)',
-        1: '노란불 (주의)',
-        2: '초록불 (진행)'
-    }
 ```
 
-### 3.3 실시간 표지판 및 신호등 인식 구현
+- 시각화 처리용 패키지
+    - matplotlib 패키지 가져오기
+    - seaborn 패키지 가져오기 및 외형 설정
+        - seaborn: 시각화 디자인 업그레이드를 위한 패키지
 
 ```python
-#// file: "PyTorch_RoadSign_TrafficLight_Recognition.py"
-def detect_and_classify_traffic_signs_and_lights_torch(
-    sign_model_state_dict_path, 
-    light_model_state_dict_path, 
-    camera_index=0, 
-    sign_size=(32, 32), 
-    light_size=(64, 64)
-):
-    """실시간 도로 표지판 및 신호등 인식 (PyTorch)"""
-    # 모델 로드
-    sign_model = SimpleCNN(num_classes=43).to(device)
-    sign_model.load_state_dict(torch.load(sign_model_state_dict_path, map_location=device))
-    sign_model.eval()
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-    light_model = SimpleCNN(num_classes=3).to(device)
-    light_model.load_state_dict(torch.load(light_model_state_dict_path, map_location=device))
-    light_model.eval()
-    
-    # 클래스 이름 가져오기
-    sign_class_names = get_traffic_sign_class_names()
-    light_class_names = get_traffic_light_class_names()
-    
-    # 표지판 및 신호등 검출을 위한 캐스케이드 분류기 (예시)
-    # 실제로는 더 정교한 객체 검출 모델(예: YOLO, SSD)을 사용하는 것이 좋습니다.
-    sign_cascade = cv2.CascadeClassifier('haarcascade_traffic_sign.xml')
-    light_cascade = cv2.CascadeClassifier('haarcascade_traffic_light.xml')
-    
-    # 카메라 열기
-    cap = cv2.VideoCapture(camera_index)
-    
-    # FPS 측정 변수 초기화
-    fps_start_time = time.time()
-    fps_frame_count = 0
-    current_fps = 0.0
-
-    while True:
-        ret, frame = cap.read()
-        if not ret:
-            break
-            
-        result_frame = frame.copy()
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        
-        # ------------------ 표지판 검출 및 분류 ------------------
-        signs = sign_cascade.detectMultiScale(gray, 1.1, 5)
-        for (x, y, w, h) in signs:
-            sign_roi = frame[y:y+h, x:x+w]
-            
-            # PyTorch 모델을 위한 전처리
-            sign_tensor = preprocess_image_torch(sign_roi, sign_size).unsqueeze(0).to(device)
-            
-            with torch.no_grad():
-                sign_outputs = sign_model(sign_tensor)
-                sign_probabilities = F.softmax(sign_outputs, dim=1) # 소프트맥스 적용
-            
-            sign_confidence, sign_class_id = torch.max(sign_probabilities, 1)
-            sign_confidence = sign_confidence.item()
-            sign_class_id = sign_class_id.item()
-
-            if sign_confidence > 0.7:
-                sign_label = sign_class_names.get(sign_class_id, "알 수 없음")
-                cv2.rectangle(result_frame, (x, y), (x+w, y+h), (255, 0, 0), 2)
-                cv2.putText(result_frame, f"{sign_label} ({sign_confidence:.2f})", 
-                            (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), 2)
-        
-        # ------------------ 신호등 검출 및 분류 ------------------
-        lights = light_cascade.detectMultiScale(gray, 1.1, 5)
-        for (x, y, w, h) in lights:
-            light_roi = frame[y:y+h, x:x+w]
-            
-            # PyTorch 모델을 위한 전처리
-            light_tensor = preprocess_image_torch(light_roi, light_size).unsqueeze(0).to(device)
-            
-            with torch.no_grad():
-                light_outputs = light_model(light_tensor)
-                light_probabilities = F.softmax(light_outputs, dim=1) # 소프트맥스 적용
-
-            light_confidence, light_class_id = torch.max(light_probabilities, 1)
-            light_confidence = light_confidence.item()
-            light_class_id = light_class_id.item()
-            
-            if light_confidence > 0.7:
-                light_label = light_class_names.get(light_class_id, "알 수 없음")
-                color = (0, 0, 255) if light_class_id == 0 else \
-                        (0, 255, 255) if light_class_id == 1 else (0, 255, 0)
-                
-                cv2.rectangle(result_frame, (x, y), (x+w, y+h), color, 2)
-                cv2.putText(result_frame, f"{light_label} ({light_confidence:.2f})", 
-                            (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
-        
-        # FPS 계산 및 표시
-        fps_frame_count += 1
-        if time.time() - fps_start_time >= 1.0:
-            current_fps = fps_frame_count / (time.time() - fps_start_time)
-            fps_start_time = time.time()
-            fps_frame_count = 0
-            
-        cv2.putText(result_frame, f"FPS: {current_fps:.2f}", (10, 30), 
-                    cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 0), 2) # 노란색 텍스트
-        
-        cv2.imshow('Traffic Sign/Light Detection (PyTorch)', result_frame)
-        
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
-            
-    cap.release()
-    cv2.destroyAllWindows()
-    print("실시간 인식 종료.")
-
-
-# 메인 실행 코드 (PyTorch)
-if __name__ == "__main__":
-    # ----------------------------------------------------
-    # 데이터 경로 설정 (GTSRB와 LISA 데이터셋 경로를 여기에 지정)
-    gtsrb_data_dir = "path/to/GTSRB/Training" # GTSRB 학습 데이터셋 경로
-    lisa_data_dir = "path/to/LISA_Traffic_Light_Dataset" # LISA 학습 데이터셋 경로
-
-    # 경고: `haarcascade_traffic_sign.xml` 및 `haarcascade_traffic_light.xml` 파일이 필요합니다.
-    # 이 예제는 이 캐스케이드 파일이 현재 작업 디렉토리에 있다고 가정합니다.
-    # ----------------------------------------------------
-
-    # 1. 교통 표지판 분류 모델 학습 또는 로드
-    traffic_sign_model_path_pt = 'traffic_sign_model_pt.pth'
-    sign_model_pt = SimpleCNN(num_classes=43).to(device)
-    try:
-        sign_model_pt.load_state_dict(torch.load(traffic_sign_model_path_pt, map_location=device))
-        print("PyTorch 교통 표지판 모델을 불러왔습니다.")
-    except:
-        print("PyTorch 교통 표지판 모델을 학습합니다...")
-        X_gtsrb, y_gtsrb = load_gtsrb_data_torch(gtsrb_data_dir)
-        X_train_gtsrb, X_val_gtsrb, y_train_gtsrb, y_val_gtsrb = train_test_split(X_gtsrb, y_gtsrb, test_size=0.2, random_state=42)
-        train_dataset_gtsrb = TrafficDataset(X_train_gtsrb, y_train_gtsrb)
-        val_dataset_gtsrb = TrafficDataset(X_val_gtsrb, y_val_gtsrb)
-        train_loader_gtsrb = DataLoader(train_dataset_gtsrb, batch_size=32, shuffle=True)
-        val_loader_gtsrb = DataLoader(val_dataset_gtsrb, batch_size=32)
-        
-        optimizer_gtsrb = optim.Adam(sign_model_pt.parameters(), lr=0.001)
-        criterion_gtsrb = nn.CrossEntropyLoss()
-        
-        sign_model_pt = train_classification_model_torch(sign_model_pt, train_loader_gtsrb, val_loader_gtsrb, criterion_gtsrb, optimizer_gtsrb, epochs=30)
-        torch.save(sign_model_pt.state_dict(), traffic_sign_model_path_pt)
-        print("PyTorch 교통 표지판 모델 학습 및 저장 완료.")
-
-    # 2. 신호등 상태 분류 모델 학습 또는 로드
-    traffic_light_model_path_pt = 'traffic_light_model_pt.pth'
-    light_model_pt = SimpleCNN(num_classes=3).to(device)
-    try:
-        light_model_pt.load_state_dict(torch.load(traffic_light_model_path_pt, map_location=device))
-        print("PyTorch 신호등 모델을 불러왔습니다.")
-    except:
-        print("PyTorch 신호등 모델을 학습합니다...")
-        X_lisa, y_lisa = load_lisa_traffic_light_data_torch(lisa_data_dir)
-        X_train_lisa, X_val_lisa, y_train_lisa, y_val_lisa = train_test_split(X_lisa, y_lisa, test_size=0.2, random_state=42)
-        train_dataset_lisa = TrafficDataset(X_train_lisa, y_train_lisa)
-        val_dataset_lisa = TrafficDataset(X_val_lisa, y_val_lisa)
-        train_loader_lisa = DataLoader(train_dataset_lisa, batch_size=32, shuffle=True)
-        val_loader_lisa = DataLoader(val_dataset_lisa, batch_size=32)
-        
-        optimizer_lisa = optim.Adam(light_model_pt.parameters(), lr=0.001)
-        criterion_lisa = nn.CrossEntropyLoss()
-        
-        light_model_pt = train_classification_model_torch(light_model_pt, train_loader_lisa, val_loader_lisa, criterion_lisa, optimizer_lisa, epochs=30)
-        torch.save(light_model_pt.state_dict(), traffic_light_model_path_pt)
-        print("PyTorch 신호등 모델 학습 및 저장 완료.")
-    
-    # 3. 실시간 인식 실행
-    print("\n--- 실시간 도로 표지판 및 신호등 인식을 시작합니다 (PyTorch) ---")
-    detect_and_classify_traffic_signs_and_lights_torch(traffic_sign_model_path_pt, traffic_light_model_path_pt, 
-                                                camera_index=0, sign_size=(32, 32), light_size=(64, 64))
-
+sns.set(rc={'axes.facecolor': '#eae8fa'}, style='darkgrid')
 ```
 
-## 4. 라즈베리파이에서의 최적화 방법
+- 개발환경 보완용 패키지
+    - IPython.display
+        - Video
+            - Jupyter Notebook 환경에서 코드 셀 안에 동영상 파일을 직접 임베드하여 재생할 수 있게 해줌
+    - tqdm.notebook
+        - tqdm
+            - 반복문(loop)의 진행 상황을 진행률 바(progress bar) 형태로 시각적으로 보여줌
+        - trange
+            - tqdm(range(N))의 단축 표현
+            - 주로 특정 횟수만큼 반복되는 반복문의 진행 상황을 표시할 때 range() 함수와 함께 편리하게 사용
+
+```python
+from IPython.display import Video
+from tqdm.notebook import trange, tqdm
+```
+
+- 영상 처리용 패키지
+
+```python
+import cv2
+from PIL import Image
+from ultralytics import YOLO
+```
+
+- 기타 처리
+    - 불필요한 경고 메시지 제거
+
+```python
+import warnings
+warnings.filterwarnings('ignore')
+```
+
+### 2.2 데이터셋
+
+- 감지 전 원본 이미지 보여주기
+    - 훈련 데이터셋으로부터 예시 이미지 확인
+
+```python
+Image_dir = './car/train/images'
+
+num_samples = 9
+image_files = os.listdir(Image_dir)
+
+# Randomly select num_samples images
+rand_images = random.sample(image_files, num_samples)
+
+fig, axes = plt.subplots(3, 3, figsize=(11, 11))
+
+for i in range(num_samples):
+    image = rand_images[i]
+    ax = axes[i // 3, i % 3]
+    ax.imshow(plt.imread(os.path.join(Image_dir, image)))
+    ax.set_title(f'Image {i+1}')
+    ax.axis('off')
+
+plt.tight_layout()
+plt.show()
+```
+
+- 훈련 단계에서 사용할 이미지 모양 가져오기
+
+```python
+# Get the size of the image
+image = cv2.imread("./car/train/images/00000_00000_00012_png.rf.23f94508dba03ef2f8bd187da2ec9c26.jpg")
+h, w, c = image.shape
+print(f"The image has dimensions {w}x{h} and {c} channels.")
+```
+
+### 2.3 사전학습된 YOLOv8 모델
+
+```python
+# Use a pretrained YOLOv8n model
+model = YOLO("yolov8n.pt")
+
+# Use the model to detect object
+image = "./car/train/images/FisheyeCamera_1_00228_png.rf.e7c43ee9b922f7b2327b8a00ccf46a4c.jpg"
+result_predict = model.predict(source = image, imgsz=(640))
+
+# show results
+plot = result_predict[0].plot()
+plot = cv2.cvtColor(plot, cv2.COLOR_BGR2RGB)
+display(Image.fromarray(plot))
+```
+
+### 2.4 YOLOv8 기반 교통 표지판 감지 모델
+
+- 기본 설정
+
+```bash
+pip install --upgrade ultralytics ray
+```
+
+- 추가 학습
+    - Google T4 GPU 사용 시 약 30분 소요됨
+
+```python
+# Build from YAML and transfer weights
+Final_model = YOLO('yolov8n.pt')
+
+# Training The Final Model
+Result_Final_model = Final_model.train(data="./car/data.yaml",epochs = 30, batch = -1, optimizer = 'auto')
+```
+
+- 검증 단계
+
+```python
+import os
+import cv2
+import matplotlib.pyplot as plt
+
+def display_images(post_training_files_path, image_files):
+
+    for image_file in image_files:
+        image_path = os.path.join(post_training_files_path, image_file)
+        print(image_path)
+        img = cv2.imread(image_path)
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+        plt.figure(figsize=(10, 10), dpi=120)
+        plt.imshow(img)
+        plt.axis('off')
+        plt.show()
+
+# List of image files to display
+image_files = [
+    'confusion_matrix_normalized.png',
+    'BoxF1_curve.png',
+    'BoxP_curve.png',
+    'BoxR_curve.png',
+    'BoxPR_curve.png',
+    'results.png'
+]
+
+# Path to the directory containing the images
+post_training_files_path = './runs/detect/train'
+
+# Display the images
+display_images(post_training_files_path, image_files)
+
+Result_Final_model = pd.read_csv('./runs/detect/train/results.csv')
+Result_Final_model.tail(10)
+
+# Read the results.csv file as a pandas dataframe
+Result_Final_model.columns = Result_Final_model.columns.str.strip()
+
+# Create subplots
+fig, axs = plt.subplots(nrows=5, ncols=2, figsize=(15, 15))
+
+# Plot the columns using seaborn
+sns.lineplot(x='epoch', y='train/box_loss', data=Result_Final_model, ax=axs[0,0])
+sns.lineplot(x='epoch', y='train/cls_loss', data=Result_Final_model, ax=axs[0,1])
+sns.lineplot(x='epoch', y='train/dfl_loss', data=Result_Final_model, ax=axs[1,0])
+sns.lineplot(x='epoch', y='metrics/precision(B)', data=Result_Final_model, ax=axs[1,1])
+sns.lineplot(x='epoch', y='metrics/recall(B)', data=Result_Final_model, ax=axs[2,0])
+sns.lineplot(x='epoch', y='metrics/mAP50(B)', data=Result_Final_model, ax=axs[2,1])
+sns.lineplot(x='epoch', y='metrics/mAP50-95(B)', data=Result_Final_model, ax=axs[3,0])
+sns.lineplot(x='epoch', y='val/box_loss', data=Result_Final_model, ax=axs[3,1])
+sns.lineplot(x='epoch', y='val/cls_loss', data=Result_Final_model, ax=axs[4,0])
+sns.lineplot(x='epoch', y='val/dfl_loss', data=Result_Final_model, ax=axs[4,1])
+
+# Set titles and axis labels for each subplot
+axs[0,0].set(title='Train Box Loss')
+axs[0,1].set(title='Train Class Loss')
+axs[1,0].set(title='Train DFL Loss')
+axs[1,1].set(title='Metrics Precision (B)')
+axs[2,0].set(title='Metrics Recall (B)')
+axs[2,1].set(title='Metrics mAP50 (B)')
+axs[3,0].set(title='Metrics mAP50-95 (B)')
+axs[3,1].set(title='Validation Box Loss')
+axs[4,0].set(title='Validation Class Loss')
+axs[4,1].set(title='Validation DFL Loss')
+
+plt.suptitle('Training Metrics and Loss', fontsize=24)
+plt.subplots_adjust(top=0.8)
+plt.tight_layout()
+plt.show()
+```
+
+- 테스트셋 기반의 검증 모델
+
+```python
+# Loading the best performing model
+Valid_model = YOLO('./runs/detect/train/weights/best.pt')
+
+# Evaluating the model on the validset
+metrics = Valid_model.val(split = 'val')
+
+# final results
+print("precision(B): ", metrics.results_dict["metrics/precision(B)"])
+print("metrics/recall(B): ", metrics.results_dict["metrics/recall(B)"])
+print("metrics/mAP50(B): ", metrics.results_dict["metrics/mAP50(B)"])
+print("metrics/mAP50-95(B): ", metrics.results_dict["metrics/mAP50-95(B)"])
+```
+
+- 테스트 이미지로 예측하기
+
+```python
+# Normalization function
+def normalize_image(image):
+    return image / 255.0
+
+# Image resizing function
+def resize_image(image, size=(640, 640)):
+    return cv2.resize(image, size)
+
+# Path to validation images
+# dataset_path = '/kaggle/input/cardetection/car'  # Place your dataset path here
+dataset_path = './car'  # Place your dataset path here
+valid_images_path = os.path.join(dataset_path, 'test', 'images')
+
+# List of all jpg images in the directory
+image_files = [file for file in os.listdir(valid_images_path) if file.endswith('.jpg')]
+
+# Check if there are images in the directory
+if len(image_files) > 0:
+    # Select 9 images at equal intervals
+    num_images = len(image_files)
+    step_size = max(1, num_images // 9)  # Ensure the interval is at least 1
+    selected_images = [image_files[i] for i in range(0, num_images, step_size)]
+
+    # Prepare subplots
+    fig, axes = plt.subplots(3, 3, figsize=(20, 21))
+    fig.suptitle('Validation Set Inferences', fontsize=24)
+
+    for i, ax in enumerate(axes.flatten()):
+        if i < len(selected_images):
+            image_path = os.path.join(valid_images_path, selected_images[i])
+
+            # Load image
+            image = cv2.imread(image_path)
+
+            # Check if the image is loaded correctly
+            if image is not None:
+                # Resize image
+                resized_image = resize_image(image, size=(640, 640))
+                # Normalize image
+                normalized_image = normalize_image(resized_image)
+
+                # Convert the normalized image to uint8 data type
+                normalized_image_uint8 = (normalized_image * 255).astype(np.uint8)
+
+                # Predict with the model
+                results = Valid_model.predict(source=normalized_image_uint8, imgsz=640, conf=0.5)
+
+                # Plot image with labels
+                annotated_image = results[0].plot(line_width=1)
+                annotated_image_rgb = cv2.cvtColor(annotated_image, cv2.COLOR_BGR2RGB)
+                ax.imshow(annotated_image_rgb)
+            else:
+                print(f"Failed to load image {image_path}")
+        ax.axis('off')
+
+    plt.tight_layout()
+    plt.show()
+```
+
+### 2.5 사전학습된 YOLOv8로 동영상 교통 표지판 감지
+
+- 영상 인식 후 출력
+
+```bash
+!ffmpeg -y -loglevel panic -i ./video.mp4 output.mp4
+```
+
+```python
+# Display the video
+Video("./output.mp4", width=960, embed=True)
+
+# Use the model to detect signs
+Valid_model.predict(source="./video.mp4", show=True,save = True, stream=True)
+```
+
+```bash
+!ffmpeg -y -loglevel panic -i ./video.avi result_out.mp4
+```
+
+```python
+# Display the video
+Video("./result_out.mp4", width=960, embed=True)
+```
+
+- 모델 저장
+
+```python
+# Export the model
+Valid_model.export(format='onnx')
+```
+
+
+## 3. 라즈베리파이에서의 최적화 방법
 
 - 라즈베리파이와 같은 임베디드 디바이스에서는 모델 경량화(양자화, 가지치기) 및 추론 속도 향상(이미지 크기 축소, 프레임 건너뛰기, 스레드 분리) 기법이 중요함
 
@@ -980,7 +418,7 @@ def run_tflite_inference(interpreter, input_details, output_details, image_data)
 # ...
 ```
 
-## 5. 실제 자율주행 키트에 적용하기
+## 4. 실제 자율주행 키트에 적용하기
 
 - **제어 로직**
     - 인식된 표지판이나 신호등 정보에 따라 차량의 주행 속도, 방향, 정지 여부 등을 제어하는 로직 추가
