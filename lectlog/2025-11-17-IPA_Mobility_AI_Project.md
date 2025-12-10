@@ -78,6 +78,7 @@ categories: lectlog
 #### 4.2 딥러닝 기반 자율주행 인지
 - [딥러닝 기반 객체 탐지](/materials/S10-01-04-04_01-DeepLearningBasedObjectDetection)
 - [딥러닝 기반 차선 인식](/materials/S10-01-04-05_01-DeepLearningBasedLaneRecognition)
+- [YOLO 모델의 이해](/materials/S03-03-03-03_01-YoloModel)
 - [도로 표지판 및 신호등 인식](/materials/S10-01-04-06_01-RoadSignTrafficLightRecognition)
 - [자율주행 인지 모델 구현](/materials/S10-01-04-07_01-AutonomousDrivingCognitiveModelImplementation)
                 

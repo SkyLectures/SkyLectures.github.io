@@ -49,7 +49,7 @@ rpicam-hello
 
 ### 2.1 OpenCV 설치
 
-- OpenCV를 사용하기 위해 필요한 시스템 파이브러리 설치
+- OpenCV를 사용하기 위해 필요한 시스템 라이브러리 설치
 
 ```bash
 #// file: "Terminal"

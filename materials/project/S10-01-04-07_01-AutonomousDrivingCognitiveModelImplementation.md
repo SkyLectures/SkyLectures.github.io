@@ -9,13 +9,6 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 
-<div class="insert-image" style="text-align: center;">
-    <img style="width: 400px;" src="/assets/img/PagePreparing.png">
-</div>
-
-
-
-
 > - **딥러닝 기반 자율주행 인지 모델**
 >   - 자율주행 자동차의 인지 시스템은 **차량이 주변 환경을 이해하고 상황을 파악**하는 핵심 요소
 {: .common-quote}
