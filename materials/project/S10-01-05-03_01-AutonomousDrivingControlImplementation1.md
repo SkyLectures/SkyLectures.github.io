@@ -831,48 +831,50 @@ for i in range(n_tests_show):
 
     - 빌드도구 설치
 
-```bash
-sudo apt update
-sudo apt install -y make build-essential libssl-dev zlib1g-dev \
-                    libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-                    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-```
+    ```bash
+    sudo apt update
+    sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+                        libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+                        libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+    ```
 
     - pyenv 설치
 
-```bash
-curl https://pyenv.run | bash
-```
+    ```bash
+    curl https://pyenv.run | bash
+    ```
 
     - 셸(Shell) 환경 설정
 
-```bash
-nano ~/.bashrc
-```
+    ```bash
+    nano ~/.bashrc
+    ```
 
-```bash
-//#file: "~/.bashrc"
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-```
+    - 파일의 제일 아래쪽에 추가
+    
+    ```bash
+    #//file: "~/.bashrc"
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+    ```
 
-```bash
-source ~/.bashrc
+    ```bash
+    source ~/.bashrc
 
-pyenv install 3.11.8
-pyenv rehash
-pyenv versions
-```
+    pyenv install 3.11.8
+    pyenv rehash
+    pyenv versions
+    ```
 
     - 가상환경 생성 및 활성화
 
-```bash
-pyenv virtualenv 3.11.8 ai_car_py311
-pyenv activate ai_car_py311
-```
+    ```bash
+    pyenv virtualenv 3.11.8 ai_car_py311
+    pyenv activate ai_car_py311
+    ```
 
     - 가상환경이 활성화되었다면 작업 디렉토리는 원하는 장소를 사용하면 됨
 
