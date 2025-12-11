@@ -29,8 +29,9 @@ categories: materials
 
 - **데이터셋**
     - 자율주행 인지 모델 학습을 위한 대표적인 데이터셋: BDD100K, Cityscapes, KITTI 등
-        - 실습에서는 Berkeley DeepDrive Dataset(BDD100K)을 기준으로 진행
-            - [BDD100K 데이터셋 다운로드](https://bdd-data.berkeley.edu/){: target="_blank"}
+        - 실습에서는 Cityscapes의 하위셋인 Cityscapes Mini Dataset을 기준으로 진행
+            - [Cityscapes Mini Dataset (208.05 MB)](https://www.kaggle.com/datasets/shuvoalok/cityscapes){: target="_blank"}
+            - [Cityscapes Original Dataset](https://www.cityscapes-dataset.com/){: target="_blank"}
 
 > - 국내 환경에서 사용하기 위해서는 국내용으로 개발된 데이터셋을 찾아서(또는 직접 구축) 적용해야 함
 {: .expert-quote}
@@ -62,8 +63,8 @@ from torch.utils.data import Dataset, DataLoader, random_split
 
 ```python
 # 데이터셋 루트 폴더 (Cityscapes Mini Dataset의 root 디렉토리로 변경)
-# 예: DATA_ROOT = "/home/skyy/datasets/cityspaces" (여기서는 'cityspaces' 폴더 자체의 경로)
-DATA_ROOT = "./cityspaces_mini"
+# 예: DATA_ROOT = "/home/skyy/datasets/cityscapes" (여기서는 'cityscapes' 폴더 자체의 경로)
+DATA_ROOT = "./cityscapes_mini"
 
 # U-Net 모델의 입력 이미지 크기
 INPUT_IMAGE_SIZE = 256 # Cityscapes 이미지 크기 (보통 1024x2048)를 256으로 리사이즈
