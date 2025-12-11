@@ -85,8 +85,5 @@ categories: lectlog
 #### 4.3 자율주행 판단 및 제어 시스템 구축
 - [인지 결과 기반 판단 전략](/materials/S10-01-05-01_01-DecisionStrategy)
 - [자율주행 제어의 기초 및 PID 제어](/materials/S10-01-05-02_01-AutonomousDrivingControlPidControl)
-- [라즈베리파이 기반 차량 제어](/materials/S10-01-05-03_01-RaspberryPiBasedVehicleControl)
-- [라즈베리파이-카메라 실시간 영상 처리](/materials/S10-01-03-06_01-RealtimeImageProcessing)
-
-### 5. 실전 프로젝트
-- [영상 인식을 통한 자율주행 제어 구현](/materials/S10-01-05-04_01-AutonomousDrivingControlImplementation)
+- [라즈베리파이 기반 자율주행자동차 구현(1)](/materials/S10-01-05-03_01-AutonomousDrivingControlImplementation1)
+- [라즈베리파이 기반 자율주행자동차 구현(2)](/materials/S10-01-05-03_02-AutonomousDrivingControlImplementation2)
