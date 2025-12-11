@@ -816,16 +816,115 @@ for i in range(n_tests_show):
     axes[i].set_title(f"actual angle={y_test[i]}, predicted angle={int(y_pred[i])}, diff = {int(y_pred[i])-y_test[i]}")
 ```
 
-
-- 최종 파일 목록
+- 결과 파일 목록
     - history.pickle
     - lane_navigation_check.keras
-    - lane_navigation_final.keras
+    - lane_navigation_final.keras (학습완료된 모델)
 
 ## 3. 모델 적용 후 자율 주행
 
-```python
+- 학습완료된 모델을 라즈베리파이에 전송
+    - lane_navigation_final.keras
 
+- 파이썬 버전 변경
+    - 현재 제공되는 자율주행 키트용 소스코드가 사용하는 Tensorflow 기능은 의존성 문제로 인하여 3.11.x 버전 이하의 파이썬 환경에서만 작동함
+
+    - 빌드도구 설치
+
+```bash
+sudo apt update
+sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+                    libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+                    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+```
+
+    - pyenv 설치
+
+```bash
+curl https://pyenv.run | bash
+```
+
+    - 셸(Shell) 환경 설정
+
+```bash
+nano ~/.bashrc
+```
+
+```bash
+//#file: "~/.bashrc"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+```
+
+```bash
+source ~/.bashrc
+
+pyenv install 3.11.8
+pyenv rehash
+pyenv versions
+```
+
+    - 가상환경 생성 및 활성화
+
+```bash
+pyenv virtualenv 3.11.8 ai_car_py311
+pyenv activate ai_car_py311
+```
+
+    - 가상환경이 활성화되었다면 작업 디렉토리는 원하는 장소를 사용하면 됨
+
+
+
+- 자동차 조향각 예측 코드
+
+```python
+import mycamera
+import cv2
+import numpy as np
+import tensorflow as tf
+from tensorflow.keras.models import load_model
+
+def img_preprocess(image):
+    height, _, _ = image.shape
+    image = image[int(height/2):,:,:]
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
+    image = cv2.GaussianBlur(image, (3,3), 0)
+    image = cv2.resize(image, (200,66)) 
+    image = image / 255
+    return image
+
+def main():
+    camera = mycamera.MyPiCamera(640,480)
+    model_path = '/home/pi/AI_CAR/model/lane_navigation_final.keras'
+    model = load_model(model_path)
+    
+    carState = "stop"
+    
+    while( camera.isOpened()):
+        
+        keValue = cv2.waitKey(1)
+        
+        if keValue == ord('q') :
+            break
+        
+        _, image = camera.read()
+        image = cv2.flip(image,-1)
+        cv2.imshow('Original', image)
+        
+        preprocessed = img_preprocess(image)
+        cv2.imshow('pre', preprocessed)
+        
+        X = np.asarray([preprocessed])
+        steering_angle = int(model.predict(X)[0])
+        print("predict angle:",steering_angle)
+        
+    cv2.destroyAllWindows()
+    
+if __name__ == '__main__':
+    main()
 ```
 
 
