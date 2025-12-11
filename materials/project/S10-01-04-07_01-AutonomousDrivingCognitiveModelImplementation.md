@@ -36,26 +36,24 @@ categories: materials
 {: .expert-quote}
         
 
-## 2. PyTorch 기반 구현
+## 2. PyTorch 기반 Segmentation 구현
 
 ### 2.1 패키지 가져오기
 
 ```python
 import os
 import random
-import json
-import time
-
 import numpy as np
 import matplotlib.pyplot as plt
-from PIL import Image
 import cv2
+from PIL import Image
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import torch.optim as optim
 from torchvision import transforms
-from torchvision.models import resnet50, ResNet50_Weights
+from torch.utils.data import Dataset, DataLoader, random_split
 ```
 
 ### 2.2 기반 환경 설정
@@ -63,540 +61,385 @@ from torchvision.models import resnet50, ResNet50_Weights
 - 데이터셋 및 사전학습모델 경로 설정
 
 ```python
-BDD10K_DATA_ROOT_PATH = "/content/bdd10k"
-PRETRAINED_MODEL_PATH = "/content/pretrained/upernet_r50-d8_769x769_40k_sem_seg_bdd100k.pth"
+# 데이터셋 루트 폴더 (Cityscapes Mini Dataset의 root 디렉토리로 변경)
+# 예: DATA_ROOT = "/home/skyy/datasets/cityspaces" (여기서는 'cityspaces' 폴더 자체의 경로)
+DATA_ROOT = "./cityspaces_mini"
 
-CLASS_LABELS = {
-    "background": 0,
-    "drivable": 1,
-    "lane": 2,
-    # "road_line": 2,
-    # "other_line": 3
+# U-Net 모델의 입력 이미지 크기
+INPUT_IMAGE_SIZE = 256 # Cityscapes 이미지 크기 (보통 1024x2048)를 256으로 리사이즈
+
+# Cityscapes Dataset의 클래스 및 ID 정의 (19개 클래스)
+NUM_CLASSES = 19 # (0~18) - 255는 ignore_index로 처리
+
+# Cityscapes ID to Train ID 매핑 (Cityscapes 공식 스크립트 기반)
+cityscapes_id_to_trainid = {
+    0: 255, 1: 255, 2: 255, 3: 255, 4: 255, 5: 255, 6: 255,
+    7: 0, 8: 1, 9: 255, 10: 255, 11: 2, 12: 3, 13: 4, 14: 255,
+    15: 255, 16: 255, 17: 5, 18: 255, 19: 6, 20: 7, 21: 8, 22: 9,
+    23: 10, 24: 11, 25: 12, 26: 13, 27: 14, 28: 15, 29: 255, 30: 255,
+    31: 16, 32: 17, 33: 18, -1: 255 # -1은 공식적으로 맵핑되지 않는 ID (예: license plate)
 }
 
-NUM_CLASSES = len(CLASS_LABELS)
-INPUT_IMAGE_HEIGHT, INPUT_IMAGE_WIDTH = 769, 769
+# Cityscapes Color Palette (Visualization)
+CITYSCAPES_PALETTE = {
+    0: [128, 64, 128],    # road
+    1: [244, 35, 232],    # sidewalk
+    2: [70, 70, 70],      # building
+    3: [102, 102, 156],   # wall
+    4: [190, 153, 153],   # fence
+    5: [153, 153, 153],   # pole
+    6: [250, 170, 30],    # traffic light
+    7: [220, 220, 0],     # traffic sign
+    8: [107, 142, 35],    # vegetation
+    9: [152, 251, 152],   # terrain
+    10: [70, 130, 180],   # sky
+    11: [220, 20, 60],    # person
+    12: [255, 0, 0],      # rider
+    13: [0, 0, 142],      # car
+    14: [0, 0, 70],       # truck
+    15: [0, 60, 100],     # bus
+    16: [0, 80, 100],     # train
+    17: [0, 0, 230],      # motorcycle
+    18: [119, 11, 32],    # bicycle
+    255: [0, 0, 0]        # ignore (black)
+}
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 print(f"Using device: {device}")
 ```
 
-### 2.3 구성요소 구현
+### 2.3 U-Net 모델 정의
 
-#### 2.3.1 BDD10K 데이터셋 로더
+- Convolutional Block
 
 ```python
-def get_bdd10k_segmentation_paths(split='val'):
-    if split == 'train':
-        image_dir = os.path.join(BDD10K_DATA_ROOT_PATH, 'train')
-        drivable_mask_dir = os.path.join(BDD10K_DATA_ROOT_PATH, 'labels', 'drivable_maps', '10k', 'train')
-        lane_mask_dir = os.path.join(BDD10K_DATA_ROOT_PATH, 'labels', 'lane_masks', '10k', 'train')
+def conv_block(in_channels, out_channels):
+    return nn.Sequential(
+        nn.Conv2d(in_channels, out_channels, kernel_size=3, padding=1),
+        nn.ReLU(inplace=True),
+        nn.Conv2d(out_channels, out_channels, kernel_size=3, padding=1),
+        nn.ReLU(inplace=True)
+    ) 
+```
 
-    elif split == 'val':
-        image_dir = os.path.join(BDD10K_DATA_ROOT_PATH, 'val')
-        drivable_mask_dir = os.path.join(BDD10K_DATA_ROOT_PATH, 'labels', 'drivable_maps', '10k', 'val')
-        lane_mask_dir = os.path.join(BDD10K_DATA_ROOT_PATH, 'labels', 'lane_masks', '10k', 'val')
+- Encoder Block
 
-    else:
-        raise ValueError(f"지원하지 않는 split: {split}. 'train', 'val' 중 하나여야 합니다.")
+```python
+class Encoder(nn.Module):
+    def __init__(self, in_channels, out_channels):
+        super().__init__()
+        self.conv = conv_block(in_channels, out_channels)
+        self.pool = nn.MaxPool2d(2) # 2x2 Max Pooling
 
-    samples = []
+    def forward(self, x):
+        conv_out = self.conv(x) # conv_block을 먼저 적용
+        pooled_out = self.pool(conv_out) # conv_block의 출력에 Max Pooling 적용
+        return conv_out, pooled_out # Conv 출력과 Pool 출력을 모두 반환
+```
 
-    # 이미지 파일들을 기준으로 마스크를 찾음
-    for image_name in os.listdir(image_dir):
-        if image_name.endswith('.jpg'):
-            base_name = os.path.splitext(image_name)[0]
+- Decoder Block
 
-            image_path = os.path.join(image_dir, image_name)
-            drivable_mask_path = os.path.join(drivable_mask_dir, base_name + '.png')
-            lane_mask_path = os.path.join(lane_mask_dir, base_name + '.png')
+```python
+class Decoder(nn.Module):
+    def __init__(self, in_channels_dec_up, in_channels_skip, out_channels):
+        super().__init__()
+        self.up = nn.Upsample(scale_factor=2, mode='bilinear', align_corners=True)
+        # 컨볼루션 블록의 입력 채널은 업샘플링된 특징과 스킵 커넥션 특징을 합친 것
+        self.conv = conv_block(in_channels_dec_up + in_channels_skip, out_channels)
 
-            # 모든 파일이 존재하는지 확인 (필수)
-            if os.path.exists(image_path) and os.path.exists(drivable_mask_path) and os.path.exists(lane_mask_path):
-                samples.append({
-                    'image_path': image_path,
-                    'drivable_mask_path': drivable_mask_path,
-                    'lane_mask_path': lane_mask_path,
-                    'image_name': image_name
-                })
+    def forward(self, x, skip_connection_feature):
+        x = self.up(x) # 업샘플링
 
-            # else:
-            #     print(f"누락된 파일: {image_name} 관련 마스크 파일이 없습니다.")
+        # 스킵 커넥션 특징과 채널 차원으로 합치기
+        # 이 때 x와 skip_connection_feature의 공간 해상도가 정확히 일치해야 합니다.
+        if x.shape[2:] != skip_connection_feature.shape[2:]:
+            skip_connection_feature = F.interpolate(skip_connection_feature, size=x.shape[2:], mode='bilinear', align_corners=True)
 
-    # 안정적인 학습/추론을 위해 리스트를 정렬
-    samples = sorted(samples, key=lambda x: x['image_name'])
-    return samples
+        x = torch.cat([x, skip_connection_feature], dim=1)
+        x = self.conv(x) # <--- 이 부분의 self.conv(x)
+        return x
+```
 
-def get_image_paths_from_dir(target_dir):
-    """
-    지정된 디렉토리에서 모든 JPG 이미지 파일의 경로를 가져옵니다.
-    """
-    if not os.path.exists(target_dir):
-        print(f"CRITICAL ERROR: Directory does not exist: {target_dir}")
-        return []
+- U-Net Architecture
 
-    image_paths = []
-    for fname in os.listdir(target_dir):
-        if fname.lower().endswith(('.jpg', '.jpeg')):
-            image_paths.append(os.path.join(target_dir, fname))
+```python
+class UNet(nn.Module):
+    def __init__(self, num_classes=NUM_CLASSES):
+        super().__init__()
+        # Encoder Path
+        self.enc1 = Encoder(3, 64)
+        self.enc2 = Encoder(64, 128)
+        self.enc3 = Encoder(128, 256)
+        self.enc4 = Encoder(256, 512)
 
-    if not image_paths:
-        print(f"WARNING: No JPG/JPEG images found in {target_dir}. Check directory content or file extensions.")
-        return []
+        # Bottleneck
+        self.bottleneck = conv_block(512, 1024)
 
-    # 랜덤 선택을 위해 이미지 이름을 기준으로 정렬은 불필요하지만 일관성을 위해 유지
-    return sorted(image_paths)    
+        # Decoder Path
+        # in_channels_dec_up, in_channels_skip, out_channels 순서
+        self.dec4 = Decoder(1024, 512, 512) # (bottleneck 출력 1024 -> upsample -> 1024채널) + (e4_conv 512채널) -> 512 출력
+        self.dec3 = Decoder(512, 256, 256) # (d4 출력 512 -> upsample -> 512채널) + (e3_conv 256채널) -> 256 출력
+        self.dec2 = Decoder(256, 128, 128) # (d3 출력 256 -> upsample -> 256채널) + (e2_conv 128채널) -> 128 출력
+        self.dec1 = Decoder(128, 64, 64)   # (d2 출력 128 -> upsample -> 128채널) + (e1_conv 64채널) -> 64 출력
 
-# BDD10KSegmentationDataset 클래스는 학습시에만 사용되므로 주석 처리하거나 제거 가능
-class BDD10KSegmentationDataset(torch.utils.data.Dataset):
-    def __init__(self, split='val', transform=None, target_transform=None):
-        self.samples = get_bdd10k_segmentation_paths(split)
-        self.transform = transform
-        self.target_transform = target_transform # 마스크 변환용
+        # Output Layer
+        self.output_conv = nn.Conv2d(64, num_classes, kernel_size=1)
+
+    def forward(self, x):
+        # Encoder
+        e1_conv, e1_pool = self.enc1(x)  # e1_conv는 skip connection용
+        e2_conv, e2_pool = self.enc2(e1_pool)
+        e3_conv, e3_pool = self.enc3(e2_pool)
+        e4_conv, e4_pool = self.enc4(e3_pool)
+
+        # Bottleneck
+        bottleneck = self.bottleneck(e4_pool)
+
+        # Decoder (eX_conv와 concat)
+        d4 = self.dec4(bottleneck, e4_conv)
+        d3 = self.dec3(d4, e3_conv)
+        d2 = self.dec2(d3, e2_conv)
+        d1 = self.dec1(d2, e1_conv)
+
+        # Output
+        return self.output_conv(d1)
+```
+
+#### 2.4 데이터셋 로드 및 전처리
+
+- Cityscapes Mini Dataset 로더
+
+```python
+class CityscapesMiniDataset(Dataset):
+    def __init__(self, root_dir, split='train', transform_img=None, transform_mask=None, id_to_trainid_map=None):
+        self.root_dir = root_dir
+        self.split = split
+        self.transform_img = transform_img
+        self.transform_mask = transform_mask
+        self.id_to_trainid_map = id_to_trainid_map if id_to_trainid_map is not None else {}
+
+        self.image_paths = []
+        self.mask_paths = []
+
+        # 스카이님의 새로운 디렉토리 구조에 맞춤
+        img_dir = os.path.join(self.root_dir, self.split, 'img')
+        label_dir = os.path.join(self.root_dir, self.split, 'label')
+
+        if not os.path.exists(img_dir):
+            raise FileNotFoundError(f"Image directory not found: {img_dir}")
+        if not os.path.exists(label_dir):
+            raise FileNotFoundError(f"Label directory not found: {label_dir}")
+
+        # 이미지 파일 목록을 가져와서 마스크 파일과 매칭
+        for img_filename in os.listdir(img_dir):
+            if img_filename.endswith('.png') or img_filename.endswith('.jpg'): # jpg도 처리 가능하도록
+                img_path = os.path.join(img_dir, img_filename)
+
+                # 마스크 파일 이름이 이미지 파일 이름과 동일하고 .png 확장자를 가진다고 가정
+                mask_filename = img_filename # .png 확장자일 것이므로 그대로 사용
+                mask_path = os.path.join(label_dir, mask_filename)
+
+                if os.path.exists(mask_path): # 마스크 파일이 있는지 확인
+                    self.image_paths.append(img_path)
+                    self.mask_paths.append(mask_path)
+                # else:
+                #     print(f"Warning: Corresponding mask not found for {img_filename} at {mask_path}")
+
+        print(f"Loaded {len(self.image_paths)} images for {self.split} split from Cityscapes Mini Dataset with custom structure.")
 
     def __len__(self):
-        return len(self.samples)
+        return len(self.image_paths)
 
     def __getitem__(self, idx):
-        sample_info = self.samples[idx]
+        img_path = self.image_paths[idx]
+        mask_path = self.mask_paths[idx]
 
-        # 이미지 로드 (RGB)
-        image = Image.open(sample_info['image_path']).convert('RGB')
+        image = Image.open(img_path).convert('RGB')
+        mask = Image.open(mask_path).convert('L') # Label ID 마스크는 단일 채널 (Grayscale)
 
-        # 주행 가능 영역 마스크 로드 (Grayscale)
-        drivable_mask = Image.open(sample_info['drivable_mask_path']).convert('L')
-        # 차선 마스크 로드 (Grayscale)
-        lane_mask = Image.open(sample_info['lane_mask_path']).convert('L')
+        mask_np = np.array(mask, dtype=np.uint8)
 
-        # 이미지 크기와 동일한 최종 마스크 생성 (all zeros initially for background)
-        final_mask_np = np.zeros(image.size[::-1], dtype=np.uint8) # (H, W)
+        # Cityscapes trainId 매핑 (클래스 ID에 따라 정의된 매핑 사용)
+        mapped_mask = np.full(mask_np.shape, 255, dtype=np.uint8) # 255로 초기화 (ignore)
 
-        drivable_mask_np = np.array(drivable_mask)
-        lane_mask_np = np.array(lane_mask)
+        for original_id, train_id in self.id_to_trainid_map.items():
+            mapped_mask[mask_np == original_id] = train_id
 
-        # 1. 주행 가능 영역 (ID 1) 설정
-        # drivable_mask_np의 픽셀 값이 1 (direct) 또는 2 (alternative)인 부분을 ID 1로 설정
-        final_mask_np[np.where(drivable_mask_np > 0)] = CLASS_LABELS["drivable"] # drivable_mask_np > 0
+        mask = Image.fromarray(mapped_mask)
 
-        # 2. 차선 (ID 2) 설정 - 차선은 주행 가능 영역 위에 덮어씌움 (더 중요한 요소)
-        # lane_mask_np의 픽셀 값이 1 (road line) 또는 2 (other lane line)인 부분을 ID 2로 설정
-        final_mask_np[np.where(lane_mask_np > 0)] = CLASS_LABELS["lane"] # lane_mask_np > 0
-
-        target_mask = Image.fromarray(final_mask_np)
-
-        if self.transform:
-            image = self.transform(image)
-        if self.target_transform:
-            target_mask = self.target_transform(target_mask)
-        else: # target_transform이 없으면 기본적으로 텐서로 변환
-            target_mask = torch.from_numpy(np.array(target_mask, dtype=np.int64))
-
-        return image, target_mask, sample_info['image_name'] # image_name도 반환하여 추론 결과에 사용    
-```
-
-#### 2.3.2 Minimal UPerNet (ResNet50 백본) 구현
-
-```python
-class PPM(nn.Module):
-    def __init__(self, in_dim, reduction_dim, bins):
-        super(PPM, self).__init__()
-        self.features = []
-        for bin in bins:
-            self.features.append(nn.Sequential(
-                nn.AdaptiveAvgPool2d(bin),
-                nn.Conv2d(in_dim, reduction_dim, kernel_size=1, bias=False),
-                nn.BatchNorm2d(reduction_dim),
-                nn.ReLU(inplace=True)
-            ))
-        self.features = nn.ModuleList(self.features)
-
-    def forward(self, x):
-        x_size = x.size()
-        out = [x]
-        for f in self.features:
-            out.append(F.interpolate(f(x), x_size[2:], mode='bilinear', align_corners=True))
-        return torch.cat(out, 1)
-
-class UPerNet(nn.Module):
-    def __init__(self, num_classes, backbone_name='resnet50', pretrained_backbone=True):
-        super(UPerNet, self).__init__()
-
-        # 백본 (Feature Extractor) - ResNet50 사용
-        if backbone_name == 'resnet50':
-            # weights=ResNet50_Weights.IMAGENET1K_V1: ImageNet으로 사전 학습된 가중치 로드
-            resnet = resnet50(weights=ResNet50_Weights.IMAGENET1K_V1 if pretrained_backbone else None)
-
-            # ResNet의 각 Stage에서 특징맵을 추출
-            # C1 = conv1, bn1, relu, maxpool
-            # C2 = layer1
-            # C3 = layer2
-            # C4 = layer3
-            # C5 = layer4
-
-            # 실제 FPN은 C2, C3, C4, C5를 사용함
-            # `self.resnet_features`는 FPN에 직접 전달될 특징 맵들을 저장함
-            self.backbone = nn.Sequential(
-                resnet.conv1, resnet.bn1, resnet.relu, resnet.maxpool, # Initial layers (before C2)
-                resnet.layer1, # C2 output: 256
-                resnet.layer2, # C3 output: 512
-                resnet.layer3, # C4 output: 1024
-                resnet.layer4  # C5 output: 2048
-            )
-
-            # ResNet Stage별 출력 채널
-            # ResNet50: C2=256, C3=512, C4=1024, C5=2048
-            self.in_channels = [256, 512, 1024, 2048]
+        if self.transform_img:
+            image = self.transform_img(image)
+        if self.transform_mask:
+            mask = self.transform_mask(mask)
         else:
-            raise NotImplementedError(f"Backbone {backbone_name} not supported yet.")
+            mask = torch.from_numpy(np.array(mask, dtype=np.int64))
 
-        # --- FPN & PPM 관련 채널 설정 재확인 ---
-        # UPerNet은 PPM의 출력을 가장 높은 피라미드 레벨의 FPN에 통합합니다.
-        # 즉, C5 특징맵을 PPM에 넣고, 그 결과를 FPN의 시작점으로 사용합니다.
-
-        self.ppm_out_channels = 512 # PPM의 최종 출력 채널
-        self.ppm = PPM(self.in_channels[-1], self.ppm_out_channels // 4, bins=(1, 2, 3, 6))
-        self.ppm_conv = nn.Sequential(
-            nn.Conv2d(self.in_channels[-1] + self.ppm_out_channels, self.ppm_out_channels, kernel_size=3, padding=1, bias=False),
-            nn.BatchNorm2d(self.ppm_out_channels),
-            nn.ReLU(inplace=True),
-            nn.Dropout(0.1)
-        )
-
-        # FPN 입력 채널들: C2, C3, C4
-        # self.in_channels[:-1]은 [256, 512, 1024]
-        self.fpn_in_channels = self.in_channels[:-1] # ResNet C2, C3, C4
-        self.fpn_out_channels = 256 # FPN 각 단계의 출력 채널 (일반적으로 256)
-
-        self.fpn_convs = nn.ModuleList() # 1x1 conv for FPN lateral connections
-        self.fpn_post_convs = nn.ModuleList() # 3x3 conv for FPN output features
-
-        for in_dim in reversed(self.fpn_in_channels): # C4(1024) -> C3(512) -> C2(256) 순서로 처리
-            self.fpn_convs.append(nn.Conv2d(in_dim, self.fpn_out_channels, kernel_size=1, bias=False))
-            self.fpn_post_convs.append(nn.Sequential(
-                nn.Conv2d(self.fpn_out_channels, self.fpn_out_channels, kernel_size=3, padding=1, bias=False),
-                nn.BatchNorm2d(self.fpn_out_channels),
-                nn.ReLU(inplace=True)
-            ))
-
-        # 최종 분류기 (Classifier)
-        # PPM 출력 채널 + 모든 FPN 출력 채널을 합친 후 num_classes 채널로
-        self.final_head = nn.Sequential(
-            nn.Conv2d(self.ppm_out_channels + len(self.fpn_in_channels) * self.fpn_out_channels,
-                      num_classes, kernel_size=1)
-        )
-
-    def _forward_backbone(self, x):
-        # ResNet의 각 Stage에서 특징맵을 추출
-        # C1 = conv1, bn1, relu, maxpool
-        # C2 = layer1
-        # C3 = layer2
-        # C4 = layer3
-        # C5 = layer4
-
-        # torchvision resnet의 경우, layer1, layer2, layer3, layer4가 각각 C2, C3, C4, C5에 해당
-        x = self.backbone[0](x) # conv1, bn1, relu, maxpool
-        c2 = self.backbone[1](x) # layer1
-        c3 = self.backbone[2](c2) # layer2
-        c4 = self.backbone[3](c3) # layer3
-        c5 = self.backbone[4](c4) # layer4
-
-        return [c2, c3, c4, c5] # List of feature maps from C2 to C5
-
-    def forward(self, x):
-        input_size = x.size()[2:] # (H, W)
-
-        # 백본을 통해 특징맵 추출
-        c_features = self._forward_backbone(x) # [c2, c3, c4, c5]
-
-        # C5 특징맵에 PPM 적용
-        ppm_out = self.ppm(c_features[-1]) # c_features[-1]은 c5
-        ppm_out = self.ppm_conv(ppm_out) # (B, ppm_out_channels, H_c5, W_c5)
-
-        # FPN (Feature Pyramid Network)
-        # top-down path
-        fpn_out_list = [ppm_out] # PPM 출력이 FPN의 가장 높은 레벨 출력으로 시작
-
-        # ResNet 특징 맵은 [C2, C3, C4, C5] 순서
-        # FPN은 C4 -> C3 -> C2 역순으로 합쳐나감.
-        # c_features[:-1]은 [c2, c3, c4]
-        # reversed(self.fpn_in_channels)는 [1024, 512, 256]
-
-        current_fpn_feature = ppm_out # P5 (C5)에서 시작하는 FPN 특징
-
-        # Zip fpn_convs with reversed(c_features[:-1])
-        # self.fpn_convs는 (C4->256), (C3->256), (C2->256)
-        # c_features[:-1]은 [C2, C3, C4]
-
-        # 루프를 돌면서 C4, C3, C2에 해당하는 특징맵을 사용해야 합니다.
-        # c_features[-2]는 C4, c_features[-3]은 C3, c_features[-4]는 C2
-
-        for i, lateral_conv in enumerate(self.fpn_convs):
-            # 이전 FPN 레벨의 특징맵을 현재 스케일로 upsample
-            # 현재 current_fpn_feature의 스케일 (H, W)
-            target_size = c_features[-(i+2)].size()[2:] # 예를 들어, i=0일 때 c_features[-2]는 C4
-            upsampled_current_fpn_feature = F.interpolate(current_fpn_feature, size=target_size, mode='bilinear', align_corners=True)
-
-            # 현재 ResNet 특징맵 (C4, C3, C2)을 1x1 컨볼루션으로 채널 맞춤 (lateral connection)
-            # 여기였던 self.fpn_in_convs[i](c[i+1])가 문제였는데, c_features[-(i+2)]로 직접 참조합니다.
-            # self.fpn_convs[i]는 lateral_conv에 해당
-            lateral_feature = lateral_conv(c_features[-(i+2)]) # c_features[-2]는 C4, c_features[-3]는 C3, c_features[-4]는 C2
-
-            # FPN Add
-            current_fpn_feature = lateral_feature + upsampled_current_fpn_feature
-
-            # 3x3 conv (post-fusion)
-            current_fpn_feature = self.fpn_post_convs[i](current_fpn_feature)
-
-            fpn_out_list.append(current_fpn_feature)
-
-        # UPerNet은 모든 FPN 레벨의 출력을 원래 입력 크기로 upsample한 후 concatenate
-        # fpn_out_list에는 [PPM_out(P5), P4, P3, P2] 순서로 담겨있습니다.
-
-        all_upsampled_fpn_features = []
-        for feature in fpn_out_list:
-            all_upsampled_fpn_features.append(F.interpolate(feature, size=input_size, mode='bilinear', align_corners=True))
-
-        # 모든 업샘플링된 특징들을 채널 방향으로 합칩니다.
-        concat_features = torch.cat(all_upsampled_fpn_features, dim=1) # (B, total_channels, H, W)
-
-        # 최종 분류기 헤드
-        output = self.final_head(concat_features)
-
-        return output        
+        return image, mask
 ```
 
-#### 2.3.3 데이터 전처리 및 후처리 변환
+- 이미지 전처리: 리사이즈, 텐서 변환, 정규화
 
 ```python
-# ImageNet으로 사전 학습된 ResNet50 백본을 위한 정규화 값 사용
-TRANSFORM_IMG = transforms.Compose([
-    transforms.Resize((INPUT_IMAGE_HEIGHT, INPUT_IMAGE_WIDTH)),
-    transforms.ToTensor(), # (H, W, C) -> (C, H, W), 0-255 -> 0-1
-    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-])
-
-# 마스크는 Tensor로 변환하고, 픽셀 값 그대로 사용 (클래스 ID)
-TRANSFORM_MASK = transforms.Compose([
-    transforms.Resize((INPUT_IMAGE_HEIGHT, INPUT_IMAGE_WIDTH), interpolation=Image.NEAREST), # 마스크는 Nearest Neighbor 보간
-    transforms.ToTensor(), # 0-255 -> 0-1.0
-    # 마스크는 클래스 ID이므로 정규화하지 않음. ToTensor() 이후 (1, H, W) 형태로 float32
-    # 나중에 .long()로 int64로 변환하여 Loss 함수에 전달해야 함.
+transform_img = transforms.Compose([
+    transforms.Resize((INPUT_IMAGE_SIZE, INPUT_IMAGE_SIZE)),
+    transforms.ToTensor(), # HWC to CWH, [0, 255] to [0.0, 1.0]
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]) # ImageNet 통계
 ])
 ```
 
-#### 2.3.4 결과 시각화 유틸리티 함수
+- 마스크 전처리: 리사이즈, 텐서 변환 (클래스 ID이므로 정규화 없음)
 
 ```python
-COLOR_MAP = {
-    0: (0, 0, 0),       # Background (Black)
-    1: (0, 255, 0),     # Drivable Area (Green)
-    2: (255, 0, 0),     # Lane Lines (Red)
-    # 3: (0, 0, 255)    # Other lines (Blue) (사용 안 함)
-}
+class ConvertMaskToTensor:
+    def __call__(self, mask_pil):
+        # PIL Image를 NumPy 배열로 변환하고 int64 타입으로 지정
+        mask_np = np.array(mask_pil, dtype=np.int64)
+        # NumPy 배열을 torch.LongTensor로 변환 (스케일링 없음)
+        return torch.from_numpy(mask_np)
 
-def decode_segmentation_map(mask):
-    """
-    예측된 클래스 ID 마스크 (numpy array)를 컬러 이미지로 변환
-    """
-    height, width = mask.shape
-    color_mask = np.zeros((height, width, 3), dtype=np.uint8)
-    for class_id, color in COLOR_MAP.items():
-        color_mask[mask == class_id] = color
-    return color_mask
+transform_mask = transforms.Compose([
+    transforms.Resize((INPUT_IMAGE_SIZE, INPUT_IMAGE_SIZE), interpolation=Image.NEAREST), # 마스크는 Nearest Neighbor 보간 필수
+    ConvertMaskToTensor() # 사용자 정의 변환 적용
+])
 ```
 
-### 2.4 학습 부분
+- DataLoader 생성
 
 ```python
-def train_upernet_model(model, train_loader, val_loader, num_epochs=10, learning_rate=0.001):
-    model.train() # 모델을 훈련 모드로 전환
-    optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
-    criterion = nn.CrossEntropyLoss(ignore_index=CLASS_LABELS["background"]) # 배경 픽셀은 Loss 계산에서 제외
+train_dataset = CityscapesMiniDataset(root_dir=DATA_ROOT, split='train',
+                                      transform_img=transform_img, transform_mask=transform_mask,
+                                      id_to_trainid_map=cityscapes_id_to_trainid)
+val_dataset = CityscapesMiniDataset(root_dir=DATA_ROOT, split='val',
+                                    transform_img=transform_img, transform_mask=transform_mask,
+                                    id_to_trainid_map=cityscapes_id_to_trainid)
 
-    print("\n--- UPerNet 모델 학습 시작 (실제로 실행되지 않음) ---")
-    print("BDD10K 데이터셋으로 UPerNet을 학습시키려면 상당한 시간과 GPU 자원이 필요합니다.")
-    print("이 코드는 개념 이해를 위한 것이며, 실제 학습은 다음처럼 진행될 것입니다:\n")
+print(f"훈련 데이터셋 크기: {len(train_dataset)}")
+print(f"검증 데이터셋 크기: {len(val_dataset)}")
+
+train_loader = DataLoader(train_dataset, batch_size=4, shuffle=True, num_workers=2)
+val_loader = DataLoader(val_dataset, batch_size=4, shuffle=False, num_workers=2)
+```
+
+#### 2.5 학습 함수
+
+```python
+def train_model(model, train_loader, val_loader, num_epochs=5, learning_rate=0.001):
+    criterion = nn.CrossEntropyLoss(ignore_index=255)
+    optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+
+    model.train()
+    print("\n--- U-Net 모델 학습 시작 ---")
+    print(f"({num_epochs} 에포크 진행, 학습 데이터 {len(train_loader)} 배치)")
 
     for epoch in range(num_epochs):
         running_loss = 0.0
-        for i, (images, masks, _) in enumerate(train_loader):
-            images = images.to(device)
-            masks = masks.squeeze(1).long().to(device) # (B, 1, H, W) -> (B, H, W) for CrossEntropyLoss
+        for i, (inputs, masks) in enumerate(train_loader):
+            inputs = inputs.to(device)
+            masks = masks.to(device)
 
             optimizer.zero_grad()
-            outputs = model(images)
+            outputs = model(inputs)
             loss = criterion(outputs, masks)
             loss.backward()
             optimizer.step()
 
             running_loss += loss.item()
-            if (i + 1) % 100 == 0:
+            if (i + 1) % 50 == 0:
                 print(f"Epoch [{epoch+1}/{num_epochs}], Step [{i+1}/{len(train_loader)}], Loss: {running_loss / (i+1):.4f}")
 
-        # 검증 루프 (생략)
-        # model.eval()
-        # with torch.no_grad(): ...
+        model.eval()
+        val_loss = 0.0
+        with torch.no_grad():
+            for inputs_val, masks_val in val_loader:
+                inputs_val = inputs_val.to(device)
+                masks_val = masks_val.to(device)
+                outputs_val = model(inputs_val)
+                loss_val = criterion(outputs_val, masks_val)
+                val_loss += loss_val.item()
 
-        print(f"Epoch [{epoch+1}/{num_epochs}] 평균 Loss: {running_loss / len(train_loader):.4f}")
-        # 모델 저장 (예: torch.save(model.state_dict(), f"upernet_epoch_{epoch+1}.pth"))
+        print(f"Epoch [{epoch+1}/{num_epochs}] - Avg Train Loss: {running_loss / len(train_loader):.4f}, Avg Val Loss: {val_loss / len(val_loader):.4f}")
+        model.train()
 
-    print("\n--- UPerNet 모델 학습 완료 (가정) ---")
+    print("\n--- U-Net 모델 학습 완료 ---")
+    return model
 ```
 
-### 2.5 사전 학습 모델 로드 및 추론
+### 2.6 추론 및 시각화 함수
 
 ```python
-# BDD100K 데이터셋을 대상으로 Validation까지 수행할 때 사용
-def run_segmentation_inference(model, val_dataset, num_samples_to_show=5):
-    model.eval() # 모델을 평가 모드로 전환
+def visualize_segmentation(model, dataset, num_samples=5):
+    model.eval()
+    print(f"\n--- U-Net 모델 추론 및 시각화 시작 ({num_samples}개 샘플) ---")
 
-    print(f"\n--- 사전 학습 모델 로드 및 추론 시작 ---")
-    if not os.path.exists(PRETRAINED_MODEL_PATH):
-        print(f"오류: 사전 학습 모델 파일이 없습니다: {PRETRAINED_MODEL_PATH}")
-        print("파일 경로를 확인하거나, 해당 파일을 다운로드하여 스크립트와 같은 위치에 배치하세요.")
-        return
+    if len(dataset) < num_samples:
+        print(f"경고: 데이터셋 크기({len(dataset)}개)가 요청한 샘플 수({num_samples}개)보다 작습니다. 모든 샘플을 시각화합니다.")
+        sample_indices = list(range(len(dataset)))
+    else:
+        sample_indices = random.sample(range(len(dataset)), num_samples)
 
-    try:
-        model.load_state_dict(torch.load(PRETRAINED_MODEL_PATH, map_location=device), strict=False) # strict=False는 일부 레이어가 없을 때 유연하게 처리
-        print(f"'{PRETRAINED_MODEL_PATH}' 모델 가중치를 성공적으로 로드했습니다.")
-    except Exception as e:
-        print(f"모델 가중치 로드 중 오류 발생: {e}")
-        print("모델 아키텍처와 .pth 파일의 가중치가 호환되는지 확인하세요.")
-        return
+    plt.figure(figsize=(20, num_samples * 5))
 
-    plt.figure(figsize=(20, num_samples_to_show * 5))
+    with torch.no_grad():
+        for i, idx in enumerate(sample_indices):
+            img_tensor, true_mask_tensor = dataset[idx]
 
-    # DataLoader를 사용하여 배치 단위로 이미지 가져오기
-    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=1, shuffle=False)
+            input_batch = img_tensor.unsqueeze(0).to(device)
 
-    sample_count = 0
-    with torch.no_grad(): # 추론 시에는 그라디언트 계산 비활성화
-        for i, (images, masks_gt, image_name) in enumerate(val_loader):
-            if sample_count >= num_samples_to_show:
-                break
+            output = model(input_batch)
 
-            images = images.to(device)
-            # masks_gt = masks_gt.squeeze(1).long().to(device) # Ground Truth 마스크 (옵션)
+            predicted_mask = torch.argmax(F.softmax(output, dim=1), dim=1).squeeze(0).cpu().numpy()
 
-            # 추론 실행
-            outputs = model(images) # (B, num_classes, H, W)
+            img_np = img_tensor.permute(1, 2, 0).cpu().numpy()
+            mean = np.array([0.485, 0.456, 0.406])
+            std = np.array([0.229, 0.224, 0.225])
+            img_np = (img_np * std + mean) * 255
+            img_np = np.clip(img_np, 0, 255).astype(np.uint8)
 
-            # 예측된 마스크 (가장 높은 확률을 가진 클래스 ID)
-            predicted_mask = torch.argmax(outputs, dim=1).squeeze(0).cpu().numpy() # (H, W)
+            true_mask_np = true_mask_tensor.cpu().numpy()
+            true_color_mask = np.zeros((*true_mask_np.shape, 3), dtype=np.uint8)
+            for class_id, color in CITYSCAPES_PALETTE.items():
+                if class_id == 255:
+                    continue
+                true_color_mask[true_mask_np == class_id] = color
 
-            # 원본 이미지 (PyTorch Tensor -> NumPy RGB)
-            original_image_np = images.squeeze(0).cpu().numpy()
-            original_image_np = np.transpose(original_image_np, (1, 2, 0)) # (C, H, W) -> (H, W, C)
-            original_image_np = (original_image_np * [0.229, 0.224, 0.225] + [0.485, 0.456, 0.406]) * 255
-            original_image_np = original_image_np.astype(np.uint8)
+            predicted_color_mask = np.zeros((*predicted_mask.shape, 3), dtype=np.uint8)
+            for class_id, color in CITYSCAPES_PALETTE.items():
+                if class_id == 255:
+                    continue
+                predicted_color_mask[predicted_mask == class_id] = color
 
-            # 예측된 마스크를 컬러로 디코딩
-            predicted_color_mask = decode_segmentation_map(predicted_mask)
-
-            # 원본 이미지와 예측된 마스크를 합성하여 시각화
-            # 알파 블렌딩 (원본 이미지는 RGB, 마스크는 컬러, 두 개를 투명하게 합성)
-            blended_image = cv2.addWeighted(original_image_np, 0.7, predicted_color_mask, 0.3, 0)
-
-            plt.subplot(num_samples_to_show, 1, sample_count + 1)
-            plt.imshow(blended_image)
-            plt.title(f"Segmentation Result for {image_name[0]}")
+            plt.subplot(num_samples, 3, i*3 + 1)
+            plt.imshow(img_np)
+            plt.title(f"Original Image")
             plt.axis('off')
 
-            sample_count += 1
+            plt.subplot(num_samples, 3, i*3 + 2)
+            plt.imshow(true_color_mask)
+            plt.title("Ground Truth Mask")
+            plt.axis('off')
+
+            plt.subplot(num_samples, 3, i*3 + 3)
+            blended_image = cv2.addWeighted(img_np, 0.7, predicted_color_mask, 0.3, 0)
+            plt.imshow(blended_image)
+            plt.title("Predicted Overlay")
+            plt.axis('off')
 
     plt.tight_layout()
     plt.show()
     print("--- 추론 및 시각화 완료 ---")
-
-# BDD10K 등을 대상으로 실제 예측에만 사용하기위하여 샘플링한 데이터에만 추론 예측을 적용함
-def run_segmentation_inference_on_random_samples(model, image_paths_list, preprocess_transform, num_samples_to_show=5):
-    model.eval() # 모델을 평가 모드로 전환
-
-    print(f"\n--- 사전 학습 모델 로드 및 랜덤 {num_samples_to_show}개 샘플 추론 시작 ---")
-    if not os.path.exists(PRETRAINED_MODEL_PATH):
-        print(f"오류: 사전 학습 모델 파일이 없습니다: {PRETRAINED_MODEL_PATH}")
-        print("파일 경로를 확인하거나, 해당 파일을 다운로드하여 스크립트와 같은 위치에 배치하세요.")
-        return
-
-    try:
-        model.load_state_dict(torch.load(PRETRAINED_MODEL_PATH, map_location=device), strict=False)
-        print(f"'{PRETRAINED_MODEL_PATH}' 모델 가중치를 성공적으로 로드했습니다.")
-    except Exception as e:
-        print(f"모델 가중치 로드 중 오류 발생: {e}")
-        print("모델 아키텍처와 .pth 파일의 가중치가 호환되는지 확인하세요.")
-        return
-
-    if len(image_paths_list) < num_samples_to_show:
-        print(f"경고: 사용 가능한 이미지({len(image_paths_list)}개)가 요청한 수({num_samples_to_show}개)보다 적습니다. 사용 가능한 모든 이미지를 추론합니다.")
-        samples_to_infer_paths = image_paths_list
-    else:
-        samples_to_infer_paths = random.sample(image_paths_list, num_samples_to_show) # 랜덤으로 샘플 선택
-
-    plt.figure(figsize=(20, num_samples_to_show * 5))
-
-    with torch.no_grad():
-        for i, image_path in enumerate(samples_to_infer_paths):
-            image_name = os.path.basename(image_path)
-
-            # 이미지 로드 (RGB)
-            original_image = Image.open(image_path).convert('RGB')
-
-            # 전처리
-            input_tensor = preprocess_transform(original_image).unsqueeze(0).to(device) # (1, C, H, W)
-
-            # 추론 실행
-            start_time = time.time()
-            outputs = model(input_tensor) # (B, num_classes, H, W)
-            inference_time = time.time() - start_time
-
-            # 예측된 마스크 (가장 높은 확률을 가진 클래스 ID)
-            predicted_mask = torch.argmax(outputs, dim=1).squeeze(0).cpu().numpy() # (H, W)
-
-            # 원본 이미지 (PIL Image -> NumPy RGB, 시각화를 위해 원본 크기 유지)
-            original_image_np = np.array(original_image)
-
-            # 예측된 마스크를 원본 이미지 크기로 리사이즈 후 컬러 디코딩
-            # 모델 출력(predicted_mask)은 769x769, 원본 이미지는 1280x720
-            # 마스크를 원본 크기로 리사이즈해야 정확히 오버레이 가능
-            predicted_mask_resized = cv2.resize(predicted_mask.astype(np.uint8),
-                                                (original_image_np.shape[1], original_image_np.shape[0]),
-                                                interpolation=cv2.INTER_NEAREST)
-
-            predicted_color_mask = decode_segmentation_map(predicted_mask_resized)
-
-            # 원본 이미지와 예측된 마스크를 합성하여 시각화
-            blended_image = cv2.addWeighted(original_image_np, 0.7, predicted_color_mask, 0.3, 0) # 0.3은 마스크 투명도
-
-            plt.subplot(num_samples_to_show, 1, i + 1)
-            plt.imshow(blended_image)
-            plt.title(f"[{image_name}] Inference Time: {inference_time:.3f}s")
-            plt.axis('off')
-
-    plt.tight_layout()
-    plt.show()
-    print("--- 추론 및 시각화 완료 ---")    
 ```
 
-### 2.6 메인 실행 블록
+### 2.7 메인 실행 블록
 
 ```python
-if __name__ == '__main__':
-    # 'val' 디렉토리의 절대 경로 설정
-    val_image_directory = os.path.join(BDD10K_DATA_ROOT_PATH, "val")
+# 1. 모델 생성 및 디바이스 이동
+model = UNet(num_classes=NUM_CLASSES).to(device)
 
-    # 'val' 디렉토리에서 JPG 이미지 파일 경로 목록만 가져옴
-    image_paths_for_inference = get_image_paths_from_dir(val_image_directory)
-    print(f"BDD10K Validation 이미지 디렉토리에서 {len(image_paths_for_inference)}개 이미지 경로 로드 완료.")
+# 2. 모델 학습
+# (예시이므로 짧게 5 에포크만 진행. 실제는 더 오래 학습해야 합니다.)
+trained_model = train_model(model, train_loader, val_loader, num_epochs=20, learning_rate=0.001)
 
-    if not image_paths_for_inference:
-        print("로드된 BDD10K 이미지 경로가 없습니다. 'val' 디렉토리 또는 경로 설정을 확인해주세요.")
-
-    else:
-        # UPerNet 모델 생성
-        model = UPerNet(num_classes=NUM_CLASSES, backbone_name='resnet50', pretrained_backbone=False).to(device)
-        print("UPerNet 모델 생성 완료 (ResNet50 백본).")
-
-        run_segmentation_inference_on_random_samples(model, image_paths_for_inference, TRANSFORM_IMG, num_samples_to_show=5)
+visualize_segmentation(trained_model, val_dataset, num_samples=5)
 ```
 
 ## 3. 라즈베리파이에서의 최적화 방법
