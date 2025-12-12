@@ -2,7 +2,7 @@
 layout: page
 title:  "라즈베리파이 기반 자율주행자동차 구현(1)"
 date:   2025-07-29 10:00:00 +0900
-permalink: /materials/S10-01-05-03_01-AutonomousDrivingControlImplementation1
+permalink: /materials/S10-01-05-03_01-AutonomousDrivingControlImplementation
 categories: materials
 ---
 * toc
@@ -532,7 +532,7 @@ if __name__ == '__main__':
 
 
 
-## 2. 모델 생성
+## 2. 모델 생성 (Tensorflow)
 
 - Colab을 이용하여 Tensorflow로 모델 학습 수행
     - nvidia에서 배포한 모델을 기반으로 학습 진행
@@ -821,112 +821,521 @@ for i in range(n_tests_show):
     - lane_navigation_check.keras
     - lane_navigation_final.keras (학습완료된 모델)
 
-## 3. 모델 적용 후 자율 주행
 
-- 학습완료된 모델을 라즈베리파이에 전송
-    - lane_navigation_final.keras
+## 3. 모델 생성 (Pytorch)
 
-- 파이썬 버전 변경
-    - 현재 제공되는 자율주행 키트용 소스코드가 사용하는 Tensorflow 기능은 의존성 문제로 인하여 3.11.x 버전 이하의 파이썬 환경에서만 작동함
+- 라즈베리파이 5에서의 각종 버전 총돌 문제로 인하여 파이토치 버전으로 재작성
 
-    - 빌드도구 설치
-
-    ```bash
-    sudo apt update
-    sudo apt install -y make build-essential libssl-dev zlib1g-dev \
-                        libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-                        libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-    ```
-
-    - pyenv 설치
-
-    ```bash
-    curl https://pyenv.run | bash
-    ```
-
-    - 셸(Shell) 환경 설정
-
-    ```bash
-    nano ~/.bashrc
-    ```
-
-    - 파일의 제일 아래쪽에 추가
-    
-    ```bash
-    #//file: "~/.bashrc"
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-    eval "$(pyenv init --path)"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-    ```
-
-    ```bash
-    source ~/.bashrc
-
-    pyenv install 3.11.8
-    pyenv rehash
-    pyenv versions
-    ```
-
-    - 가상환경 생성 및 활성화
-
-    ```bash
-    pyenv virtualenv 3.11.8 ai_car_py311
-    pyenv activate ai_car_py311
-    ```
-
-    - 가상환경이 활성화되었다면 작업 디렉토리는 원하는 장소를 사용하면 됨
+<div class="colab-link">
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/project/notebooks/S10-01-05-03_01-AutonomousDrivingControlImplementation2.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+</div>
 
 
+```python
+import os
+import numpy as np
+import pickle
 
-- 자동차 조향각 예측 코드
+import matplotlib.pyplot as plt
+import cv2
+import fnmatch
+
+import torch
+import torch.nn as nn
+import torch.optim as optim
+from torch.utils.data import Dataset, DataLoader
+
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+```
+
+```python
+data_dir = './video/'
+file_list = os.listdir(data_dir)
+image_paths = []
+steering_angles = []
+pattern = "*.png"
+
+for filename in file_list:
+    if fnmatch.fnmatch(filename, pattern):
+        image_paths.append(os.path.join(data_dir,filename))
+        angle = int(filename[-7:-4])
+        steering_angles.append(angle)
+
+X_train, X_valid, y_train, y_valid = train_test_split( image_paths, steering_angles, test_size=0.2, random_state=42)
+print(f"Training data: {len(X_train)}\nValidation data: {len(X_valid)}")
+```
+
+```python
+def img_preprocess_pytorch(image):
+    # Normalize pixel values to [0, 1]
+    image = image / 255.0
+    # Convert numpy array to PyTorch tensor
+    image = torch.from_numpy(image).float()
+    # Rearrange dimensions from (H, W, C) to (C, H, W)
+    image = image.permute(2, 0, 1)
+    return image
+```
+
+```python
+class DrivingDataset(Dataset):
+    def __init__(self, image_paths, steering_angles):
+        self.image_paths = image_paths
+        self.steering_angles = steering_angles
+
+    def __len__(self):
+        return len(self.image_paths)
+
+    def __getitem__(self, idx):
+        image_path = self.image_paths[idx]
+        image = cv2.imread(image_path) # Use cv2.imread from previous definition
+        # Ensure image is not None for cases where imread might fail
+        if image is None:
+            raise FileNotFoundError(f"Image not found at {image_path}")
+        image = img_preprocess_pytorch(image)
+        steering_angle = torch.tensor(self.steering_angles[idx], dtype=torch.float32)
+        return image, steering_angle
+```
+
+```python
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
+```
+
+```python
+batch_size = 100
+
+train_dataset = DrivingDataset(X_train, y_train)
+valid_dataset = DrivingDataset(X_valid, y_valid)
+
+train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+valid_dataloader = DataLoader(valid_dataset, batch_size=batch_size, shuffle=False)
+
+print(f"Training dataset size: {len(train_dataset)}")
+print(f"Validation dataset size: {len(valid_dataset)}")
+print(f"Number of training batches: {len(train_dataloader)}")
+print(f"Number of validation batches: {len(valid_dataloader)}")
+```
+
+```python
+for images, angles in train_dataloader:
+    print(f"Sample batch image shape: {images.shape}")
+    print(f"Sample batch steering angles shape: {angles.shape}")
+    print(f"Sample image data type: {images.dtype}")
+    print(f"Sample angle data type: {angles.dtype}")
+    images = images.to(device)
+    angles = angles.to(device)
+    print(f"Images moved to device: {images.device}")
+    print(f"Angles moved to device: {angles.device}")
+    break
+```
+
+```python
+class NvidiaModel(nn.Module):
+    def __init__(self):
+        super(NvidiaModel, self).__init__()
+        self.conv_layers = nn.Sequential(
+            nn.Conv2d(3, 24, kernel_size=5, stride=2),
+            nn.ELU(),
+            nn.Conv2d(24, 36, kernel_size=5, stride=2),
+            nn.ELU(),
+            nn.Conv2d(36, 48, kernel_size=5, stride=2),
+            nn.ELU(),
+            nn.Conv2d(48, 64, kernel_size=3, stride=1),
+            nn.ELU(),
+            nn.Dropout(0.2),
+            nn.Conv2d(64, 64, kernel_size=3, stride=1),
+            nn.ELU()
+        )
+        self.flatten = nn.Flatten()
+        self.linear_layers = nn.Sequential(
+            nn.Dropout(0.2),
+            nn.Linear(64 * 1 * 18, 100),
+            nn.ELU(),
+            nn.Linear(100, 50),
+            nn.ELU(),
+            nn.Linear(50, 10),
+            nn.ELU(),
+            nn.Linear(10, 1)
+        )
+
+    def forward(self, x):
+        x = self.conv_layers(x)
+        x = self.flatten(x)
+        x = self.linear_layers(x)
+        return x
+```
+
+```python
+model = NvidiaModel()
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
+
+print(f"Using device: {device}")
+print("Model Architecture:")
+print(model)
+
+dummy_input = torch.randn(1, 3, 66, 200).to(device) # Batch_size, Channels, Height, Width
+output = model(dummy_input)
+print(f"Output shape with dummy input: {output.shape}")
+
+loss_fn = nn.MSELoss()
+learning_rate = 1e-3 # Consistent with the original Keras model
+optimizer = optim.Adam(model.parameters(), lr=learning_rate)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+```
+
+```python
+def train_epoch(model, dataloader, loss_fn, optimizer, device, steps_per_epoch):
+    model.train() # Set model to training mode
+    running_loss = 0.0
+    data_iter = iter(dataloader)
+
+    for batch_idx in range(steps_per_epoch):
+        try:
+            images, angles = next(data_iter)
+        except StopIteration:
+            data_iter = iter(dataloader)
+            images, angles = next(data_iter)
+
+        images = images.to(device)
+        angles = angles.to(device).float().unsqueeze(1) # Ensure angles are float and have correct shape
+
+        outputs = model(images)
+        loss = loss_fn(outputs, angles)
+
+        optimizer.zero_grad()
+        loss.backward()
+        optimizer.step()
+
+        running_loss += loss.item()
+
+    return running_loss / steps_per_epoch
+```
+
+```python
+def validate_epoch(model, dataloader, loss_fn, device, validation_steps):
+    model.eval() # Set model to evaluation mode
+    running_loss = 0.0
+    data_iter = iter(dataloader)
+
+    with torch.no_grad(): # Disable gradient calculations
+        for batch_idx in range(validation_steps):
+            try:
+                images, angles = next(data_iter)
+            except StopIteration:
+                # If the iterator is exhausted, re-initialize it
+                data_iter = iter(dataloader)
+                images, angles = next(data_iter)
+
+            images = images.to(device)
+            angles = angles.to(device).float().unsqueeze(1) # Ensure angles are float and have correct shape
+
+            outputs = model(images)
+            loss = loss_fn(outputs, angles)
+
+            running_loss += loss.item()
+
+    return running_loss / validation_steps
+```
+
+```python
+model_output_dir = "./model/"
+os.makedirs(model_output_dir, exist_ok=True)
+
+torch.backends.cudnn.benchmark = True
+
+epochs = 10
+steps_per_epoch = 300
+validation_steps = 200
+
+history = {'loss': [], 'val_loss': []}
+best_val_loss = float('inf')
+```
+
+```python
+print("Starting model training...")
+for epoch in range(epochs):
+    train_loss = train_epoch(model, train_dataloader, loss_fn, optimizer, device, steps_per_epoch)
+    val_loss = validate_epoch(model, valid_dataloader, loss_fn, device, validation_steps)
+
+    history['loss'].append(train_loss)
+    history['val_loss'].append(val_loss)
+
+    print(f"Epoch {epoch+1}/{epochs} | Train Loss: {train_loss:.4f} | Val Loss: {val_loss:.4f}")
+
+    if val_loss < best_val_loss:
+        best_val_loss = val_loss
+        checkpoint_path = os.path.join(model_output_dir, 'lane_navigation_check.pt')
+        torch.save(model.state_dict(), checkpoint_path)
+        print(f"Epoch {epoch+1}: Validation loss improved to {best_val_loss:.4f}, saving model checkpoint to {checkpoint_path}")
+
+final_model_path = os.path.join(model_output_dir, 'lane_navigation_final.pt')
+torch.save(model.state_dict(), final_model_path)
+print(f"Final model saved to {final_model_path}")
+
+history_path = os.path.join(model_output_dir, 'history.pickle')
+with open(history_path, 'wb') as f:
+    pickle.dump(history, f, pickle.HIGHEST_PROTOCOL)
+print(f"Training history saved to {history_path}")
+
+print("Model training complete.")
+```
+
+```python
+def predict_and_summarize_pytorch(model_class, model_path, dataloader, device, n_tests_show=2):
+    model = model_class()
+    model.to(device)
+
+    model.load_state_dict(torch.load(model_path))
+    model.eval() # Set model to evaluation mode
+
+    true_angles = []
+    predicted_angles = []
+
+    print(f"Evaluating model from: {model_path}")
+
+    with torch.no_grad(): # Disable gradient calculations
+        for images, angles in dataloader:
+            images = images.to(device)
+            outputs = model(images)
+
+            true_angles.extend(angles.cpu().numpy())
+            predicted_angles.extend(outputs.cpu().numpy().flatten())
+
+    true_angles = np.array(true_angles)
+    predicted_angles = np.array(predicted_angles)
+
+    mse = mean_squared_error(true_angles, predicted_angles)
+    r_squared = r2_score(true_angles, predicted_angles)
+
+    print(f'mse       = {mse:.2f}')
+    print(f'r_squared = {r_squared:.2%}')
+    print()
+
+    # Visualize a small subset of predictions
+    fig, axes = plt.subplots(n_tests_show, 1, figsize=(10, 4 * n_tests_show))
+    fig.tight_layout()
+
+    for i in range(n_tests_show):
+        image, actual_angle = valid_dataset[i] # Get raw preprocessed image and angle
+        input_image = image.unsqueeze(0).to(device)
+        predicted_angle = model(input_image).item()
+        display_image = image.permute(1, 2, 0).cpu().numpy()
+        
+        axes[i].imshow(display_image)
+        axes[i].set_title(f"actual angle={actual_angle.item():.0f}, predicted angle={predicted_angle:.0f}, diff = {predicted_angle - actual_angle.item():.0f}")
+        axes[i].axis('off') # Hide axes for cleaner image display
+
+    plt.show()
+
+    return predicted_angles
+```
+
+```python
+model_output_dir = './model/'
+checkpoint_path = os.path.join(model_output_dir, 'lane_navigation_check.pt')
+history_path = os.path.join(model_output_dir, 'history.pickle')
+
+if os.path.exists(history_path):
+    with open(history_path, 'rb') as f:
+        history = pickle.load(f)
+    print("Training history loaded successfully.")
+else:
+    print(f"Error: History file not found at {history_path}")
+    history = {'loss': [], 'val_loss': []}
+```
+
+```python
+plt.figure(figsize=(10, 6))
+plt.plot(history['loss'], color='blue', label='training loss')
+plt.plot(history['val_loss'], color='red', label='validation loss')
+
+plt.title('Model Training History (Loss over Epochs)')
+plt.xlabel('Epochs')
+plt.ylabel('Loss (MSE)')
+
+plt.legend()
+plt.grid(True)
+plt.show()
+```
+
+
+
+## 4. 모델 적용 후 자율 주행
 
 ```python
 import mycamera
 import cv2
 import numpy as np
-import tensorflow as tf
-from tensorflow.keras.models import load_model
+import torch
+import torch.nn as nn
+from torchvision import transforms
+from gpiozero import DigitalOutputDevice
+from gpiozero import PWMOutputDevice
 
+
+PWMA = PWMOutputDevice(18)
+AIN1 = DigitalOutputDevice(22)
+AIN2 = DigitalOutputDevice(27)
+
+PWMB = PWMOutputDevice(23)
+BIN1 = DigitalOutputDevice(25)
+BIN2 = DigitalOutputDevice(24)
+
+def motor_go(speed):
+    AIN1.value = 0
+    AIN2.value = 1
+    PWMA.value = speed
+    BIN1.value = 0
+    BIN2.value = 1
+    PWMB.value = speed
+
+def motor_back(speed):
+    AIN1.value = 1
+    AIN2.value = 0
+    PWMA.value = speed
+    BIN1.value = 1
+    BIN2.value = 0
+    PWMB.value = speed
+    
+def motor_left(speed):
+    AIN1.value = 1
+    AIN2.value = 0
+    PWMA.value = 0.0
+    BIN1.value = 0
+    BIN2.value = 1
+    PWMB.value = speed
+    
+def motor_right(speed):
+    AIN1.value = 0
+    AIN2.value = 1
+    PWMA.value = speed
+    BIN1.value = 1
+    BIN2.value = 0
+    PWMB.value = 0.0
+
+def motor_stop():
+    AIN1.value = 0
+    AIN2.value = 1
+    PWMA.value = 0.0
+    BIN1.value = 1
+    BIN2.value = 0
+    PWMB.value = 0.0
+
+speedSet = 0.4
+
+class NvidiaModel(nn.Module):
+    def __init__(self):
+        super(NvidiaModel, self).__init__()
+        self.conv_layers = nn.Sequential(
+            nn.Conv2d(3, 24, kernel_size=5, stride=2),
+            nn.ELU(),
+            nn.Conv2d(24, 36, kernel_size=5, stride=2),
+            nn.ELU(),
+            nn.Conv2d(36, 48, kernel_size=5, stride=2),
+            nn.ELU(),
+            nn.Conv2d(48, 64, kernel_size=3, stride=1),
+            nn.ELU(),
+            nn.Dropout(0.2),
+            nn.Conv2d(64, 64, kernel_size=3, stride=1),
+            nn.ELU()
+        )
+        self.flatten = nn.Flatten()
+        self.linear_layers = nn.Sequential(
+            nn.Dropout(0.2),
+            nn.Linear(64 * 1 * 18, 100),
+            nn.ELU(),
+            nn.Linear(100, 50),
+            nn.ELU(),
+            nn.Linear(50, 10),
+            nn.ELU(),
+            nn.Linear(10, 1)
+        )
+
+    def forward(self, x):
+        x = self.conv_layers(x)
+        x = self.flatten(x)
+        x = self.linear_layers(x)
+        return x
+    
 def img_preprocess(image):
     height, _, _ = image.shape
     image = image[int(height/2):,:,:]
     image = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
     image = cv2.GaussianBlur(image, (3,3), 0)
     image = cv2.resize(image, (200,66)) 
-    image = image / 255
+    image = image / 255.0
     return image
 
 def main():
+
     camera = mycamera.MyPiCamera(640,480)
-    model_path = '/home/pi/AI_CAR/model/lane_navigation_final.keras'
-    model = load_model(model_path)
+
+    model_path = "./model/lane_navigation_final.pt"
+    model = NvidiaModel()
     
+    try:
+        model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+        model.eval()
+        print(f"PyTorch model loaded successfully from {model_path}")
+    except Exception as e:
+        print(f"Error loading PyTorch model: {e}")
+        print("Please ensure YourPyTorchModelClass is correctly defined and the .pt file is valid.")
+        return
+
     carState = "stop"
     
-    while( camera.isOpened()):
-        
+    while camera.isOpened():
         keValue = cv2.waitKey(1)
         
         if keValue == ord('q') :
             break
+
+        elif keValue == 82 :
+            print("go")
+            carState = "go"
+
+        elif keValue == 84 :
+            print("stop")
+            carState = "stop"
         
+
         _, image = camera.read()
-        image = cv2.flip(image,-1)
         cv2.imshow('Original', image)
         
         preprocessed = img_preprocess(image)
         cv2.imshow('pre', preprocessed)
         
-        X = np.asarray([preprocessed])
-        steering_angle = int(model.predict(X)[0])
+        X = torch.from_numpy(preprocessed).float()
+        X = X.permute(2, 0, 1).unsqueeze(0) 
+
+        with torch.no_grad():
+            output = model(X)
+        
+        steering_angle = int(output.cpu().numpy()[0])
         print("predict angle:",steering_angle)
+
+        
+        #if carState == "go":
+        if steering_angle >= 85 and steering_angle <= 95:
+            print("go")
+            motor_go(speedSet)
+        elif steering_angle > 96:
+            print("right")
+            motor_right(speedSet)
+        elif steering_angle < 84:
+            print("left")
+            motor_left(speedSet)
+        #elif carState == "stop":
+        #    motor_stop()
         
     cv2.destroyAllWindows()
     
 if __name__ == '__main__':
     main()
+    PWMA.value = 0.0
+    PWMB.value = 0.0
 ```
 
 
