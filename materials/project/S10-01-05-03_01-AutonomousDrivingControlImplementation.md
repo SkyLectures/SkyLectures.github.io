@@ -830,6 +830,7 @@ for i in range(n_tests_show):
     <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/project/notebooks/S10-01-05-03_01-AutonomousDrivingControlImplementation2.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 </div>
 
+- 필요한 패키지 가져오기
 
 ```python
 import os
@@ -849,6 +850,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 ```
 
+- 데이터 가져오기 및 분할
+
 ```python
 data_dir = './video/'
 file_list = os.listdir(data_dir)
@@ -866,6 +869,8 @@ X_train, X_valid, y_train, y_valid = train_test_split( image_paths, steering_ang
 print(f"Training data: {len(X_train)}\nValidation data: {len(X_valid)}")
 ```
 
+- 전처리 함수 정의
+
 ```python
 def img_preprocess_pytorch(image):
     # Normalize pixel values to [0, 1]
@@ -876,6 +881,15 @@ def img_preprocess_pytorch(image):
     image = image.permute(2, 0, 1)
     return image
 ```
+
+- GPU 사용 설정
+
+```python
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
+```
+
+- 데이터셋 정의
 
 ```python
 class DrivingDataset(Dataset):
@@ -897,10 +911,7 @@ class DrivingDataset(Dataset):
         return image, steering_angle
 ```
 
-```python
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-print(f"Using device: {device}")
-```
+- 데이터로더 생성
 
 ```python
 batch_size = 100
@@ -915,9 +926,7 @@ print(f"Training dataset size: {len(train_dataset)}")
 print(f"Validation dataset size: {len(valid_dataset)}")
 print(f"Number of training batches: {len(train_dataloader)}")
 print(f"Number of validation batches: {len(valid_dataloader)}")
-```
 
-```python
 for images, angles in train_dataloader:
     print(f"Sample batch image shape: {images.shape}")
     print(f"Sample batch steering angles shape: {angles.shape}")
@@ -929,6 +938,8 @@ for images, angles in train_dataloader:
     print(f"Angles moved to device: {angles.device}")
     break
 ```
+
+- NVIDIA 모델 정의
 
 ```python
 class NvidiaModel(nn.Module):
@@ -966,6 +977,8 @@ class NvidiaModel(nn.Module):
         return x
 ```
 
+- 모델 생성 및 설정
+
 ```python
 model = NvidiaModel()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -984,6 +997,8 @@ learning_rate = 1e-3 # Consistent with the original Keras model
 optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 ```
+
+- 학습 함수 정의
 
 ```python
 def train_epoch(model, dataloader, loss_fn, optimizer, device, steps_per_epoch):
@@ -1013,6 +1028,8 @@ def train_epoch(model, dataloader, loss_fn, optimizer, device, steps_per_epoch):
     return running_loss / steps_per_epoch
 ```
 
+- 검증 함수 정의
+
 ```python
 def validate_epoch(model, dataloader, loss_fn, device, validation_steps):
     model.eval() # Set model to evaluation mode
@@ -1039,6 +1056,8 @@ def validate_epoch(model, dataloader, loss_fn, device, validation_steps):
     return running_loss / validation_steps
 ```
 
+- 하이퍼 파라미터 및 기타 설정
+
 ```python
 model_output_dir = "./model/"
 os.makedirs(model_output_dir, exist_ok=True)
@@ -1052,6 +1071,8 @@ validation_steps = 200
 history = {'loss': [], 'val_loss': []}
 best_val_loss = float('inf')
 ```
+
+- 학습 수행
 
 ```python
 print("Starting model training...")
@@ -1081,6 +1102,8 @@ print(f"Training history saved to {history_path}")
 
 print("Model training complete.")
 ```
+
+- 예측 작업
 
 ```python
 def predict_and_summarize_pytorch(model_class, model_path, dataloader, device, n_tests_show=2):
@@ -1132,6 +1155,8 @@ def predict_and_summarize_pytorch(model_class, model_path, dataloader, device, n
     return predicted_angles
 ```
 
+- 학습된 모델 읽어오기
+
 ```python
 model_output_dir = './model/'
 checkpoint_path = os.path.join(model_output_dir, 'lane_navigation_check.pt')
@@ -1146,6 +1171,8 @@ else:
     history = {'loss': [], 'val_loss': []}
 ```
 
+- 학습 결과 출력
+
 ```python
 plt.figure(figsize=(10, 6))
 plt.plot(history['loss'], color='blue', label='training loss')
@@ -1159,7 +1186,6 @@ plt.legend()
 plt.grid(True)
 plt.show()
 ```
-
 
 
 ## 4. 모델 적용 후 자율 주행
@@ -1338,8 +1364,5 @@ if __name__ == '__main__':
     PWMB.value = 0.0
 ```
 
-
-> - 하드웨어 제어 시에는 **전원 연결**과 **핀 연결 오류**에 항상 주의해야 하며,
-> - 특히 모터는 라즈베리파이와 별도의 고전류 전원을 사용해야 함
-> - 과전류로 인한 라즈베리파이 손상을 방지하는 것이 매우 중요
-{: .expert-quote}
+- 각 시스템마다 하드웨어, 센서, 카메라 각도 등의 조정이 필요함
+- 학습 상태에 따라 주행 성능이 달라짐
