@@ -32,7 +32,7 @@ categories: lectlog
 
 - GPT를 활용한 연구계획서 작성법
     - [연구계획서의 기본 구조 및 구성요소](/materials/S11-02-01-01_01-ResearchPlanStructure)
-    - [연구 문서 활용 사례](/materials/S11-02-01-02_01-ResearchPlanExamples) [Pass]
+    - [연구 문서 활용 사례](/materials/S11-02-01-02_01-ResearchPlanExamples)
     - [연구계획서 작성을 위한 프롬프트 설계](/materials/S11-02-01-03_01-PromptDesignForResearchPlan)
     - [(실습) GPT를 활용한 연구계획서 초안 작성](/materials/S11-02-01-04_01-ResearchPlanMakingWithGpt)
 
