@@ -230,7 +230,7 @@ categories: materials
 ### 2.3 PowerPoint Copilot 예시
 
 - **[시나리오]**
-    - '라즈베리파이_상용화_보고서_초안.docx'라는 워드 문서 초안을 가지고 있음
+    - ['라즈베리파이_상용화_보고서_초안.docx'](./docs/라즈베리파이_상용화_보고서_초안.docx)라는 워드 문서 초안을 가지고 있음
     - 이를 바탕으로 투자 유치를 위한 PowerPoint 프레젠테이션을 작성
 
 - **[PowerPoint Copilot 예시 1: 워드 문서 기반 프레젠테이션 개요 생성]**
