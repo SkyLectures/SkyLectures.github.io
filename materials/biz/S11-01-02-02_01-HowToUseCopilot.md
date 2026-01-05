@@ -2,7 +2,7 @@
 layout: page
 title:  "Copilot 사용법"
 date:   2025-12-14 10:00:00 +0900
-permalink: /materials/S11-01-01-04_01-HowToUseCopilot
+permalink: /materials/S11-01-02-02_01-HowToUseCopilot
 categories: materials
 ---
 * toc

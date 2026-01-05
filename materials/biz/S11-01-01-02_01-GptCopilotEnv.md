@@ -116,7 +116,7 @@ categories: materials
 
 웹 기반 Copilot은 일반적인 AI 챗봇처럼 작동함
 
-## 3.1 웹 기반 Copilot 사용
+### 3.1 웹 기반 Copilot 사용
 
 - 웹 기반 Copilot은 일반적인 AI 챗봇처럼 작동함
 

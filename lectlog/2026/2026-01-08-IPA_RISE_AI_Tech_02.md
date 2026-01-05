@@ -25,22 +25,22 @@ categories: lectlog
 
 <h2>● 강의 내용</h2>
 
-- Copilot 개요 및 연동 원리 (1시간)
+- Copilot 개요 및 연동 원리
     - [Copilot 개요 및 연동 원리 이해](/materials/S11-01-02-01_01-CopilotForOffice)
-    - [(실습) Copilot 환경 설정](/materials/S11-01-02-02_01-CopilotEnvForOffice)
-    - [(실습) Copilot을 이용한 오피스 활용 기본 실습](/materials/S11-01-02-03_01-CopilotForOfficePractice)
+    - [Copilot 환경 설정](/materials/S11-01-02-02_01-CopilotEnvForOffice)
+    - [(실습) Copilot을 이용한 오피스 활용 기본 실습](/materials/S11-01-02-04_01-CopilotForOfficePractice)
 
-- Copilot in Word (1시간)
-    - Copilot in Word: 보고서, 회의록 자동화
-    - 템플릿 기반 보고서, 회의록 자동 완성법 학습
-    - (실습) 템플릿 기반 보고서, 회의록 작성 실무 적용 실습
+- Copilot in Word
+    - [Copilot in Word: 보고서, 회의록 자동화](/materials/S11-01-02-05_01-CopilotWordReportAutomation)
+    - [템플릿 기반 보고서, 회의록 자동 완성법 학습](/materials/S11-01-02-05_02-CopilotWordTemplateAutomation)
+    - [(실습) 템플릿 기반 보고서, 회의록 작성 실무 적용 실습](/materials/S11-01-02-05_03-CopilotWordTemplateAutomationPractice)
 
-- Copilot in Excel (1시간)
-    - Copilot in Excel: 데이터 분석, 시각화
-    - 엑셀 데이터 분석 자동화 및 시각화 지시 학습
-    - (실습) 엑셀 데이터 분석 자동화 및 시각화 지시 실무 적용 실습
+- Copilot in Excel
+    - [Copilot in Excel: 데이터 분석, 시각화](/materials/S11-01-02-06_01-CopilotExcelDataAnalysisVisualization)
+    - [(실습) 엑셀 데이터 분석 자동화 및 시각화 실습](/materials/S11-01-02-06_03-CopilotExcelDataAnalysisVisualizationAutomationPractice)
 
-- Copilot + Power Automate + GPT 통합 자동화 (1시간)
-    - Copilot + Power Automate + GPT 통합 자동화
-    - GPT 기반 자동 알림, 문서 생성 워크플로우 설계
-    - (실습) GPT 기반 자동 알림, 문서 생성 워크플로우 설계 실무 적용 실습
+- Copilot + Power Automate + GPT 통합 자동화
+    - [Copilot + Power Automate + GPT 통합 자동화](/materials/S11-01-02-08_01-CopilotPowerAutomate)
+    - [(실습) Copilot + Power Automate + GPT 통합 자동화](/materials/S11-01-02-08_02-CopilotPowerAutomatePractice)
+    - [GPT 기반 자동 알림, 문서 생성 워크플로우 설계](/materials/S11-01-02-08_03-CopilotPowerAutomateWorkflow)
+    - [(실습) GPT 기반 자동 알림, 문서 생성 워크플로우 설계 실무 적용 실습](/materials/S11-01-02-08_04-CopilotPowerAutomateWorkflowPractice)

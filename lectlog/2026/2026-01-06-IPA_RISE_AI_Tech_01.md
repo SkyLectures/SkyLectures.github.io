@@ -38,7 +38,7 @@ categories: lectlog
 
 - GPT/Copilot을 활용한 보고서 작성법
     - [보고서 작성 구조와 논리 구성](/materials/S11-02-02-01_01-ReportStructureAndLogic)
-    - [Copilot 사용법](/materials/S11-01-01-04_01-HowToUseCopilot)
+    - [Copilot 사용법](/materials/S11-01-02-02_01-HowToUseCopilot)
     - [GPT/Copilot을 이용한 보고서 초안 작성 자동화](/materials/S11-02-02-02_01-ReportWritingWithGptCopilot)
     - [(실습) GPT/Copilot을 이용한 보고서 초안 작성 자동화](/materials/S11-02-02-02_02-ReportWritingWithGptCopilotPractice)
 
