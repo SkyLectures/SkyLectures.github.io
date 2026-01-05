@@ -17,7 +17,7 @@ categories: materials
 {: .common-quote}
 
 
-### 1.1. 준비 단계 (Data Preparation)
+### 1.1. 준비 단계
 1. **Copilot 활성화 확인**
     - Excel 문서가 열려 있고, Copilot 기능이 활성화되어 있는지 확인
     
@@ -38,7 +38,7 @@ categories: materials
     - 어떤 질문에 대한 답을 얻고 싶은지,
     - 어떤 유형의 시각화를 원하는지 미리 생각하고 정리
 
-### 1.2. 분석 및 시각화 단계 (Analysis & Visualization with Copilot)
+### 1.2. 분석 및 시각화 단계
 1. **Copilot 호출**
     - Excel에서 Copilot 버튼을 클릭하여 Copilot 창 열기
 
@@ -58,7 +58,7 @@ categories: materials
     - 마음에 드는 결과는 "워크시트에 삽입" 버튼을 클릭하여 Excel 시트에 직접 적용
     - 만족스럽지 않으면 추가 질문이나 다른 요청으로 수정하거나, "더 많은 차트 유형 보기" 등을 요청할 수 있음
 
-### 1.3. 검토 및 활용 단계 (Review & Utilization)
+### 1.3. 검토 및 활용 단계
 1. **결과 검증**
     - Copilot이 제시한 모든 분석 결과(숫자, 차트의 레이블 등)는 **반드시 원본 데이터와 대조하여 검증**해야 함
     - Copilot은 분석을 자동화하지만, 데이터 자체의 오류를 고쳐주지는 않으며, 때때로 분석의 오해석을 할 수도 있음
@@ -71,7 +71,7 @@ categories: materials
     - 분석된 데이터와 차트를 활용하여 대시보드를 구성하거나,
     - 다른 보고서에 포함하여 활용
 
-## 2. 주의사항 및 지켜야 할 점 (Excel Copilot)
+## 2. 주의사항 및 지켜야 할 점
 
 ### 2.1. 주의사항
 - **데이터 품질의 중요성**
