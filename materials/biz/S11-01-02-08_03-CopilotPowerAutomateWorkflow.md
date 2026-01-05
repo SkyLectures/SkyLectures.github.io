@@ -110,8 +110,8 @@ categories: materials
 
 
 > - **참고** 
->   - [내 업무를 자동화하는 GPT 워크플로우 설계하기](https://beyondourlimit.tistory.com/87)
->   - [챗 GPT 활용](https://www.hrdeedu.com/include/download.php?idx=93&code=StudyPDS&file=1)
->   - [OORTCLOUD: GPT 기반 협업 시스템 구축-워크플로우 자동화 전략](https://oortcloud.kr/59)
->   - [ClickUp: ChatGPT 자동화-AI를 활용해 작업을 효율화하는 방법](https://clickup.com/ko/blog/526030/chatgpt-automation)
->   - [AI 에이전트란? 코파일럿부터 자동화까지, 지금 바로 도입할 실전 가이드](https://www.koreadeep.com/blog/ai-agent)        
+>   - [내 업무를 자동화하는 GPT 워크플로우 설계하기](https://beyondourlimit.tistory.com/87){: target="_blank"}
+>   - [챗 GPT 활용](https://www.hrdeedu.com/include/download.php?idx=93&code=StudyPDS&file=1){: target="_blank"}
+>   - [OORTCLOUD: GPT 기반 협업 시스템 구축-워크플로우 자동화 전략](https://oortcloud.kr/59){: target="_blank"}
+>   - [ClickUp: ChatGPT 자동화-AI를 활용해 작업을 효율화하는 방법](https://clickup.com/ko/blog/526030/chatgpt-automation){: target="_blank"}
+>   - [AI 에이전트란? 코파일럿부터 자동화까지, 지금 바로 도입할 실전 가이드](https://www.koreadeep.com/blog/ai-agent){: target="_blank"}
