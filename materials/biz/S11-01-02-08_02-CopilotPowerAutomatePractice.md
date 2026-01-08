@@ -100,7 +100,7 @@ categories: materials
     5. **[Power Automate 액션]**
         - Power Automate는 GPT 결과를 받아서
             - `PowerPoint 커넥터`
-                - GPT가 제안한 슬라이드 초안을 바탕으로 새로운 PowerPoint 프레젠테이션(`시장_분석_전략_제안_2025_초안.pptx`)을 생성하거나,
+                - GPT가 제안한 슬라이드 초안([`시장_분석_및_전략_제안_초안.pptx`](./docs/시장_분석_및_전략_제안_초안.pptx))을 바탕으로 새로운 PowerPoint 프레젠테이션(`시장_분석_및_전략_제안_초안_20260108xxxx.pptx`)을 생성하거나,
                 - 기존 프레젠테이션에 슬라이드를 추가
 
             - (옵션) `Email 커넥터`
