@@ -11,6 +11,8 @@ categories: materials
 
 ## 1. Word Copilot
 
+- 기준 문서: [`프로젝트_기획서_최종.docx`](./docs/프로젝트_기획서_최종.docx)
+
 ### 1.1 긴 문서 요약
 
 - **시나리오**
