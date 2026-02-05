@@ -1,35 +1,78 @@
-**제목: [개발팀] 라즈베리파이 엣지 AI 세그멘테이션 모델 주간 기술 보고서**
-
-**보고일**: 2025년 12월 30일
-**작성자**: 김철수 (개발팀장)
-**수신**: 스카이 (PM)
+**'AI 에이전트 특화 자율형 독립 OS'**
+## 📋 [Project Reference] AI-Centric Autonomous OS (Codename: Self-Brain)
 
 ---
 
-### **1. 지난 주 (12월 23일 ~ 12월 29일) 주요 기술 진행 현황**
+### 1. 연구의 핵심 목적 (Research Objective)
 
-#### **1.1. 모델 경량화 및 추론 속도 최적화**
-*   **2차 경량화 테스트 완료**: MobileNetV3 기반 U-Net 모델에 추가적인 가지치기(Pruning)를 적용한 2차 경량화 테스트를 완료했습니다.
-*   **RPi 5 환경 추론 속도**: 라즈베리파이 5 (8GB) 환경에서 평균 25 FPS (Frames Per Second)를 달성했습니다. 이는 1차 테스트(18 FPS) 대비 상당한 개선을 보인 결과입니다.
-*   **이슈 발생**: 특정 자율주행 시나리오(예: 야간, 급격한 조명 변화, 밀집된 차선 구간)에서 순간적으로 FPS가 10~15 FPS까지 저하되는 현상이 관찰되었습니다. 이는 모델의 안정적인 실시간성 확보에 중요한 과제로 인식됩니다.
+* **목표:** 범용 운영체제의 복잡성을 배제하고, 단일 하드웨어 개체의 **'인지(Sense)-추론(Think)-행동(Act)'** 루프에 최적화된 독립적·폐쇄적 64비트 OS 설계 및 구현.
+* **철학:** 외부 통신 최소화, 자기 완결성(Self-contained), 실시간 추론 우선순위 보장.
 
-#### **1.2. 8-bit 양자화(Quantization) 준비**
-*   TensorFlow Lite Converter를 활용한 8-bit 정수 양자화(INT8 Quantization)를 위한 데이터셋 수집 및 환경 설정 작업을 완료했습니다.
-*   이번 주 내로 양자화된 모델의 성능 및 추론 속도 테스트를 진행할 예정입니다.
+---
 
-#### **1.3. Picamera2 연동 안정화**
-*   Picamera2 라이브러리와 모델 추론 간의 데이터 파이프라인 지연을 최소화하기 위한 비동기 처리 로직을 개선했습니다. 카메라 입력 스트림의 안정성이 향상되었습니다.
+### 2. 기술 아키텍처 및 특징 (Architecture & Characteristics)
 
-### **2. 현재 직면한 기술적 과제 및 해결 방안**
+| 구분 | 상세 명세 |
+| --- | --- |
+| **커널 유형** | **Agent-Centric Monolithic Kernel** (성능 극대화를 위해 AI 엔진과 커널이 밀착된 구조) |
+| **대상 아키텍처** | **ARMv8-A (AArch64)** - Raspberry Pi 4/5 특화 |
+| **핵심 스케줄러** | **Deterministic Priority Scheduler** (AI 추론 태스크에 최우선순위 및 고정 타임슬롯 할당) |
+| **메모리 전략** | **Static Allocation First** (런타임 오류 방지를 위해 부팅 시 메모리 영역 확정, `no_std` 환경) |
+| **인지 시스템** | **CSI Camera Driver(Bare-metal)** 기반 고속 이미지 스트림 획득 |
+| **추론 엔진** | **Embedded Inference Engine** (TFLite Micro 또는 Rust 기반 `burn` 라이브러리 이식) |
+| **행동 제어** | **Low-latency PWM/GPIO Control** (추론 결과와 하드웨어 제어 사이의 지연 시간 최소화) |
 
-*   **과제 1: FPS 드롭 현상 해결**: 특정 복잡 시나리오에서의 FPS 드롭은 모델의 robustness와 직결됩니다.
-    *   **해결 방안**: 8-bit 양자화 적용 후 재측정, 추가적인 후처리(Post-processing) 최적화, 또는 상황별 동적 모델 전환(Adaptive Inference) 방안 검토.
-*   **과제 2: 모델 정확도 유지**: 경량화 과정에서 mIoU(mean Intersection over Union)가 85%에서 82%로 소폭 하락했습니다. 상용화 목표치인 90% 달성을 위해 정확도와 속도 간의 트레이드오프 조정이 필요합니다.
-    *   **해결 방안**: 학습 데이터 증강(Data Augmentation) 전략 재검토, 정밀 양자화(Quantization-Aware Training) 적용, 특정 레이어에 대한 미세 조정(Fine-tuning).
+---
 
-### **3. 다음 주 (12월 30일 ~ 1월 5일) 기술 개발 계획**
+### 3. 개발 환경 및 도구 (Dev Environment)
 
-*   **8-bit 양자화 모델 성능 테스트**: 양자화된 모델의 라즈베리파이 5 환경에서의 FPS 및 mIoU 측정. (주요 담당: 이지영)
-*   **FPS 드롭 현상 심층 분석**: 문제 시나리오 데이터 분석 및 원인 규명. (주요 담당: 김철수)
-*   **모델 정확도 개선 방안 논의**: 양자화 결과와 FPS 드롭 분석을 바탕으로, 정확도와 속도 밸런스를 위한 최적화 전략 수립. (개발팀 전체)
-*   **하드웨어 통합 테스트 준비**: 교육용 키트 시제품 하드웨어 구성에 맞춰 모델 및 소프트웨어 통합 테스트 계획 수립. (주요 담당: 김철수)
+* **언어:** Rust (`edition = "2021"`, `no_std`, `no_main`)
+* **툴체인:** `aarch64-unknown-none-softfloat`, `cargo-make`, `nasm` (Bootloader)
+* **에뮬레이션:** QEMU (`qemu-system-aarch64`) - 실제 보드 테스트 전 로직 검증용
+* **디버깅:** UART(Universal Asynchronous Receiver/Transmitter) 시리얼 통신을 통한 커널 로그 확인
+
+---
+
+### 4. 단계별 개발 방향 (Development Roadmap)
+
+1. **Phase 1: Bootstrapping**
+* 라즈베리파이 4/5 전원 인가 시 Rust 엔트리 포인트(`_start`) 진입 및 UART를 통한 "Hello OS" 출력.
+
+
+2. **Phase 2: Hardware Foundation**
+* MMU 설정(가상 메모리 매핑), 인터럽트 벡터 테이블 구축, 기본적인 GPIO 및 PWM 드라이버 작성.
+
+
+3. **Phase 3: Sensing & Memory**
+* CSI 카메라 인터페이스 구현 및 이미지 데이터를 저장할 프레임 버퍼 관리 시스템 구축.
+
+
+4. **Phase 4: AI Integration (The Brain)**
+* 신경망 모델 가중치를 커널 바이너리에 포함시키고, `no_std` 환경에서 추론 연산 함수 구동.
+
+
+5. **Phase 5: Self-Autonomous Loop**
+* "인지-추론-행동" 루프를 완성하여 카메라 입력에 따라 물리적 액추에이터가 실시간 반응하도록 최적화.
+
+
+
+---
+
+### 🔍 딥리서치를 위한 핵심 질문 리스트 (Research Queries)
+
+딥리서치 도구에 다음 질문들을 던져 상세 데이터를 수집하세요.
+
+1. **[하드웨어 제어]** "Raspberry Pi 4/5의 Broadcom BCM2711/BCM2712 칩셋에서 OS 수준의 Bare-metal CSI 카메라 드라이버를 구현하기 위한 레지스터 맵과 초기화 시퀀스는?"
+2. **[Rust OS 개발]** "Rust `no_std` 환경에서 정적 메모리 할당만을 사용하여 고용량 AI 모델 가중치(약 5~10MB)를 효율적으로 로드하고 관리하는 디자인 패턴은?"
+3. **[실시간성]** "임베디드 AI 추론의 지연 시간을 줄이기 위해 ARM64 아키텍처의 L1/L2 캐시를 OS 커널 수준에서 어떻게 최적화할 수 있는가?"
+4. **[추론 엔진 이식]** "Rust로 작성된 `burn` 또는 `tract` 라이브러리를 `aarch64-unknown-none` 타겟의 베어메탈 환경에 이식할 때 발생하는 주요 이슈와 해결 방안은?"
+5. **[폐쇄형 OS]** "외부 라이브러리 의존성 없이 독립 개체로서 작동하는 OS에서, 환경의 변화(경험)를 기록하기 위한 최소한의 휘발성/비휘발성 데이터 구조 설계 사례는?"
+
+---
+
+### 💡 연구 가이드라인 (Tips for Suk-hwan)
+
+석환님의 **AI 전문성**과 **하드웨어 수리 경험**을 결합한다면, 이 프로젝트는 단순한 OS를 넘어 **'디지털 생명체'**의 기초가 될 것입니다.
+
+* **추천 도서:** *The Little Book of Semaphores* (동기화 이해용), *Operating Systems: Three Easy Pieces* (OS 구조 이해용)
+* **참고 커뮤니티:** Reddit의 `r/osdev`, Rust Embedded Working Group.

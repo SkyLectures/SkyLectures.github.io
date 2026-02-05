@@ -162,14 +162,9 @@ description: >
             - [미세조정 개요](/materials/S03-03-03-02_01-FineTuningOverview)
             - [미세조정 실습](/materials/S03-03-03-02_02-FineTuningPractice)
 
-### 3.4 강화학습(RL)
-- [강화학습 개요](/materials/S03-07-01-01_01-RlOverview)
-- [강화학습 모델](/materials/S03-07-02-01_01-RlModel)
-- [강화학습 실습](/materials/S03-07-03-01_01-RlPractice)
+### 3.4 자연어 처리(NLP) 
 
-### 3.5 자연어 처리(NLP) 
-
-### 3.6 대형 언어 모델(LLM) + 생성형 AI(GenAI)
+### 3.5 대형 언어 모델(LLM)
 - [LLM 개요](/materials/S03-05-01-00_LLM_Overview)
 - [생성형 AI 개요](/materials/S03-06-01-01_01-GenAiOverview)
 - [생성형 AI 작동 원리](/materials/S03-06-02-01_01-GenAiPrinciple)
@@ -196,11 +191,34 @@ description: >
     - [사용자 맞춤형 프롬프트 설계](/materials/S03-05-04-06_01-AdvCustomPrompts)
     - [GPT 응용 서비스 설계](/materials/S03-05-04-07_01-AdvGptService)
 
-### 3.7 AI 윤리
+### 3.6 생성형 AI
+
+### 3.7 강화학습(RL)
+- [강화학습 개요](/materials/S03-07-01-01_01-RlOverview)
+- [강화학습 모델](/materials/S03-07-02-01_01-RlModel)
+- [강화학습 실습](/materials/S03-07-03-01_01-RlPractice)
+
+### 3.8 자동 음성인식
+
+
+### 3.9 AI 윤리
 - [AI 윤리 개요](/materials/S03-09-01-01_01_AiEthicsOverview)
 - [AI 윤리와 전통 윤리](/materials/S03-09-02-01_01_AiEthicsTraditionalEthics)
 - [인공지능의 사회적 문제](/materials/S03-09-03-01_01_AiSocialProblems)
 - [인공지능과 규제](/materials/S03-09-04-01_01_AiRegulations)
+
+
+### 3.10 AI SW 테스트
+
+### 3.11 Physical AI
+- [Physical AI 개요](/materials/S03-11-01-01_01-PhysicalAiOverview)
+- Physical AI의 작동 원리
+- On Device AI와 Edge AI
+- 응용
+    - 모빌리티 AI
+    - 자율제조와 스마트팩토리
+    - 휴머노이드와 서비스 AI
+- 실습
 
 ---
 
