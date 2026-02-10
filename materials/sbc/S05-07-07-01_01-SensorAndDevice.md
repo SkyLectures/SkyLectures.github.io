@@ -1,8 +1,8 @@
 ---
 layout: page
-title:  "라즈베리파이 제어 기초"
+title:  "센서와 디바이스의 관계"
 date:   2025-07-29 10:00:00 +0900
-permalink: /materials/S05-03-03-01_01-RaspberryPiControlBasic
+permalink: /materials/S05-07-07-01_01-SensorAndDevice
 categories: materials
 ---
 * toc

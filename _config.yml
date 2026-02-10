@@ -48,7 +48,7 @@ author:
 
 # Add links to the sidebar.
 menu:
-  - title: 강의 이력
+  - title: 강의 및 멘토링 이력
     url:   /lectlog/
   - title: 강의 자료
     url:   /materials/
