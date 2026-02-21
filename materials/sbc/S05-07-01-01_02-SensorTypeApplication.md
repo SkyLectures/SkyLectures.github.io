@@ -216,7 +216,11 @@ categories: materials
 
 - 센서는 자율주행, 환경 모니터링, 의료 진단, 산업 자동화, 스마트 시티 등 다양한 실무 영역에서 활용되고 있음
 
-### 2.1 일반적인 분류
+### 2.1 측정 대상 및 응용 분야 기준에 따른 분류
+
+- 센서가 어디에 쓰이며, 어떤 대상을 측정하는가?"를 기준으로 하는 분류
+- 커리큘럼에 따른 분류이며 기준이 다소 중복될 수 있음
+    - 예: 미세먼지 센서는 환경 센서이기도 하지만, 원리는 물리/광학 센서일 수 있음
 
 #### 2.1.1 물리 센서 (Physical Sensors)
 - 온도, 압력, 위치, 움직임, 빛, 소리, 가속도 등 물리량을 감지하여 전기 신호로 변환하는 센서 ➜ 환경의 물리적 변화를 감지
@@ -731,7 +735,11 @@ categories: materials
 {: .common-quote}
 
 
-### 2.2 다른 기준에 따른 분류
+### 2.2 에너지 형태 및 변환 원리 기준에 따른 분류
+
+- '외부 자극이 어떤 물리 법칙을 통해 신호로 변환되는가?'를 기준으로 하는 분류
+- 계측 공학에서 가장 표준적으로 사용하는 분류
+- 센서의 감지부와 신호 변환부의 설계 방식을 결정하는 기준이 됨
 
 <div class="info-table">
     <table>
@@ -843,6 +851,124 @@ categories: materials
                 <td class="td-left">
                     혈당 센서, 유전자(DNA) 센서, 항원-항체 반응 센서, 뇌파(EEG) 센서, 심전도(ECG) 센서, 근전도(EMG) 센서 등
                 </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+### 2.3 센서 구성에 따른 분류
+
+<div class="info-table">
+    <table>
+        <thead>
+            <th>분류</th>
+            <th>센서 구성</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="td-rowheader">기구</td>
+                <td>기구형 센서, 물성형 센서, 기구·물성 혼합형 센서</td>
+            </tr>
+            <tr>
+                <td class="td-rowheader">구성</td>
+                <td>기본 센서, 조립 센서, 응용 센서</td>
+            </tr>
+            <tr>
+                <td class="td-rowheader">검출 신호</td>
+                <td>아날로그 센서, 디지털 센서, 주파수형 센서</td>
+            </tr>
+            <tr>
+                <td class="td-rowheader">감지 기능</td>
+                <td>공간량, 역학량, 열역학량, 전기자기량, 화학량, 시각·촉각 센서</td>
+            </tr>
+            <tr>
+                <td class="td-rowheader">변환 방법</td>
+                <td>역학적, 전기적, 자기적, 전자기적, 광학적, 전기화학적, 촉매화학적, 미생물화학적, 효소화학적 센서</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+### 2.4 역학량에 따른 분류
+
+<div class="info-table">
+    <table>
+        <thead>
+            <th>감지 대상</th>
+            <th>센서 분류</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="td-rowheader">변위, 길이</td>
+                <td>자동 트랜스, 스트레인 게이지, 콘덴서 변위계</td>
+            </tr>
+            <tr>
+                <td class="td-rowheader">속도, 가속도</td>
+                <td>회전형 속도계, 동전형 가속도계</td>
+            </tr>
+            <tr>
+                <td class="td-rowheader">회전수, 진동</td>
+                <td>로터리 엔코더, 스코프, 압전형 검출기</td>
+            </tr>
+            <tr>
+                <td class="td-rowheader">압력</td>
+                <td>다이어프램, 로드셀, 수정압력계</td>
+            </tr>
+            <tr>
+                <td class="td-rowheader">힘, 토크</td>
+                <td>저울, 천칭, 비틀림바</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+### 2.5 감지 방식에 따른 분류 (동작 방식 기준)
+    
+- 감지부와 변환부가 에너지를 생성하느냐, 아니면 외부 전원을 쓰느냐에 따른 분류
+
+<div class="info-table">
+    <table>
+        <thead>
+            <th>분류</th>
+            <th>설명</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="td-rowheader">능동형 (Active/Self-generating)</td>
+                <td>
+                    외부 전원 없이 자극으로부터 직접 전기를 생성<br>
+                    (예: 압전 소자, 태양 전지, 열전대)
+                </td>
+            </tr>
+            <tr>
+                <td class="td-rowheader">수동형 (Passive/Modulating)</td>
+                <td>
+                    외부에서 전기를 공급해주어야 하며, 자극에 의해 저항이나 정전용량 등이 변함<br>
+                    (예: 저항 막 방식 압력 센서, LDR 조도 센서)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+### 2.6 데이터 출력 형태에 따른 분류 (시스템 연동 기준)
+
+- Jetson Nano나 Raspberry Pi 같은 시스템 입장에서 가장 중요한 기준
+
+<div class="info-table">
+    <table>
+        <thead>
+            <th>분류</th>
+            <th>설명</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="td-rowheader">아날로그 센서</td>
+                <td>연속적인 전압/전류 신호 출력</td>
+            </tr>
+            <tr>
+                <td class="td-rowheader">디지털 센서</td>
+                <td>I2C, SPI, UART 등을 통해 가공된 숫자 데이터 출력</td>
             </tr>
         </tbody>
     </table>

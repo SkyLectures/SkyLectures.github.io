@@ -29,24 +29,6 @@ categories: materials
 > - 단순하게 보면,"무엇으로 구성되어 있는가(Structure)"와 "어떤 순서로 일이 일어나는가(Function)"의 차이로 볼 수 있음
 {: .common-quote}
 
-<div>
-    <table>
-    <thead>
-    <th>구분</th>
-    <th>구분</th>
-    <th>구분</th>
-    <th>구분</th>
-    </thead>
-    <tbody>
-    <tr>
-    <td class="td-rowheader">실무 키워드</td>
-    <td>휘트스톤 브리지</td>
-    <td>MEMS, 기생 용량</td>
-    <td>자가 발전, 일회용(화학)</td>
-    </tr>
-    </tbody>
-    </table>
-</div>
 
 ### 1-1. 감지 원리 (물리량 → 전기신호 변환 사례)
 
