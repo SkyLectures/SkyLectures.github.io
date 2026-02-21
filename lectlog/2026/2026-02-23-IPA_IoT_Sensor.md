@@ -26,33 +26,50 @@ categories: lectlog
 {: .common-quote}
 
 
-<h2>● 강의 내용</h2>
+<h2>● 강의 내용(New)</h2>
 
 - 센서의 이해
     - [센서에 대한 기본적인 이해와 센서의 역할 개요](/materials/S05-07-01-01_01-SensorOverview)
-    - [센서의 종류 및 응용 사례](/materials/S05-07-01-02_01-SensorTypeApplication)
-- 센서의 종류와 특성
-    - [물리 센서의 종류와 특성](/materials/S05-07-02-01_01-PhysicalSensor)
-    - [화학/환경 센서의 종류와 특성](/materials/S05-07-03-01_01-ChemicalAndEnvironmentalSensor)
-- 센서의 원리
-    - [물리 센서의 동작 원리](/materials/S05-07-02-02_01-PhysicalSensorOperatingPrinciples)
-    - [화학 센서의 동작 원리](/materials/S05-07-03-02_01-ChemicalSensorOperatingPrinciples)
-    - [환경 센서의 동작 원리](/materials/S05-07-03-03_01-EnvironmentalSensorOperatingPrinciples)
+    - [센서의 종류 및 응용 사례](/materials/S05-07-01-01_02-SensorTypeApplication)
+    - [스마트폰 센서 데이터 시각화 및 분석](/materials/S05-07-01-01_03-SensorBasicPractice)
+- 센서의 구조와 원리
+    - [센서의 하드웨어 구조와 원리](/materials/S05-07-02-01_01-SensorHardwareStructure)
+    - [센서의 동작 원리](/materials/S05-07-02-01_02-SensorOperatingPrinciples)
+
+    
+    - [센서의 신호 처리](/materials/S05-07-03-01_01-ChemicalAndEnvironmentalSensor)
+
+<h2>● 강의 내용(Old)</h2>
+
+- 센서의 이해
+    - 센서에 대한 기본적인 이해와 센서의 역할 개요 **→ 유지**
+    - 센서의 종류 및 응용 사례 **→ 유지**
+-센서의 종류와 특성
+    - 물리 센서의 종류와 특성 **→ 센서의 종류 및 응용 사례**
+    - 화학/환경 센서의 종류와 특성 **→ 센서의 종류 및 응용 사례**
+- 센서의 원리 1
+    - 물리 센서의 동작 원리 1 **→ 센서의 동작 원리**
+    - 물리 센서의 동작 원리 2 **→ 센서의 동작 원리**
+- 센서의 원리 2
+    - 화학 센서의 동작 원리 **→ 센서의 동작 원리**
+    - 환경 센서의 동작 원리 **→ 센서의 동작 원리**
 - 센서의 기본 요소
-    - [센서의 기본 기능에 대한 이해](/materials/S05-07-04-01_01-SensorBasicFunction)
-    - [센서를 구성하는 요소들에 대한 이해](/materials/S05-07-04-02_01-SensorComponents)
+    - 센서의 기본 기능에 대한 이해 **→ 센서의 하드웨어 구조와 원리 / 센서의 동작 원리**
+    - 센서를 구성하는 요소들에 대한 이해 **→ 센서의 하드웨어 구조와 원리 / 센서의 동작 원리**
 - 센서의 구조
-    - [센서의 기계적 구조와 동작 원리](/materials/S05-07-05-01_01-SensorMechanicalStructure)
-    - [센서의 전기/전자적 구조와 회로의 동작 원리](/materials/S05-07-05-02_01-SensorElectricalStructure)
+    - 센서의 기계적 구조와 동작 원리 **→ 센서의 하드웨어 구조와 원리**
+    - 센서의 전기/전자적 구조와 회로의 동작 원리 **→ 센서의 하드웨어 구조와 원리**
 - 센서 인터페이스 기술
-    - [물리 센서들에 대한 인터페이스 방법](/materialsS05-07-06-01_01-PhysicalSensorInterface/)
-    - [화학/환경 센서들에 대한 인터페이스 방법](/materials/S05-07-06-02_01-ChemicalAndEnvironmentalSensorInterface)
+    - 물리 센서들에 대한 인터페이스 방법
+    - 화학/환경 센서들에 대한 인터페이스 방법
 - 센서와 디바이스
-    - [센서와 디바이스의 관계](/materials/S05-07-07-01_01-SensorAndDevice)
-    - [센서형 디바이스와 디바이스형 센서의 이해](/materials/S05-07-07-02_01-SensorTypeDeviceAndDeviceTypeSensor)
+    - 센서와 디바이스의 관계
+    - 센서형 디바이스와 디바이스형 센서의 이해
 - 센서와 구동 장치
-    - [센서용 구동 장치의 종류와 구조](/materials/S05-07-08-01_01-SensorActuators)
-    - [구동 장치의 원리, 활용 방법과 응용 사례](/materials/S05-07-08-02_01-SensorActuatorPrinciples)
+    - 센서용 구동 장치의 종류와 구조
+    - 구동 장치의 원리, 활용 방법과 응용 사례
 - 센서와 에지 컴퓨팅
-    - [에지 컴퓨팅에서 센서 활용의 개념과 기술 적용 방법](/materials/S05-07-09-01_01-SensorInEdgeComputing)
-    - [에지 컴퓨팅을 위한 센서 활용 기술](/materials/S05-07-09-02_01-SensorForEdgeComputing)
+    - 에지 컴퓨팅에서 센서 활용의 개념과 기술 적용 방법
+    - 에지 컴퓨팅을 위한 센서 활용 기술
+
+<h2>● 강의 내용(추가된 것)</h2>
