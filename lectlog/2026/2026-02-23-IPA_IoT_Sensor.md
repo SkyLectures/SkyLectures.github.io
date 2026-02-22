@@ -30,15 +30,16 @@ categories: lectlog
 
 - 센서의 이해
     - [센서에 대한 기본적인 이해와 센서의 역할 개요](/materials/S05-07-01-01_01-SensorOverview)
-    - [센서의 종류 및 응용 사례](/materials/S05-07-01-01_02-SensorTypeApplication)
-    - [(실습) 스마트폰 센서 데이터 시각화 및 분석](/materials/S05-07-01-01_03-SensorBasicPractice)
+    - [센서의 종류 및 응용 사례](/materials/S05-07-01-02_01-SensorTypeApplication)
+    - [(실습) 스마트폰 센서 데이터 시각화 및 분석](/materials/S05-07-01-03_01-SensorBasicPractice)
+    - [센서 평가 지표](/materials/S05-07-01-04_01-SensorEvaluationMetrics)
+    - [(실습) 센서 평가 지표 적용해 보기](/materials/S05-07-01-04_02-SensorEvaluationMetricsPractice)
 
 - 센서의 구조와 원리
     - [센서의 하드웨어 구조와 원리](/materials/S05-07-02-01_01-SensorHardwareStructure)
-    - [센서의 동작 원리](/materials/S05-07-02-01_02-SensorOperatingPrinciples)
+    - [센서의 동작 원리](/materials/S05-07-02-02_01-SensorOperatingPrinciples)
+    - [센서 종류별 동작 원리 및 활용 사례](/materials/S05-07-02-02_02-EachSensorsOperatingPrinciples)
 
-    
-    - [센서의 신호 처리](/materials/S05-07-03-01_01-ChemicalAndEnvironmentalSensor)
 
 <h2>● 강의 내용(Old)</h2>
 
@@ -49,11 +50,11 @@ categories: lectlog
     - 물리 센서의 종류와 특성 **→ 센서의 종류 및 응용 사례**
     - 화학/환경 센서의 종류와 특성 **→ 센서의 종류 및 응용 사례**
 - 센서의 원리 1
-    - 물리 센서의 동작 원리 1 **→ 물리 센서의 동작 원리** 로 통합
-    - 물리 센서의 동작 원리 2 **→ 물리 센서의 동작 원리** 로 통합
+    - 물리 센서의 동작 원리 1 **→ 센서 종류별 동작 원리 및 활용 사례**
+    - 물리 센서의 동작 원리 2 **→ 센서 종류별 동작 원리 및 활용 사례**
 - 센서의 원리 2
-    - 화학 센서의 동작 원리 **→ 유지**
-    - 환경 센서의 동작 원리 **→ 유지**
+    - 화학 센서의 동작 원리 **→ 센서 종류별 동작 원리 및 활용 사례**
+    - 환경 센서의 동작 원리 **→ 센서 종류별 동작 원리 및 활용 사례**
 - 센서의 기본 요소
     - 센서의 기본 기능에 대한 이해 **→ 센서의 하드웨어 구조와 원리 / 센서의 동작 원리**
     - 센서를 구성하는 요소들에 대한 이해 **→ 센서의 하드웨어 구조와 원리 / 센서의 동작 원리**
@@ -76,5 +77,6 @@ categories: lectlog
 <h2>● 강의 내용(추가된 것)</h2>
 
 - (실습) 스마트폰 센서 데이터 시각화 및 분석
+- 센서의 평가 지표
+- (실습) 센서 평가 지표 적용해 보기
 - 센서의 동작 원리
-- 센서의 신호 처리

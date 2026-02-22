@@ -2,7 +2,7 @@
 layout: page
 title:  "(실습) 스마트폰 센서 데이터 시각화 및 분석"
 date:   2025-07-29 10:00:00 +0900
-permalink: /materials/S05-07-01-01_03-SensorBasicPractice
+permalink: /materials/S05-07-01-03_01-SensorBasicPractice
 categories: materials
 ---
 * toc
