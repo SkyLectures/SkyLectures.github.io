@@ -5,7 +5,7 @@ slug: lectlog
 description: >
   <span style="color: #CC0000;font-size: 1.4em;">총 강의시수: 3,199H</span>
   <span style="color: #000000;font-size: 1.4em;">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
-  <span style="color: #1c5f1c;font-size: 1.4em;">(현재 대기 중인 강의 시수: 124H)</span><br>
+  <span style="color: #1c5f1c;font-size: 1.4em;">(현재 대기 중인 강의 시수: 248H)</span><br>
   <span style="color: #CC0000;font-size: 1.4em;">총 멘토링 시수: 59H</span>
   <span style="color: #000000;font-size: 1.4em;">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
   <span style="color: #1c5f1c;font-size: 1.4em;">(현재 대기 중인 멘토링 시수: 7H)</span>
@@ -15,15 +15,15 @@ description: >
 
 ---
 
-# **강의 이력** (3,199H + 288H)
+# **강의 이력** (3,199H + 248H)
 
-## 2026 (31H + 288H)
+## 2026 (31H + 248H)
 - **[11.09~11.11]** 제조 산업과 AI 활용 4차(21H)
 - **[09.07~09.09]** 제조 산업과 AI 활용 3차(21H)
 - **[07.27~07.29]** 제조 산업과 AI 활용 2차(21H)
 - **[05.18~05.20]** 제조 산업과 AI 활용 1차(21H)
 - **[04.13~05.14]** 생성형 AI 활용 개발자 양성 및 취업 과정(164H)
-- [**[02.23~03.09]** IoT 센서기술(40H)](/lectlog/2023-02-23-IPA_IoT_Sensor)
+<!--- [**[02.23~03.09]** IoT 센서기술(40H)](/lectlog/2023-02-23-IPA_IoT_Sensor)//-->
 - **[02.01~03.15]** 피지컬 AI 동영상 강의 녹화(20H분량)
 - **[01.12~02.08]** 피지컬 AI 동영상 강의 녹화(3H분량)
 - [**[01.08]** AI도구를 활용한 스마트 워크 실무과정(초중급)(4H)](/lectlog/2026-01-08-IPA_RISE_AI_Tech_02)
