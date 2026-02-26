@@ -31,7 +31,7 @@ layout: home
 
 ## 개별 커리큘럼 모음
 
-
+<!--
 ## 최신 포스트
 
 <ul class="related-posts" style="font-weight: normal;">
@@ -39,3 +39,4 @@ layout: home
     {% include_cached components/post-list-item.html post=post %}
   {% endfor %}
 </ul>
+//-->

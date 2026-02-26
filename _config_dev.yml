@@ -91,10 +91,10 @@ menu:
 legal:
   - title:             LICENSE
     url:               /LICENSE/
-  - title:             NOTICE
-    url:               /NOTICE/
-  - title:             CHANGELOG
-    url:               /CHANGELOG/
+  # - title:             NOTICE
+  #   url:               /NOTICE/
+  # - title:             CHANGELOG
+  #   url:               /CHANGELOG/
 
 # This text will appear in a `<small>` tag in the footer of every page.
 copyright:             © 2020. AiDALab Co. All rights reserved.
@@ -429,29 +429,29 @@ sass:
 # Jekyll Compose Defaults
 # ---------------------------------------------------------------------------------------
 
-jekyll_compose:
-  default_front_matter:
-    drafts:
-      layout: post
-      description: > 
-        A short ~160 character description of your post for search engines,
-        social media previews, etc.
-      image:
-        path: /assets/img/sidebar-bg.jpg
-    posts:
-      layout: post
-      description: > 
-        A short ~160 character description of your post for search engines,
-        social media previews, etc.
-      image:
-        path: /assets/img/sidebar-bg.jpg
-    projects:
-      layout: project
-      description: > 
-        A short ~160 character description of your post for search engines,
-        social media previews, etc.
-      image:
-        path: /assets/img/sidebar-bg.jpg
-      links:
-        - title: Project Link
-          url: https://example.com
+# jekyll_compose:
+#   default_front_matter:
+#     drafts:
+#       layout: post
+#       description: > 
+#         A short ~160 character description of your post for search engines,
+#         social media previews, etc.
+#       image:
+#         path: /assets/img/sidebar-bg.jpg
+#     posts:
+#       layout: post
+#       description: > 
+#         A short ~160 character description of your post for search engines,
+#         social media previews, etc.
+#       image:
+#         path: /assets/img/sidebar-bg.jpg
+#     projects:
+#       layout: project
+#       description: > 
+#         A short ~160 character description of your post for search engines,
+#         social media previews, etc.
+#       image:
+#         path: /assets/img/sidebar-bg.jpg
+#       links:
+#         - title: Project Link
+#           url: https://example.com

@@ -18,8 +18,23 @@
     {% include body/nav.html %}
   </nav>
 
-  {% assign author = site.data.authors.first[1] | default:site.author %}
-  <div class="sidebar-social">
-    {% include components/social.html author=author %}
-  </div>
+  {% if jekyll.environment == 'production' and plugins contains 'jekyll-adsense' %}
+    <div class="sidebar-ads">
+      {% include components/adsense.html %}
+    </div>
+  {% endif %}
+
+  {% if site.show_toc and page.toc %}
+    <nav class="sidebar-toc" role="navigation">
+      <h2 class="h3">{{ site.data.strings.toc | default:"Table of Contents" }}</h2>
+      {{ page.toc }}
+    </nav>
+  {% endif %}
+
+  {% if jekyll.environment == 'development' %}
+    {% assign author = site.data.authors.first[1] | default:site.author %}
+    <div class="sidebar-social">
+      {% include components/social.html author=author %}
+    </div>
+  {% endif %}
 </div>
