@@ -50,6 +50,8 @@ author:
 menu:
   - title: 강의 및 멘토링 이력
     url:   /lectlog/
+  - title: 강의 자료
+    url:   /materials/
   - title: Q & A
     url:   https://cafe.naver.com/aidalab
     external: true
