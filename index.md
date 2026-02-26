@@ -7,7 +7,7 @@ layout: home
 > 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,199H</span> + <span style="color: #1c5f1c;">(대기 중: 248H)</span> / <span style="color: #CC0000;">멘토링: 총 59H</span> + <span style="color: #1c5f1c;">(대기 중: 7H)</span>  
 {: .summary-quote}
 
-> 💡 지난 연도의 강의 이력은 <a href="./lectlog/"><span style="color: #CC0000;"><b>강의 이력</b></span></a> 메뉴를 사용하시기 바랍니다.<br>
+> 💡 지난 연도의 실적과 내용은 <a href="./lectlog/"><span style="color: #CC0000;"><b>강의 및 멘토링 이력</b></span></a> 메뉴를 사용하시기 바랍니다.<br>
 {: .common-quote}
 
 ## 2026년 강의 일정

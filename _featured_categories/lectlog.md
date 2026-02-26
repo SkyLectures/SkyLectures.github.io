@@ -3,17 +3,12 @@ layout: page
 title: 강의 및 멘토링 이력
 slug: lectlog
 description: >
-  <span style="color: #CC0000;font-size: 1.4em;">총 강의시수: 3,199H</span>
-  <span style="color: #000000;font-size: 1.4em;">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
-  <span style="color: #1c5f1c;font-size: 1.4em;">(현재 대기 중인 강의 시수: 248H)</span><br>
-  <span style="color: #CC0000;font-size: 1.4em;">총 멘토링 시수: 59H</span>
-  <span style="color: #000000;font-size: 1.4em;">&nbsp;&nbsp;+&nbsp;&nbsp;</span>
-  <span style="color: #1c5f1c;font-size: 1.4em;">(현재 대기 중인 멘토링 시수: 7H)</span>
 ---
 * toc
 {:toc .large-only .toc-sticky:true}
 
----
+> 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,199H</span> + <span style="color: #1c5f1c;">(대기 중: 248H)</span> / <span style="color: #CC0000;">멘토링: 총 59H</span> + <span style="color: #1c5f1c;">(대기 중: 7H)</span>  
+{: .summary-quote}
 
 # **강의 이력** (3,199H + 248H)
 

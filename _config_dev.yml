@@ -50,6 +50,8 @@ author:
 menu:
   - title: 강의 및 멘토링 이력
     url:   /lectlog/
+  - title: 커리큘럼 모음
+    url:   /curriculums/
   - title: 강의 자료
     url:   /materials/
   - title: Q & A
@@ -424,8 +426,11 @@ compress_html:
     envs:              [development]
 
 sass:
+  quiet_deps: true
   style:               compressed
 
+liquid:
+  error_mode: lax
 # Jekyll Compose Defaults
 # ---------------------------------------------------------------------------------------
 
