@@ -43,8 +43,7 @@ categories: materials
                 - 인코더-디코더 구조를 가짐
                 - 트랜스포머 모델의 Full Architecture를 따름
                 <p style="text-align: center">
-                <img src='/materials/images/ai/S03-05-01-01_01-001.png' width="600"/><br>
-                Transformer Full Architecture (출처: 위키피디아)
+                <img src='/materials/ai/images/S03-05-01-01_01-001.png' width="600px"/>
                 </p>
 
         - 트랜스포머 디코더 (GPT 계열)

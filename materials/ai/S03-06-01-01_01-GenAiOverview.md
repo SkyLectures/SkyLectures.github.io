@@ -57,11 +57,38 @@ categories: materials
 
 - 생성형 AI의 주요 기술
 
-| 기술명 | 설명 |
-|--------|------|
-| **GAN (Generative Adversarial Network)** | - 두 개의 신경망(생성자 & 판별자)이 경쟁하면서 더 정교한 데이터를 생성함<br>- 주로 이미지 생성에 활용됨 |
-| **VAE (Variational AutoEncoder)** | - 확률 기반으로 데이터를 압축하고, 이를 다시 복원하는 방식<br>- 생성과 압축 둘 다 가능 |
-| **Transformer 기반 모델** | - GPT, BERT, T5 등의 자연어 처리 모델이 대표<br>- 긴 문맥도 이해하며 텍스트 생성에 강력함 |
+<div class="info-table">
+<table>
+    <thead>
+        <th style="width: 300px;">기술명</th>
+        <th style="width: 550px;">설명</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="td-rowheader">GAN (Generative Adversarial Network)</td>
+            <td class="td-left">
+                - 두 개의 신경망(생성자 & 판별자)이 경쟁하면서 더 정교한 데이터를 생성함<br>
+                - 주로 이미지 생성에 활용됨
+            </td>
+        </tr>
+        <tr>
+            <td class="td-rowheader">VAE (Variational AutoEncoder)</td>
+            <td class="td-left">
+                - 확률 기반으로 데이터를 압축하고, 이를 다시 복원하는 방식<br>
+                - 생성과 압축 둘 다 가능
+            </td>
+        </tr>
+        <tr>
+            <td class="td-rowheader">Transformer 기반 모델</td>
+            <td class="td-left">
+                - GPT, BERT, T5 등의 자연어 처리 모델이 대표<br>
+                - 긴 문맥도 이해하며 텍스트 생성에 강력함
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
 
 ## 4. 생성형 AI의 종류 (생성하는 결과물 형태에 따라)
 
