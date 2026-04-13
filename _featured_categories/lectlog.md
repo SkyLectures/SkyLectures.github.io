@@ -10,16 +10,24 @@ description: >
 > 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,199H</span> + <span style="color: #1c5f1c;">(대기 중: 248H)</span> / <span style="color: #CC0000;">멘토링: 총 59H</span> + <span style="color: #1c5f1c;">(대기 중: 7H)</span>  
 {: .summary-quote}
 
-# **강의 이력** (3,199H + 248H)
+# **강의 이력** (3,199H + 513H)
 
-## 2026 (31H + 248H)
-- [**[11.09~11.11]** 제조 산업과 AI 활용 4차(21H)](/lectlog/2026-11-09-KPC_ManufaturingAI_4th)
-- **[10.26~10.27]** 제조 산업과 AI 활용-천안(14H)
-- [**[09.07~09.09]** 제조 산업과 AI 활용 3차(21H)](/lectlog/2026-09-07-KPC_ManufaturingAI_3rd)
-- **[08.27~08.08]** 제조 산업과 AI 활용-부산(14H)
-- [**[07.27~07.29]** 제조 산업과 AI 활용 2차(21H)](/lectlog/2026-07-27-KPC_ManufaturingAi_2nd)
+## 2026 (31H + 513H)
+
+- [[**12.14~12.15**] 제조 산업과 AI 활용-KOMEA과정12차-부산(14H)](/lectlog/2026-12-14-KPC_ManufaturingAi_Komea12)
+- [[**11.24~11.25**] 제조 산업과 AI 활용-KOMEA과정11차-부산(14H)](/lectlog/2026-11-24-KPC_ManufaturingAi_Komea11)
+- [[**11.09~11.11**] 제조 산업과 AI 활용-일반과정6차(서울)(21H)](/lectlog/2026-11-09-KPC_ManufaturingAi6)
+- [[**10.26~10.27**] 제조 산업과 AI 활용-KOMEA과정10차-부산(14H)](/lectlog/2026-10-26-KPC_ManufaturingAi_Komea10)
+- [[**10.22~10.23**] 제조 산업과 AI 활용-KOMEA과정9차-부산(14H)](/lectlog/2026-10-22-KPC_ManufaturingAi_Komea9)
+- [[**10.12~10.13**] 제조 산업과 AI 활용-KOMEA과정8차-부산(14H)](/lectlog/2026-10-12-KPC_ManufaturingAi_Komea8)
+- [[**09.07~09.09**] 제조 산업과 AI 활용-일반과정4차-서울(21H)](/lectlog/2026-09-07-KPC_ManufaturingAi4)
+- [[**08.27~08.28**] 제조 산업과 AI 활용-일반과정3차-부산(14H)](/lectlog/2026-08-27-KPC_ManufaturingAi3)
+- [[**08.24~08.25**] 제조 산업과 AI 활용-KOMEA과정7차-부산(14H)](/lectlog/2026-08-24-KPC_ManufaturingAi_Komea7)
+- [[**08.20~08.21**] 제조 산업과 AI 활용-KOMEA과정6차-부산(14H)](/lectlog/2026-08-30-KPC_ManufaturingAi_Komea6)
+- [[**08.05~08.06**] 제조 산업과 AI 활용-KOMEA과정5차-부산(14H)](/lectlog/2026-08-05-KPC_ManufaturingAi_Komea5)
+- [[**07.27~07.29**] 제조 산업과 AI 활용-일반과정2차-서울(21H)](/lectlog/2026-07-27-KPC_ManufaturingAi2)
 - [**[05.18~07.14]** 데이터 엔지니어링 과정(160H)](/lectlog/2026-05-18-ITC_DataEngineering)
-- [**[04.13~05.14]** 생성형 AI 활용 개발자 양성 및 취업 과정(164H)](/lectlog/2026-04-13-IPA_GenAI)
+- [**[04.14~05.15]** 생성형 AI 활용 개발자 양성 및 취업 과정(164H)](/lectlog/2026-04-14-IPA_GenAI)
 <!--- [**[02.23~03.09]** IoT 센서기술(40H)](/lectlog/2023-02-23-IPA_IoT_Sensor)//-->
 - **[02.01~03.15]** 피지컬 AI 동영상 강의 녹화(20H분량)
 - **[01.12~02.08]** 피지컬 AI 동영상 강의 녹화(3H분량)

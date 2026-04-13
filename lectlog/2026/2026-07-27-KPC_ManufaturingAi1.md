@@ -1,8 +1,8 @@
 ---
 layout: page
-title:  "제조 산업과 AI 활용 과정 4차(21H)"
+title:  "제조 산업과 AI 활용 과정 2차(21H)"
 date:   2026-04-02 10:50:00 +0900
-permalink: /lectlog/2026-11-09-KPC_ManufaturingAI_4th
+permalink: /lectlog/2026-07-27-KPC_ManufaturingAi1
 categories: lectlog
 ---
 * toc
@@ -18,7 +18,7 @@ categories: lectlog
 >   - 설비 유지보수 및 예지 정비 시스템 구축 담당자
 >   - 스마트 팩토리 전환 프로젝트 리더 및 기획자
 >   - 제조 분야 AI 알고리즘 적용에 관심 있는 엔지니어
-> - **강의기간:** 2026.11.09~11.11 (09:00 ~ 17:00) (21H)
+> - **강의기간:** 2026.07.27~07.29 (09:00 ~ 17:00) (21H)
 > - **운영방식:** 오프라인 대면 강의
 
 > - **학습목표**

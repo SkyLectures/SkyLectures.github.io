@@ -2,7 +2,7 @@
 layout: page
 title:  "제조 산업과 AI 활용 과정 3차(21H)"
 date:   2026-04-02 10:50:00 +0900
-permalink: /lectlog/2026-09-07-KPC_ManufaturingAI_3rd
+permalink: /lectlog/2026-09-07-KPC_ManufaturingAi2
 categories: lectlog
 ---
 * toc
