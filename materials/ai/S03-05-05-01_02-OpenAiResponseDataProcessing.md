@@ -1,8 +1,8 @@
 ---
 layout: page
-title:  "GPT 응답 데이터 처리"
+title:  "OpenAI API 응답 데이터 처리"
 date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S03-05-05-02_01-ProcessingGptResponseData
+permalink: /materials/S03-05-05-01_02-OpenAiResponseDataProcessing
 categories: materials
 ---
 * toc

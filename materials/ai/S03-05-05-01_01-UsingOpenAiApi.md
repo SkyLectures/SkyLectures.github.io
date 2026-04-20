@@ -2,7 +2,7 @@
 layout: page
 title:  "GPT API 연동"
 date:   2025-03-01 10:00:00 +0900
-permalink: /materials/S03-05-05-01_01-UsingGptApi
+permalink: /materials/S03-05-05-01_01-UsingOpenAiApi
 categories: materials
 ---
 * toc
