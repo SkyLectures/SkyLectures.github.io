@@ -189,7 +189,7 @@ categories: materials
             ```python
             import streamlit as st
             st.title("윈도우에서 실행하는 AI 비서")
-            st.write("반갑습니다, 박사님! Streamlit이 정상 작동 중입니다.")
+            st.write("반갑습니다! Streamlit이 정상 작동 중입니다.")
             ```
 
         2.  **실행:** 터미널에서 아래 명령어를 입력

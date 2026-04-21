@@ -150,3 +150,4 @@ categories: materials
 >   3. **확장성**
 >       - "현재는 OpenAI를 쓰지만, 추후 타 플랫폼/API 또는 오픈소스 LLM(Llama 등)으로 교체하기 위해 추상화 레이어를 어떻게 설계했는지" 언급하면 설계 능력이 돋보일 수 있음
 {: .expert-quote}
+
