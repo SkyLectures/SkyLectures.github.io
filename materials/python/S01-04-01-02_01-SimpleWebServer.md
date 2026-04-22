@@ -124,7 +124,7 @@ for ip, b in ret:
             - 데이터를 전송할 때 직접 프로토콜 헤더를 만들어 전송하고, 데이터를 수신할 때도 프로토콜 헤더를 포함하여 수신
             - 라우터나 네트워크 장비 등에 주로 활용되며 사용자 공간에서 새로운 전송 계층 프로토콜을 구현하는 데에도 활용됨
 
-<p align="center"><img src="/materials/images/python/S01-04-01-00_005.jpg" width="700"></p>
+<p align="center"><img src="/materials/python/images/S01-04-01-00_005.jpg" width="700"></p>
 
 ### 2.1 서버
 

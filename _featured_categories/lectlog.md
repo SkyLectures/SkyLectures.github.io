@@ -7,12 +7,12 @@ description: >
 * toc
 {:toc .large-only .toc-sticky:true}
 
-> 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,199H</span> + <span style="color: #1c5f1c;">(대기 중: 248H)</span> / <span style="color: #CC0000;">멘토링: 총 59H</span> + <span style="color: #1c5f1c;">(대기 중: 7H)</span>  
+> 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,248H</span> + <span style="color: #1c5f1c;">(대기 중: 461H)</span> / <span style="color: #CC0000;">멘토링: 총 66H</span>
 {: .summary-quote}
 
-# **강의 이력** (3,199H + 513H)
+# **강의 이력** (3,248H + 461H)
 
-## 2026 (31H + 513H)
+## 2026 (83H + 461H)
 
 - [[**12.14~12.15**] 제조 산업과 AI 활용-KOMEA과정12차-부산(14H)](/lectlog/2026-12-14-KPC_ManufaturingAi_Komea12)
 - [[**11.24~11.25**] 제조 산업과 AI 활용-KOMEA과정11차-부산(14H)](/lectlog/2026-11-24-KPC_ManufaturingAi_Komea11)
@@ -35,10 +35,9 @@ description: >
 - [**[01.06]** AI기반 연구계획서·기획·보고서 작성 실전과정(중급)(4H)](/lectlog/2026-01-06-IPA_RISE_AI_Tech_01)
 
 
-## 2025 (315H)
+## 2025 (312H)
 - [**[11.17~12.12]** 모빌리티 AI 산업 프로젝트 과정(80H)](/lectlog/2025-11-17-IPA_Mobility_AI_Project)
 <!-- (잠정보류)- [**[10.21~10.31]** 스마트팩토리 품질경쟁력 기반DX경영(45H)](/lectlog/2025-10-21-SmartFactory_QA_DX) -->
-- [**[06.19~06.20]** 수도권ICT이노베이션스퀘어교육사업 멘토링(3H)](/lectlog/2025-06-19-ICT_Mentoring)
 - [**[05.15~06.14]** 생성형 AI 개발자 맞춤형 인재 양성 과정(152H)](/lectlog/2025-05-15-IPA_GenAI)
 - [**[03.18~04.30]** AI 기반 서비스의 기획 및 구현(80H)](/lectlog/2025-03-15-ICT_Service_Planning)
 
@@ -122,7 +121,7 @@ description: >
 
 ---
 
-# **멘토링 이력** (59H)
+# **멘토링 이력** (66H)
 
 ## 2026 (7H)
 - **[03.10/03.18]** SSAFY 14기 특화프로젝트 전문가 리뷰 1~2차(7H)
