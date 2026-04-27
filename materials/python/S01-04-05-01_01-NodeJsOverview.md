@@ -207,7 +207,7 @@ categories: materials
     - `npm install dotenv`
     - `.env` 파일을 생성하여 DB 접속 정보나 AI API Key 등을 안전하게 관리
 
-4.  **GitIgnore 설정**
+- **GitIgnore 설정**
     - `node_modules`, `.env` 등은 Git 관리에서 제외하도록 `.gitignore`를 설정
 
 
