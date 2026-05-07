@@ -2,7 +2,7 @@
 layout: page
 title:  "리눅스 명령어: 프로세스 관리"
 date:   2025-02-27 09:00:00 +0900
-permalink: /materials/S08-02-03-01_01-ProcessManagement
+permalink: /materials/S08-02-02-03_01-ProcessManagement
 categories: materials
 ---
 * toc

@@ -2,7 +2,7 @@
 layout: page
 title:  "리눅스 명령어: 텍스트 처리 및 검색"
 date:   2025-02-27 09:00:00 +0900
-permalink: /materials/S08-02-06-01_01-TextProcessSearchManagement
+permalink: /materials/S08-02-02-06_01-TextProcessSearchManagement
 categories: materials
 ---
 * toc

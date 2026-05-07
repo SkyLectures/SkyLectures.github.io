@@ -2,7 +2,7 @@
 layout: page
 title:  "리눅스 명령어: 패키지 관리"
 date:   2025-02-27 09:00:00 +0900
-permalink: /materials/S08-02-05-01_01-PackageManagement
+permalink: /materials/S08-02-02-05_01-PackageManagement
 categories: materials
 ---
 * toc

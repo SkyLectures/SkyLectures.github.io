@@ -2,7 +2,7 @@
 layout: page
 title:  "리눅스 명령어: 네트워크 관리"
 date:   2025-02-27 09:00:00 +0900
-permalink: /materials/S08-02-04-01_01-NetworkManagement
+permalink: /materials/S08-02-02-04_01-NetworkManagement
 categories: materials
 ---
 * toc

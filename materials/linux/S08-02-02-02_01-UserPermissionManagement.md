@@ -2,7 +2,7 @@
 layout: page
 title:  "리눅스 명령어: 사용자 및 권한 관리"
 date:   2025-02-27 09:00:00 +0900
-permalink: /materials/S08-02-02-01_01-UserPermissionManagement
+permalink: /materials/S08-02-02-02_01-UserPermissionManagement
 categories: materials
 ---
 * toc

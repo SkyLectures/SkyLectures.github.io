@@ -2,7 +2,7 @@
 layout: page
 title:  "리눅스 명령어: 파일 및 디렉토리 관리"
 date:   2025-02-27 09:00:00 +0900
-permalink: /materials/S08-02-01-01_01-FileDirectoryManagement
+permalink: /materials/S08-02-02-01_01-FileDirectoryManagement
 categories: materials
 ---
 * toc

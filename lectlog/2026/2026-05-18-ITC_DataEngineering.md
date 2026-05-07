@@ -26,26 +26,36 @@ categories: lectlog
 
 - **1주차: 리눅스 & Docker**
     - **리눅스**
-        - 리눅스 커맨드 기초
-        - 리눅스쉘 스크립트
+        - [리눅스 개요](/materials/S08-01-01-01_01-LinuxOverview)
+        - [WSL2 설치 및 환경설정](/materials/S08-01-02-01_01-Wsl2Setup)
+        - [리눅스 커맨드 기초](/materials/S08-02-01-01_01-LinuxCommandsBasic)
+        - [리눅스쉘 스크립트](/materials/S08-05-01-01_01-LinuxShellScript)
     - **Docker**
-        - 이미지, 컨테이너에 대한 이해와 도커 사용하기
-        - Dockerfile 작성 및 이미지 최적화
-        - Docker Compose 이해하고 사용하기
+        - [Docker 개요와 이미지, 컨테이너의 이해](/materials/S13-01-01-01_01-DockerOverview)
+        - [Dockerfile 작성 및 이미지 최적화](/materials/S13-01-02-01_01-Dockerfile)
+        - [Docker Compose 이해하고 사용하기](/materials/S13-01-03-01_01-DockerCompose)
 
 - **2주차: Database**
     - MySQL 8.0 설치 및 기초 쿼리 이해하기
-    - CTE, Window Function을 활용한 분석 쿼리
+        - [MySQL 개요 및 설치, 환경 설정](/materials/S02-03-06-01_01-MySqlOverview)
+        - [SQL 기초](/materials/S02-03-02-01_01-SqlBasic)
     - MongoDB 구축 및 비정형 로그 데이터 적재
+        - [MongoDB 개요 및 설치, 환경 설정](/materials/S02-03-06-03_01-MongoDbOverview)
+        - [MongoDB를 활용한 비정형 로그 데이터 적재](/materials/S02-03-06-01_02-MySqlLoadingUnstructuredLogData)
     - ERD 설계 및 정규화/반정규화 전략
+        - [ERD 개요](/materials/S02-03-04-01_01-ErdOverview)
+        - [ERD 설계 도구](/materials/S02-03-04-01_02-ErdDesignTools)
+        - [ERD 설계 기법](/materials/S02-03-04-01_03-ErdDesign)
+        - [ERD 정규화 및 반정규화 전략](/materials/S02-03-04-01_04-ErdNormDenorm)
     - Python 기반의 크롤러
 
 - **3주차: Python ETL**
-    - Pandas를 활용한 데이터 처리
-    - Pandas를 활용한 데이터 분석
-    - DuckDB를 이용한 로컬 대용량 데이터 처리
-    - DuckDB를 이용한 데이터 분석
-    - Pandas와 DuckDB를 이용한 하이브리드 가공
+    - [Pandas를 활용한 데이터 처리](/materials/S02-02-02-02_01-PandasDataPreprocess)
+    - [Pandas를 활용한 데이터 분석](/materials/S02-02-03-02_01-PandasDataAnalysis)
+    - [DuckDB 개요](/materials/S02-03-06-04_01-DuckDbOverview)
+    - [DuckDB를 이용한 로컬 대용량 데이터 처리](/materials/S02-03-06-04_02-DuckDbLocalBigDataProcess)
+    - [DuckDB를 이용한 데이터 분석](/materials/S02-03-06-04_03-DuckDbDataAnalysis)
+    - [Pandas와 DuckDB를 이용한 하이브리드 가공](/materials/S02-03-06-04_04-DuckDbPandasHybrid)
 
 - **4주차: DataLake**
     - MiniIO, S3 기반 오브젝트 스토리지 구축
@@ -70,6 +80,8 @@ categories: lectlog
 
 - **7주차: RAG**
     - LangChain을 이용한 챗봇 기초
+        - [LangChain 개요](/materials/S03-05-03-01_01-LangChainOverview)
+        - [LangChain 기반 챗봇](/materials/S03-05-03-05_01-LangChainChatbot)
     - RAG를 위한 텍스트 데이터 Chunking
     - Embedding기법과 Vector DB
     - MiniO와 VectorDB(Qdrant) 연동
