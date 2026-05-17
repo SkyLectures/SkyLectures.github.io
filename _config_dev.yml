@@ -48,6 +48,8 @@ author:
 
 # Add links to the sidebar.
 menu:
+  - title: 사업 전략
+    url:   /bizstrategy/
   - title: 강의 및 멘토링 이력
     url:   /lectlog/
   - title: 커리큘럼 모음
@@ -87,6 +89,7 @@ menu:
     url:   https://blog.naver.com/aida-smart
     external: true
     new_tab: true
+
 
 # Add links to the footer.
 # Typically you'll want to link to your cookie- or privacy policy (if appliable), etc..

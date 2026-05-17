@@ -7,12 +7,12 @@ description: >
 * toc
 {:toc .large-only .toc-sticky:true}
 
-> 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,248H</span> + <span style="color: #1c5f1c;">(대기 중: 461H)</span> / <span style="color: #CC0000;">멘토링: 총 66H</span>
+> 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,360H</span> + <span style="color: #1c5f1c;">(대기 중: 349H)</span> / <span style="color: #CC0000;">멘토링: 총 66H</span>
 {: .summary-quote}
 
-# **강의 이력** (3,248H + 461H)
+# **강의 이력** (3,412H + 349H)
 
-## 2026 (83H + 461H)
+## 2026 (195H + 349H)
 
 - [[**12.14~12.15**] 제조 산업과 AI 활용-KOMEA과정12차-부산(14H)](/lectlog/2026-12-14-KPC_ManufaturingAi_Komea12)
 - [[**11.24~11.25**] 제조 산업과 AI 활용-KOMEA과정11차-부산(14H)](/lectlog/2026-11-24-KPC_ManufaturingAi_Komea11)
@@ -33,7 +33,6 @@ description: >
 - **[01.12~02.08]** 피지컬 AI 동영상 강의 녹화(3H분량)
 - [**[01.08]** AI도구를 활용한 스마트 워크 실무과정(초중급)(4H)](/lectlog/2026-01-08-IPA_RISE_AI_Tech_02)
 - [**[01.06]** AI기반 연구계획서·기획·보고서 작성 실전과정(중급)(4H)](/lectlog/2026-01-06-IPA_RISE_AI_Tech_01)
-
 
 ## 2025 (312H)
 - [**[11.17~12.12]** 모빌리티 AI 산업 프로젝트 과정(80H)](/lectlog/2025-11-17-IPA_Mobility_AI_Project)
