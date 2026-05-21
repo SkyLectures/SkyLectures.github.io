@@ -40,6 +40,7 @@ categories: lectlog
 
 - **2주차: Database**
     - [2주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_02)
+    - [데이터베이스 개요](/materials/S02-03-01-01_01-DatabaseOverview)
     - MySQL 8.0 설치 및 기초 쿼리 이해하기
         - [MySQL 개요 및 설치, 환경 설정](/materials/S02-03-06-01_01-MySqlOverview)
         - [SQL 기초](/materials/S02-03-02-01_01-SqlBasic)
