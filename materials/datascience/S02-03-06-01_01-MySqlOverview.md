@@ -11,20 +11,69 @@ categories: materials
 
 ## 1. MySQL 개요
 
-- 전 세계적으로 가장 널리 사용되는 오픈 소스 **관계형 데이터베이스 관리 시스템(RDBMS)**
-- 다중 스레드, 다중 사용자 형식을 지원하며, 빠르고 유연하며 사용하기 쉬워 웹 애플리케이션 개발의 필수 도구로 자리 잡음<br><br>
+> - **웹의 표준 RDBMS:** 전 세계적으로 가장 인기 있는 오픈 소스  **관계형 데이터베이스 관리 시스템(RDBMS)**
+> - **LAMP 스택의 주역:**
+>   - Linux, Apache, MySQL, PHP/Python/Perl로 이어지는 현대 웹 아키텍처(LAMP 스택)의 핵심 구성 요소
+>   - 페이스북, 유튜브, 위키피디아 등 수많은 대형 서비스의 기초 자산이 되고 있음
+> - **강력한 성능과 쉬운 사용성:**
+>   - 빠르고 신뢰할 수 있으며 가벼워, 소규모 스타트업부터 대규모 기업까지 폭넓게 선택하는 최적의 도구
+>   - 다중 스레드, 다중 사용자 형식을 지원하며, 빠르고 유연하며 사용하기 쉬워 웹 애플리케이션 개발의 필수 도구로 자리 잡음
+{: .common-quote}
 
 - **주요 특징**
-    * **오픈 소스:**
-        - 커뮤니티 에디션은 무료로 사용 가능
-        - 거대한 사용자 커뮤니티를 통해 문제 해결이 빠름
-    * **계층 구조:**
-        - 데이터베이스 - 테이블 - 행(Row) - 열(Column)로 이어지는 정형화된 구조
-    * **성능 및 신뢰성:**
-        - 대용량 데이터 처리에 최적화
-        - 트랜잭션 지원(InnoDB 엔진)을 통해 데이터의 무결성 보장
-    * **다양한 운영체제 지원:**
-        - Windows, Linux, macOS 등 대부분의 플랫폼에서 구동
+
+<div class="info-table">
+<table>
+    <thead>
+        <th style="width: 170px;">구분</th>
+        <th style="width: 200px;">주요 학습 항목</th>
+        <th style="width: 580px;">상세 설명</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="td-rowheader">정형화된 구조</td>
+            <td>계층 구조 및 정규화</td>
+            <td class="td-left">
+                - 데이터베이스 - 테이블 - 행(Row) - 열(Column)로 이어지는 엄격한 구조를 가짐<br>
+                - ERD 설계를 통해 데이터 중복을 최소화(정규화)하여 저장
+            </td>
+        </tr>
+        <tr>
+            <td class="td-rowheader">강력한 스토리지 엔진</td>
+            <td>플러그형 아키텍처</td>
+            <td class="td-left">
+                - 사용 목적에 따라 스토리지 엔진을 유연하게 교체할 수 있음<br>
+                    - 예: 데이터 무결성을 위한 InnoDB, 빠른 읽기를 위한 MyISAM
+            </td>
+        </tr>
+        <tr>
+            <td class="td-rowheader">데이터 무결성</td>
+            <td>트랜잭션 및 ACID</td>
+            <td class="td-left">
+                - <b>InnoDB 엔진</b>을 기본으로 사용하여 트랜잭션(ACID 원칙)을 완벽하게 지원<br>
+                - 대용량 데이터 처리 시에도 데이터 오류를 방지하고 신뢰성을 보장
+            </td>
+        </tr>
+        <tr>
+            <td class="td-rowheader">오픈 소스 및 커뮤니티</td>
+            <td>무료 및 빠른 문제 해결</td>
+            <td class="td-left">
+                - 커뮤니티 에디션은 누구나 무료로 사용할 수 있음<br>
+                - 방대한 사용자 커뮤니티를 통해 문제 해결과 학습이 매우 빠름
+            </td>
+        </tr>
+        <tr>
+            <td class="td-rowheader">호환성 및 확장성</td>
+            <td>다양한 플랫폼 및 리플리케이션</td>
+            <td class="td-left">
+                - Windows, Linux, macOS 등 대부분의 플랫폼에서 구동됨<br>
+                - <b>데이터베이스 복제(Replication)</b> 기능을 통해 대량의 트래픽을 분산 처리<br>
+                - 고가용성을 확보할 수 있음
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 
 ## 2. MySQL 설치 가이드
