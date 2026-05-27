@@ -428,3 +428,179 @@ categories: materials
 >   - 이 이미지를 실행(run)하면 **컨테이너**가 됨
 >   - **컨테이너**는 이미지 위에 얇은 '쓰기 가능 층'을 얹어 독립된 환경에서 돌아가는 실제 서비스임
 {: .summary-quote}
+
+
+## 3. 도커 설치
+
+### 3.1 Windows 환경
+
+> - 운영체제 수준에서 컨테이너를 실행할 수 있는 환경(Linux 커널)을 준비하는 과정이 필요함 🡲 WSL 2(Windows Subsystem for Linux 2)
+>   - 과거에는 가상 머신(Hyper-V)을 기반으로 작동하여 느리고 무거웠지만, 최근에는 **WSL 2(Windows Subsystem for Linux 2)** 기술을 활용하여 리눅스와 거의 동일한 성능과 통합성을 제공함
+{: .common-quote}
+
+- **1단계: Windows 시스템 요구 사항 확인**
+    - 설치 전, 내 PC가 WSL 2 및 Docker Desktop을 실행할 수 있는 환경인지 확인
+        - **OS 버전:** Windows 11 (64비트) 또는 Windows 10 (64비트, Home/Pro, 빌드 19041 이상)
+        - **하드웨어:** 4GB 이상의 RAM, 바이오스(BIOS)에서 CPU 가상화 기능(VT-x/AMD-v) 활성화 필수
+    - **확인 방법:**
+        - 터미널(PowerShell/CMD)에서 `winver` 명령어를 입력하여 빌드 번호를 확인
+        - CPU 가상화는 작업 관리자의 성능 탭에서 확인할 수 있음
+
+- **2단계: WSL 2 (Windows Subsystem for Linux 2) 설치**
+    - Docker Desktop은 리눅스 커널을 기반으로 작동 🡲 Windows 내에 실제 리눅스 커널을 가볍게 띄워주는 WSL 2가 먼저 설치되어 있어야 함
+
+    1. **관리자 권한**으로 PowerShell 또는 Windows 터미널을 실행
+    2. 아래 명령어를 입력하여 WSL과 기본 리눅스 배포판(Ubuntu)을 한 번에 설치
+
+        ```powershell
+        wsl --install
+        ```
+
+    3. 설치가 완료되면 반드시 컴퓨터를 다시 시작(Reboot)함
+    4. 재부팅 후 자동으로 리눅스 터미널이 열리며 초기 사용자 이름과 비밀번호를 설정
+
+    - **팁:** 만약 이미 WSL을 쓰고 있다면, `wsl --update` 명령으로 커널 버전을 최신으로 유지하는 것이 좋음
+
+- **3단계: Docker Desktop for Windows 설치 파일 다운로드 및 실행**
+    - Windows 환경에서 도커를 편리하게 관리할 수 있게 해주는 GUI 도구인 Docker Desktop 설치
+
+    1. [Docker 공식 홈페이지 다운로드 페이지](https://www.docker.com/products/docker-desktop/) 접속 🡲 **[Download for Windows]** 버튼
+    2. 다운로드한 설치 파일(`Docker Desktop Installer.exe`) 실행
+    3. **중요**
+        - 설치 옵션 창에서 **[Use WSL 2 instead of Hyper-V (recommended)]** 항목이 체크되어 있는지 확인하고 [OK]를 클릭
+        - Hyper-V보다 성능이 훨씬 좋음
+    4. 설치가 완료되면 [Close and restart] 버튼을 클릭하여 시스템을 다시 시작
+
+- **4단계: Docker Desktop 초기 설정 및 통합 확인**
+    - 재부팅 후 도커를 사용할 준비가 되었는지 확인 후, WSL 2 리눅스 환경과 연동
+
+    1. 컴퓨터가 켜지면 Docker Desktop이 자동으로 실행됨
+        - 최초 실행 시 서비스 약관 동의가 필요할 수 있음
+    2. 시스템 트레이(시계 옆)에 도커 아이콘(고래 모양)이 생기고, 녹색(Running) 상태로 변할 때까지 대기
+    3. **WSL 2 통합 확인:**
+        - Docker Desktop 설정(톱니바퀴) > [Resources] > [WSL Integration] 메뉴로 이동
+        - [Enable integration with my default WSL distro]가 체크되어 있는지 확인
+        - 아래 배포판 목록에서 내가 사용하는 리눅스(예: Ubuntu)가 켜져 있는지 확인하고 [Apply & restart]를 클릭
+            - 이 과정이 있어야 리눅스 터미널 안에서도 도커 명령어를 쓸 수 있음
+
+- **5단계: 설치 성공 여부 테스트**
+    - 도커가 제대로 작동하는지 터미널에서 확인
+
+    1. PowerShell, CMD, 리눅스(Ubuntu) 터미널을 실행
+    2. 도커 버전 확인
+
+        ```bash
+        docker --version
+        ```
+
+    3. 도커 공식 테스트 이미지를 실행하여 설치 성공여부 확인
+
+        ```bash
+        docker run hello-world
+        ```
+        - 이 명령어를 입력했을 때, 인터넷에서 이미지를 다운로드하고, "Hello from Docker!"라는 환영 메시지가 터미널에 출력되면 성공
+
+- **요약: 설치 흐름도**
+
+    ```text
+    BIOS 가상화 활성화 ──▶ WSL 2 설치 (--install) ──▶ 재부팅 ──▶ Docker Desktop 설치
+    ──▶ 재부팅 ──▶ WSL Integration 설정 ──▶ docker run hello-world 완료!
+    ```
+
+### 3.2 Linux 환경
+
+> - 도커(Docker)는 본질적으로 **리눅스 커널(Linux Kernel) 기술**을 기반으로 만들어진 도구
+> - 따라서 Windows나 macOS처럼 중간에 가상화 레이어(WSL 2나 가상 머신)를 거치지 않고, **리눅스 운영체제 위에서 직접(Native) 구동될 때 가장 빠르고 강력한 성능**을 발휘함
+> - 리눅스 환경에서는 GUI 도구인 Docker Desktop 대신, 핵심 엔진인 Docker Engine(도커 엔진)을 설치하여 서버 환경에 최적화된 방식으로 운영하는 것이 글로벌 표준
+<: .common-quote>
+
+
+- **1단계: 기존 구버전 삭제 (충돌 방지)**
+    - 시스템에 혹시 남아있을지 모르는 구버전 도커 패키지(`docker`, `docker-engine`, `docker.io` 등) 제거
+        - 새 설치 시 발생할 수 있는 충돌 방지
+
+    ```bash
+    sudo apt-get remove docker docker-engine docker.io containerd runc
+    ```
+
+    - 새로 설치한 클린 OS 상태라면 이 단계는 건너뛰어도 좋음
+
+
+- **2단계: 필수 패키지 및 리포지토리 설정**
+    - 도커 공식 저장소(Repository)로부터 안전하게 패키지를 다운로드하기 위해 필요한 암호화 및 네트워크 관련 도구들 설치
+    - 도커의 공식 GPG 보안 키를 시스템에 등록
+
+    ```bash
+    # 1. 패키지 인덱스 업데이트 및 필수 도구 설치
+    sudo apt-get update
+    sudo apt-get install -y ca-certificates curl gnupg lsb-release
+
+    # 2. 도커 공식 GPG 키를 저장할 디렉토리 생성 및 키 다운로드
+    sudo install -m 0755 -d /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+    # 3. 도커 공식 apt 저장소(Repository)를 시스템 소스 리스트에 등록
+    echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+    $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    ```
+
+- **3단계: Docker Engine 설치**
+    - 저장소 등록이 완료되었으면, 패키지 목록을 한 번 더 갱신한 뒤
+    - 실제 도커 엔진과 컨테이너 런타임, 그리고 최신 다중 컨테이너 관리 도구인 **Docker Compose 플러그인**을 한 번에 설치
+
+    ```bash
+    # 1. 등록된 도커 저장소 반영을 위해 업데이트
+    sudo apt-get update
+
+    # 2. 도커 엔진 및 핵심 구성요소 통합 설치
+    sudo apt-get install -y docker-ceil docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+    ```
+
+    - **`docker-ce`**: 도커 엔진(데몬)의 본체
+    - **`docker-ce-cli`**: 터미널에서 도커 명령어를 제어하는 클라이언트 도구
+    - **`docker-compose-plugin`**: 과거 별도로 설치하던 `docker-compose` 명령어 대신, 최신 도커 표준인 **`docker compose`**(띄어쓰기 형식)를 지원하는 플러그인
+
+
+- **4단계: 서비스 활성화 및 권한 설정 (중요)**
+    - 리눅스 시스템이 부팅될 때 도커 엔진이 자동으로 켜지도록 설정
+    - 매번 `sudo` 명령어를 붙여야 하는 번거로움을 해결하기 위한 필수 설정
+
+    ```bash
+    # 1. 도커 서비스 시작 및 부팅 시 자동 실행 설정
+    sudo systemctl start docker
+    sudo systemctl enable docker
+
+    # 2. 현재 로그인한 사용자($USER)를 docker 그룹에 추가 (sudo 생략 위함)
+    sudo usermod -aG docker $USER
+    ```
+
+    > - **⚠️ 주의:**
+    >   - 그룹 변경 사항을 현재 터미널 세션에 즉시 반영하려면 `newgrp docker` 명령을 입력하거나, **리눅스 세션을 로그아웃한 후 다시 로그인(또는 SSH 재접속)**해야 `sudo` 없이 도커 명령어를 사용할 수 있음
+
+
+- **5단계: 설치 완료 검증**
+    - 설치가 완벽히 끝났는지 버전을 확인하고 테스트 컨테이너 구동
+
+    ```bash
+    # 1. 도커 엔진 버전 확인 (sudo 없이 작동하는지 체크)
+    docker --version
+
+    # 2. 도커 컴포즈 버전 확인
+    docker compose version
+
+    # 3. 최종 연동 테스트
+    docker run hello-world
+    ```
+
+    - 터미널에 환영 메시지("Hello from Docker!")가 출력되면 리눅스 원격 서버나 로컬 PC에 네이티브 도커 환경 구축이 완료된 것
+
+
+> - **리눅스 환경만의 아키텍처적 장점**
+>   - Windows나 macOS 환경에서는 도커를 돌리기 위해 내부에 경량 가상 머신을 띄우고 그 안의 리눅스 커널을 빌려 쓰는 간접적인 방식을 취함
+>   - 반면 리눅스 네이티브 환경에서는 호스트의 실제 리눅스 커널 위에 **도커 엔진(데몬)이 프로세스 관리자 형태로 직접 상주**함.
+>   - 컨테이너들은 어떠한 가상화 기술도 거치지 않고 호스트 커널의 `Namespaces`와 `cgroups` 제어를 직접 받기 때문에,
+>   - **I/O 병목이 전혀 없는 제로(0)에 가까운 오버헤드로 완벽한 성능**을 보장받음
+>   - 기업의 운영 서버와 고성능 AI 모델 학습/서빙 환경에서 무조건 리눅스 서버를 채택하는 이유가 바로 여기에 있음
+{: .summary-quote}
