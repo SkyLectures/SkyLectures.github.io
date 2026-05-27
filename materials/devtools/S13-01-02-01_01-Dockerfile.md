@@ -9,6 +9,7 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 
+
 > - **`Dockerfile`**은 도커 이미지를 만들기 위한 **자동화된 스크립트**
 > - 단순히 앱을 실행하는 것을 넘어, 운영 환경에서 효율적으로 동작하는 이미지를 만들기 위해서는 작성 요령과 최적화 기법을 깊이 있게 이해해야 함.
 {: .summary-quote}

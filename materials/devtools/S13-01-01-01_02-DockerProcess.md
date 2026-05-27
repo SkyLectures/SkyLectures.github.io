@@ -9,7 +9,6 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 
-
 > - **프로세스 요약**
 >   1. **Build**: 사용자가 클라이언트에서 **`docker build`**를 수행하면 🡲 도커 데몬이 이미지를 생성함
 >   2. **Pull**: **`docker pull`** 명령 시 🡲 데몬은 레지스트리에서 이미지를 찾아 🡲 호스트로 가져옴
