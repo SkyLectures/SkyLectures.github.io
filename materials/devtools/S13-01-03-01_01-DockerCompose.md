@@ -183,8 +183,149 @@ categories: materials
         - 구동 중인 모든 컨테이너를 안전하게 정지 및 삭제
         - 가상 네트워크까지 깔끔하게 제거하여 시스템 리소스를 확보
 
+## 5. 실습
 
-## 5. 컴포즈 활용 팁 (Best Practices)
+- **Docker Compose를 이용한 멀티 컨테이너 배포 및 관리**
+  - **[Flask 웹 서버(80번 포트)] + [Redis 메모리 데이터베이스]** 조합의 멀티 컨테이너 아키텍처를 이용한 예제
+    - 브라우저를 새로고침할 때마다 Redis에 방문 횟수(Count)가 누적되는 직관적인 시스템
+  - 여러 개의 컨테이너(웹 서버와 데이터베이스)로 구성된 복잡한 애플리케이션 스택을 단 하나의 설정 파일(`docker-compose.yml`)로 정의하고, 명령어 한 줄로 일괄 가동 및 완전 청소하는 실무 기법을 학습
+
+
+- **1 단계: 실습 전용 디렉터리 생성 및 이동**
+  - 실습 파일들이 엉키지 않도록 새 폴더를 만들고 진입 (Windows PowerShell 기준)
+
+    ```powershell
+    mkdir flask-compose-demo
+    cd flask-compose-demo
+    ```
+
+- **2 단계: 애플리케이션 소스 코드 (`app.py`) 작성**
+  - Redis 데이터베이스와 연동하여 방문자 수를 1씩 증가시키는 Flask 웹 서버 코드
+  - 폴더 내에 `app.py` 파일을 생성하고 아래 코드를 저장
+
+    ```python
+    import time
+    import redis
+    from flask import Flask
+
+    app = Flask(__name__)
+
+    # Redis 컨테이너 서비스 이름으로 연결
+    cache = redis.Redis(host='redis-db', port=6379)
+
+    def get_hit_count():
+        retries = 5
+        while True:
+            try:
+                return cache.incr('hits')
+            except redis.exceptions.ConnectionError as exc:
+                if retries == 0:
+                    raise exc
+                retries -= 1
+                time.sleep(0.5)
+
+    # [@app.index_string] 라인을 삭제하고 바로 라우팅 데코레이터만 남깁니다.
+    @app.route('/')
+    def hello():
+        count = get_hit_count()
+        return f'<h1>Docker Compose 실습 성공!</h1><p>방문자 수: {count}번째 보았습니다.</p>\n'
+
+    if __name__ == "__main__":
+        app.run(host='0.0.0.0', port=5000)
+    ```
+
+- **3 단계:  의존성 파일 (`requirements.txt`) 작성**
+  - Flask 앱 실행에 필요한 파이썬 패키지 목록
+  - `requirements.txt` 파일을 만들고 아래 내용을 작성
+
+    ```text
+    flask
+    redis
+    ```
+
+- **4 단계:  웹 서버용 `Dockerfile` 작성**
+  - 파이썬 앱을 이미지화하기 위한 설계도 🡲 `Dockerfile` 파일 생성
+
+    ```dockerfile
+    FROM python:3.9-slim
+    WORKDIR /code
+    COPY requirements.txt .
+    RUN pip install --no-cache-dir -r requirements.txt
+    COPY app.py .
+    EXPOSE 5000
+    CMD ["python", "app.py"]
+    ```
+
+- **5 단계:  Docker Compose 오케스트레이션 설정 (`docker-compose.yml`) 작성**
+  - 웹 서버 빌드 규칙과 Redis DB 인프라를 한 장으로 정의하는 마스터 설계도
+  - `docker-compose.yml` 파일을 생성하고 아래 내용을 입력 (YAML 파일이므로 들여쓰기에 주의)
+
+    ```yaml
+    services:
+      web-server:
+        build: .
+        ports:
+          - "8080:5000"
+        depends_on:
+          - redis-db
+
+      redis-db:
+        image: "redis:alpine"
+    ```
+
+- **6 단계:  명령어 단 한 줄로 전체 스택 빌드 및 가동 (`up`)**
+  - 이제 터미널에서 여러 명령어를 내릴 필요 없이, 다음 명령 한 줄이면 
+    - 도커 컴포즈가 `Dockerfile`을 읽어 웹 이미지를 빌드하고,
+    - Redis 이미지를 다운로드하여
+    - 내부 가상 네트워크로 묶어 동시에 띄워줌
+    - 필요 시, sudo apt install docker-compose를 통해 docker-compose를 설치할 것
+
+      ```powershell
+      docker-compose up -d
+      ```
+
+      - **`-d` 옵션:** 백그라운드(데몬) 모드로 실행하여 터미널을 자유롭게 사용할 수 있게 함
+
+- **7 단계:  실행 상태 및 브라우저 검증**
+  - 가동 중인 컴포즈 서비스 목록을 확인하고 웹페이지에 접속
+
+    ```powershell
+    # 컴포즈로 가동 중인 컨테이너 레이아웃 확인
+    docker-compose ps
+    ```
+
+    - **웹 브라우저 검증:** 주소창에 포트 번호 없이 **`http://localhost`** 를 입력하고 이동
+    - 새로고침(`F5`)을 누를 때마다 "방문자 수: X번째 보았습니다."의 숫자가 1씩 끊김 없이 올라가면 멀티 컨테이너 연동 배포에 완벽하게 성공한 것
+
+
+- **8 단계:  실습 종료 후 흔적 없는 "최종 클린 청소" (`down`)**
+  - 실습이 끝났으므로 내 컴퓨터의 자원을 태초의 상태로 되돌리기 위해 청소 진행
+  - 도커 컴포즈의 가장 큰 장점은 **지울 때도 단 한 줄로 연관된 모든 컨테이너와 가상 네트워크 인터페이스까지 한꺼번에 안전하게 폭파**할 수 있다는 점
+
+    ```powershell
+    # 1. 가동 중인 모든 컨테이너 정지 및 프로세스 소거, 가상 네트워크 삭제
+    docker-compose down
+
+    # 2. [완벽주의적 청소] 하드디스크에 생성 및 다운로드된 이미지 설계도 원본까지 완전 소거
+    docker rmi flask-compose-demo-web-server:latest
+    docker rmi redis:alpine
+
+    # 3. [최종 확인] 내 PC가 실습 전 상태로 깨끗해졌는지 목록 검증
+    docker ps -a
+    docker images
+    ```
+
+> - **핵심 포인트**
+>   - **컨테이너 간의 서비스 디스커버리 (Service Discovery):**
+>     - `app.py` 코드 내부에서 Redis 주소를 하드코딩된 IP(`172.17.0.2` 등)로 적지 않고, `docker-compose.yml`에 선언한 서비스 이름인 `redis-db`로 적어도 알아서 찾아감
+>       - 도커 컴포즈가 내부 가상 DNS 서버를 만들어 이름을 IP로 매핑해 주기 때문<br><br>
+>   - **`up`과 `down`의 라이프사이클 관리:**
+>     - 일일이 컨테이너를 하나씩 `stop`, `rm` 하던 방식에서 탈피하여,
+>     - `docker-compose up`과 `docker-compose down`이라는 거대한 수명 주기로 인프라 전체를 핸들링하는 편리함을 제공
+{: .common-quote}
+
+
+## 6. 컴포즈 활용 팁 (Best Practices)
 
 - **서비스 이름으로 통신하기 (Service Discovery)**
   - 컴포즈로 띄운 컨테이너들은 동일한 기본 네트워크에 속함
