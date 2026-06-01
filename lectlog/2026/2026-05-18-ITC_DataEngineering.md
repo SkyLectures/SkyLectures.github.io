@@ -46,13 +46,16 @@ categories: lectlog
         - [SQL 기초](/materials/S02-03-02-01_01-SqlBasic)
     - MongoDB 구축 및 비정형 로그 데이터 적재
         - [MongoDB 개요 및 설치, 환경 설정](/materials/S02-03-06-03_01-MongoDbOverview)
-        - [MongoDB를 활용한 비정형 로그 데이터 적재](/materials/S02-03-06-01_02-MySqlLoadingUnstructuredLogData)
+        - [MongoDB 활용 및 실습](/materials/S02-03-06-03_02-MongoDbPractice)
     - ERD 설계 및 정규화/반정규화 전략
-        - [ERD 개요](/materials/S02-03-04-01_01-ErdOverview)
+        - [ERD 개요 및 데이터 모델링](/materials/S02-03-04-01_01-ErdOverview)
         - [ERD 설계 도구](/materials/S02-03-04-01_02-ErdDesignTools)
         - [ERD 설계 기법](/materials/S02-03-04-01_03-ErdDesign)
         - [ERD 정규화 및 반정규화 전략](/materials/S02-03-04-01_04-ErdNormDenorm)
     - Python 기반의 크롤러
+    - Redis 기초 및 활용
+        - [Redis 개요](/materials/S02-03-06-05_01-RedisOverview)
+        - [Redis 활용 및 실습](/materials/S02-03-06-05_02-RedisPractice)
 
 - **3주차: Python ETL**
     - [3주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_03)
