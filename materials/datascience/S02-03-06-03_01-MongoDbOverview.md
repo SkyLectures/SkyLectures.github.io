@@ -182,32 +182,34 @@ categories: materials
 
         ```bash
         # 1. 필수 패키지 설치
-        sudo apt-get install gnupg curl
+        sudo apt install gnupg curl
 
         # 2. MongoDB 공개 GPG 키 가져오기
-        curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \
-        sudo gpg --o /usr/share/keyrings/mongodb-server-7.0.gpg \
+        curl -fsSL https://pgp.mongodb.com/server-8.0.asc | \
+        sudo gpg -o /usr/share/keyrings/mongodb-server-8.0.gpg \
         --dearmor
         ```
 
-        - 주의: 사용하는 MongoDB 버전에 따라 URL의 `server-7.0` 부분을 해당 버전으로 변경해야 할 수 있음
+        - 주의: 사용하는 MongoDB 버전에 따라 URL의 `server-8.0` 부분을 해당 버전으로 변경해야 할 수 있음
 
     2. Ubuntu 버전에 맞는 리스트 파일을 생성하여 저장소 등록
+        - 내 리눅스 머신의 Ubuntu 버전 확인하기
+            - **`cat /etc/os-release` :** 제일 마지막 줄에 **`UBUNTU_CODENAME=noble`**와 같이 기록되어 있음
 
         ```bash
         # Ubuntu 저장소 추가
-        echo "deb [ png-keyring=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/7.0 multiverse" | sudo tee /etc/apt/sources.list.drop/mongodb-org-7.0.list
+        echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg ] https://repo.mongodb.org/apt/ubuntu noble/mongodb-org/8.3 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-8.3.list
         ```
 
 - **단계 2: MongoDB 패키지 설치**
     - 저장소를 새로고침하고 MongoDB 메타 패키지 설치
 
         ```bash
-        # 패키지 데이터베이스 업데이트
-        sudo apt-get update
+        # 패키지 데이터베이스 다시 업데이트
+        sudo apt update
 
         # MongoDB Community Edition 전체 설치
-        sudo apt-get install -y mongodb-org
+        sudo apt install -y mongodb-org
         ```
 
 - **단계 3: MongoDB 서비스 시작 및 상태 확인**

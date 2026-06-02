@@ -52,7 +52,7 @@ categories: lectlog
         - [ERD 설계 도구](/materials/S02-03-04-01_02-ErdDesignTools)
         - [ERD 설계 기법](/materials/S02-03-04-01_03-ErdDesign)
         - [ERD 정규화 및 반정규화 전략](/materials/S02-03-04-01_04-ErdNormDenorm)
-    - Python 기반의 크롤러
+    - [Python 기반의 크롤러](/materials/S02-02-01-02_01-PythonBasedCrawler)
     - Redis 기초 및 활용
         - [Redis 개요](/materials/S02-03-06-05_01-RedisOverview)
         - [Redis 활용 및 실습](/materials/S02-03-06-05_02-RedisPractice)
