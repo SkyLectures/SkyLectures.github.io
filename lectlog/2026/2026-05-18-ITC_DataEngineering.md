@@ -49,8 +49,7 @@ categories: lectlog
         - [MongoDB 활용 및 실습](/materials/S02-03-06-03_02-MongoDbPractice)
     - ERD 설계 및 정규화/반정규화 전략
         - [ERD 개요 및 데이터 모델링](/materials/S02-03-04-01_01-ErdOverview)
-        - [ERD 설계 도구](/materials/S02-03-04-01_02-ErdDesignTools)
-        - [ERD 설계 기법](/materials/S02-03-04-01_03-ErdDesign)
+        - [ERD 설계: 설계 도구와 설계 기법](/materials/S02-03-04-01_02-ErdDesign)
         - [ERD 정규화 및 반정규화 전략](/materials/S02-03-04-01_04-ErdNormDenorm)
     - [Python 기반의 크롤러](/materials/S02-02-01-02_01-PythonBasedCrawler)
     - Redis 기초 및 활용
