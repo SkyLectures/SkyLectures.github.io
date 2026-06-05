@@ -264,7 +264,7 @@ categories: materials
         curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
 
         # APT 소스 리스트에 Redis 저장소 추가
-        echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+        echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb noble main" | sudo tee /etc/apt/sources.list.d/redis.list
 
         # 저장소 반영을 위한 업데이트
         sudo apt update
