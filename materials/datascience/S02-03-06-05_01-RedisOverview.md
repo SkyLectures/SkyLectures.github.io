@@ -213,20 +213,20 @@ categories: materials
 <div class="info-table">
 <table>
     <thead>
-        <th style="width: 150px;">비교 항목</th>
-        <th style="width: 400px;">초기 개발 목적 (2009년 탄생 당시)</th>
-        <th style="width: 400px;">현재의 활용 방향 및 분야 (2026년 현재)</th>
+        <th style="width: 100px;">비교 항목</th>
+        <th style="width: 380px;">초기 개발 목적 (2009년 탄생 당시)</th>
+        <th style="width: 500px;">현재의 활용 방향 및 분야 (2026년 현재)</th>
     </thead>
     <tbody>
         <tr>
             <td class="td-rowheader">기본 역할</td>
             <td>RDBMS(MySQL)의 디스크 병목을 돕는 보조용 <b>'캐시 스토어'</b></td>
-            <td>캐시, 메시지 브로커, 검색 엔진, AI 메모리를 아우르는 <b>'멀티 모델 데이터 플랫폼'</b></td>
+            <td>캐시, 메시지 브로커, 검색 엔진, AI 메모리를 아우르는<br><b>'멀티 모델 데이터 플랫폼'</b></td>
         </tr>
         <tr>
             <td class="td-rowheader">핵심 데이터</td>
             <td>단순 문자열 카운터, 최근 방문자 리스트, 웹 로그 데이터</td>
-            <td>세션 관리, JSON 문서, 시계열(Time-Series) 데이터, <b>AI 벡터 임베딩(Vector Embedding)</b></td>
+            <td>세션 관리, JSON 문서, 시계열(Time-Series) 데이터,<br><b>AI 벡터 임베딩(Vector Embedding)</b></td>
         </tr>
         <tr>
             <td class="td-rowheader">포지셔닝</td>
