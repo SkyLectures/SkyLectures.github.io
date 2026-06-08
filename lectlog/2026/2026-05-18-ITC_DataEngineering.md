@@ -59,7 +59,10 @@ categories: lectlog
 - **3주차: Python ETL**
     - [3주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_03)
     - Pandas 활용
-        - [Pandas를 활용한 데이터 처리](/materials/S02-02-02-02_01-PandasDataPreprocess)
+        - [Pandas 개요](/materials/S01-01-04-03_01-Pandas)
+        - [Pandas 활용 기초](/materials/S01-01-04-03_02-PandasBasic)
+        - [Pandas를 활용한 데이터 전처리](/materials/S02-02-02-02_01-PandasDataPreprocess)
+        - [데이터 분석 개요](/materials/S02-02-03-01_01-DataAnalysis)
         - [Pandas를 활용한 데이터 분석](/materials/S02-02-03-02_01-PandasDataAnalysis)
     - DuckDB 활용
         - [DuckDB 개요](/materials/S02-03-06-04_01-DuckDbOverview)
