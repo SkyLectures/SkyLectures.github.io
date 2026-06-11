@@ -1,7 +1,7 @@
 ---
 layout: page
-title:  "Iceberg 개요"
-date:   2025-07-07 10:00:00 +0900
+title:  "Apache Iceberg 개요 및 설치, 환경설정"
+date:   2026-06-01 10:00:00 +0900
 permalink: /materials/S13-03-01-01_01-IcebergOverview
 categories: materials
 ---
