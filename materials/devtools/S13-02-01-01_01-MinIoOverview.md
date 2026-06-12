@@ -66,13 +66,13 @@ categories: materials
 <div class="info-table">
 <table>
     <thead>
-        <th style="width: 150px;">구분</th>
-        <th style="width: 800px;">주요 내용</th>
+        <th style="width: 100px;">구분</th>
+        <th style="width: 600px;">주요 내용</th>
     </thead>
     <tbody>
         <tr>
             <td class="td-rowheader">장점</td>
-            <td>
+            <td class="td-left">
                 - <b>초고속 성능:</b> 하드웨어 자원을 극한으로 활용하여 업계 최고 수준의 처리량을 제공<br>
                 - <b>강력한 보안:</b> 서버 측 암호화, ID 관리(IAM), WORM(Write Once Read Many) 기능을 지원<br>
                 - <b>단순함:</b> 설치와 운영이 매우 직관적이며 가벼움<br>
@@ -81,7 +81,7 @@ categories: materials
         </tr>
         <tr>
             <td class="td-rowheader">단점</td>
-            <td>
+            <td class="td-left">
                 - <b>라이선스 변화:</b> 최근 AGPLv3 라이선스를 적용하여, 상업적 이용 시 라이선스 검토가 엄격해짐<br>
                 - <b>메모리 의존성:</b> 고성능을 내기 위해 하드웨어 사양(특히 RAM) 요구치가 높을 수 있음<br>
                 - <b>운영 부담:</b> 직접 인프라를 관리해야 하므로 하드웨어 장애 대응이나 업데이트 관리가 필요함
@@ -183,21 +183,21 @@ categories: materials
 <div class="info-table">
 <table>
     <thead>
-        <th style="width: 250px;">아키텍처 형태</th>
-        <th style="width: 700px;">설명</th>
+        <th style="width: 280px;">아키텍처 형태</th>
+        <th style="width: 690px;">설명</th>
     </thead>
     <tbody>
         <tr>
-            <td class="td-rowheader">SNSD<br>(Single Node Single Drive)</td>
-            <td>단일 서버, 단일 디스크 구조. 개발 및 실습(로컬 테스트) 환경에 주로 사용</td>
+            <td class="td-rowheader">SNSD (Single Node Single Drive)</td>
+            <td class="td-left">단일 서버, 단일 디스크 구조. 개발 및 실습(로컬 테스트) 환경에 주로 사용</td>
         </tr>
         <tr>
-            <td class="td-rowheader">SNMD<br>(Single Node Multiple Drives)</td>
-            <td>단일 서버 내에 여러 디스크를 장착하고 이레이저 코딩을 적용하여 가용성을 확보하는 단계</td>
+            <td class="td-rowheader">SNMD (Single Node Multiple Drives)</td>
+            <td class="td-left">단일 서버 내에 여러 디스크를 장착하고 이레이저 코딩을 적용하여 가용성을 확보하는 단계</td>
         </tr>
         <tr>
-            <td class="td-rowheader">MNMD<br>(Multi-Node Multiple Drives)</td>
-            <td>여러 대의 독립된 서버들을 네트워크로 묶어 하나의 거대한 스토리지 풀(Pool)을 형성하는 <b>분산(Distributed) 모드</b></td>
+            <td class="td-rowheader">MNMD (Multi-Node Multiple Drives)</td>
+            <td class="td-left">여러 대의 독립된 서버들을 네트워크로 묶어 하나의 거대한 스토리지 풀(Pool)을 형성하는 <b>분산(Distributed) 모드</b></td>
         </tr>
     </tbody>    
 </table>

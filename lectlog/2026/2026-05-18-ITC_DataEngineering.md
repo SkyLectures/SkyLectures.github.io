@@ -80,7 +80,7 @@ categories: lectlog
         - [Apache Iceberg 기반 레이크하우스 구축](/materials/S13-03-02-01_01-IcebergBasedLakehouse)
     - [MiniO – Iceberg 데이터 파이프라인 구축](/materials/S13-99-01-01_01-MinIoIcebergDataPipeline)
     - [Trino(Presto) 기반 S3 데이터 SQL 엔진 구축](/materials/S13-04-01-01_01-TrinoOverview)
-    - 데이터 카탈로그 연결 및 레이크하우스 통합
+    - [데이터 카탈로그 연결 및 레이크하우스 통합](/materials/S13-99-01-01_01-MinIoIcebergDataPipeline)
 
 - **5주차: Spark**
     - [5주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_05)
