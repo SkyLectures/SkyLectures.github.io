@@ -335,9 +335,9 @@ categories: materials
         depends_on:
         - minio
 
-    # 2. 실제 파일들이 저장될 오브젝트 스토리지
+    # 2. 실제 파일들이 저장될 오브젝트 스토리지 (latest 버전으로 수정)
     minio:
-        image: minio/minio:RELEASE.2024-01-11T06-46-16Z
+        image: minio/minio:latest
         container_name: iceberg-minio
         ports:
         - "9000:9000"       # API 포트
@@ -347,17 +347,16 @@ categories: materials
         - MINIO_ROOT_PASSWORD=password
         command: server /data --console-address ":9001"
 
-    # MinIO 기동 시 'warehouse' 버킷을 자동으로 생성해주는 유틸리티
+    # MinIO 기동 시 'warehouse' 버킷을 자동으로 생성해주는 유틸리티 (latest 버전으로 수정)
     mc:
-        image: minio/mc:RELEASE.2024-01-11T06-46-16Z
+        image: minio/mc:latest
         depends_on:
         - minio
         entrypoint: >
         /bin/sh -c "
         until (/usr/bin/mc alias set myminio http://minio:9000 admin password) do echo 'Waiting for MinIO...' && sleep 1; done;
         /usr/bin/mc mb myminio/warehouse;
-        exit 0;
-        "
+        exit 0;"
     ```
 
     - 터미널에서 `docker-compose up -d`를 실행하여 컨테이너 구동
@@ -460,3 +459,22 @@ categories: materials
     print(f"\n--- 첫 번째 스냅샷({first_snapshot_id}) 시점으로 타임 트래블 ---")
     print(table.scan(snapshot_id=first_snapshot_id).to_arrow())
     ```
+
+
+> - **[참고]**
+>   - 간혹 각 도구들의 버전이 충돌을 일으키거나 인식하지 못해서 오류가 나는 경우가 발생함
+>   - 가끔은 다 지우고 심플하게 갈 필요도 있음
+{: .expert-quote}
+
+```yaml
+services:
+  # 실제 파일들이 저장될 오브젝트 스토리지 딱 하나만 기동
+  minio:
+    image: minio/minio:latest
+    container_name: iceberg-minio
+    network_mode: "host"
+    environment:
+      - MINIO_ROOT_USER=admin
+      - MINIO_ROOT_PASSWORD=password
+    command: server /data --console-address ":9001"
+```
