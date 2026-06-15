@@ -148,14 +148,14 @@ def generate_sensor_data(num_records=10000):
     # PyArrow Table 형태로 변환 (Iceberg와 직접 호환)
     return pa.Table.from_pydict(data)
 
-print("🚀 1. 10,000건의 스마트팩토리 가상 데이터 생성 중...")
+print("1. 10,000건의 스마트팩토리 가상 데이터 생성 중...")
 raw_arrow_data = generate_sensor_data(10000)
 
 
 # ==========================================
 # [STEP 2] Iceberg 레이크하우스 테이블 구축
 # ==========================================
-print("📦 2. Iceberg REST 카탈로그 연결 및 테이블 생성 중...")
+print("2. Iceberg REST 카탈로그 연결 및 테이블 생성 중...")
 # Iceberg 카탈로그 인프라 연결 설정
 catalog = load_catalog(
     "lakehouse_catalog",
@@ -188,13 +188,13 @@ iceberg_table = catalog.create_table(
 
 # 첫 번째 데이터 적재 (Batch 1 - 최초 1만 건) -> 스냅샷 V1 발생
 iceberg_table.append(raw_arrow_data)
-print("✅ 최초 데이터 10,000건이 레이크하우스에 안정적으로 적재되었습니다. (Snapshot V1)")
+print("최초 데이터 10,000건이 레이크하우스에 안정적으로 적재되었습니다. (Snapshot V1)")
 
 
 # ==========================================
 # [STEP 3] 데이터 추가 적재 (트랜잭션 및 스냅샷 V2 생성)
 # ==========================================
-print("\n🔄 3. 실시간 추가 데이터(이상치 데이터 5건) 적재 중...")
+print("\n3. 실시간 추가 데이터(이상치 데이터 5건) 적재 중...")
 extra_data = pa.Table.from_pydict({
     "log_id": [fake.uuid4() for _ in range(5)],
     "sensor_id": ["SNS-999"] * 5,  # 추적을 용이하게 하기 위한 가상 테스트 ID
@@ -204,13 +204,13 @@ extra_data = pa.Table.from_pydict({
     "timestamp": [datetime.datetime.now(datetime.timezone.utc) for _ in range(5)]
 })
 iceberg_table.append(extra_data)
-print("✅ 추가 데이터 5건이 적재되었습니다. (Snapshot V2)")
+print("추가 데이터 5건이 적재되었습니다. (Snapshot V2)")
 
 
 # ==========================================
 # [STEP 4] DuckDB를 이용한 고속 가상 DW 분석
 # ==========================================
-print("\n🦅 4. DuckDB 엔진을 결합하여 가상 데이터 웨어하우스 SQL 분석 시작...")
+print("\n4. DuckDB 엔진을 결합하여 가상 데이터 웨어하우스 SQL 분석 시작...")
 
 # 최신 상태(Snapshot V2)의 테이블 스캔 데이터를 Arrow 객체로 로드
 current_snapshot_data = iceberg_table.scan().to_arrow()
@@ -235,7 +235,7 @@ con.execute(query2).show()
 # ==========================================
 # [STEP 5] 데이터 웨어하우스 핵심: 타임 트래블(Time Travel) 검증
 # ==========================================
-print("\n🕰️ 5. 레이크하우스 기능 검증: 최초 데이터 적재 시점(Snapshot V1)으로 타임 트래블...")
+print("\n5. 레이크하우스 기능 검증: 최초 데이터 적재 시점(Snapshot V1)으로 타임 트래블...")
 
 # 테이블 변경 이력에서 첫 번째 스냅샷 ID 추출
 history = iceberg_table.history()

@@ -79,7 +79,9 @@ categories: lectlog
         - [Apache Iceberg 개요 및 설치, 환경설정](/materials/S13-03-01-01_01-IcebergOverview)
         - [Apache Iceberg 기반 레이크하우스 구축](/materials/S13-03-02-01_01-IcebergBasedLakehouse)
     - [MiniO – Iceberg 데이터 파이프라인 구축](/materials/S13-99-01-01_01-MinIoIcebergDataPipeline)
-    - [Trino(Presto) 기반 S3 데이터 SQL 엔진 구축](/materials/S13-04-01-01_01-TrinoOverview)
+    - Trino(Presto) 기반 S3 데이터 SQL 엔진 구축
+        - [Trino 개요 및 설치, 환경설정](/materials/S13-04-01-01_01-TrinoOverview)
+        - [Trino(Presto) 기반 S3 데이터 SQL 엔진 구축](/materials/S13-04-02-01_01-TrinoS3SqlEngine)
     - [데이터 카탈로그 연결 및 레이크하우스 통합](/materials/S13-99-01-01_01-MinIoIcebergDataPipeline)
 
 - **5주차: Spark**

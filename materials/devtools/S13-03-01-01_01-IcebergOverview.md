@@ -234,7 +234,6 @@ categories: materials
                 - **'파일 단위'의 스냅샷**을 통해 테이블의 상태를 추적함
 
 
-
 - **타 포맷(Delta Lake, Hudi) 대비 장단점 비교**
 
 <div class="info-table">
@@ -312,9 +311,9 @@ categories: materials
     - **Storage:** MinIO (실제 메타데이터 `.json` 파일과 데이터 `.parquet` 파일이 저장되는 곳)
 
 
-### 3.1 환경 구축 (Docker Compose & Python 환경)
+### 3.1 환경 구축 (Docker Compose & Python)
 
-1. **`docker-compose.yml`** 작성
+- **[1 단계] `docker-compose.yml`** 작성
 
     ```yaml
     version: '3.8'
@@ -363,7 +362,7 @@ categories: materials
 
     - 터미널에서 `docker-compose up -d`를 실행하여 컨테이너 구동
 
-2. **로컬 Python 환경 설정 (PyIceberg 설치)**
+- **[2 단계] 로컬 Python 환경 설정 (PyIceberg 설치)**
 
 - 로컬 PC 또는 개발 서버의 가상환경에서 아래 명령어로 Iceberg 조작을 위한 파이썬 패키지 설치
     - PyArrow 기반으로 작동하므로 매우 빠르고 가벼움
@@ -373,7 +372,7 @@ categories: materials
     ```
 
 
-### 3.2 Iceberg 조작 및 메타데이터 추적 (Python 실습)
+### 3.2 Iceberg 조작 및 메타데이터 추적 (Python)
 
 - 실제 저장소(MinIO)에 어떤 파일들이 파일 단위로 꼽히는지 확인하기
 
@@ -414,7 +413,7 @@ categories: materials
     print("Iceberg 테이블 생성 완료!")
     ```
 
-    - **🔍 저장소 확인 포인트:**
+    - **저장소 확인 포인트:**
         - 이 단계를 실행한 후 `http://localhost:9001` (MinIO 콘솔)에 접속해 보면,
         - `warehouse/factory_db/sensors/metadata/` 경로에 `v1.metadata.json` 파일이 생성된 것을 볼 수 있음
         - 아직 데이터 파일은 없고 **"테이블이 만들어졌다"는 메타데이터 스펙만 기록**된 상태임
@@ -434,7 +433,7 @@ categories: materials
     print("첫 번째 데이터 업로드 완료!")
     ```
 
-    - **🔍 저장소 확인 포인트:**
+    - **저장소 확인 포인트:**
         - `data/` 폴더가 새로 생기며 그 밑에 실제 데이터가 담긴 `.parquet` 파일이 생성됨
         - `metadata/` 폴더에는 `v2.metadata.json`과 함께 스냅샷 정보를 담은 `manifest_list` 및 `manifest` 파일(`.avro`)이 추가됨
         - **이것이 바로 Iceberg가 스냅샷 단위로 파일을 추적하는 실체**
