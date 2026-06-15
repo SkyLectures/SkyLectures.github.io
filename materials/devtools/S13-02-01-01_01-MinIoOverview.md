@@ -423,7 +423,7 @@ categories: materials
     HR_SECRET_KEY = "hruser1234"
     ```
 
-- 생성된 User ID(HR_ACCESS_KEY), User Password(HR_SECRET_KEY)를 각각 Access Key / Secret Key에 적용하면 됨
+- 생성된 User ID, User Password를 각각 Access Key(HR_ACCESS_KEY) / Secret Key(HR_SECRET_KEY)에 적용하면 됨
 
 
 
