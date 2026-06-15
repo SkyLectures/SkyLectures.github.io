@@ -351,6 +351,15 @@ categories: materials
         * 외부 컴퓨팅 엔진(Trino 등)이나 소스 코드에서 접근할 수 있도록 권한을 넘겨주어야 함
         * 좌측 메뉴 **Access Keys** 🡲 **Create Access Key**를 클릭하여 생성된 **`Access Key`**와 **`Secret Key`**를 안전하게 복사해 둘 것
 
+> - **[참고]**
+>   - 최근 버전에서는 라이센스의 변경과 함께 커뮤니티 에디션에서의 Web GUI에서 기존의 기능이 모두 제거된 상황임
+>   - 따라서 Web GUI에서는 버킷의 생성과 파일 업로드 현황 및 관리 외의 모든 작업이 불가능함<br><br>
+>   - **해결 방안**
+>       - 클라이언트 툴(mc)를 이용한 제어는 여전히 잘 작동하므로 mc 기반의 명령어로 관리할 수 있음
+>       - 파이썬 등에서의 제어는 기본적으로 CLI 기반이므로 작업에 문제가 없음
+>       - Access Key / Secret Key는 mc를 이용해서 생성하는 사용자의 ID / Password를 적용하여 사용할 수 있음
+>       - mc를 이용한 사용자 등록은 mc 설명 이후에 제시함
+{: .expert-quote}
 
 ### 3.4 클라이언트 툴(mc) 설치 및 검증
 
@@ -373,6 +382,50 @@ categories: materials
 > - 이 단계까지 완료되면 로컬 PC에 완벽한 **프라이빗 AWS S3 대체 환경**이 마련된 것
 > - 이제 이 인프라 위에 Apache Iceberg 테이블 포맷을 얹고, Trino 엔진을 연결하여 통합 레이크하우스 파이프라인을 구축해 나갈 수 있음
 {: .common-quote}
+
+> - **[참고] 최신 커뮤니티 버전 맞춤형 사용자 계정 생성 방법**
+{: .expert-quote}
+
+- 실행한 도커 컨테이너 안에는 이미 mc라는 강력한 CLI 툴이 내장되어 있음<br><br>
+
+1. 터미널창에 아래 명령어를 쳐서 컨테이너 내부 터미널로 진입
+
+    ```bash
+    docker exec -it minio_local bash
+    ```
+
+- 실행하면 터미널 프롬프트가 `root@...:/#` 형태로 바뀜
+
+- 컨테이너 내부에서 CLI 명령어로 유저 생성하기
+
+    ```bash
+    # 1. 관리자 권한을 가진 로컬 alias(mylake) 등록
+    mc alias set mylake http://localhost:9000 minioadmin minioadmin
+
+    # 2. 인사팀 전용 유저(ID: hruser / PW: hruser1234) 생성
+    mc admin user add mylake hruser hruser1234
+
+    # 3. 인사팀 유저에게 읽고 쓸 수 있는 기본 권한(readwrite) 부여
+    mc admin policy attach mylake readwrite --user=hruser
+    ```
+
+- 컨테이너에서 빠져나오기
+
+    ```bash
+    exit
+    ```
+
+- 파이썬 실습 코드 적용하기
+
+    ```python
+    # 코드 상단에 방금 터미널로 만든 계정을 그대로 넣어주시면 됩니다.
+    HR_ACCESS_KEY = "hruser"
+    HR_SECRET_KEY = "hruser1234"
+    ```
+
+- 생성된 User ID(HR_ACCESS_KEY), User Password(HR_SECRET_KEY)를 각각 Access Key / Secret Key에 적용하면 됨
+
+
 
 ### 3.5 로컬 사용 시의 이점
 
