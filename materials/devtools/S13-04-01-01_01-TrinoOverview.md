@@ -9,7 +9,6 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 
-
 ## 1. Trino의 개념 및 개요
 
 ### 1.1 개요

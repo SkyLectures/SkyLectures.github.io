@@ -24,8 +24,10 @@ categories: materials
 - 구축할 아키텍처는 현대적인 오픈 레이크하우스의 표준 3계층 구조를 따름
     - **Storage Layer (MinIO):**
         - 대용량 원시 데이터(Raw Parquet)와 Iceberg 메타데이터 파일들이 저장되는 오픈 데이터 레이크
-    - **Table Format Layer (Iceberg REST Catalog):**
-        - 어떤 데이터 파일이 유효한지, 스냅샷과 트랜잭션을 격리하고 제어하는 두뇌 역할
+    - **Table Format Layer (SQLite Virtual Catalog):**
+        - 외부 자바 브릿지 서버 없이,
+        - 파이썬 가상환경 내부에서 SQL 데이터베이스 원장 파일(sqlite:///)을 통해 어떤 데이터 파일이 유효한지
+        - 스냅샷과 트랜잭션을 격리하고 제어하는 두뇌 역할
     - **Compute/Query Layer (DuckDB + PyIceberg):**
         - 저장된 데이터 레이크하우스 테이블을 고속으로 가상 분석(OLAP)하고 SQL을 실행하는 엔드포인트
 
@@ -36,6 +38,8 @@ categories: materials
 
 - 작업 디렉터리에 `docker-compose.yml` 파일을 생성
     - 데이터 레이크하우스의 핵심 인프라(스토리지 및 카탈로그)를 구동
+        - 복잡하고 불투명한 외부 자바 카탈로그 서버 엔진을 완전히 걷어내고,
+        - 오직 데이터 레이크하우스의 핵심 저장소 인프라(순수 S3 오브젝트 스토리지)만 구동
 
     ```yaml
     version: '3.8'
@@ -43,46 +47,33 @@ categories: materials
     services:
     # 1. 스토리지 계층 (S3 호환 MinIO)
     minio:
-        image: minio/minio:RELEASE.2024-01-11T06-46-16Z
-        container_name: lakehouse-minio
+        image: minio/minio:latest
+        container_name: minio
         ports:
-        - "9000:9000"       # API 엔드포인트
-        - "9001:9001"       # 웹 관리 콘솔
+            - "9000:9000"       # API 엔드포인트 포트
+            - "9001:9001"       # 웹 관리 콘솔 포트
         environment:
-        - MINIO_ROOT_USER=admin
-        - MINIO_ROOT_PASSWORD=password
+            - MINIO_ROOT_USER=admin
+            - MINIO_ROOT_PASSWORD=password
         command: server /data --console-address ":9001"
 
-    # MinIO 기동 시 'lakehouse-bucket'을 자동 생성하는 유틸리티
+    # 2. MinIO 기동 시 'warehouse' 버킷을 자동으로 생성해주는 유틸리티
     mc:
-        image: minio/mc:RELEASE.2024-01-11T06-46-16Z
+        image: minio/mc:latest
+        container_name: minio-mc
         depends_on:
-        - minio
+            - minio
         entrypoint: >
-        /bin/sh -c "
-        until (/usr/bin/mc alias set myminio http://minio:9000 admin password) do echo 'Waiting for MinIO...' && sleep 1; done;
-        /usr/bin/mc mb myminio/lakehouse-bucket;
-        exit 0;
-        "
-
-    # 2. 테이블 포맷 계층 (Iceberg REST Catalog)
-    iceberg-catalog:
-        image: tabulario/iceberg-rest:0.6.0
-        container_name: lakehouse-catalog
-        ports:
-        - "8181:8181"
-        environment:
-        - CATALOG_WAREHOUSE=s3a://lakehouse-bucket/
-        - CATALOG_IO__IMPL=org.apache.iceberg.aws.s3.S3FileIO
-        - CATALOG_S3_ENDPOINT=http://minio:9000
-        - CATALOG_S3_PATH_STYLE_ACCESS=true
-        - AWS_ACCESS_KEY_ID=admin
-        - AWS_SECRET_ACCESS_KEY=password
-        depends_on:
-        - minio
+            /bin/sh -c "
+            until (/usr/bin/mc alias set myminio http://minio:9000 admin password); do 
+                echo 'Waiting for MinIO...'; 
+                sleep 1; 
+            done;
+            /usr/bin/mc mb myminio/warehouse;
+            exit 0;"
     ```
 
-- 터미널에서 `docker-compose up -d`를 실행하여 서버 활성화
+- 터미널에서 `docker compose up -d`를 실행하여 서버 활성화
 
 
 ### 2.2 로컬 파이썬 환경 설정
@@ -97,10 +88,12 @@ source ./bin/activate
 
 
 - **레이크하우스를 제어할 라이브러리 설치**
+    - 자바 서버 없이 파이썬 내장에서 자체적으로 SQL 카탈로그 이정표 원장을 핸들링할 수 있도록
+    - [sql-sqlite] (SQLAlchemy 코어 엔진 라이브러리 세트) 확장 팩을 함께 주입
 
-```bash
-pip install "pyiceberg[s3fs,pyarrow]" duckdb python-faker
-```
+    ```bash
+    pip install "pyiceberg[s3fs,pyarrow]" duckdb python-faker numpy pandas
+    ```
 
 
 ### 2.3 실습 데이터 생성 및 레이크하우스 구축
@@ -153,18 +146,21 @@ raw_arrow_data = generate_sensor_data(10000)
 
 
 # ==========================================
-# [STEP 2] Iceberg 레이크하우스 테이블 구축
+# [STEP 2] Iceberg 레이크하우스 테이블 구축 
 # ==========================================
-print("2. Iceberg REST 카탈로그 연결 및 테이블 생성 중...")
-# Iceberg 카탈로그 인프라 연결 설정
+print("2. 내장 SQL 카탈로그 및 물리 오브젝트 스토리지 다이렉트 바인딩 중...")
+# 외부 자바 이미지의 버그 및 상용화 꼼수 간섭을 배제하기 위해 로컬 가상 SQLite 원장으로 우회 연결 설정
 catalog = load_catalog(
-    "lakehouse_catalog",
+    "default",
     **{
-        "type": "rest",
-        "uri": "http://localhost:8181",
-        "s3.endpoint": "http://localhost:9000",
+        "type": "sql",
+        "uri": "sqlite:///iceberg_catalog.db",        # 실행하는 현재 폴더 밑에 가볍고 무결한 .db 파일 관리 원장 생성
+        "warehouse": "s3://warehouse",                # 도커 MinIO 내부의 물리 데이터 영토 버킷 지정
+        "s3.endpoint": "http://localhost:9000",       # 호스트에서 도커 스토리지로 직격하는 인터페이스 통로
+        "s3.path-style-access": "true",
         "s3.access-key-id": "admin",
         "s3.secret-access-key": "password",
+        "py-io-impl": "pyiceberg.io.pyarrow.PyArrowFileIO"
     }
 )
 
@@ -251,17 +247,17 @@ con.execute(query3).show()
 
 
 - **예제 코드의 중요사항 해설**
-    - 실습 예제는 기존의 단순 파일 저장 방식(Data Lake)과 Iceberg 레이크하우스의 차별점을 명확히 보여주는 몇 가지 핵심 설계 요소를 포함하고 있음
+    - 기존의 단순 파일 저장 방식(Data Lake)과 Iceberg 레이크하우스의 차별점을 명확히 보여주는 몇 가지 핵심 설계 요소를 포함하고 있음
 
-    1. **`load_catalog()`의 역할: 중앙 집중식 데이터 통제**
+    1. **`load_catalog()`의 역할: 가볍고 통제력이 강한 임베디드 카탈로그 레이어**
 
         ```python
-        catalog = load_catalog("lakehouse_catalog", **{"type": "rest", ...})
+        catalog = load_catalog("default", **{"type": "sql", "uri": "sqlite:///iceberg_catalog.db", ...})
         ```
 
-        - 전통적인 데이터 레이크는 분석가가 파일 경로(`s3://bucket/path/to/parquet/`)를 직접 알아야 쿼리를 할 수 있음
-        - Iceberg 레이크하우스는 **RDBMS처럼 카탈로그에 테이블 명세(`factory_analytics.sensor_history`)만 요청**
-            - 물리적인 저장 위치나 파티션 구조는 카탈로그가 알아서 가상화하여 숨겨주므로, 데이터 보안 및 거버넌스 통제가 매우 용이
+        - 전통적인 데이터 레이크는 분석가가 파일 경로(s3://warehouse/path/to/parquet/)를 직접 알아야 쿼리를 할 수 있어 보안 및 관리가 파편화됨
+        - Iceberg 레이크하우스는 무겁고 네트워크 간섭이 심한 중앙 자바 서버 대신, **파이썬 내부의 가볍고 무결한 SQLite 관계형 메타데이터 원장을 독점적(Embedded)으로 빌드**하여 제어권을 일원화함
+        - 분석가는 복잡한 파일 토폴로지 대신 **RDBMS처럼 카탈로그에 테이블 명세**(factory_analytics.sensor_history)만 요청하면, 카탈로그 내부 원장이 물리적 파일 위치를 자동 스캔하여 숨겨주므로 아키텍처 보안 및 거버넌스 통제가 극도로 명쾌해짐
 
     2. **`pa.Table`과 `table.append()`: 원자적 트랜잭션(Atomic Commit)**
 
