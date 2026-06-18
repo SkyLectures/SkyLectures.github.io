@@ -38,12 +38,43 @@ categories: materials
 
 - **컴포넌트별 핵심 역할**
 
-| 컴포넌트 | 기술 스택 | 실무 및 강의상 핵심 역할 |
-| --- | --- | --- |
-| **Storage Layer** | **MinIO** | S3 API 호환 오브젝트 스토리지. 실제 데이터 파일(`Parquet`)과 테이블 구조를 담은 메타데이터 파일들이 원시 저장되는 물리적 공간 |
-| **Catalog Layer** | **Iceberg REST Catalog** | 하이브 메타스토어(HMS)를 대체하는 **"중앙 소스 오브젝트 트러스트(Source of Truth)"**. 어떤 데이터 파일이 최신 스냅샷인지 루트 포인터를 관리하며, 도커의 파일 권한 장벽을 네트워크 레이어 수준에서 격리 |
-| **Query Engine** | **Trino (v435)** | MPP(대규모 분산 병렬 처리) SQL 질의 엔진. 사용자가 날린 SQL을 해석하여 Iceberg REST Catalog에서 파일 목록을 받아온 뒤, MinIO의 Parquet 파일들을 고속으로 스캔·집계 |
-
+<div class="info-table">
+<table>
+    <thead>
+        <th style="width: 150px;">컴포넌트</th>
+        <th style="width: 200px;">기술 스택</th>
+        <th style="width: 600px;">실무 및 강의상 핵심 역할</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="td-rowheader">Storage Layer</td>
+            <td><b>MinIO</b></td>
+            <td class="td-left">
+                ● S3 API 호환 오브젝트 스토리지<br>
+                ● 실제 데이터 파일(`Parquet`)과 테이블 구조를 담은 메타데이터 파일들이 원시 저장되는 물리적 공간
+            </td>
+        </tr>
+        <tr>
+            <td class="td-rowheader">Catalog Layer</td>
+            <td><b>Iceberg REST Catalog</b></td>
+            <td class="td-left">
+                ● 하이브 메타스토어(HMS)를 대체하는 <b>"중앙 소스 오브젝트 트러스트(Source of Truth)"</b><br>
+                ● 어떤 데이터 파일이 최신 스냅샷인지 루트 포인터를 관리하며,<br>
+                &nbsp;&nbsp;&nbsp;도커의 파일 권한 장벽을 네트워크 레이어 수준에서 격리
+            </td>
+        </tr>
+        <tr>
+            <td class="td-rowheader">Query Engine</td>
+            <td><b>Trino (v435)</b></td>
+            <td class="td-left">
+                ● MPP(대규모 분산 병렬 처리) SQL 질의 엔진<br>
+                ● 사용자가 날린 SQL을 해석하여 Iceberg REST Catalog에서 파일 목록을 받아온 뒤,<br>
+                &nbsp;&nbsp;&nbsp;MinIO의 Parquet 파일들을 고속으로 스캔·집계
+            </td>
+        </tr>
+    </tbody>    
+</table>
+</div>
 
 
 ## 3. 엔드투엔드 데이터 프로세스 (Data Process)
@@ -52,29 +83,32 @@ categories: materials
 
 - **1단계: 데이터 적재 및 트랜잭션 (Ingestion & ACID)**
 
-    1. **Client / Python Agent** 또는 **Trino CLI**가 SQL 문을 실행합니다. (`INSERT`, `UPDATE`)
-    2. **Trino**가 **Iceberg REST Catalog**에 연락하여 "새로운 데이터를 쓸 테니 새로운 스냅샷 격리 번호를 달라"고 요청합니다.
-    3. 데이터는 MinIO 스토리지의 `.../data/` 디렉터리에 압축률과 읽기 성능이 극대화된 **Parquet** 포맷으로 안전하게 분할 저장됩니다.
+    1. **Client / Python Agent** 또는 **Trino CLI**가 SQL 문 실행 (`INSERT`, `UPDATE`)
+    2. **Trino**가 **Iceberg REST Catalog**에 연락 🡲 "새로운 데이터를 쓸 테니 새로운 스냅샷 격리 번호를 달라"고 요청
+    3. 데이터는 MinIO 스토리지의 `.../data/` 디렉터리에 압축률과 읽기 성능이 극대화된 **Parquet** 포맷으로 안전하게 분할 저장
 
 - **2단계: 메타데이터 원자적 갱신 (Atomic Commit)**
 
-    1. 파일 쓰기가 완료되면 Iceberg 엔진이 새로운 메타데이터 파일(`v2.metadata.json`)을 MinIO의 `.../metadata/`에 생성합니다.
-    2. **Iceberg REST Catalog**가 테이블의 최상위 포인터를 방금 생성된 새 메타데이터 파일 주소로 원자적(Atomic)으로 쾅 찍어 변경합니다. 이 덕분에 쿼리 도중 데이터가 꼬이는 현상(Dirty Read)이 원천 차단됩니다.
+    1. 파일 쓰기가 완료되면 🡲 Iceberg 엔진이 새로운 메타데이터 파일(`v2.metadata.json`)을 MinIO의 `.../metadata/`에 생성
+    2. **Iceberg REST Catalog**가 테이블의 최상위 포인터를 방금 생성된 새 메타데이터 파일 주소로 원자적(Atomic)으로 변경<br>
+        🡲 쿼리 도중 데이터가 꼬이는 현상(Dirty Read)이 원천 차단
 
 - **3단계: 쿼리 최적화 및 수행 (Query Parsing & Execution)**
 
-    1. 분석가가 Trino에 `SELECT * FROM ... WHERE temperature > 80` 쿼리를 수행합니다.
-    2. Trino는 메타데이터 파일에 적힌 통계 정보(Min/Max 값 등)를 먼저 읽어 들입니다.
-    3. **[핵심 기술]** WHERE 조건에 부합하지 않는 불필요한 파티션과 파일 조각들을 물리적으로 아예 읽지 않고 스킵하는 **Predicate Pushdown** 및 **Partition Pruning**이 발동하여 수십억 건의 데이터 중 필요한 파일 몇 개만 정확하게 골라 고속 스캔합니다.
+    1. 분석가가 Trino에 `SELECT * FROM ... WHERE temperature > 80` 쿼리 수행
+    2. Trino는 메타데이터 파일에 적힌 통계 정보(Min/Max 값 등)를 먼저 읽어 들임
+    3. **[핵심 기술]**
+        - WHERE 조건에 부합하지 않는 불필요한 파티션과 파일 조각들을
+        - 물리적으로 아예 읽지 않고 스킵하는 **Predicate Pushdown** 및 **Partition Pruning**이 발동
+        - 수십억 건의 데이터 중 필요한 파일 몇 개만 정확하게 골라 고속 스캔
 
 - **4단계: 스키마 진화 및 타임 트래블 (Schema Evolution & Time Travel)**
 
-    1. 공정에 새로운 센서(예: 진동 센서)가 추가되면, 기존 데이터를 건드리지 않고 `ALTER TABLE` 명령으로 테이블 구조를 실시간 확장합니다. (스키마 진화)
-    2. 과거 특정 시점의 사고 이력을 조사해야 할 경우, 테이블의 과거 스냅샷 ID를 역추적하여 수개월 전의 데이터 상태 그대로 롤백 조회합니다. (타임 트래블)
+    1. 공정에 새로운 센서(예: 진동 센서)가 추가되면 🡲 기존 데이터를 건드리지 않고 `ALTER TABLE` 명령으로 테이블 구조를 실시간 확장 (스키마 진화)
+    2. 과거 특정 시점의 사고 이력을 조사해야 할 경우 🡲 테이블의 과거 스냅샷 ID를 역추적 🡲 수개월 전의 데이터 상태 그대로 롤백 조회 (타임 트래블)
 
 
 ## 4. 실습 환경 구성
-
 
 1. **정석 디렉터리 구조 (Directory Tree)**
     - 호스트 OS(Ubuntu)에서 도커 엔진과의 소유권 마찰을 피하기 위해 반드시 아래 구조로 디렉터리와 설정을 먼저 선점해 두어야 함

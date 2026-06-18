@@ -82,7 +82,7 @@ categories: lectlog
     - Trino(Presto) 기반 S3 데이터 SQL 엔진 구축
         - [Trino 개요 및 설치, 환경설정](/materials/S13-04-01-01_01-TrinoOverview)
         - [Trino(Presto) 기반 S3 데이터 SQL 엔진 구축](/materials/S13-04-02-01_01-TrinoS3SqlEngine)
-    - [데이터 카탈로그 연결 및 레이크하우스 통합](/materials/S13-99-01-01_01-MinIoIcebergDataPipeline)
+    - [데이터 카탈로그 연결 및 레이크하우스 통합](/materials/S13-99-02-01_01-MinIoIcebergTrinoDatalakehouse)
 
 - **5주차: Spark**
     - [5주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_05)
