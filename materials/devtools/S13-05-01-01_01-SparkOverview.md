@@ -555,37 +555,39 @@ categories: materials
     version: '3.8'
 
     services:
-    spark-master:
-        image: bitnami/spark:3.5
-        environment:
-        - SPARK_MODE=master
-        - SPARK_RPC_AUTHENTICATION_ENABLED=no
-        - SPARK_RPC_ENCRYPTION_ENABLED=no
-        - SPARK_LOCAL_STORAGE_ENCRYPTION_ENABLED=no
-        - SPARK_SSL_ENABLED=no
-        ports:
-        - '8080:8080' # Master Web UI
-        - '7077:7077' # Spark Master 내부 통신 포트
+        spark-master:
+            image: apache/spark:3.5.0
+            container_name: spark-master
+            # 공식 이미지는 실행 명령을 직접 주입하고 0.0.0.0 호스트 바인딩을 해야 8080 포트가 열립니다.
+            command: /opt/spark/sbin/start-master.sh --host 0.0.0.0
+            ports:
+                - '8080:8080'  # 마스터 Web UI (웹 브라우저 접속용)
+                - '7077:7077'  # 마스터 클러스터 내부 통신 포트
 
-    spark-worker-1:
-        image: bitnami/spark:3.5
-        environment:
-        - SPARK_MODE=worker
-        - SPARK_MASTER_URL=spark://spark-master:7077
-        - SPARK_WORKER_MEMORY=2G
-        - SPARK_WORKER_CORES=2
-        depends_on:
-        - spark-master
+        spark-worker-1:
+            image: apache/spark:3.5.0
+            container_name: spark-worker-1
+            # 마스터 컨테이너 이름(spark-master)과 내부 포트를 인자로 주어 워커 데몬을 실행합니다.
+            command: /opt/spark/sbin/start-worker.sh spark://spark-master:7077
+            environment:
+                - SPARK_WORKER_MEMORY=2G
+                - SPARK_WORKER_CORES=2
+            ports:
+                - '8081:8081'  # 워커 1 자체 모니터링 UI (옵션)
+            depends_on:
+                - spark-master
 
-    spark-worker-2:
-        image: bitnami/spark:3.5
-        environment:
-        - SPARK_MODE=worker
-        - SPARK_MASTER_URL=spark://spark-master:7077
-        - SPARK_WORKER_MEMORY=2G
-        - SPARK_WORKER_CORES=2
-        depends_on:
-        - spark-master
+        spark-worker-2:
+            image: apache/spark:3.5.0
+            container_name: spark-worker-2
+            command: /opt/spark/sbin/start-worker.sh spark://spark-master:7077
+            environment:
+                - SPARK_WORKER_MEMORY=2G
+                - SPARK_WORKER_CORES=2
+            ports:
+                - '8082:8081'  # 워커 2 자체 모니터링 UI (호스트 포트 8082로 중복 회피)
+            depends_on:
+                - spark-master
     ```
 
 - **클러스터 실행 및 웹 UI 확인**
