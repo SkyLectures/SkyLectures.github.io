@@ -1,7 +1,7 @@
 ---
 layout: page
-title:  "Spark 개요"
-date:   2025-07-07 10:00:00 +0900
+title:  "Spark 개요와 분산 데이터 처리"
+date:   2026-06-01 10:00:00 +0900
 permalink: /materials/S13-05-01-01_01-SparkOverview
 categories: materials
 ---
@@ -224,7 +224,7 @@ categories: materials
 
 > - **Apache Spark**
 >   - 대규모 데이터 처리를 위한 오픈 소스 **분산 컴퓨팅 프레임워크**
->   - 2009년 UC 버클리 대학의 AMPLab에서 개발
+>       - 대용량 데이터(Big Data)를 한 대의 컴퓨터가 아닌 수십, 수백 대의 클러스터 환경에서 빠르고 안전하게 병렬 처리할 수 있도록 지원하는 현대 데이터 엔지니어링의 표준 기술
 >   - 기존의 빅데이터 처리 표준이었던 Hadoop MapReduce의 한계를 극복하기 위해 탄생
 {: .common-quote}
 
@@ -498,23 +498,20 @@ categories: materials
 
 ## 3. Apache Spark 설치 및 환경 설정
 
-- 커리큘럼에 맞춰 추후 실무 테스트를 원활하게 진행하시려면 **Docker Compose 방식**을 추천함
+- **Docker Compose 방식** 추천
 
+### 3.1 방법 A: 로컬 Standalone 설치 (Linux/macOS 기준)
 
-### 3.1 사전 필수 요구사항 (Pre-requisites)
+- **사전 필수 요구사항 (Pre-requisites)**
+    - Spark는 JVM(Java Virtual Machine) 위에서 동작하므로 **Java 설치 필수**
+    - Python API(PySpark)를 사용하기 위해 **Python 환경**이 준비되어야 함<br><br>
 
-- Spark는 JVM(Java Virtual Machine) 위에서 동작하므로 **Java 설치가 필수**
-- Python API(PySpark)를 사용하기 위해 **Python 환경**이 준비되어야 함<br><br>
-
-- **Java JDK:**
-    - **Java 11 또는 Java 17**을 권장 (Spark 3.x 버전 이상 기준): 호환성이 가장 좋음
-- **Python:** 3.8 ~ 3.11 버전 권장
-- **운영체제:**
-    - Linux 또는 macOS를 권장
-    - Windows의 경우 `winutils.exe` 설정이 추가로 필요함
-
-
-### 3.2 방법 A: 로컬 Standalone 설치 (Linux/macOS 기준)
+    - **Java JDK:**
+        - **Java 11 또는 Java 17**을 권장 (Spark 3.x 버전 이상 기준): 호환성이 가장 좋음
+    - **Python:** 3.8 ~ 3.11 버전 권장
+    - **운영체제:**
+        - Linux 또는 macOS를 권장
+        - Windows의 경우 `winutils.exe` 설정이 추가로 필요함
 
 - **Spark 다운로드 및 압축 해제**
     1. Apache Spark 공식 다운로드 페이지에서 원하는 버전을 선택
@@ -545,7 +542,7 @@ categories: materials
     - 정상 실행 시 터미널에 대형 `Spark` 로고와 함께 대화형 콘솔이 나타남
 
 
-### 3.3 방법 B: Docker Compose를 이용한 Master-Worker 구조 구축 (추천)
+### 3.2 방법 B: Docker Compose를 이용한 Master-Worker 구조 구축 (추천)
 
 - 커리큘럼에 포함된 **Master-Worker(M-W) 구조**를 로컬 가상화 환경에 가장 깔끔하게 구축하는 방법
     - Bitnami에서 제공하는 검증된 이미지를 사용하면 편리함
@@ -757,3 +754,41 @@ categories: materials
 >       </table>
 >       </div>
 {: .common-quote}
+
+- **Docker Compose 사용 시, HOST 작업환경 구성**
+    - Docker Compose 운영환경 그대로 사용할 경우
+        - 컨테이너 내부에 직접 들어가서 명령어를 쳐야 하므로 코드 작업이 매우 불편함
+        - **코드는 HOST(내 컴퓨터)에서 편하게 편집, 실행은 도커(컨테이너) 내부에서 돌아가도록 연결**할 것을 권장함<br><br>
+
+    - **실무에서 가장 많이 쓰는 패턴**
+        - **볼륨 마운트 (Volume Mount)**
+            - 코드는 HOST의 VS Code 등으로 편집
+            - 코드 파일이 들어있는 폴더를 도커 컨테이너 내부와 실시간으로 동기화(연결)<br><br>
+            * **작업 방식:**
+                1. 호스트 PC의 특정 폴더(예: `~/workspace/spark_project`)에 `app.py`라는 파이썬 코드 작성
+                2. `docker-compose.yml` 설정에서 이 폴더를 Spark 컨테이너 내부의 특정 경로와 연결(`volumes` 옵션)
+                3. 호스트에서 코드를 수정하고 저장하면, 컨테이너 내부에도 즉시 반영됨
+                4. 실행할 때는 도커 터미널을 통해 컨테이너 안에서 `spark-submit app.py`를 입력해 실행<br><br>
+                - **장점:**
+                    - 호스트의 강력한 IDE(VS Code 등) 환경을 그대로 쓰면서,
+                    - 실행은 깨끗한 도커 환경에서 할 수 있음
+
+        - **주피터 노트북 (Jupyter Notebook) 패턴: 브라우저 활용**
+            - 데이터 분석이나 Spark 실습 시 가장 직관적인 방법<br><br>
+            * **작업 방식:**
+                1. Spark 도커 이미지 안에 이미 주피터 노트북(또는 주피터 랩) 서버가 내장되어 있거나 추가되어 있음
+                2. 도커를 띄우면 컨테이너 내부에서 주피터 서버가 돌아감
+                3. 사용자는 호스트 PC의 크롬 브라우저를 열고 `http://localhost:8888`에 접속
+                4. 웹 브라우저 화면에서 파이썬 코드를 작성하고 즉시 실행(`Shift + Enter`)<br><br>
+                - **장점:**
+                    - 코드 작성과 실행 결과 확인이 웹 브라우저 하나로 끝나므로 학습 및 프로토타이핑에 최적
+                    - 생성된 `.ipynb` 파일은 앞서 말한 볼륨 마운트를 통해 호스트 PC에 안전하게 저장됨
+
+        - **고급 패턴: VS Code의 'Dev Containers' 확장 기능 사용**
+            - 최근 시니어 개발자나 엔지니어들이 가장 선호하는 깔끔한 방식<br><br>
+            * **작업 방식:**
+                1. 호스트 PC의 VS Code에 `Dev Containers`라는 공식 확장 프로그램을 설치
+                2. VS Code 자체를 도커 컨테이너 내부로 접속
+                3. 화면은 내 컴퓨터에 떠 있지만, VS Code가 인식하는 파이썬 환경, 확장 프로그램, 터미널은 전부 **도커 컨테이너 내부의 환경**이 됨<br><br>
+                * **장점:**
+                    - 호스트 PC에 파이썬을 깔지 않아도 코드 자동 완성(IntelliSense)이나 디버깅 기능이 컨테이너 내부 스택에 맞춰 완벽하게 작동함
