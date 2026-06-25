@@ -90,8 +90,8 @@ categories: lectlog
     - [Docker Compose를 이용한 Spark M-W 구조 구축](/materials/S13-05-02-01_01-SparkArchitecture)
     - [Spark 설치 및 환경설정](/materials/S13-05-01-02_01-SparkInstall)
     - [Iceberg, MinIO 연결 및 대용량 데이터 분석 준비](/materials/S13-05-03-01_01-IcebergMinIoSpark) 
-    - Spark DataFrame, SparkSQ을 이용한 데이터 가공 
-    - 파티셔닝과 셔플링 최적화 이해하기
+    - [Spark DataFrame, SparkSQL을 이용한 데이터 가공](/materials/S13-05-04-01_01-SparkDataFrameSql)
+    - [파티셔닝과 셔플링 최적화 이해하기](/materials/S13-05-05-01_01-PartitionSufflingOptimization)
 
 - **6주차: Streaming**
     - [6주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_06)
