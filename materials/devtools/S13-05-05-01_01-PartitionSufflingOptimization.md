@@ -196,37 +196,44 @@ categories: materials
         - 1,000만 건 이하의 데이터에서는 200개로 쪼개면 지나치게 작은 찌꺼기 파일이 양산되므로 이를 리소스 스펙에 맞게 줄여주어야 성능이 향상됨
 
 - **예제 및 설명**
-    - 셔플 파티션을 최적화하여 분산 대시보드 집계하기
-    - 기본값 200개를 ROGStrix의 워커 코어 수(총 4개 코어)에 맞춤 설정
+    - 대용량 데이터 가공의 가장 큰 병목 지점인 셔플링(Shuffling)을 물리적으로 어떻게 제어하고 최적화할 수 있는지 증명하는 예제<br><br>
+
+    - **예제의 구성**
+        - 스마트팩토리의 대용량 센서 로그(1,000만 건)와 기준 정보인 장비 마스터 데이터(1,000건)를 이종 결합하는 동일한 연산을
+        - 두 가지의 서로 다른 물리적 방식으로 실행하여 성능 차이를 초 단위로 직접 비교하도록 구성
+
+    - **기반 기술 (Underlying Technologies)**
+        - Spark SQL Optimizer (Catalyst):
+            - 코드 단에서 주입된 broadcast() 힌트를 해석하여
+            - 물리 실행 계획을 Shuffle Join에서 Broadcast Join으로 동적으로 전환
+
+        - Tungsten Execution Engine:
+            - 브로드캐스트된 해시 테이블을
+            - CPU 캐시 레벨에서 고속 탐색하여
+            - 메모리 내 매핑 연산 속도를 극대화
+
+    - **중요성, 의미와 의의 (Significance & Impact)**
+        - 하드웨어 친화적 튜닝 입증:
+            - 네트워크 자원(Network Bandwidth)이 분산 컴퓨팅의 가장 비싼 자원임을 학습자에게 리포트 지표로 확실하게 각인시킴
+
+        - 코드 한 줄의 가치:
+            - 인프라를 증설하거나 하드웨어를 바꾸지 않고도,
+            - 오직 .join(broadcast(small_master))라는 코드 한 줄의 최적화 힌트만으로
+            - 시스템 성능을 수십 배 이상 끌어올릴 수 있다는 아키텍처적 주도권을 증명
+
+    <br>
+
+    - **전체 코드**
 
     ```python
-    spark.conf.set("spark.sql.shuffle.partitions", "4")
-
-    # 셔플링을 유발하는 고부하 GROUP BY 연산 수행
-    summary_result = spark.sql("""
-        SELECT factory_id, COUNT(*) as total_count, AVG(temperature) as avg_temp
-        FROM minio_lake.performance_db.massive_sensor_logs
-        GROUP BY factory_id
-    """)
-    summary_result.show()
-    ```
-
-    - `GROUP BY factory_id` 구문이 들어가는 순간 워커 1, 2 간에 대대적인 물리적 데이터 셔플링이 가동됨
-    - 이때 `spark.sql.shuffle.partitions` 값을 `4`로 낮추어 주었기 때문에,
-    - 스파크는 쓸데없이 200개의 임시 가상 태스크를 만들지 않고 딱 4개의 굵직한 분산 파티션 파일만 교환하여 네트워크 전달 속도를 극대화함
-
-    - 전체 코드
-
-    ```python
-    #//file: "ecommerce_analytics.py"
+    #//file: "shuffle_join_tuning.py"
     from pyspark.sql import SparkSession
-    from pyspark.sql.functions import col, rand, when, expr, round
+    from pyspark.sql.functions import col, rand, expr, broadcast
     import time
 
     if __name__ == "__main__":
-        # [Step 1] Spark 세션 기동 (내장 라이브러리 기반 안전 가동)
         spark = SparkSession.builder \
-                .appName("Ecommerce-Data-Processing-Lab") \
+                .appName("Spark-Shuffle-Join-Tuning-Lab") \
                 .master("spark://spark-master:7077") \
                 .config("spark.sql.extensions", "org.apache.iceberg.spark.extensions.IcebergSparkSessionExtensions") \
                 .config("spark.sql.catalog.minio_lake", "org.apache.iceberg.spark.SparkCatalog") \
@@ -239,85 +246,57 @@ categories: materials
                 .config("spark.hadoop.fs.s3a.impl", "org.apache.hadoop.fs.s3a.S3AFileSystem") \
                 .getOrCreate()
 
-        print("\n=== 1. 이커머스 비즈니스 분석 파이프라인 엔진 가동 완료 ===")
+        print("\n=== 🚀 1. 셔플링 조인 튜닝 실험 엔진 가동 완료 ===")
 
-        TOTAL_ORDERS = 10_000_000
-        print(f"\n=== 2. DataFrame API: 다중 정형 로그 결합 및 파생 변수 가공 (1,000만 건) ===")
-        start_time = time.time()
+        # 대용량 스마트팩토리 로그 생성 (1,000만 건)
+        print("\n⏳ [케이스 A] 1,000만 건 대용량 센서 로그 생성 중...")
+        large_logs = spark.range(0, 10000000, numPartitions=8) \
+                        .withColumn("equipment_id", expr("concat('EQ_', lpad(id % 1000, 4, '0'))")) \
+                        .withColumn("metrics", rand(seed=42) * 100)
 
-        # 가상 대용량 주문 원천 데이터프레임 생성 (8개 파티션 분할)
-        raw_orders = spark.range(0, TOTAL_ORDERS, numPartitions=8)
+        # 극소용량 마스터 데이터 생성 (장비 명칭 매핑 - 1,000건)
+        print("⏳ [케이스 B] 1,000건 소용량 장비 마스터 정보 생성 중...")
+        small_master = spark.range(0, 1000) \
+                            .withColumn("equipment_id", expr("concat('EQ_', lpad(id, 4, '0'))")) \
+                            .withColumn("equipment_name", expr("concat('Sensor_Node_Alpha_', id)")) \
+                            .drop("id")
 
-        # [DataFrame 가공 1] 정형 코드 결합 및 수식 파생 변수 유도
-        processed_orders = raw_orders.withColumn("order_id", expr("concat('ORD_', lpad(id, 8, '0'))")) \
-                                    .withColumn("user_id", expr("concat('USR_', lpad(id % 50000, 5, '0'))")) \
-                                    .withColumn("category", when(col("id") % 4 == 0, "Electronics")
-                                                            .when(col("id") % 4 == 1, "Apparel")
-                                                            .when(col("id") % 4 == 2, "Home")
-                                                            .otherwise("Beauty")) \
-                                    .withColumn("price", round(rand(seed=10) * 200 + 10, 2)) \
-                                    .withColumn("quantity", (rand(seed=20) * 5 + 1).cast("int")) \
-                                    .withColumn("total_amount", round(col("price") * col("quantity"), 2))
+        print("\n------------------------------------------------------------")
+        print("🚨 실험 1: 일반 셔플 조인 (Shuffle Hash Join) 실행")
+        print("-> 데이터를 정렬하기 위해 워커 노드 간 전 대역폭 네트워크 셔플링이 발생합니다.")
+        print("------------------------------------------------------------")
+        
+        # 일반 조인 시 강제로 셔플링 파티션을 많이 잡아서 병목을 체감하도록 유도
+        spark.conf.set("spark.sql.shuffle.partitions", "200")
+        
+        start_shuffle = time.time()
+        # 일반적인 조인 수행 (네트워크 데이터 이동 유발)
+        bad_join_result = large_logs.join(small_master, on="equipment_id", how="inner")
+        
+        # Action을 호출하여 실제 분산 연산 및 셔플링 강제 구동
+        shuffle_count = bad_join_result.count()
+        duration_shuffle = time.time() - start_shuffle
+        print(f"🚩 [일반 셔플 조인 완료] 총 {shuffle_count:,}건 매핑 완료 (소요시간: {duration_shuffle:.2f}초)")
 
-        # [DataFrame 가공 2] 기준 정보 마스터 데이터프레임(5만 명의 유저 등급 매핑) 생성
-        raw_users = spark.range(0, 50000)
-        user_master = raw_users.withColumn("user_id", expr("concat('USR_', lpad(id, 5, '0'))")) \
-                            .withColumn("region", when(col("id") % 3 == 0, "Seoul")
-                                                    .when(col("id") % 3 == 1, "Busan")
-                                                    .otherwise("Incheon"))
+        print("\n------------------------------------------------------------")
+        print("✨ 실험 2: 최적화 브로드캐스트 조인 (Broadcast Hash Join) 실행")
+        print("-> 소용량 마스터를 메모리에 복제 배포하여 네트워크 셔플링을 '원천 차단'합니다.")
+        print("------------------------------------------------------------")
+        
+        start_broadcast = time.time()
+        # 💡 broadcast() 힌트를 사용하여 최적화 조인 수행 (셔플링 단계를 완전히 생략)
+        good_join_result = large_logs.join(broadcast(small_master), on="equipment_id", how="inner")
+        
+        broadcast_count = good_join_result.count()
+        duration_broadcast = time.time() - start_broadcast
+        print(f"🚩 [브로드캐스트 조인 완료] 총 {broadcast_count:,}건 매핑 완료 (소요시간: {duration_broadcast:.2f}초)")
 
-        # [DataFrame 가공 3] 대용량 주문 테이블과 소용량 유저 마스터 테이블의 분산 결합(Join)
-        final_ecommerce_df = processed_orders.join(user_master, on="user_id", how="inner")
-
-        print(f"-> [성공] DataFrame API 융합 및 전처리 실행 계획 수립 완료 (소요시간: {time.time() - start_time:.2f}초)")
-
-        # [Step 3] SparkSQL 테이블 인프라 정의 (ACID 트랜잭션 Iceberg 포맷)
-        spark.sql("CREATE DATABASE IF NOT EXISTS minio_lake.ecommerce_db")
-        spark.sql("DROP TABLE IF EXISTS minio_lake.ecommerce_db.order_analysis_ledger")
-        spark.sql("""
-                CREATE TABLE minio_lake.ecommerce_db.order_analysis_ledger (
-                    user_id STRING,
-                    order_id STRING,
-                    category STRING,
-                    price DOUBLE,
-                    quantity INT,
-                    total_amount DOUBLE,
-                    region STRING
-                ) USING iceberg
-                PARTITIONED BY (category)
-        """)
-
-        print(f"\n=== 3. Action 호출: 융합 전처리 데이터 레이크하우스 병렬 저장 ===")
-        write_start = time.time()
-
-        # 지연 연산 해제 및 MinIO 스토리지 적재 (카테고리별 물리 디렉토리 자동 분할 적재)
-        final_ecommerce_df.write \
-                        .format("iceberg") \
-                        .mode("append") \
-                        .save("minio_lake.ecommerce_db.order_analysis_ledger")
-
-        print(f"-> [성공] 1,000만 건 가공 데이터 레이크하우스 커밋 완료 (소요시간: {time.time() - write_start:.2f}초)")
-
-        print(f"\n=== 4. SparkSQL: 다차원 분산 셔플링 집계 기반 비즈니스 매출 마트 생성 ===")
-        query_start = time.time()
-
-        # 고정된 저장소 인프라 테이블을 대상으로 대규모 네트워크 데이터 재배치(Shuffling) 집계 유발
-        vip_summary = spark.sql("""
-            SELECT 
-                region,
-                category,
-                COUNT(DISTINCT user_id) as unique_users,
-                SUM(quantity) as total_units_sold,
-                ROUND(SUM(total_amount), 2) as aggregate_revenue,
-                ROUND(AVG(total_amount), 2) as average_order_value
-            FROM minio_lake.ecommerce_db.order_analysis_ledger
-            GROUP BY region, category
-            ORDER BY region ASC, aggregate_revenue DESC
-        """)
-
-        # 최종 결과 리포트 테이블 출력
-        vip_summary.show(truncate=False)
-        print(f"-> [성공] 다차원 셔플링 매출 분석 마트 연산 완료 (소요시간: {time.time() - query_start:.2f}초)")
+        print("\n" + "="*60)
+        print(f"📊 최종 성능 개선 결과 리포트")
+        print(f"  - 일반 셔플 조인 소요시간: {duration_shuffle:.2f}초")
+        print(f"  - 브로드캐스트 조인 소요시간: {duration_broadcast:.2f}초")
+        print(f"🔥 네트워크 셔플링 제어를 통한 속도 향상: 약 {duration_shuffle / max(duration_broadcast, 0.01):.1f}배 가속")
+        print("="*60 + "\n")
 
         spark.stop()
     ```
@@ -327,6 +306,56 @@ categories: materials
     ```bash
     docker exec -it spark-client spark-submit /workspace/ecommerce_analytics.py
     ```
+
+
+    - **단계별 코드 상세 설명 (Step-by-Step Walkthrough)**
+
+        - **[Step 1] 대소용량 소스 데이터프레임 빌드**
+
+            ```python
+            large_logs = spark.range(0, 10000000, numPartitions=8) ...
+            small_master = spark.range(0, 1000) ...
+            ```
+
+            - 실험의 대칭성을 위해 8개 파티션으로 쪼개진 **1,000만 건의 헤비(Heavy) 데이터**와 단 1개의 파티션으로도 가뿐한 **1,000건의 라이트(Light) 데이터**를 메모리상에 독립적으로 생성
+
+        - **[Step 2] 실험 1: 일반 셔플 조인 강제 구동**
+
+            ```python
+            spark.conf.set("spark.sql.shuffle.partitions", "200")
+            bad_join_result = large_logs.join(small_master, on="equipment_id", how="inner")
+            shuffle_count = bad_join_result.count()
+            ```
+
+            - **`spark.sql.shuffle.partitions = 200`:**
+                - 스파크의 기본 셔플 파티션 수를 명시
+                - 쿼리가 실행될 때 워커 노드들이 네트워크 조인 분기를 위해 무려 200개의 임시 태스크 조각을 쪼개고 나르는 무거운 물리적 이사(Shuffling) 과정을 겪도록 유도
+            * **`.count()` (Action):**
+                - 지연 연산되어 있던 조인 계보를 깨우고
+                - 물리적인 셔플링 연산을 실시간 가동하는 트리거 역할 수행
+
+        - **[Step 3] 실험 2: 브로드캐스트 최적화 조인 구동**
+
+            ```python
+            good_join_result = large_logs.join(broadcast(small_master), on="equipment_id", how="inner")
+            broadcast_count = good_join_result.count()
+            ```
+
+            - **`broadcast(small_master)`:**
+                - 본 예제의 핵심 심장부
+                - 스파크 최적화 엔진에게 **"이 소형 테이블은 셔플링하지 말고 모든 워커 노드 메모리에 복제본으로 미리 얹어줘"**라고 힌트를 하달
+                    - 이 명령 덕분에 200개의 셔플 파티션 네트워크 교환 단계가 물리 실행 계획에서 **통째로 소멸**
+                    - 워커 노드가 가진 CPU 코어들이 로컬 메모리 안에서 단 몇 초 만에 1,000만 건을 초고속 패스 처리하게 됨
+
+        - **[Step 4] 최종 성능 비교 리포트 출력**
+
+            ```python
+            print(f"🔥 네트워크 셔플링 제어를 통한 속도 향상: 약 {duration_shuffle / duration_broadcast:.1f}배 가속")
+            ```
+
+            - 두 연산의 순수 런타임 시간을 계산
+            - 최종 효율성 지표를 콘솔 테이블로 직관적으로 출력하고
+            - 자원을 반납(`spark.stop()`)
 
 
 ## 3. 종합 최적화 튜닝 포인트 및 활용 방향
@@ -340,6 +369,19 @@ categories: materials
     ```
 
 <br>
+
+- **셔플 조인(Shuffle Join)의 한계**
+    - 분산 클러스터 환경에서 두 테이블을 결합(JOIN)할 때,
+    - 스파크는 기본적으로 양쪽 테이블의 데이터를 결합 키(Key) 기준으로 재정렬하기 위해
+    - 전국의 워커 노드 간 네트워크로 데이터를 교환하는 셔플 해시 조인(Shuffle Hash Join)을 수행함
+    - 데이터가 1,000만 건 단위가 되면 네트워크 대역폭 폭발과 디스크 I/O 병목으로 인해 연산 속도가 급격히 떨어짐
+
+- **브로드캐스트 조인 (Broadcast Join)의 혁신**
+    - 결합하려는 두 테이블 중 하나가 메모리에 가뿐히 올라갈 정도로 작은 소용량 마스터 테이블(예: 1,000건 장비 정보)이라면, 굳이 무거운 셔플링을 할 필요가 없음
+    - 스파크 드라이버가 이 작은 테이블의 복제본을 모든 워커 노드의 메모리로 미리 통째로 배포(Broadcast)해 버리는 방식
+        - 각 워커 노드는 네트워크 이동 없이 자신이 가진 대용량 파티션 조각과 메모리 상의 마스터 데이터를 로컬에서 즉시 매핑(Map-side Join)
+        - 분산 셔플링을 원천 차단하여 극적인 속도 향상을 이루어냄
+
 
 > - **아키텍처 가이드라인**
 >   1. **`ClusteredDistribution` 메커니즘의 의의:**

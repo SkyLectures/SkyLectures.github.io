@@ -295,7 +295,7 @@ user_master = raw_users.withColumn("user_id", expr("concat('USR_', lpad(id, 5, '
 
 # [DataFrame 가공 3] 대용량 주문 데이터와 소용량 마스터 데이터의 분산 결합(Join)
 # 지연 연산 덕분에 이 시점에는 계획만 수립되며, 실제 데이터 결합은 최종 적재 시점에 최적화되어 처리됩니다.
-final_ecommerce_df = processed_orders.join(user_master, on="user_id", how="inner")
+final_ecommerce_df = processed_orders.join(user_master, on="user_id", how="inner").drop("id")
 
 print(f"-> [성공] DataFrame API 조인 및 전처리 계획 빌드 완료 (소요시간: {time.time() - start_time:.2f}초)")
 
