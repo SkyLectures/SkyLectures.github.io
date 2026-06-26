@@ -202,6 +202,10 @@ volumes:
 
 - 호스트 PC(컨테이너 외부) 관점에서 아파치 공식 Kafka 클러스터의 내부 메타데이터 상태를 추적하고 진단하는 실무형 인프라 점검 도구
 
+```bash
+pip install kafka-python-ng
+```
+
 ```python
 #//file: "check.py"
 from kafka import KafkaAdminClient
