@@ -98,11 +98,11 @@ categories: materials
         df_large = spark.range(0, TOTAL_ROWS, numPartitions=8)
 
         # factory_id 컬럼 기준으로 데이터프레임 내부 파티션 재정렬 연산 계획 수립
-        df_repartitioned = df_large.withColumn(
-            "factory_id", when(col("id") % 2 == 0, "FAC_SEOUL").otherwise("FAC_BUSAN")
-        ).withColumn("temperature", (rand(seed=42) * 40 + 10).cast("double")) \
-        .withColumn("timestamp", expr("171921600 + id % 86400")) \
-        .repartition(2, "factory_id")
+        df_repartitioned = df_large.withColumn("sensor_id", expr("concat('SNS_', lpad(id % 100, 3, '0'))")) \
+                                   .withColumn("factory_id", when(col("id") % 2 == 0, "FAC_SEOUL").otherwise("FAC_BUSAN")) \
+                                   .withColumn("temperature", (rand(seed=42) * 40 + 10).cast("double")) \
+                                   .withColumn("timestamp", expr("171921600 + id % 86400")) \
+                                   .repartition(2, "factory_id")        
 
         print(f"-> [성공] 대용량 8개 파티션을 공장별 2개 파티션으로 컴팩트 재배치 계획 수립 완료 (소요시간:{time.time() - start_time: .2f}초)")
 
