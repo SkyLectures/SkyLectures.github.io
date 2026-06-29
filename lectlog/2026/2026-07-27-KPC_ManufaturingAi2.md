@@ -2,7 +2,7 @@
 layout: page
 title:  "제조 산업과 AI 활용 과정 2차(21H)"
 date:   2026-04-02 10:50:00 +0900
-permalink: /lectlog/2026-07-27-KPC_ManufaturingAi1
+permalink: /lectlog/2026-07-27-KPC_ManufaturingAi2
 categories: lectlog
 ---
 * toc
@@ -35,16 +35,37 @@ categories: lectlog
 
 - **1일차**
     - 스마트 제조의 본질과 데이터 흐름
+        - [스마트팩토리란 무엇인가?](S06-01-01-01_01-SmartFactoryOverview)
+        - [제조산업의 패러다임 변화](S06-01-01-02_01-ParadigmShiftInTheManufacturingIndustry)
+        - [스마트팩토리의 구축절차](S06-01-02-01_01-SmartFactoryConstructionProcedures)
+        - [스마트팩토리의 구성 요소 및 기술](S06-01-03-01_01-SmartFactoryComponents)
     - 제조 데이터 전처리 전략
+        - 제조 시계열 데이터의 특성과 전처리
+        
     - 시각적 지능, 비전 AI 검사 실습
+        - [딥러닝 개요](S03-03-01-01_01-DeepLearningOverview)
+        - Google Teachable Machine 실습
+        - [CNN 모델](S03-03-02-02_01-CnnModel)
+        - [CNN 모델 실습](S03-03-02-02_02-CnnPractice)
+        - [YOLO 모델](S03-03-03-03_01-YoloMolel)
+        - [YOLO 모델 실습](S03-03-03-03_02-YoloPractice)
 
 - **2일차**
     - 현장 데이터 분석 및 시각화
+        - [제조 데이터 수집 및 분석](S06-04-01-01_01-ManufacturingDataCollectAndAnalyze)
+        - 의사결정을 돕는 제조 데이터 시각화
+        - 실무형 대시보드(Dashboard) 구성 및 실습
     - 노코드 AI 기반 공정 변수 예측
+        - Orange 소개
+        - Orange 기반 AI 모델링 및 결과해석(예측) 실습
     - 이상 징후 포착 및 대응
+        - 제조 현장의 이상징후 정의 및 데이터 분석
+        - 로컬 AI 기반 이상탐지 모델링 실습
+        - 이상징후 알람 기준 설정 및 대응 시나리오
 
 - **3일차**
     - 피지컬 AI와 협동 로봇
+        - [피지컬 AI란 무엇인가?](S03-11-01-01_01-PhysicalAiOverview)
     - 디지털 트윈(Digital Twin)과 가상 공장
     - 다품종 소량 생산을 위한 유연 생산 시스템(FMS)
 

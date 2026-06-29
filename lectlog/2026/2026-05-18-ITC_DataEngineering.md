@@ -98,8 +98,8 @@ categories: lectlog
     - [실시간 데이터 특징 이해와 Kafka 이해하기](/materials/S13-07-01-01_01-KafkaOverview)
     - [Docker 기반 Kafka 클러스터 구축하기](/materials/S13-07-02-01_01-KafkaClusterDocker)
     - [Producer / Consumer 애플리케이션 만들기](/materials/S13-07-03-01_01-KafkaProducerConsumer)
-    - CDC(Debezium) DB 변경분 실시간 캡처
-    - Kafka Connect 이용한 실시간 데이터 MiniO 적재
+    - [CDC(Debezium) DB 변경분 실시간 캡처](/materials/S13-07-04-01_01-KafkaCdcRealtimeCapture)
+    - [Kafka Connect 이용한 실시간 데이터 MiniO 적재](/materials/S13-07-05-01_01-KafkaConnectMinIo)
 
 - **7주차: RAG**
     - [7주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_07)
