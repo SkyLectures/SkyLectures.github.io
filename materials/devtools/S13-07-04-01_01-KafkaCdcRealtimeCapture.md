@@ -355,7 +355,7 @@ categories: materials
                     - --server-id=223344
                     - --log-bin=mysql-bin
                     - --binlog_format=ROW
-                    - --binlog_row_image=full
+                    - --binlog-row-image=FULL
                     - --binlog_expire_logs_seconds=604800
                     volumes:
                     - mysql_data:/var/lib/mysql
@@ -443,15 +443,51 @@ categories: materials
                     docker exec -it mysql-cdc mysql -uroot -proot_pass!
                     ```
 
-                - 접속된 MySQL 프롬프트(`mysql>`)에서 다음을 검증
+                
+                - **확인 사항(CDC 가능 상태 환경 설정값 검증법)**
+                    - 접속된 MySQL 프롬프트(`mysql>`)에서 다음을 검증
+                    - 설정 및 계정 생성이 끝난 후, DB 터미널창에서 인프라가 완벽히 구성되었는지 확인
 
-                    ```sql
-                    -- 1. 데이터 저장 형식 검증 (ROW 명시 확인)
-                    SHOW VARIABLES LIKE 'binlog_format';
+                    - **검증 명령어 1: Binlog 포맷 확인**
 
-                    -- 2. 캡처 이미지 범위 검증 (FULL 명시 확인)
-                    SHOW VARIABLES LIKE 'binlog_row_image';
-                    ```
+                        ```sql
+                        SHOW VARIABLES LIKE 'binlog_format';
+                        ```
+
+                        - **합격 기준 출력 결과:**
+
+                            ```text
+                            +---------------+-------+
+                            | Variable_name | Value |
+                            +---------------+-------+
+                            | binlog_format | ROW   |
+                            +---------------+-------+
+                            ```
+
+                        - **설명:**
+                            - `Value` 자리에 반드시 `ROW`가 출력되어야 함
+                            - 만약 `STATEMENT`나 `MIXED`가 출력된다면 1.1절에서 배운 중간 상태 유실 및 복잡한 페이로드 구성이 불가능하므로 탈락
+
+                    - **검증 명령어 2: Binlog 이미지 범위 확인**
+
+                        ```sql
+                        SHOW VARIABLES LIKE 'binlog_row_image';
+                        ```
+
+                        - **합격 기준 출력 결과:**
+
+                            ```text
+                            +------------------+-------+
+                            | Variable_name    | Value |
+                            +------------------+-------+
+                            | binlog_row_image | FULL  |
+                            +------------------+-------+
+                            ```
+
+                        - **설명:**
+                            - `FULL`로 지정되어 있어야만 데이터가 수정되었을 때
+                            - Debezium 페이로드에 `before`와 `after` 구조가 완벽하게 다 담겨 출력될 수 있음
+
 
             3. **실습용 테스트 테이블 및 CDC 계정 생성**
                 - Debezium이 읽어갈 대상 데이터와 전용 권한 계정을 설정(MySQL 창에 그대로 입력)
@@ -473,9 +509,36 @@ categories: materials
                     FLUSH PRIVILEGES;
                     ```
 
+                    - CREATE USER 'debezium_user'@'%' IDENTIFIED BY 'dbz_pass123!';
+                        - 디비지움 전용 ID(debezium_user)와 비밀번호(dbz_pass123!)로 사용자 계정 생성
+                        - 외부 컨테이너(kafka-connect)에서 MySQL로 접속할 때 보안을 위해 최고 관리자(root) 계정을 주는 대신, 
+                        - 제한된 접근망(%: 어디서나 접속 가능)을 가진 전용 파이프라인 계정을 하나 개설
+
+                    - GRANT SELECT, RELOAD, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'debezium_user'@'%';
+                        - 권한별 세부 역할:
+                            - REPLICATION SLAVE (핵심):
+                                - 트랜잭션 바이너리 로그 스트림을 실시간으로 수신할 수 있는 권한 (CDC의 핵심)
+                                    - 디비지움이 단순 조회용 프로그램이 아니라
+                                    - "백업용 복제 서버(Slave)니까 최신 트랜잭션 로그(Binlog)를 실시간으로 보내줘"라고
+                                    - 마스터 DB에 요청할 수 있는 결정적인 권한
+                            - SELECT:
+                                - 디비지움이 처음 가동될 때,
+                                - 기존에 이미 테이블에 쌓여있던 과거 데이터의 스냅샷을 읽어오기 위한 읽기 권한
+                            - RELOAD & REPLICATION CLIENT:
+                                - `REPLICATION CLIENT`: 현재 빈로그의 위치와 상태를 모니터링할 수 있는 권한
+                                - 마스터 DB의 로그 파일 위치가 몇 번 번호인지 모니터링하고,
+                                - 필요할 때 로그 상태를 리로드하여 동기화 포인트를 맞추는 권한
+                                
+                            - SHOW DATABASES:
+                                - 디비지움 내부 엔진이 어떤 데이터베이스가 존재하는지 카탈로그 조회
+                    - FLUSH PRIVILEGES;
+                        - MySQL 서버를 껐다 켜지 않아도,
+                        - 방금 부여한 복제 및 읽기 권한들이 시스템 엔진에 실시간으로 즉각 반영되도록 뇌를 동기화하는 명령
+                            - "방금 설정한 유저 권한 메모리를 즉시 새로고침(적용)해라."
+
 
     - **[실습 과정 2] MySQL CDC 전용 설정 파일 작성**
-        - MySQL 엔진이 모든 행 단위 변경 분을 누락 없이 바이너리 로그에 쓰도록 프로젝트 디렉토리에 구성 파일(`mysql_cdc.cnf`) 생성
+        - MySQL 엔진이 모든 행 단위 변경 분을 누락 없이 바이너리 로그에 쓰도록 프로젝트 디렉토리에 구성 파일(`mysql_cdc.cnf`) 생성        
 
             ```ini
             [mysqld]
@@ -489,74 +552,13 @@ categories: materials
             binlog_format=ROW
 
             # 4. 행 변경 시 이전/이후 값을 로그에 모두 기록하도록 설정
-            binlog_row_image=full
+            binlog_row_image=FULL
 
             # 5. 빈로그 보존 기간 (초 단위 - 7일 지정)
             binlog_expire_logs_seconds=604800
             ```
 
-    - **[실습 과정 3] Debezium 전용 계정 생성 및 복제 권한 부여**
-        - Debezium이 MySQL 마스터에 복제 서버 자격으로 접근하여 빈로그를 읽어갈 수 있도록 권한을 부여하는 과정
-        
-        1. **DB 루트 권한으로 접속하여 아래 스크립트를 수행**
-
-            ```sql
-            -- 1. 디비지움 연동용 CDC 전용 사용자 생성
-            CREATE USER 'debezium_user'@'%' IDENTIFIED BY 'dbz_pass123!';
-
-            -- 2. 일반 데이터 조회를 위한 읽기 권한 부여
-            GRANT SELECT, RELOAD, SHOW DATABASES, REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'debezium_user'@'%';
-
-            -- 3. 권한 설정 즉시 적용
-            FLUSH PRIVILEGES;
-            ```
-
-        - **주요 권한 설명:**
-            - `REPLICATION SLAVE`: 트랜잭션 바이너리 로그 스트림을 실시간으로 수신할 수 있는 권한 (CDC의 핵심)
-            - `REPLICATION CLIENT`: 현재 빈로그의 위치와 상태를 모니터링할 수 있는 권한
-
-        2. **확인 사항(CDC 가능 상태 환경 설정값 검증법)**
-            - 설정 및 계정 생성이 끝난 후, DB 터미널창에서 인프라가 완벽히 구성되었는지 확인
-
-            - **검증 명령어 1: Binlog 포맷 확인**
-
-                ```sql
-                SHOW VARIABLES LIKE 'binlog_format';
-                ```
-
-                - **합격 기준 출력 결과:**
-
-                    ```text
-                    +---------------+-------+
-                    | Variable_name | Value |
-                    +---------------+-------+
-                    | binlog_format | ROW   |
-                    +---------------+-------+
-                    ```
-
-                - **설명:**
-                    - `Value` 자리에 반드시 `ROW`가 출력되어야 함
-                    - 만약 `STATEMENT`나 `MIXED`가 출력된다면 1.1절에서 배운 중간 상태 유실 및 복잡한 페이로드 구성이 불가능하므로 탈락
-
-            - **검증 명령어 2: Binlog 이미지 범위 확인**
-
-                ```sql
-                SHOW VARIABLES LIKE 'binlog_row_image';
-                ```
-
-                - **합격 기준 출력 결과:**
-
-                    ```text
-                    +------------------+-------+
-                    | Variable_name    | Value |
-                    +------------------+-------+
-                    | binlog_row_image | FULL  |
-                    +------------------+-------+
-                    ```
-
-                - **설명:**
-                    - `FULL`로 지정되어 있어야만 데이터가 수정되었을 때
-                    - Debezium 페이로드에 `before`와 `after` 구조가 완벽하게 다 담겨 출력될 수 있음
+        - 이번 실습에서는 docker-compose.yml 파일에 넣어두었으므로 따로 실행하지 않아도 됨
 
 
 ### 6.2 Docker 기반 CDC 파이프라인 인프라 빌드
@@ -598,102 +600,107 @@ categories: materials
 
         ```yaml
         services:
-        # 1. CDC 원천 데이터베이스 (MySQL 8.0)
-        mysql-cdc:
-            image: mysql:8.0
-            container_name: mysql-cdc
-            ports:
-            - "3306:3306"
-            environment:
-            - MYSQL_ROOT_PASSWORD=root_pass!
-            - MYSQL_DATABASE=inventory
-            command:
-            - --server-id=223344
-            - --log-bin=mysql-bin
-            - --binlog_format=ROW
-            - --binlog_row_image=full
-            - --binlog_expire_logs_seconds=604800
-            volumes:
-            - mysql_data:/var/lib/mysql
+            # 1. CDC 원천 데이터베이스
+            mysql-cdc:
+                image: mysql:8.0
+                container_name: mysql-cdc
+                ports:
+                    - "3306:3306"
+                environment:
+                    - MYSQL_ROOT_PASSWORD=root_pass!
+                    - MYSQL_DATABASE=inventory
+                command:
+                    - --server-id=223344
+                    - --log-bin=mysql-bin
+                    - --binlog-format=ROW
+                    - --binlog-row-image=FULL
+                    - --binlog_expire_logs_seconds=604800
+                volumes:
+                    - mysql_data:/var/lib/mysql
 
-        # Kafka 브로커 노드 1
-        kafka-1:
-            image: apache/kafka:latest
-            container_name: kafka-1
-            ports:
-            - "9092:9092"
-            environment:
-            - KAFKA_NODE_ID=1
-            - KAFKA_PROCESS_ROLES=controller,broker
-            - KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
-            - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
-            - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
-            - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
-            - KAFKA_LOG_DIRS=/var/lib/kafka/data
-            volumes:
-            - kafka_1_data:/var/lib/kafka/data
+            # 2. Kafka 3-브로커 클러스터 (내/외부 리스너 완벽 분리)
+            kafka-1:
+                image: apache/kafka:latest
+                container_name: kafka-1
+                ports:
+                    - "9092:9092"
+                environment:
+                    - KAFKA_NODE_ID=1
+                    - KAFKA_PROCESS_ROLES=broker,controller
+                    - KAFKA_LISTENERS=INTERNAL://:19092,EXTERNAL://:9092,CONTROLLER://:9093
+                    - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-1:19092,EXTERNAL://localhost:9092
+                    - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+                    - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
+                    - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
+                    - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
+                    - KAFKA_LOG_DIRS=/var/lib/kafka/data
+                volumes:
+                    - kafka_1_data:/var/lib/kafka/data
 
-        # Kafka 브로커 노드 2
-        kafka-2:
-            image: apache/kafka:latest
-            container_name: kafka-2
-            ports:
-            - "9094:9092"
-            environment:
-            - KAFKA_NODE_ID=2
-            - KAFKA_PROCESS_ROLES=controller,broker
-            - KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
-            - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9094
-            - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
-            - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
-            - KAFKA_LOG_DIRS=/var/lib/kafka/data
-            volumes:
-            - kafka_2_data:/var/lib/kafka/data
+            kafka-2:
+                image: apache/kafka:latest
+                container_name: kafka-2
+                ports:
+                    - "9094:9094"
+                environment:
+                    - KAFKA_NODE_ID=2
+                    - KAFKA_PROCESS_ROLES=broker,controller
+                    - KAFKA_LISTENERS=INTERNAL://:19092,EXTERNAL://:9094,CONTROLLER://:9093
+                    - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-2:19092,EXTERNAL://localhost:9094
+                    - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+                    - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
+                    - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
+                    - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
+                    - KAFKA_LOG_DIRS=/var/lib/kafka/data
+                volumes:
+                    - kafka_2_data:/var/lib/kafka/data
 
-        # Kafka 브로커 노드 3
-        kafka-3:
-            image: apache/kafka:latest
-            container_name: kafka-3
-            ports:
-            - "9095:9092"
-            environment:
-            - KAFKA_NODE_ID=3
-            - KAFKA_PROCESS_ROLES=controller,broker
-            - KAFKA_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
-            - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9095
-            - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
-            - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
-            - KAFKA_LOG_DIRS=/var/lib/kafka/data
-            volumes:
-            - kafka_3_data:/var/lib/kafka/data
+            kafka-3:
+                image: apache/kafka:latest
+                container_name: kafka-3
+                ports:
+                    - "9095:9095"
+                environment:
+                    - KAFKA_NODE_ID=3
+                    - KAFKA_PROCESS_ROLES=broker,controller
+                    - KAFKA_LISTENERS=INTERNAL://:19092,EXTERNAL://:9095,CONTROLLER://:9093
+                    - KAFKA_ADVERTISED_LISTENERS=INTERNAL://kafka-3:19092,EXTERNAL://localhost:9095
+                    - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+                    - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
+                    - KAFKA_CONTROLLER_LISTENER_NAMES=CONTROLLER
+                    - KAFKA_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
+                    - KAFKA_LOG_DIRS=/var/lib/kafka/data
+                volumes:
+                    - kafka_3_data:/var/lib/kafka/data
 
-        # [이번 세션 핵심] Debezium CDC 플러그인이 포함된 Kafka Connect 엔진
-        kafka-connect:
-            image: debezium/connect:2.4
-            container_name: kafka-connect
-            ports:
-            - "8083:8083" # REST API 제어 포트
-            environment:
-            # 도커 내부망 통신을 위해 kafka-1의 9093(CONTROLLER 포트와 공유망) 포트를 조준합니다.
-            - BOOTSTRAP_SERVERS=kafka-1:9093,kafka-2:9093,kafka-3:9093
-            - GROUP_ID=1
-            # Connect의 상태 및 설정을 백업할 카프카 내부 메타데이터 토픽 이름 자동 설정 정의
-            - CONFIG_STORAGE_TOPIC=my_connect_configs
-            - OFFSET_STORAGE_TOPIC=my_connect_offsets
-            - STATUS_STORAGE_TOPIC=my_connect_statuses
-            # 단일 노드 테스트이므로 복제 계수를 1로 설정하여 에러 방지
-            - CONFIG_STORAGE_REPLICATION_FACTOR=1
-            - OFFSET_STORAGE_REPLICATION_FACTOR=1
-            - STATUS_STORAGE_REPLICATION_FACTOR=1
-            # 데이터 파싱 규격 지정 (문자열 Key/Value 포맷터 사용)
-            - KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
-            - VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+            # 3. Kafka Connect 엔진
+            kafka-connect:
+                image: debezium/connect:2.4
+                container_name: kafka-connect
+                ports:
+                    - "8083:8083"
+                environment:
+                    # 👇 내부망 전용 포트인 19092 채널을 정밀 조준합니다.
+                    - BOOTSTRAP_SERVERS=kafka-1:19092,kafka-2:19092,kafka-3:19092
+                    - GROUP_ID=1
+                    - CONFIG_STORAGE_TOPIC=my_connect_configs
+                    - OFFSET_STORAGE_TOPIC=my_connect_offsets
+                    - STATUS_STORAGE_TOPIC=my_connect_statuses
+                    - CONFIG_STORAGE_REPLICATION_FACTOR=1
+                    - OFFSET_STORAGE_REPLICATION_FACTOR=1
+                    - STATUS_STORAGE_REPLICATION_FACTOR=1
+                    - KEY_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+                    - VALUE_CONVERTER=org.apache.kafka.connect.json.JsonConverter
+                depends_on:
+                    - kafka-1
+                    - kafka-2
+                    - kafka-3
 
         volumes:
-        mysql_data:
-        kafka_1_data:
-        kafka_2_data:
-        kafka_3_data:
+            mysql_data:
+            kafka_1_data:
+            kafka_2_data:
+            kafka_3_data:
         ```
 
     - **[2단계] 전체 인프라 가동 명령**
@@ -805,7 +812,7 @@ categories: materials
                 "database.server.id": "184054",
                 "topic.prefix": "cdc",
                 "database.include.list": "inventory.customers",
-                "schema.history.internal.kafka.bootstrap.servers": "kafka-1:9093,kafka-2:9093,kafka-3:9093",
+                "schema.history.internal.kafka.bootstrap.servers": "kafka-1:19092,kafka-2:19092,kafka-3:19092",
                 "schema.history.internal.kafka.topic": "schemahistory.inventory",
                 "include.schema.changes": "false"
             }
