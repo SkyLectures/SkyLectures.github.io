@@ -8,6 +8,8 @@ categories: materials
 * toc
 {:toc .large-only .toc-sticky:true}
 
+
+
 ## 1. 대형 언어 모델(LLM)이란?
 - 대형 언어 모델(Large Language Models, LLM) 또는 거대 언어 모델이라고 지칭함
 - 방대한 양의 텍스트 데이터를 학습하여 인간과 유사한 텍스트를 생성하고 이해하는 데 특화된 인공 신경망 모델

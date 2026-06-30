@@ -104,6 +104,7 @@ categories: lectlog
 - **7주차: RAG**
     - [7주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_07)
     - LangChain을 이용한 챗봇 기초
+        - [LLM 개요](/materials/S03-05-01-01_01-LlmOverview)
         - [LangChain 개요](/materials/S03-05-03-01_01-LangChainOverview)
         - [LangChain 기반 챗봇](/materials/S03-05-03-05_01-LangChainChatbot)
     - RAG를 위한 텍스트 데이터 Chunking
