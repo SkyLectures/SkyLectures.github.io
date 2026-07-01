@@ -163,7 +163,7 @@ categories: materials
     }
     ```
 
-- 이 `before`와 `after` 구조 덕분에 🡲 이벤트를 받는 하부 시스템은 데이터가 어떻게 변했는지에 대한 완벽한 '맥락(Context)'을 제공받게 됨
+- 이 `before`와 `after` 구조 덕분에 🡲 이벤트를 받는 하부 시스템은 데이터가 어떻게 변했는지에 대한 '맥락(Context)'을 제공받게 됨
 
 
 ## 5. CDC 관련 기술 생태계 (Ecosystem)
@@ -237,13 +237,13 @@ categories: materials
             - 스케줄러(예: 10분 주기)가 DB에 `SELECT * FROM 테이블 WHERE 수정일시 > '마지막_수집일시'` 형태의 쿼리를 지속적으로 던져 변경분을 가져옴
 
         - **한계 1 (DB 성능 저하):**
-            - 수집 주기마다 인덱스를 타고 대량의 데이터를 조회 🡲 서비스 중인 OLTP DB에 심각한 성능 병목을 유발
+            - 수집 주기마다 인덱스를 타고 대량의 데이터를 조회<br> 🡲 서비스 중인 OLTP DB에 심각한 성능 병목을 유발
 
         - **한계 2 (Hard Delete 추적 불가):**
-            - 어플리케이션이 DB에서 데이터를 아예 삭제(`DELETE FROM...`)해 버리면 🡲 다음 폴링 시점에는 데이터가 존재하지 않으므로 무엇이 지워졌는지 추적할 방법이 없음
+            - 어플리케이션이 DB에서 데이터를 아예 삭제(`DELETE FROM...`)해 버리면<br> 🡲 다음 폴링 시점에는 데이터가 존재하지 않으므로 무엇이 지워졌는지 추적할 방법이 없음
 
         - **한계 3 (중간 상태 손실):**
-            - 수집 주기(예: 10분) 사이에 데이터가 'A 🡲 B 🡲 C'로 빠르게 두 번 수정 🡲 폴링 방식은 최종 상태인 'C'만 가져오고 'B'라는 중간 비즈니스 흐름은 유실
+            - 수집 주기(예: 10분) 사이에 데이터가 'A 🡲 B 🡲 C'로 빠르게 두 번 수정<br> 🡲 폴링 방식은 최종 상태인 'C'만 가져오고 'B'라는 중간 비즈니스 흐름은 유실
 
     - **로그 기반 CDC(Log-based CDC)의 필요성**
         - DB에 직접적인 데이터 조회 쿼리를 단 한 번도 전송하지 않고,
@@ -641,7 +641,7 @@ categories: materials
                 image: apache/kafka:latest
                 container_name: kafka-2
                 ports:
-                    - "9094:9094"
+                    - "9094:9092"
                 environment:
                     - KAFKA_NODE_ID=2
                     - KAFKA_PROCESS_ROLES=broker,controller
@@ -659,7 +659,7 @@ categories: materials
                 image: apache/kafka:latest
                 container_name: kafka-3
                 ports:
-                    - "9095:9095"
+                    - "9095:9092"
                 environment:
                     - KAFKA_NODE_ID=3
                     - KAFKA_PROCESS_ROLES=broker,controller
@@ -680,7 +680,7 @@ categories: materials
                 ports:
                     - "8083:8083"
                 environment:
-                    # 👇 내부망 전용 포트인 19092 채널을 정밀 조준합니다.
+                    # 내부망 전용 포트인 19092 채널을 지정
                     - BOOTSTRAP_SERVERS=kafka-1:19092,kafka-2:19092,kafka-3:19092
                     - GROUP_ID=1
                     - CONFIG_STORAGE_TOPIC=my_connect_configs
@@ -826,9 +826,13 @@ categories: materials
                     - 세션 1에서 생성하고 REPLICATION 권한을 주었던 전용 계정 정보 입력
                 - `"topic.prefix"`
                     - 카프카 토픽 이름의 맨 앞에 붙을 고유 식별자
-                - `"database.include.list"`
+                - `"table.include.list"`
                     - 전체 DB를 다 읽어오면 비효율적
                     - 특정 데이터베이스의 특정 테이블(`inventory.customers`)만 타겟팅하여 감시하도록 제한
+                    
+                    > - database.include.list로 작성하면 inventory 까지 작성(데이터베이스 레벨까지)
+                    > - table.include.list로 작성하면 inventory.customers 까지 작성(테이블 레벨까지)
+
                 - `"schema.history.internal.kafka.topic"`
                     - DDL(테이블 구조 변경) 이벤트를 추적하여
                     - 내부에 보관할 Kafka 메타데이터 토픽 지정
@@ -872,7 +876,7 @@ categories: materials
 
             ```bash
             docker exec -it kafka-1 /opt/kafka/bin/kafka-console-consumer.sh \
-            --bootstrap-server localhost:9092 \
+            --bootstrap-server kafka-1:19092 \
             --topic cdc.inventory.customers \
             --from-beginning
             ```
@@ -971,12 +975,14 @@ categories: materials
             # 1. KafkaConsumer 인프라 정의
             # 외부 호스트 포트 스펙 반영 및 JSON 직렬화 해제 처리
             consumer = KafkaConsumer(
-                "cdc.inventory.customers",
-                bootstrap_servers=["localhost:9092", "localhost:9094", "localhost:9095"],
-                group_id="cdc-analytics-processor-group",
-                auto_offset_reset="latest", # 켠 순간부터 흐르는 트랜잭션 실시간 추적
-                enable_auto_commit=True,
-                value_deserializer=lambda x: json.loads(x.decode('utf-8'))
+                "cdc.inventory.customers"
+                , bootstrap_servers=["localhost:9092", "localhost:9094", "localhost:9095"]
+                , group_id="cdc-analytics-processor-group"
+                , auto_offset_reset="latest" # 켠 순간부터 흐르는 트랜잭션 실시간 추적
+                , enable_auto_commit=True
+                # 수정된 부분--------------------------------------------------
+                # , value_deserializer=lambda x: json.loads(x.decode('utf-8'))
+                # -------------------------------------------------------------
             )
 
             print("========================================================")
@@ -987,7 +993,13 @@ categories: materials
             try:
                 # 실시간 인메모리 스트리밍 루프 구동
                 for message in consumer:
-                    event_msg = message.value
+                    # 수정된 부분--------------------------------------------------
+                    if message.value is None:
+                        print("--> [Tombstone] 데이터가 삭제되어 로그 컴팩션 마킹이 유입되었습니다. 스킵하겠습니다.")
+                        continue
+                    
+                    event_msg = json.loads(message.value.decode('utf-8'))
+                    # -------------------------------------------------------------
                     
                     # 데이터 유효성 검사 및 껍질 벗기기 (payload 추출)
                     if not event_msg or 'payload' not in event_msg:
@@ -1109,3 +1121,27 @@ categories: materials
                 -----------------------------------------------------------------
                 ```
 
+            <br>
+            
+            > - **Delete 시, 오류 발생의 원인**
+            >   - Debezium CDC는 MySQL에서 데이터가 삭제(DELETE)되면 카프카 토픽에 연속으로 2개의 메시지를 발행함
+            >       - Delete 메시지: op 코드가 'd'이고, before에 삭제 전 데이터가 들어있으며 after가 null인 JSON 메시지
+            >       - Tombstone 메시지: 카프카의 로그 컴팩션(Log Compaction) 기능을 위해 Key값만 남기고 Value를 완전히 null(None)로 비워서 보내는 빈 메시지<br><br>
+            >   - 기존 예제 코드의 value_deserializer는 들어오는 모든 메시지의 Value에 값이 채워져 있다고 가정하고 x.decode('utf-8')를 수행
+            >       - 하지만 삭제 직후 유입되는 Tombstone 메시지는 Value가 없기 때문에(x가 None)<br>
+            >       🡲 변환하는 시점에 NoneType object has no attribute 'decode'를 발생시키며 즉시 크래시가 나는 것<br><br>
+            > - **수정 방법**
+            >   - consumer = KafkaConsumer(...) 생성 시,
+            >       - value_deserializer=lambda x: json.loads(x.decode('utf-8')) 구문 삭제
+            >       - message.value가 None이 아닐 때에만 수행하도록 함
+            >   - 스트리밍 루프가 시작될 때,
+            >       - 루프 속의 메시지를 확인하여 None이 발생했다면 🡲 Tombstone 메시지 발행으로 판단하여 스킵
+            >       - 루프 속의 메시지가 None이 아니라면 🡲 디코딩 수행<br>
+            >
+            >           <div class="info-table"><table><tr><td style="width:700px;" class="td-left">
+            >           if message.value is None:<br>
+            >           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("--> [Tombstone] 데이터가 삭제되어 로그 컴팩션 마킹이 유입되었습니다. 스킵하겠습니다.")<br>
+            >           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;continue<br><br>
+            >           event_msg = json.loads(message.value.decode('utf-8'))
+            >           </td></tr></table></div>
+            {: .common-quote}
