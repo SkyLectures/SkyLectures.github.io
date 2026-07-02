@@ -106,8 +106,10 @@ categories: lectlog
     - LangChain을 이용한 챗봇 기초
         - [LLM 개요](/materials/S03-05-01-01_01-LlmOverview)
         - [LangChain 개요](/materials/S03-05-03-01_01-LangChainOverview)
-        - [LangChain 기반 챗봇](/materials/S03-05-03-05_01-LangChainChatbot)
+        - [LangChain 기반 챗봇](/materials/S03-05-03-05_01-LangChainChatbot)    
     - RAG를 위한 텍스트 데이터 Chunking
+        - [RAG 개요](/materials/S03-05-06-01_01-RagOverview)
+        - [RAG 요소: 청킹, 검색 방법, Vector DB](/materials/S03-05-06-01_02-RagComponents)
     - Embedding기법과 Vector DB
     - MiniO와 VectorDB(Qdrant) 연동
     - Hybrid Search 구현

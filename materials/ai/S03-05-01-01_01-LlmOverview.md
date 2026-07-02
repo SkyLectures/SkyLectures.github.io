@@ -44,9 +44,10 @@ categories: materials
                 - 디코더를 통해 추출된 의미를 기반으로 새로운 시퀀스를 생성하는 
                 - 인코더-디코더 구조를 가짐
                 - 트랜스포머 모델의 Full Architecture를 따름
-                <p style="text-align: center">
-                <img src='/materials/ai/images/S03-05-01-01_01-001.png' width="600px"/>
-                </p>
+
+                <div class="insert-image" style="text-align: left;">
+                    <img src="/materials/ai/images/S03-05-01-01_01-001.png" style="width: 50%;">
+                </div>
 
         - 트랜스포머 디코더 (GPT 계열)
             - GPT(Generative Pre-trained Transformer) 계열 모델
