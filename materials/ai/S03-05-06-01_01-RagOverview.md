@@ -1,7 +1,7 @@
 ---
 layout: page
 title:  "RAG 개요"
-date:   2025-03-01 10:00:00 +0900
+date:   2026-07-01 10:00:00 +0900
 permalink: /materials/S03-05-06-01_01-RagOverview
 categories: materials
 ---
