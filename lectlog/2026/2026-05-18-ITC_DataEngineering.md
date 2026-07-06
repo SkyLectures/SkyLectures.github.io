@@ -114,8 +114,8 @@ categories: lectlog
         - [Embedding 모델](/materials/S03-05-06-02_01-EmbeddingModel)
         - [Embedding 모델과 RAG 연동](/materials/S03-05-06-02_02-EmbeddingModelRag)
         - [Vector DB](/materials/S13-08-01-01_01-VectorDbOverview)
-    - MiniO와 VectorDB(Qdrant) 연동
-    - Hybrid Search 구현
+    - [MiniO와 VectorDB(Qdrant) 연동](/materials/S13-99-03-01_01-MinIoVectorDB)
+    - [MinIO - VectorDB 기반의 Hybrid Search RAG](/materials/S13-99-04-01_01-HybridSearchRag)
 
 - **8주차: Orchestration & AI Service**
     - [8주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_08)

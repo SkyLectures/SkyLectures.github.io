@@ -211,7 +211,7 @@ categories: materials
         - 다양한 검색 엔진(Sparse, Dense 등)을 통해 1차로 스코어링된 무수히 많은 검색 결과 중에서,
         - 유사도 점수가 가장 높은 최상위 k개(Top-k)의 핵심 청크만을 정량적으로 선별하여 LLM에게 최종 전달하는 동적 필터링 제어 기술
     - **대표 알고리즘:**
-        - **$k$-Nearest Neighbors (k-NN) / Approximate Nearest Neighbors (ANN):**
+        - **k-Nearest Neighbors (k-NN) / Approximate Nearest Neighbors (ANN):**
             - 고차원 벡터 공간에서 쿼리와 가장 가까운 k개의 이웃 벡터를 고속으로 추출하는 알고리즘
             - Hierarchical Navigable Small World (HNSW), Inverted File Index (IVF) 등 벡터 DB의 코어 스택
         - **RRF (Reciprocal Rank Fusion):**
