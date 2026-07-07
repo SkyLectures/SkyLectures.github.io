@@ -121,7 +121,7 @@ categories: lectlog
     - [8주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_08)
     - **Orchestration**
         - [Airflow 서비스 구축](/materials/S13-06-01-01_01-AirflowOverview)
-        - DAG 이해 및 유즈케이스 연구
+        - [DAG 이해 및 유즈케이스 연구](/materials/S13-06-02-01_01-AirflowDag)
         - 수집->Lake->Spark->VectorDB 흐름 자동화
     - **AI Service**
         - [Streamit 기초와 Streamlit을 활용한 LLM 연동 어플리케이션](/materials/S10-99-01-01_01-StreamLlmAppGuideline)

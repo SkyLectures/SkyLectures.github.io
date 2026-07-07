@@ -10,6 +10,7 @@ categories: materials
 
 
 
+
 > - **MinIO(오브젝트 스토리지)와 Qdrant(벡터 데이터베이스)를 연동하는 아키텍처**
 >   - 멀티미디어(이미지, 오디오, 대용량 텍스트) 기반의 RAG(검색 증강 생성) 또는 멀티모달 AI 시스템을 구축할 때 가장 표준적으로 사용되는 조합
 >   - **연동의 핵심 메커니즘**
@@ -83,6 +84,7 @@ categories: materials
 - 코드는 **`[원본 파일 준비 🡲 MinIO 업로드 🡲 임베딩 생성 🡲 Qdrant 메타데이터 연동 저장 🡲 테스트 검색]`**의 전체 수명 주기를 포함함
 
 ```python
+#//file: "minio_qdrant.py"
 import io
 from minio import Minio
 from qdrant_client import QdrantClient
@@ -173,12 +175,12 @@ print(f"사용자 질의: '{query_text}'")
 # 쿼리 임베딩 생성
 query_vector = embedding_model.encode(query_text).tolist()
 
-# Qdrant 검색 실행 (Top-1)
-search_results = qdrant_client.search(
+# Qdrant 검색 실행 (최신 v1.11+ 규격 매핑)
+search_results = qdrant_client.query_points(
     collection_name=COLLECTION_NAME,
-    query_vector=query_vector,
+    query=query_vector,
     limit=1
-)
+).points  # .points를 붙여야 하위 데이터 구조와 일치
 
 if search_results:
     best_match = search_results[0]
@@ -198,26 +200,124 @@ if search_results:
         response.release_conn()
 ```
 
+- **실행 결과**
 
-- **파이썬 코드의 핵심 역할**
-    - 분리되어 있던 스토리지, 인공지능 모델, 벡터 DB를 하나로 묶어주는 **'오케스트레이터(지휘자)'** 역할을 수행함
+    ```text
+    $ python minio_qdrant.py 
+    Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+    Loading weights: 100%|██████████████████████████████████| 103/103 [00:00<00:00, 13744.82it/s]
+    [MinIO] 'smart_factory_manual.txt' 업로드 성공.
+    [MinIO] 'ai_research_note.txt' 업로드 성공.
+    [Qdrant] 벡터 인덱싱 완료.
 
-    - **비정형 데이터의 이원화 저장 조율 (Storage & DB Bridge)**
-        - AI가 읽을 수 없는 대용량 원본 파일(텍스트/이미지 등)은 비용이 저렴하고 안정적인 MinIO(오브젝트 스토리지)에 저장
-        - AI가 의미를 해석할 수 있도록 변환한 수학적 좌표(임베딩)는 Qdrant(벡터 DB)에 저장
+    사용자 질의: '유량계 센서 점검 정보가 필요해'
 
-    - **의미론적 추상화 (Embedding Pipeline)**
-        - AI 임베딩 모델(`SentenceTransformer`)을 구동하여
-        - 인간의 자연어 데이터를 고차원 벡터 공간의 숫자로 변환(Mapping)하는 핵심 연산을 수행
+    [검색 결과] 매칭 점수: 0.8104
+    -> 참조할 MinIO 파일명: smart_factory_manual.txt
+    -> [MinIO 원본 데이터 복원 완료]:
+    스마트팩토리 가변 면적 유량계의 핵심 센서 보정 주기는 연 1회입니다.
+    ```
 
-    - **상호 참조 메타데이터 설계 (Metadata Mapping)**
-        - Qdrant에 벡터를 넣을 때,
-            - 해당 벡터가 MinIO의 어떤 파일에서 나왔는지 추적할 수 있도록 `minio_object_key`를 페이로드에 저장
-            - 이로써 **두 시스템 간의 강력한 데이터 링크**가 형성됨
+    - **결과 내용 분석**
+        - 분리되어 있던 스토리지, 인공지능 모델, 벡터 DB를 하나로 묶어주는 **'오케스트레이터(지휘자)'** 역할을 수행함<br><br>
 
-    - **컨텍스트 복원 및 질의응답 처리 (Search & Recovery)**
-        - 사용자의 질문을 실시간 벡터로 변환해 Qdrant에서 유사도 검색을 수행
-        - 매칭된 결과의 메타데이터를 기반으로 **MinIO에서 원본 파일을 즉시 다운로드하여 사용자에게 복원**
+        - **경고 구문: Hugging Face 모델 로드 관련 경고**
+            - 구문 내용
+                ```text
+                Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+                Loading weights: 100%|██████████████████████████████████| 103/103 [00:00<00:00, 13744.82it/s]
+                ```
+            - 연관 소스코드
+
+                ```python
+                embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+                ```
+
+            - Hugging Face(HF) 허브에서 발생
+            - 코드 내부에서 SentenceTransformer("all-MiniLM-L6-v2")를 호출할 때,
+                - 로컬에 모델 가중치가 없거나 업데이트를 확인할 때 Hugging Face 서버(Hub)에 접속하여 모델을 다운로드/체크함
+            - 이때 아무런 인증 정보(토큰) 없이 비로그인 상태로 요청을 보냈기 때문에,
+                - Hugging Face 측에서 "현재 인증되지 않은 요청을 보내고 있습니다. 더 높은 요청 제한(Rate Limit)과 빠른 다운로드 속도를 원하시면 HF_TOKEN을 설정하세요."라고 안내하는 것
+            - 해결 방안
+                - 방법 A: Hugging Face 토큰 설정하기 (정석)
+
+                    ```bash
+                    export HF_TOKEN="발급받은_토큰_문자열"
+                    python minio_qdrant.py
+                    ```
+                    
+                - 방법 B: 코드 상단에서 경고 무시하기 (가장 간단함)
+
+                    ```python
+                    import os
+                    os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
+                    # 토큰 경고를 끄기 위해 로컬 로깅 레벨 조정
+                    import logging
+                    logging.getLogger("huggingface_hub").setLevel(logging.ERROR)
+                    ```
+
+                - 방법 C: 그냥 무시하기
+                    - 소규모 샘플 데이터나 개인 개발 환경에서 가끔 실행할 때는 인증 토큰이 없어도 모델 다운로드와 실행이 정상적으로 완료됨
+
+
+        - **데이터 이원화 적재 및 인덱싱 단계**
+            - 출력 내용: 
+
+                ```text                
+                [MinIO] 'smart_factory_manual.txt' 업로드 성공.
+                [MinIO] 'ai_research_note.txt' 업로드 성공.
+                [Qdrant] 벡터 인덱싱 완료.
+                ```
+
+            - 내용 분석
+                - sample_docs에 정의된 2개의 실무 데이터가 루프를 돌며 처리됨
+                    - 원본 텍스트 전체는 바이트 스트림으로 변환되어 오브젝트 스토리지(MinIO)의 raw-documents 버킷에 파일 형태로 격리 적재
+                    - 본문 내용은 384차원의 실수 배열(vector)로 변환된 후, Qdrant(벡터 DB) 공간에 적재(upsert)
+                    - 메타데이터인 payload에 MinIO의 버킷명과 오브젝트 키가 꼬리표로 함께 저장되어 두 저장소 간의 논리적 연결 고리 완성
+                - AI가 읽을 수 없는 대용량 원본 파일(텍스트/이미지 등)은 비용이 저렴하고 안정적인 MinIO(오브젝트 스토리지)에 저장
+                - AI가 의미를 해석할 수 있도록 변환한 수학적 좌표(임베딩)는 Qdrant(벡터 DB)에 저장
+
+
+        - **의미론적 추상화 (Embedding Pipeline)**
+            - AI 임베딩 모델(`SentenceTransformer`)을 구동하여 인간의 자연어 데이터를 고차원 벡터 공간의 숫자로 변환(Mapping)하는 핵심 연산을 수행
+
+
+        - **상호 참조 메타데이터 설계 (Metadata Mapping)**
+            - Qdrant에 벡터를 넣을 때,
+                - 해당 벡터가 MinIO의 어떤 파일에서 나왔는지 추적할 수 있도록 `minio_object_key`를 페이로드에 저장
+                - 이로써 **두 시스템 간의 강력한 데이터 링크**가 형성됨
+                
+
+        - **유사도 검색 및 매칭 점수 산출 단계**
+            - 출력 내용:
+
+                ```text
+                사용자 질의: '유량계 센서 점검 정보가 필요해'
+
+                [검색 결과] 매칭 점수: 0.8104
+                -> 참조할 MinIO 파일명: smart_factory_manual.txt
+                ```
+
+            - 내용 분석
+                - 사용자의 질의 텍스트가 임베딩 모델을 거쳐 query_vector로 변환됨
+                - 최신 규격인 query_points를 통해 Qdrant 공간 내에서 코사인 유사도 연산이 수행됨
+                - 가장 가까운 포인트 1개(limit=1)를 추출
+                - 질문에 '보정 주기' 대신 '점검 정보'라는 유의어가 쓰였음에도 의미적 유연성에 의해 0.8104 (약 81%의 유사도)라는 높은 점수로 smart_factory_manual.txt와 매칭되는 포인트를 검색
+
+
+        - **메타데이터 추적을 통한 원본 데이터 복원 단계**
+            - 출력 내용:
+
+                ```text
+                -> [MinIO 원본 데이터 복원 완료]:
+                스마트팩토리 가변 면적 유량계의 핵심 센서 보정 주기는 연 1회입니다.
+                ```
+            
+            - 내용 분석
+                - 매칭된 결과의 메타데이터를 기반으로 **MinIO에서 원본 파일을 즉시 다운로드하여 사용자에게 복원**
+                - Qdrant에서 검색된 최상위 결과의 payload를 해석하여 원본 파일의 위치를 파악
+                - 추출한 메타데이터(meta["minio_bucket"], meta["minio_object_key"])를 바탕으로 MinIO API를 직접 호출(get_object)
+                - 파일 내부의 바이트 데이터를 가져온 뒤, utf-8 문자열로 디코딩하여 화면에 출력
 
 
 - **기술적 및 아키텍처적 의의**
@@ -227,11 +327,20 @@ if search_results:
 
     - **차원의 저주와 성능 한계 극복**
         - 수천, 수만 개의 문서 데이터를 매번 AI 모델로 전부 대조하려면 연산 비용이 폭증함
-        - 이 코드는 인덱싱된 Qdrant 공간에서 근사치 검색(ANN)을 수행함으로써, **대규모 데이터셋에서도 밀리초(ms) 단위의 초고속 검색이 가능함**을 증명
+        - 이 코드는 인덱싱된 Qdrant 공간에서 근사치 검색(ANN)을 수행함으로써,
+        - **대규모 데이터셋에서도 밀리초(ms) 단위의 초고속 검색이 가능함**을 증명
 
-    - **느슨한 결합(Loose Coupling) 아키텍처의 실현**
+    - **저장소의 분산 격리(Decoupling) 🡲 느슨한 결합(Loose Coupling) 아키텍처의 실현**
+        - 분산 시스템 설계 패턴을 파이썬 코드로 결합(Orchestration)
+            - 쿼리 연산에 민감한 고차원 벡터 데이터는 Qdrant 메모리에 가볍게 유지
+            - 무거운 원본 파일 텍스트는 오브젝트 스토리지(MinIO)가 전담
+        - 대규모 엔터프라이즈 환경으로 확장할 수 있는 RAG(검색 증강 생성) 백엔드의 인프라 표준 구조 실증
         - 만약 하나의 DB에 원본 파일과 벡터를 모두 저장한다면 용량과 성능 면에서 한계에 부딪혔을 것
-        - 파일 관리는 MinIO에, 벡터 검색은 Qdrant에 전담시키는 분산 시스템 설계 패턴을 파이썬 코드로 결합(Orchestration)
+
+    - **지식 추적성(Traceability) 입증**
+        - 벡터 DB 검색 결과에서 멈추지 않고,
+        - 메타데이터에 심어둔 식별 정보 링크를 추적하여
+        - 실제 물리 저장소(MinIO)에 있는 원본 도큐먼트의 텍스트 콘텐츠를 완벽히 복원해 낼 수 있음을 확인
 
 
 > - 코드의 역할은

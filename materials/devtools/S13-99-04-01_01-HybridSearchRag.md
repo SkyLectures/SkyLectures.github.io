@@ -46,7 +46,7 @@ services:
     # 1. 로컬 LLM 및 임베딩을 구동할 Ollama (RTX 4080 등 GPU 가속 설정)
     ollama:
         image: ollama/ollama:latest
-        container_name: ollama-local
+        container_name: ollama-container
         ports:
             - "11434:11434"
         volumes:
@@ -99,7 +99,8 @@ volumes:
 docker compose up -d
 
 # 2. Ollama 컨테이너 내부로 진입하여 Gemma 모델 다운로드 (예: gemma2 또는 gemma:9b 등 환경에 맞게 선택)
-docker exec -it ollama-local ollama run gemma2
+docker exec -it ollama-container ollama run gemma4
+docker exec -it ollama-container ollama pull nomic-embed-text
 ```
 
 > *참고: 다운로드가 완료되어 대화창이 뜨면 `/bye`를 입력하여 빠져나옴*
@@ -111,9 +112,9 @@ docker exec -it ollama-local ollama run gemma2
     - LangChain의 최신 패키지 구조와 하이브리드 서치(BM25) 구현을 위해 필요한 핵심 라이브러리들을 설치
 
     ```bash
-    pip install langchain langchain-community langchain-ollama qdrant-client minio rank-bm25
+    pip install langchain langchain-community langchain-ollama langchain-qdrant qdrant-client minio rank-bm25
     ```
-
+pip install langchain-qdrant
 
 - **실습 데이터 파일 생성**
     - `data/manual_sample.txt` 경로에 테스트용 도메인 지식 문서 생성
@@ -144,9 +145,9 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.document_loaders import TextLoader
 from langchain_community.retrievers import BM25Retriever
-from langchain_community.vectorstores import Qdrant
+from langchain_qdrant import QdrantVectorStore
 from langchain_ollama import OllamaEmbeddings, ChatOllama
-from langchain.retrievers import EnsembleRetriever
+from langchain_classic.retrievers import EnsembleRetriever
 
 # ==========================================
 # 1. 기본 인프라 환경 설정 및 클라이언트 초기화
@@ -168,7 +169,8 @@ qdrant_client = QdrantClient(url=QDRANT_URL)
 
 # Ollama 모델 컴포넌트 선언 (컨테이너 내부에서 다운로드한 모델 매핑)
 MODEL_NAME = "gemma4" 
-embeddings = OllamaEmbeddings(model=MODEL_NAME, base_url="http://localhost:11434")
+EMBED_MODEL_NAME = "nomic-embed-text"
+embeddings = OllamaEmbeddings(model=EMBED_MODEL_NAME, base_url="http://localhost:11434")
 llm = ChatOllama(model=MODEL_NAME, base_url="http://localhost:11434", temperature=0.1)
 
 print("모든 인프라 및 AI 모델 컴포넌트 로드 완료.")
@@ -211,12 +213,11 @@ print(f"원본 문서를 총 {len(docs)}개의 의미론적 청크로 분할 완
 # 3. 하이브리드 검색기(Ensemble Retriever) 설계
 # ==========================================
 # Dense 검색기 기동 (Qdrant Vector Store 빌드)
-vector_store = Qdrant.from_documents(
+vector_store = QdrantVectorStore.from_documents(
     documents=docs,
     embedding=embeddings,
     url=QDRANT_URL,
-    collection_name=COLLECTION_NAME,
-    force_recreate=True # 실습 반복을 위해 매번 컬렉션 초기화 재생성
+    collection_name=COLLECTION_NAME
 )
 dense_retriever = vector_store.as_retriever(search_kwargs={"k": 2})
 
@@ -226,8 +227,14 @@ sparse_retriever.k = 2
 
 # 가중치 결합형 앙상블 리트리버 구성 (Dense 50% + Sparse 50%)
 hybrid_retriever = EnsembleRetriever(
-    retrievers=[dense_retriever, sparse_retriever],
-    weights=[0.5, 0.5]
+    retrievers=[
+        dense_retriever,
+        sparse_retriever,
+    ],
+    weights=[
+        0.5,
+        0.5,
+    ],
 )
 print("Qdrant(Dense)와 BM25(Sparse)가 결합된 하이브리드 검색기 빌드 완료.")
 
@@ -284,6 +291,7 @@ def run_test(query):
 # 테스트 실행 (1번: 키워드 성격이 강한 질문 / 2번: 맥락 중심의 의미론적 질문)
 run_test("유량계 모델 FM-2026 정밀 보정은 언제 해야 하나요?")
 run_test("메모리를 많이 쓰더라도 가장 빠른 벡터 검색 알고리즘이 뭔지 설명해줘.")
+run_test("스마트팩토리 제어실의 실내 적정 온습도 기준은 어떻게 되나요?")
 ```
 
 
@@ -353,42 +361,58 @@ run_test("메모리를 많이 쓰더라도 가장 빠른 벡터 검색 알고리
         - **하이브리드 리트리버 추출 결과:**
 
         ```text
-        - [문서 ID: 101] 스마트팩토리 가변 면적 유량계(Model: FM-2026)의 핵심 센서 정밀 보정 주기는 연 1회(매년 3월) 필수 진행해야 합니다.
+        [하이브리드 교차 매칭된 지식 청크]
+        - [문서 ID: 101] 스마트팩토리 가변 면적 유량계(Model: FM-2026)의 핵심 센서 정밀 보정 주기는 연 1회(매년 3월) 필수 진행해야 합니다. (메타데이터: manual_sample.txt)
+        - [문서 ID: 103] 기업 보안 규정 지침에 따라, 모든 사내 RAG 시스템의 데이터 적재 시 멀티테넌시 격리 수준을 등급 3단계 이상으로 적용해야 합니다. (메타데이터: manual_sample.txt)      
         ```
 
         - **로컬 AI 추론 답변:**
 
         ```text
-        스마트팩토리 가변 면적 유량계(Model: FM-2026)의 핵심 센서 정밀 보정은 연 1회 필수 진행해야 하며, 구체적인 시기는 매년 3월입니다.
+        [Gemma4 로컬 AI 추론 답변]:
+        핵심 센서 정밀 보정은 연 1회(매년 3월) 필수 진행해야 합니다.
         ```
 
     - **결과 2: 의미론적 유추 (성공)**
         - **하이브리드 리트리버 추출 결과:**
 
         ```text
-        - [문서 ID: 102] HNSW 인덱싱 알고리즘은 메모리(RAM) 소모량이 타 알고리즘 대비 크지만, 대규모 벡터 공간에서 초고속 ANN 검색을 보장하는 특성이 있습니다.
+        [하이브리드 교차 매칭된 지식 청크]
+        - [문서 ID: 103] 기업 보안 규정 지침에 따라, 모든 사내 RAG 시스템의 데이터 적재 시 멀티테넌시 격리 수준을 등급 3단계 이상으로 적용해야 합니다. (메타데이터: manual_sample.txt)
+        - [문서 ID: 102] HNSW 인덱싱 알고리즘은 메모리(RAM) 소모량이 타 알고리즘 대비 크지만, 대규모 벡터 공간에서 초고속 ANN 검색을 보장하는 특성이 있습니다. (메타데이터: manual_sample.txt)
         ```
 
         - **로컬 AI 추론 답변:**
 
         ```text
-        메모리(RAM) 소모량이 상대적으로 크지만, 대규모 벡터 공간에서 초고속 ANN 검색을 보장하는 알고리즘은 HNSW 인덱싱 알고리즘입니다.
+        [Gemma4 로컬 AI 추론 답변]:
+        HNSW 인덱싱 알고리즘입니다. 이 알고리즘은 메모리(RAM) 소모량이 다른 알고리즘 대비 크지만, 대규모 벡터 공간에서 초고속 ANN 검색을 보장하는 특성이 있습니다.
         ```
 
     - **결과 3: 환각 제어 방어 (성공)**
         - **하이브리드 리트리버 추출 결과:**
-            - `[검색된 관련 문서 청크 없음]`
 
+        ```text
+        [하이브리드 교차 매칭된 지식 청크]
+        - [문서 ID: 103] 기업 보안 규정 지침에 따라, 모든 사내 RAG 시스템의 데이터 적재 시 멀티테넌시 격리 수준을 등급 3단계 이상으로 적용해야 합니다. (메타데이터: manual_sample.txt)
+        - [문서 ID: 101] 스마트팩토리 가변 면적 유량계(Model: FM-2026)의 핵심 센서 정밀 보정 주기는 연 1회(매년 3월) 필수 진행해야 합니다. (메타데이터: manual_sample.txt)
+        ```
+        
         - **로컬 AI 추론 답변:**
 
         ```text
         제공된 문서에 관련 정보가 없습니다.
         ```
 
+        - **[기술 노트] 검색 매칭 현상에 대한 고찰**
+            - '온습도'에 대한 직접적인 지식이 없음에도 '스마트팩토리'라는 단어의 유사성 및 Retriever의 k=2(최소 반환 개수) 설정으로 인해 상위 청크가 본문에 참조됨
+            - 그럼에도 불구하고, LLM(Gemma4)은 참조된 컨텍스트를 엄격하게 필터링하여 온습도 관련 정보가 없음을 정확히 인지하고 환각(Hallucination) 없이 완벽하게 답변을 거부
+            - 이는 프롬프트 가드레일이 엔터프라이즈 레벨에서 정상 작동하고 있음을 증명
+
 - **도출된 결과의 기술적 의의 (What it means)**
     - 이 세 가지 테스트가 모두 성공했다는 것은 구축된 시스템이 다음과 같은 **기술적 가치와 의의**를 확보했음을 의미
 
-    - **하이브리드 검색(Ensemble)의 실효성 증명**
+    - **하이브리드 검색(LangChain Classic Ensemble)의 실효성 증명**
         - 숫자와 모델명에 강한 BM25와 뉘앙스에 강한 Qdrant 벡터 검색이 50:50으로 융합되어,
         - 검색 누락(Miss)이나 엉뚱한 문서를 참조하는 비율을 극적으로 낮추었음을 의미
 
