@@ -10,7 +10,6 @@ categories: materials
 
 
 
-
 ## 1. Apache Airflow 개요
 
 ### 1.1 정의 및 핵심 개념
@@ -350,15 +349,39 @@ categories: materials
 
     ```bash
     # DB 초기화
-    docker-compose up airflow-init
+    docker compose up airflow-init
 
     # 서비스 실행 (-d는 백그라운드 실행)
-    docker-compose up -d
+    docker compose up -d
     ```
+
+    - docker compose up airflow-init는 파일에 등록된 컨테이너 중에서 airflow-init만 실행한다는 의미
+        - airflow-init 컨테이너:
+            - Airflow가 정상적으로 돌 수 있도록 기반 인프라 환경을 딱 한 번만 세팅하고 스스로 종료(Exit)되는 일회성(Transient) 컨테이너
+            - 내부적으로 다음과 같은 작업을 수행함
+                - 메타데이터 DB 스키마 생성 및 마이그레이션 (DB Init):
+                    - Airflow는 데이터베이스(PostgreSQL 등)에 태스크 상태와 실행 이력을 저장함
+                    - 처음에는 DB가 텅 비어 있으므로,
+                    - airflow-init가 진입하여 Airflow 구동에 필요한 수십 개의 테이블 스키마를 자동으로 생성(db init 또는 db upgrade)함
+                - 기본 관리자 계정(Admin User) 자동 생성:
+                    - 웹 UI(localhost:8080)에 로그인할 때 사용할 기본 유저(ID: airflow / PW: airflow)를 DB 레코드에 적재
+                - 호스트 디렉토리 권한 검증 및 세팅:
+                    - .env 파일의 AIRFLOW_UID 설정을 기반으로,
+                    - 호스트의 ./dags, ./logs, ./plugins 디렉토리에 Airflow 컨테이너가 정상적으로 접근할 수 있는지 파일 시스템 권한을 최종 조율
+        - 해당 명령을 수행한 후 결과 확인
+
+            ```text
+            airflow-init_1  | User "airflow" created with role "Admin"
+            airflow-init_1  | ...
+            airflow-init_1  | [SUCCESS] Airflow 기동 환경 초기화 완료.
+            airflow-docker_airflow-init_1 exited with code 0
+            ```
 
     - 실행 후 `http://localhost:8080`으로 접속 (기본 계정: `airflow` / `airflow`)
 
-
+        <div class="insert-image" style="text-align: center; border: solid 1px lightgray;">
+            <img src="/materials/devtools/images/S13-06-01-01_01-002_AirflowWebUi.png" style="width: 100%;">
+        </div>
 
 
 ## 3. 예제 코드 및 상세 설명
@@ -366,10 +389,11 @@ categories: materials
 - 간단한 데이터 전처리 및 AI 모델 학습 단계를 가정한 Python 기반 DAG 예제
 
     ```python
-    #//file: "example_ai_pipeline.py"
+    #//file: "dags/example_ai_pipeline.py"
+    # file: dags/example_ai_pipeline.py
+    from datetime import datetime, timedelta
     from airflow import DAG
     from airflow.operators.python import PythonOperator
-    from datetime import datetime, timedelta
 
     # 1. 태스크 함수 정의
     def preprocess_data():
@@ -394,11 +418,11 @@ categories: materials
         'ai_service_orchestration_v1',
         default_args=default_args,
         description='간단한 AI 파이프라인 예제',
-        schedule_interval='@daily',  # 매일 실행
+        schedule='@daily',  # <--- schedule_interval을 schedule로 변경!
         catchup=False
     ) as dag:
 
-        # 3. 태스크 정의 (Operators)
+        # 3. 태스크 정의 (Operators) - 정확히 4칸 들여쓰기 반영
         preprocess_task = PythonOperator(
             task_id='preprocess_task',
             python_callable=preprocess_data,
@@ -436,4 +460,84 @@ categories: materials
 >   - **Docker/Kubernetes Operator:**
 >       - Airflow 워커 환경에 구애받지 않음
 >       - 각 태스크마다 독립적인 컨테이너 환경에서 학습이나 추론을 수행할 수 있어 AI 서비스 구축 시 매우 강력함
+{: .common-quote}
+
+
+## 4. 실습 예제 코드 결과 확인 및 검증 프로세스
+
+- Airflow에서 DAG는 스스로 실행되는 프로그램이 아니라 **스케줄러가 읽어가는 설계도**
+- 따라서 실행 및 결과 확인은 로컬 터미널이 아닌 **Airflow Web UI**에서 진행해야 함
+
+- **1단계: DAG 설계도 배포 (호스트 ➔ 컨테이너 전달)**
+    1. **로컬 터미널 실행 중단:**
+        - 로컬 가상환경 터미널에서 `python example_ai_pipeline.py`로 직접 실행하던 작업을 중단
+    2. **파일 복사:**
+        - 작성한 `example_ai_pipeline.py` 파일을 Docker Compose 볼륨 마운트가 연결된 **`dags/`** 디렉토리로 복사
+
+    ```bash
+    cp example_ai_pipeline.py ~/workspace/airflow/dags/
+    ```
+
+    3. **백엔드 직렬화 대기:**
+        - 컨테이너 내부의 `DagFileProcessor`가 이 코드를 파싱하여 메타데이터 DB에 JSON 구조로 등록할 때까지 **약 30초~1분** 정도 대기
+
+- **2단계: Web UI 접속 및 파이프라인 활성화**
+    1. **웹 콘솔 접속:**
+        - 브라우저를 열고 `http://localhost:8080`에 접속 (기본 계정: `airflow` / `airflow`)
+
+    2. **DAG 등록 확인:**
+        - 메인 화면 리스트에 `ai_service_orchestration_v1`이라는 이름의 DAG가 새로 추가되었는지 확인
+
+    3. **잠금 해제 (Active):**
+        - 처음 등록된 DAG는 일시정지 상태
+        - DAG 이름 왼쪽에 있는 **회색 토글 스위치를 클릭하여 파란색(`Active`) 상태**로 전환
+
+- **3단계: 수동 트리거 및 실행 상태 모니터링**
+    1. **파이프라인 구동:**
+        - DAG 우측 끝에 있는 `Trigger DAG` (재생 버튼 ▶)을 클릭하여 컨테이너 내부 워커들에게 실행 명령을 내림
+
+    2. **그래프 뷰(Graph View) 진입:**
+        - 상단 메뉴에서 `Graph` 뷰를 클릭하면 우리가 설계한 의존성 구조를 시각적으로 볼 수 있음
+
+        ```text
+        [preprocess_task] ── (성공 시 이동) ──➔ [train_task]
+        ```
+
+    3. **태스크 상태 변화 관측:**
+        - 스케줄러가 위상 정렬 알고리즘에 따라 각 태스크의 테두리 색상을 실시간으로 변화시킴
+            - **연두색 (`Running`):** 컨테이너 내부의 일꾼(Worker)이 Python 오퍼레이터를 실제 실행 중인 상태
+            - **진녹색 (`Success`):** 에러 없이 정상적으로 실행 완료된 상태
+
+- **4단계: 콘솔 로그(Log)를 통한 비즈니스 결과 검증**
+    - 태스크가 성공적으로 끝났다면,
+    - 파이썬 코드 내부의 `print()` 문과 **XCom 데이터 통신**이 완벽히 작동했는지 태스크별 상세 로그를 확인
+
+    1. `preprocess_task` 출력 결과 확인
+        - `Graph` 뷰에서 첫 번째 노드인 **`preprocess_task`** 블록을 클릭한 후 **`Log`** 버튼을 선택
+        - 로그 덤프 중에서 파이썬 함수가 호출되어 찍은 아래 출력 패턴을 확인
+
+        ```text
+        [2026-07-08 17:35:10,123] {logging_mixin.py:115} INFO - 데이터 전처리 중... (Cleaning, Normalization)
+        [2026-07-08 17:35:10,125] {python.py:177} INFO - Done. Returned value was: Data cleaned
+        ```
+
+        - 마지막 줄을 통해 "Data cleaned"라는 문자열이 다음 태스크로 넘겨주기 위해 메타데이터 DB(XCom)에 안전하게 임시 저장되었음을 알 수 있음
+
+    2. `train_task` 출력 결과 확인
+        - 뒤이어 실행된 **`train_task`** 블록을 클릭하고 **`Log`** 버튼을 선택
+        - 이전 태스크의 리턴값을 무사히 가로채어 연산에 활용했는지 아래 최종 출력 결과를 확인
+
+        ```text
+        [2026-07-08 17:35:12,456] {logging_mixin.py:115} INFO - Data cleaned 완료. 모델 학습 시작...
+        ```
+
+    <div class="insert-image" style="text-align: center; border: solid 1px lightgray;">
+        <img src="/materials/devtools/images/S13-06-01-01_01-003.png" style="width: 100%;">
+    </div>
+
+<br>
+
+> - **[결과 요약]:**
+>   - 이 로그가 명확하게 찍혀 있다면,
+>   - 로컬에 `airflow` 패키지를 일일이 깔지 않아도 **Docker 격리 인프라가 설계도를 완벽하게 해석하여 분산 실행을 완료**했음이 증명된 것
 {: .common-quote}
