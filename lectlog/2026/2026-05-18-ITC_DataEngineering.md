@@ -122,8 +122,10 @@ categories: lectlog
     - **Orchestration**
         - [Airflow 서비스 구축](/materials/S13-06-01-01_01-AirflowOverview)
         - [DAG 이해 및 유즈케이스 연구](/materials/S13-06-02-01_01-AirflowDag)
-        - [수집->Lake->Spark->VectorDB 흐름 자동화](/materials/S13-06-03-01_01-AirflowAutomation)
+        - [수집 🡪 Lake 🡪 Spark 🡪 VectorDB 흐름 자동화](/materials/S13-06-03-01_01-AirflowAutomation)
     - **AI Service**
-        - [Streamit 기초와 Streamlit을 활용한 LLM 연동 어플리케이션](/materials/S10-99-01-01_01-StreamLlmAppGuideline)
+        - [Streamlit 기초와 Streamlit을 활용한 LLM 연동 어플리케이션]
+            - [Streamlit의 개요와 기초 사용법](/materials/S01-04-05-04_01-StreamlitOverview)
+            - [Streamlit을 활용한 LLM 연동 어플리케이션](/materials/S10-99-01-01_01-StreamLlmAppGuideline)
         - [Streamlit 기반의 챗봇 인터페이스 개발](/materials/S10-99-01-02_01-StreamlitChatbot)
         - 데이터 파이프라인 구축 및 최종 RAG 챗봇 개발 

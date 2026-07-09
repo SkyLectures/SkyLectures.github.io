@@ -16,6 +16,7 @@ categories: materials
 {: .common-quote}
 
 
+
 ### 1.1 프로젝트 준비 및 환경 구성 (Setup)
 
 > - 일반적인 환경 설정을 AI 개발 환경으로 자연스럽게 전환하는 단계
