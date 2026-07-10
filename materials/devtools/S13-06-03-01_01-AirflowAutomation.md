@@ -262,228 +262,455 @@ categories: materials
 ### 2.4 예제 코드
 
 - **`docker-compose.yml`**
+    - 도커 컨테이너 환경 설정
+        - Apache Airflow는 공식 사이트에서 제공하는 최신 파일을 다운로드해서 이용할 것
+        - MinIO, Qdrant의 설정을 추가할 것
 
-```yaml
-x-airflow-common: &airflow-common
-  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.10.4}
-  environment:
-    &airflow-common-env
-    AIRFLOW__CORE__EXECUTOR: LocalExecutor
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
-    AIRFLOW__CORE__FERNET_KEY: ''
-    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
-    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-    # 예제 코드 구동에 필수적인 minio 및 qdrant 라이브러리를 동적 설치
-    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-minio qdrant-client}
-  volumes:
-    - ${AIRFLOW_PROJ_DIR:-./dags}:/opt/airflow/dags
-    - ${AIRFLOW_PROJ_DIR:-./logs}:/opt/airflow/logs
-    - ${AIRFLOW_PROJ_DIR:-./plugins}:/opt/airflow/plugins
-  user: "${AIRFLOW_UID:-50000}:0"
-  networks:
-    - airflow-net
-  depends_on:
-    postgres:
-      condition: service_healthy
+        ```yaml
+        x-airflow-common:
+        &airflow-common
+        # In order to add custom dependencies or upgrade provider distributions you can use your extended image.
+        # Comment the image line, place your Dockerfile in the directory where you placed the docker-compose.yaml
+        # and uncomment the "build" line below, Then run `docker-compose build` to build the images.
+        image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:3.3.0}
+        # build: .
+        env_file:
+            - ${ENV_FILE_PATH:-.env}
+        environment:
+            &airflow-common-env
+            AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+            AIRFLOW__CORE__AUTH_MANAGER: airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
+            AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+            AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql+psycopg2://airflow:airflow@postgres/airflow
+            AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
+            AIRFLOW__CORE__FERNET_KEY: ${FERNET_KEY}
+            AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+            AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
+            AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-apiserver:8080/execution/'
+            AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW__API_AUTH__JWT_SECRET:-airflow_jwt_secret}
+            AIRFLOW__API_AUTH__JWT_ISSUER: ${AIRFLOW__API_AUTH__JWT_ISSUER:-airflow}
+            # yamllint disable rule:line-length
+            # Use simple http server on scheduler for health checks
+            # See https://airflow.apache.org/docs/apache-airflow/stable/administration-and-deployment/logging-monitoring/check-health.html#scheduler-health-check-server
+            # yamllint enable rule:line-length
+            AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
+            # WARNING: Use _PIP_ADDITIONAL_REQUIREMENTS option ONLY for a quick checks
+            # for other purpose (development, test and especially production usage) build/extend Airflow image.
+            _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+            # The following line can be used to set a custom config file, stored in the local config folder
+            AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
+        volumes:
+            - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
+            - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
+            - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
+            - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
+        user: "${AIRFLOW_UID:-50000}:0"
+        depends_on:
+            &airflow-common-depends-on
+            redis:
+            condition: service_healthy
+            postgres:
+            condition: service_healthy
 
-services:
-  # =========================================================================
-  # 1. Airflow 메타데이터 DB
-  # =========================================================================
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: airflow
-      POSTGRES_PASSWORD: airflow
-      POSTGRES_DB: airflow
-    volumes:
-      - postgres-db-volume:/var/lib/postgresql/data
-    networks:
-      - airflow-net
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U airflow"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+        services:
+        postgres:
+            image: postgres:16
+            environment:
+            POSTGRES_USER: airflow
+            POSTGRES_PASSWORD: airflow
+            POSTGRES_DB: airflow
+            volumes:
+            - postgres-db-volume:/var/lib/postgresql/data
+            healthcheck:
+            test: ["CMD", "pg_isready", "-U", "airflow"]
+            interval: 10s
+            retries: 5
+            start_period: 5s
+            restart: always
 
-  # =========================================================================
-  # 2. Airflow Core 웹서버 및 스케줄러
-  # =========================================================================
-  airflow-webserver:
-    <<: *airflow-common
-    command: webserver
-    ports:
-      - "8080:8080"
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    restart: always
+        redis:
+            # Redis is limited to 7.2-bookworm due to licencing change
+            # https://redis.io/blog/redis-adopts-dual-source-available-licensing/
+            image: redis:7.2-bookworm
+            expose:
+            - 6379
+            healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            interval: 10s
+            timeout: 30s
+            retries: 50
+            start_period: 30s
+            restart: always
 
-  airflow-scheduler:
-    <<: *airflow-common
-    command: scheduler
-    restart: always
+        airflow-apiserver:
+            <<: *airflow-common
+            command: api-server
+            ports:
+            - "8080:8080"
+            healthcheck:
+            test: ["CMD", "curl", "--fail", "http://localhost:8080/api/v2/monitor/health"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 30s
+            restart: always
+            depends_on:
+            <<: *airflow-common-depends-on
+            airflow-init:
+                condition: service_completed_successfully
 
-  # 데이터베이스 스키마 주춧돌 마련을 위한 초기화 서비스
-  airflow-init:
-    <<: *airflow-common
-    command: version
-    environment:
-      <<: *airflow-common-env
-      _AIRFLOW_DB_UPGRADE: 'true'
-      _AIRFLOW_WWW_USER_CREATE: 'true'
-      _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
-      _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
+        airflow-scheduler:
+            <<: *airflow-common
+            command: scheduler
+            healthcheck:
+            test: ["CMD-SHELL", 'airflow jobs check --job-type SchedulerJob --hostname "$${HOSTNAME}"']
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 30s
+            restart: always
+            depends_on:
+            <<: *airflow-common-depends-on
+            airflow-init:
+                condition: service_completed_successfully
 
-  # =========================================================================
-  # 3. 데이터 레이크 스토리지 (MinIO 안정 콘솔 버전)
-  # =========================================================================
-  minio-local:
-    image: minio/minio:RELEASE.2024-01-11T07-46-16Z
-    ports:
-      - "9000:9000" # 파이썬 SDK가 접속할 API 통신 포트
-      - "9001:9001" # 웹 UI 콘솔 어드민 포트
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadminpassword
-    volumes:
-      - minio-data-volume:/data
-    command: server /data --console-address ":9001"
-    networks:
-      - airflow-net
+        airflow-dag-processor:
+            <<: *airflow-common
+            command: dag-processor
+            healthcheck:
+            test: ["CMD-SHELL", 'airflow jobs check --job-type DagProcessorJob --hostname "$${HOSTNAME}"']
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 30s
+            restart: always
+            depends_on:
+            <<: *airflow-common-depends-on
+            airflow-init:
+                condition: service_completed_successfully
 
-  # =========================================================================
-  # 4. 고차원 RAG 임베딩 저장소 (Qdrant)
-  # =========================================================================
-  qdrant-local:
-    image: qdrant/qdrant:v1.12.0
-    ports:
-      - "6333:6333" # REST API 및 대시보드 진입 포트
-    volumes:
-      - qdrant-data-volume:/qdrant/storage
-    networks:
-      - airflow-net
+        airflow-worker:
+            <<: *airflow-common
+            command: celery worker
+            healthcheck:
+            # yamllint disable rule:line-length
+            test: ["CMD-SHELL", 'celery --app airflow.providers.celery.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}" || celery --app airflow.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}"']
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 30s
+            environment:
+            <<: *airflow-common-env
+            # Required to handle warm shutdown of the celery workers properly
+            # See https://airflow.apache.org/docs/docker-stack/entrypoint.html#signal-propagation
+            DUMB_INIT_SETSID: "0"
+            restart: always
+            depends_on:
+            <<: *airflow-common-depends-on
+            airflow-apiserver:
+                condition: service_healthy
+            airflow-init:
+                condition: service_completed_successfully
 
-networks:
-  airflow-net:
-    name: local-ai-platform-net
-    driver: bridge
+        airflow-triggerer:
+            <<: *airflow-common
+            command: triggerer
+            healthcheck:
+            test: ["CMD-SHELL", 'airflow jobs check --job-type TriggererJob --hostname "$${HOSTNAME}"']
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 30s
+            restart: always
+            depends_on:
+            <<: *airflow-common-depends-on
+            airflow-init:
+                condition: service_completed_successfully
 
-volumes:
-  postgres-db-volume:
-  minio-data-volume:
-  qdrant-data-volume:
-```
+        airflow-init:
+            <<: *airflow-common
+            entrypoint: /bin/bash
+            # yamllint disable rule:line-length
+            command:
+            - -c
+            - |
+                if [[ -z "${AIRFLOW_UID}" ]]; then
+                echo
+                echo -e "\033[1;33mWARNING!!!: AIRFLOW_UID not set!\e[0m"
+                echo "If you are on Linux, you SHOULD follow the instructions below to set "
+                echo "AIRFLOW_UID environment variable, otherwise files will be owned by root."
+                echo "For other operating systems you can get rid of the warning with manually created .env file:"
+                echo "    See: https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#setting-the-right-airflow-user"
+                echo
+                export AIRFLOW_UID=$$(id -u)
+                fi
+                one_meg=1048576
+                mem_available=$$(($$(getconf _PHYS_PAGES) * $$(getconf PAGE_SIZE) / one_meg))
+                cpus_available=$$(grep -cE 'cpu[0-9]+' /proc/stat)
+                disk_available=$$(df / | tail -1 | awk '{print $$4}')
+                warning_resources="false"
+                if (( mem_available < 4000 )) ; then
+                echo
+                echo -e "\033[1;33mWARNING!!!: Not enough memory available for Docker.\e[0m"
+                echo "At least 4GB of memory required. You have $$(numfmt --to iec $$((mem_available * one_meg)))"
+                echo
+                warning_resources="true"
+                fi
+                if (( cpus_available < 2 )); then
+                echo
+                echo -e "\033[1;33mWARNING!!!: Not enough CPUS available for Docker.\e[0m"
+                echo "At least 2 CPUs recommended. You have $${cpus_available}"
+                echo
+                warning_resources="true"
+                fi
+                if (( disk_available < one_meg * 10 )); then
+                echo
+                echo -e "\033[1;33mWARNING!!!: Not enough Disk space available for Docker.\e[0m"
+                echo "At least 10 GBs recommended. You have $$(numfmt --to iec $$((disk_available * 1024 )))"
+                echo
+                warning_resources="true"
+                fi
+                if [[ $${warning_resources} == "true" ]]; then
+                echo
+                echo -e "\033[1;33mWARNING!!!: You have not enough resources to run Airflow (see above)!\e[0m"
+                echo "Please follow the instructions to increase amount of resources available:"
+                echo "   https://airflow.apache.org/docs/apache-airflow/stable/howto/docker-compose/index.html#before-you-begin"
+                echo
+                fi
+                echo
+                echo "Creating missing opt dirs if missing:"
+                echo
+                mkdir -v -p /opt/airflow/{logs,dags,plugins,config}
+                echo
+                echo "Airflow version:"
+                /entrypoint airflow version
+                echo
+                echo "Files in shared volumes:"
+                echo
+                ls -la /opt/airflow/{logs,dags,plugins,config}
+                echo
+                echo "Running airflow config list to create default config file if missing."
+                echo
+                /entrypoint airflow config list >/dev/null
+                echo
+                echo "Files in shared volumes:"
+                echo
+                ls -la /opt/airflow/{logs,dags,plugins,config}
+                echo
+                echo "Change ownership of files in /opt/airflow to ${AIRFLOW_UID:-50000}:0"
+                echo
+                chown -R "${AIRFLOW_UID:-50000}:0" /opt/airflow/
+                echo
+                echo "Change ownership of files in shared volumes to ${AIRFLOW_UID:-50000}:0"
+                echo
+                chown -v -R "${AIRFLOW_UID:-50000}:0" /opt/airflow/{logs,dags,plugins,config}
+                echo
+                echo "Files in shared volumes:"
+                echo
+                ls -la /opt/airflow/{logs,dags,plugins,config}
 
-```python
-#//file: "dags/advanced_ai_orchestration_pipeline.py"
-from datetime import datetime, timedelta
-from airflow import DAG
-from airflow.operators.python import PythonOperator
-from minio import Minio
-from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams, PointStruct
-import os
+            # yamllint enable rule:line-length
+            environment:
+            <<: *airflow-common-env
+            _AIRFLOW_DB_MIGRATE: 'true'
+            _AIRFLOW_WWW_USER_CREATE: 'true'
+            _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
+            _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
+            _PIP_ADDITIONAL_REQUIREMENTS: ''
+            user: "0:0"
 
-# 인프라 토폴로지 엔드포인트 정의
-MINIO_URL = "localhost:9000"
-MINIO_ACCESS = "minioadmin"
-MINIO_SECRET = "minioadminpassword"
-BUCKET_NAME = "enterprise-knowledge-lake"
+        airflow-cli:
+            <<: *airflow-common
+            profiles:
+            - debug
+            environment:
+            <<: *airflow-common-env
+            CONNECTION_CHECK_MAX_COUNT: "0"
+            # Workaround for entrypoint issue. See: https://github.com/apache/airflow/issues/16252
+            command:
+            - bash
+            - -c
+            - airflow
+            depends_on:
+            <<: *airflow-common-depends-on
 
-QDRANT_URL = "http://localhost:6333"
-COLLECTION_NAME = "factory_manual_vectors"
+        # You can enable flower by adding "--profile flower" option e.g. docker-compose --profile flower up
+        # or by explicitly targeted on the command line e.g. docker-compose up flower.
+        # See: https://docs.docker.com/compose/profiles/
+        flower:
+            <<: *airflow-common
+            command: celery flower
+            profiles:
+            - flower
+            ports:
+            - "5555:5555"
+            healthcheck:
+            test: ["CMD", "curl", "--fail", "http://localhost:5555/"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+            start_period: 30s
+            restart: always
+            depends_on:
+            <<: *airflow-common-depends-on
+            airflow-init:
+                condition: service_completed_successfully
 
-# [Task 1] 외부 소스로부터 데이터를 수집하여 데이터 레이크에 저장
-def fn_ingest_to_lake():
-    client = Minio(MINIO_URL, access_key=MINIO_ACCESS, secret_key=MINIO_SECRET, secure=False)
-    if not client.bucket_exists(BUCKET_NAME):
-        client.make_bucket(BUCKET_NAME)
-        
-    dummy_doc = "TIMESTAMP:2026-07-08 | MANUAL:스마트팩토리 가변 면적 유량계 계측기 장애 조치 매뉴얼. 압력 강하 시 벨브 호스를 점검하십시오."
-    client.put_object(
-        bucket_name=BUCKET_NAME,
-        object_name="raw/manual_01.txt",
-        data=io.BytesIO(dummy_doc.encode('utf-8')),
-        length=len(dummy_doc.encode('utf-8')),
-        content_type="text/plain"
-    )
-    print("[Success] 원시 매뉴얼이 Data Lake(MinIO)에 안착했습니다.")
+        minio-local:
+            image: minio/minio:RELEASE.2024-01-11T07-46-16Z
+            container_name: minio-local
+            ports:
+            - "9000:9000" # 파이썬 SDK가 접속할 API 통신 포트
+            - "9001:9001" # 웹 UI 콘솔 어드민 포트
+            environment:
+            MINIO_ROOT_USER: minioadmin
+            MINIO_ROOT_PASSWORD: minioadminpassword
+            volumes:
+            - minio-data-volume:/data
+            command: server /data --console-address ":9001"
+            networks:
+            - airflow-net
+            
+        qdrant-local:
+            image: qdrant/qdrant:v1.18.0
+            container_name: qdrant-local
+            ports:
+            - "6333:6333" # REST API 및 대시보드 진입 포트
+            volumes:
+            - qdrant-data-volume:/qdrant/storage
+            networks:
+            - airflow-net
 
-# [Task 2 & 3] Apache Spark 스키마를 모방한 텍스트 가공 및 VectorDB 적재
-# (주의: 실제 분산환경에서는 PySpark를 활용해 대량 가공 후 분산 Upsert 처리)
-def fn_spark_processing_and_vector_upsert():
-    # 1. Lake에서 데이터 읽기 (Spark의 데이터 소스 로딩 역할 모방)
-    minio_client = Minio(MINIO_URL, access_key=MINIO_ACCESS, secret_key=MINIO_SECRET, secure=False)
-    response = minio_client.get_object(BUCKET_NAME, "raw/manual_01.txt")
-    raw_text = response.read().decode('utf-8')
-    response.close()
-    
-    # 2. Spark 비즈니스 로직: 의미론적 가공 및 청킹 (Transformation)
-    # 실제 실무에서는 Spark DataFrame의 udf(User Defined Function)를 사용하여 분산 클러스터에서 수행됨
-    refined_text = raw_text.replace("TIMESTAMP:2026-07-08 | ", "[확인 완료] ")
-    chunks = [refined_text[i:i+50] for i in range(0, len(refined_text), 50)] # 50글자 단위 청킹
-    
-    # 3. VectorDB 커넥션 수립 및 컬렉션 초기화
-    qdrant_client = QdrantClient(url=QDRANT_URL)
-    
-    # 컬렉션이 없으면 고차원(예: 384차원) HNSW 인덱스 기반으로 생성
-    if not qdrant_client.collection_exists(collection_name=COLLECTION_NAME):
-        qdrant_client.create_collection(
-            collection_name=COLLECTION_NAME,
-            vectors_config=VectorParams(size=5, distance=Distance.COSINE), # 예제를 위해 5차원으로 설정
+        networks:
+        airflow-net:
+            name: local-ai-platform-net
+            driver: bridge
+
+        volumes:
+        postgres-db-volume:
+        minio-data-volume:
+        qdrant-data-volume:
+        ```
+
+- **`.env` 설정**
+    - MinIO, Qdrant를 인식할 수 있도록 컨테이너 안에 라이브러리 설치 설정
+    - 컨테이너의 MinIO, Qdrant와 파이썬 라이브러리의 버전이 다를 경우에도 오류가 발생할 수 있음
+        - 예: 컨테이너의 Qdrant: 1.12.0 / Airflow 컨테이너에서 요청에 의해 설치한 Qdrant 라이브러리: 1.18.0
+        - 컨테이너의 버전을 수정하거나 파이브러리 설치 요청에서 버전을 지정할 것
+
+        ```
+        AIRFLOW_UID=1000
+        _PIP_ADDITIONAL_REQUIREMENTS=minio qdrant-client
+        ```
+
+- **DAG 작성(advanced_ai_orchestration_pipeline.py)**
+
+    ```python
+    #//file: "dags/advanced_ai_orchestration_pipeline.py"
+    from datetime import datetime, timedelta
+    from airflow import DAG
+    from airflow.operators.python import PythonOperator
+    from minio import Minio
+    from qdrant_client import QdrantClient
+    from qdrant_client.models import Distance, VectorParams, PointStruct
+    import io, os
+
+    # 인프라 토폴로지 엔드포인트 정의
+    MINIO_URL = "192.168.0.6:9000"
+    MINIO_ACCESS = "minioadmin"
+    MINIO_SECRET = "minioadminpassword"
+    BUCKET_NAME = "enterprise-knowledge-lake"
+
+    QDRANT_URL = "192.168.0.6:6333"
+    COLLECTION_NAME = "factory_manual_vectors"
+
+    # [Task 1] 외부 소스로부터 데이터를 수집하여 데이터 레이크에 저장
+    def fn_ingest_to_lake():
+        client = Minio(MINIO_URL, access_key=MINIO_ACCESS, secret_key=MINIO_SECRET, secure=False)
+        if not client.bucket_exists(BUCKET_NAME):
+            client.make_bucket(BUCKET_NAME)
+            
+        dummy_doc = "TIMESTAMP:2026-07-08 | MANUAL:스마트팩토리 가변 면적 유량계 계측기 장애 조치 매뉴얼. 압력 강하 시 벨브 호스를 점검하십시오."
+        client.put_object(
+            bucket_name=BUCKET_NAME,
+            object_name="raw/manual_01.txt",
+            data=io.BytesIO(dummy_doc.encode('utf-8')),
+            length=len(dummy_doc.encode('utf-8')),
+            content_type="text/plain"
         )
-    
-    # 4. 가상 가벼운 임베딩 벡터 생성 및 Upsert (Idempotency 보장)
-    # 실무에서는 Ollama나 SentenceTransformer 모델을 워커 내부 혹은 외부 GPU 가속기를 통해 수립
-    points = []
-    for idx, chunk in enumerate(chunks):
-        dummy_embedding = [0.1 * (idx + 1), 0.2, 0.5, 0.1, 0.9] # 5차원 가상 임베딩 벡터
-        points.append(PointStruct(
-            id=idx + 100, # 고유 ID 지정으로 멱등성(Upsert) 확보
-            vector=dummy_embedding,
-            payload={"page_content": chunk, "source": "minio://raw/manual_01.txt"}
-        ))
+        print("[Success] 원시 매뉴얼이 Data Lake(MinIO)에 안착했습니다.")
+
+    # [Task 2 & 3] Apache Spark 스키마를 모방한 텍스트 가공 및 VectorDB 적재
+    # (주의: 실제 분산환경에서는 PySpark를 활용해 대량 가공 후 분산 Upsert 처리)
+    def fn_spark_processing_and_vector_upsert():
+        # 1. Lake에서 데이터 읽기 (Spark의 데이터 소스 로딩 역할 모방)
+        minio_client = Minio(MINIO_URL, access_key=MINIO_ACCESS, secret_key=MINIO_SECRET, secure=False)
+        response = minio_client.get_object(BUCKET_NAME, "raw/manual_01.txt")
+        raw_text = response.read().decode('utf-8')
+        response.close()
         
-    qdrant_client.upsert(collection_name=COLLECTION_NAME, points=points)
-    print(f"[Success] Spark 전처리 완료된 {len(chunks)}개의 청크가 Qdrant HNSW 인덱스에 동기화되었습니다.")
+        # 2. Spark 비즈니스 로직: 의미론적 가공 및 청킹 (Transformation)
+        # 실제 실무에서는 Spark DataFrame의 udf(User Defined Function)를 사용하여 분산 클러스터에서 수행됨
+        refined_text = raw_text.replace("TIMESTAMP:2026-07-08 | ", "[확인 완료] ")
+        chunks = [refined_text[i:i+50] for i in range(0, len(refined_text), 50)] # 50글자 단위 청킹
+        
+        # 3. VectorDB 커넥션 수립 및 컬렉션 초기화
+        qdrant_client = QdrantClient(url=QDRANT_URL)
+        
+        # 컬렉션이 없으면 고차원(예: 384차원) HNSW 인덱스 기반으로 생성
+        if not qdrant_client.collection_exists(collection_name=COLLECTION_NAME):
+            qdrant_client.create_collection(
+                collection_name=COLLECTION_NAME,
+                vectors_config=VectorParams(size=5, distance=Distance.COSINE), # 예제를 위해 5차원으로 설정
+            )
+        
+        # 4. 가상 가벼운 임베딩 벡터 생성 및 Upsert (Idempotency 보장)
+        # 실무에서는 Ollama나 SentenceTransformer 모델을 워커 내부 혹은 외부 GPU 가속기를 통해 수립
+        points = []
+        for idx, chunk in enumerate(chunks):
+            dummy_embedding = [0.1 * (idx + 1), 0.2, 0.5, 0.1, 0.9] # 5차원 가상 임베딩 벡터
+            points.append(PointStruct(
+                id=idx + 100, # 고유 ID 지정으로 멱등성(Upsert) 확보
+                vector=dummy_embedding,
+                payload={"page_content": chunk, "source": "minio://raw/manual_01.txt"}
+            ))
+            
+        qdrant_client.upsert(collection_name=COLLECTION_NAME, points=points)
+        print(f"[Success] Spark 전처리 완료된 {len(chunks)}개의 청크가 Qdrant HNSW 인덱스에 동기화되었습니다.")
 
-# ============================================================
-# Airflow DAG 오케스트레이션 핵심 설정
-# ============================================================
-default_args = {
-    'owner': 'ai_platform_eng',
-    'depends_on_past': False,
-    'start_date': datetime(2026, 7, 8),
-    'retries': 2,
-    'retry_delay': timedelta(minutes=5),
-}
+    # ============================================================
+    # Airflow DAG 오케스트레이션 핵심 설정
+    # ============================================================
+    default_args = {
+        'owner': 'ai_platform_eng',
+        'depends_on_past': False,
+        'start_date': datetime(2026, 7, 8),
+        'retries': 2,
+        'retry_delay': timedelta(minutes=5),
+    }
 
-with DAG(
-    dag_id='advanced_bigdata_ai_pipeline_v1',
-    default_args=default_args,
-    description='수집->Lake->Spark 전처리->VectorDB 파이프라인 자동화',
-    schedule_interval='@daily',
-    catchup=False,
-    tags=['spark', 'minio', 'qdrant', 'rag']
-) as dag:
+    with DAG(
+        dag_id='advanced_bigdata_ai_pipeline_v1',
+        default_args=default_args,
+        description='수집->Lake->Spark 전처리->VectorDB 파이프라인 자동화',
+        schedule='@daily',
+        catchup=False,
+        tags=['spark', 'minio', 'qdrant', 'rag']
+    ) as dag:
 
-    task_ingest = PythonOperator(
-        task_id='ingest_to_data_lake',
-        python_callable=fn_ingest_to_lake,
-    )
+        task_ingest = PythonOperator(
+            task_id='ingest_to_data_lake',
+            python_callable=fn_ingest_to_lake,
+        )
 
-    task_spark_and_vector = PythonOperator(
-        task_id='spark_transform_and_vector_upsert',
-        python_callable=fn_spark_processing_and_vector_upsert,
-    )
+        task_spark_and_vector = PythonOperator(
+            task_id='spark_transform_and_vector_upsert',
+            python_callable=fn_spark_processing_and_vector_upsert,
+        )
 
-    # 파이프라인 상하 관계 바인딩
-    task_ingest >> task_spark_and_vector
-```
+        # 파이프라인 상하 관계 바인딩
+        task_ingest >> task_spark_and_vector
+    ```
 
 > - **실무 모니터링 및 아키텍처적 핵심 팁**
 >   - **Spark 메모리 튜닝 (`OOM` 방지):**
@@ -533,99 +760,48 @@ with DAG(
 - `docker-compose.yml`
 
 ```yaml
-x-airflow-common: &airflow-common
-  image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.10.4} # 2026 최신 프로덕션 안정 버전
-  environment:
-    &airflow-common-env
-    AIRFLOW__CORE__EXECUTOR: LocalExecutor
-    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://airflow:airflow@postgres/airflow
-    AIRFLOW__CORE__FERNET_KEY: ''
-    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
-    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-    _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-minio qdrant-client pyspark kafka-python trino}
-  volumes:
-    - ${AIRFLOW_PROJ_DIR:-./dags}:/opt/airflow/dags
-    - ${AIRFLOW_PROJ_DIR:-./logs}:/opt/airflow/logs
-    - ${AIRFLOW_PROJ_DIR:-./plugins}:/opt/airflow/plugins
-  user: "${AIRFLOW_UID:-50000}:0"
+  # Airflow 부분은 예제 1의 코드 그대로 유지
+  # Airflow의 공통부분에 network 명세 추가(대량으로 추가된 다른 컨테이너와의 통신을 위함)
   networks:
     - bigdata-network
-  depends_on:
-    postgres:
-      condition: service_healthy
 
-services:
-  # =========================================================================
-  # 1. Airflow Core Services (메타스토어 백엔드 최신화)
-  # =========================================================================
-  postgres:
-    image: postgres:16-alpine # 성능 및 보안이 강화된 최신 가벼운 Alpine 베이스
-    environment:
-      POSTGRES_USER: airflow
-      POSTGRES_PASSWORD: airflow
-      POSTGRES_DB: airflow
-    volumes:
-      - postgres-db-volume:/var/lib/postgresql/data
-    networks:
-      - bigdata-network
+  # Airflow에서 airflow-apiserver 부분의 healthcheck를 다음과 같이 수정할 것
+  #  - test 경로 🡪 공식문서의 버그(2.x.x 버전과 3.3.0 버전에 대한 경로 변경이 반영되지 않음)
+  #  - start_period: 300s 🡪 pySpark 다운로드, 설치 시 기존의 30s보다 많은 시간이 소요되어 timeout에 걸림
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U airflow"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  airflow-webserver:
-    <<: *airflow-common
-    command: webserver
-    ports:
-      - "8080:8080"
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/publicadmin/v1/health"]
       interval: 30s
       timeout: 10s
       retries: 5
-    restart: always
+      start_period: 300s  
 
-  airflow-scheduler:
-    <<: *airflow-common
-    command: scheduler
-    restart: always
+  # postgres / redis 설정부분에 network 명세 추가
+    networks:
+      - bigdata-network
 
-  airflow-init:
-    <<: *airflow-common
-    command: version
-    environment:
-      <<: *airflow-common-env
-      _AIRFLOW_DB_UPGRADE: 'true'
-      _AIRFLOW_WWW_USER_CREATE: 'true'
-      _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
-      _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
 
   # =========================================================================
   # 2. Next-Gen Messaging Layer (Kafka KRaft 단독 노드 모드)
   # =========================================================================
   kafka:
-    image: confluentinc/cp-kafka:7.6.0 # KRaft 프로덕션 레벨 안정화 버전
+    image: confluentinc/cp-kafka:8.3.0
     ports:
       - "9092:9092"
     environment:
-      # Zookeeper 없이 스스로 제어 및 합의(Controller)를 수행하는 KRaft 환경 변수 선언
       KAFKA_NODE_ID: 1
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:29092,PLAINTEXT_HOST://192.168.0.15:9092' # 호스트 실서버 IP 매핑
+      # 중요: 호스트 PC에서 접근할 IP를 현재 할당된 실제 IP(192.168.0.6 등)와 반드시 싱크해 주세요!
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:29092,PLAINTEXT_HOST://192.168.0.6:9092' 
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      # KRaft 롤 정의 (Broker 역할과 스토리지 메타 조율러 컨트롤러 역할을 동시 수행)
       KAFKA_PROCESS_ROLES: 'broker,controller'
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:29093'
       KAFKA_LISTENERS: 'PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093,PLAINTEXT_HOST://0.0.0.0:9092'
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      # 고유 Cluster ID 자동 생성 매커니즘 대체용 고정 토큰 토폴로지 (실습 멱등성 확보)
       CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
     networks:
       - bigdata-network
@@ -634,10 +810,11 @@ services:
   # 3. Data Lakehouse Storage (MinIO 지정 배포판 가이드 적용)
   # =========================================================================
   minio-local:
-    image: minio/minio:RELEASE.2024-01-11T07-46-16Z # Web UI 전 메뉴 제공 버전 선택
+    image: minio/minio:RELEASE.2024-01-11T07-46-16Z
+    container_name: minio-local
     ports:
-      - "9000:9000" # 순수 빅데이터 엔진/API 유입 통로
-      - "9001:9001" # 웹 UI 어드민 콘솔 포트
+      - "9000:9000" # 파이썬 SDK가 접속할 API 통신 포트
+      - "9001:9001" # 웹 UI 콘솔 어드민 포트
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadminpassword
@@ -651,7 +828,7 @@ services:
   # 4. Modern Analytics & Core Layer (Trino 및 Qdrant 최신판)
   # =========================================================================
   trino:
-    image: trinodb/trino:468 # 고속 분산 분석 및 Iceberg 연계 최신 릴리스
+    image: trinodb/trino:482
     ports:
       - "8082:8080"
     volumes:
@@ -660,14 +837,15 @@ services:
       - bigdata-network
 
   qdrant-local:
-    image: qdrant/qdrant:v1.12.0 # 2026 RAG 시스템용 확장 인덱싱 최신 프로덕션 엔진
+    image: qdrant/qdrant:v1.18.0
+    container_name: qdrant-local
     ports:
-      - "6333:6333"
-      - "6334:6334"
+      - "6333:6333" # REST API 및 대시보드 진입 포트
     volumes:
       - qdrant-data-volume:/qdrant/storage
     networks:
       - bigdata-network
+
 
 networks:
   bigdata-network:
@@ -686,25 +864,44 @@ volumes:
 - Apache Iceberg와 MinIO 레이크하우스를 Trino 분산 쿼리 엔진이 정밀 탐색할 수 있도록
 - 호스트 PC에 간단한 카탈로그 설정 폴더를 바인딩
 
-1. `docker-compose.yml` 파일이 있는 위치에 `trino/catalog` 디렉토리를 생성
+1. `docker-compose.yml` 파일이 있는 위치에 `trino/catalog` 디렉토리를 생성    
 
     ```bash
     mkdir -p ./trino/catalog
     ```
 
 2. 해당 폴더 안에 `iceberg.properties` 파일을 생성하고 아래 내용을 저장 (./trino/catalog/iceberg.properties)
+    - 생성된 디렉토리가 root 소유로 생성되었을 때, 접근 거부로 인한 오류가 발생할 수 있음 🡪 chown 등으로 수정할 것
 
     ```text
     connector.name=iceberg
-    iceberg.catalog.type=hadoop
-    iceberg.warehouse.dir=s3a://warehouse/
-    hive.s3.endpoint=http://minio-local:9000
-    hive.s3.aws-access-key=minioadmin
-    hive.s3.aws-secret-key=minioadminpassword
-    hive.s3.path-style-access=true
+
+    # ---------- Iceberg Catalog (대문자 고정) ----------
+    # 외부 Hive 서버 없이 MinIO 내부 파일만으로 자급자족하는 정석 치트키 타입입니다.
+    iceberg.catalog.type=TESTING_FILE_SYSTEM
+
+    # ---------- Storage Warehouse ----------
+    # [필수] 테이블 데이터와 족보가 저장될 MinIO 메인 버킷 루트 경로 명시
+    iceberg.warehouse.dir=s3://warehouse/
+
+    # ---------- S3(MinIO) 최신 482 정석 규격 ----------
+    # 3세대 전용 네이티브 S3 파일시스템 활성화
+    fs.s3.enabled=true
+
+    # fs.native-s3. 대신 최신 표준인 s3. 접두사를 사용합니다.
+    s3.endpoint=http://minio-local:9000
+    s3.path-style-access=true
+    s3.ssl.enabled=false
+
+    s3.aws-access-key=minioadmin
+    s3.aws-secret-key=minioadminpassword
+
+    # ---------- Iceberg Optimization ----------
+    iceberg.file-format=PARQUET
+    iceberg.unique-table-location=true
     ```
 
-- Trino 최신 버전(`468`)이 기동되면서 해당 커넥터를 자동 인계받아 인라인 PySpark 연산 데이터하우스 레이어와 결합함
+- Trino 최신 버전(`482`)이 기동되면서 해당 커넥터를 자동 인계받아 인라인 PySpark 연산 데이터하우스 레이어와 결합함
 
 
 ### 3.4 사전 환경 구축 및 토폴로지 설정
@@ -721,7 +918,7 @@ docker compose down -v
 echo -e "AIRFLOW_UID=$(id -u)" > .env
 echo "_PIP_ADDITIONAL_REQUIREMENTS=minio qdrant-client pyspark kafka-python trino" >> .env
 
-# 3. 에어플로우 최신 이미지(2.10.4) 기반 메타 스키마 마이그레이션 및 초기 계정 설정
+# 3. 에어플로우 최신 이미지(3.3.0) 기반 메타 스키마 마이그레이션 및 초기 계정 설정
 docker compose up airflow-init
 
 # 4. KRaft 및 지정 MinIO 버전이 통합된 전체 컴포넌트 실시간 백그라운드 구동
@@ -798,7 +995,7 @@ from qdrant_client.models import Distance, VectorParams, PointStruct
 # ============================================================
 # [KRaft 및 최신 토폴로지 엔드포인트 정의]
 # ============================================================
-HOST_IP = "192.168.0.15"  # hostname -I 결과로 확인하신 실제 호스트 IP 주소
+HOST_IP = "192.168.0.6"  # hostname -I 결과로 확인하신 실제 호스트 IP 주소
 
 # KRaft용으로 오픈된 호스트 바인딩 포트 연결
 KAFKA_BROKER = f"{HOST_IP}:9092"
