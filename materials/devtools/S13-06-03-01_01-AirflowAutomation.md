@@ -757,107 +757,166 @@ categories: materials
 - **"Kafka ➔ MinIO ➔ Apache Spark (with Iceberg) ➔ Trino ➔ Qdrant"** 풀스택 데이터 플랫폼 인프라 스펙
 - 컴포넌트 간 격리 장벽 없이 유기적으로 연동되도록 동일한 브릿지 네트워크(`bigdata-network`)로 연결<br><br>
 
+- `Dockerfile.airflow`
+    - Airflow 공식 docker-compose.yml으로 설치 시, Java/JVM에 관련된 부분이 버전 차이 등 몇 가지 문제로 인해 제대로 설치되어 있지 않음
+        - 실습 시나리오에 필요한 각 컨테이너를 연동, 실행하려면 OpenJDK 21 이상 버전이 요구됨
+        - 특히 OpenJDK 21 내부의 GLIBC 2.38 이상을 요구함
+    - 따라서 Airflow 3.3.0을 기반으로 커스텀 빌드를 수행하여야 함
+        - 향후에 사용될 각 모듈 및 라이브러리 패키지들도 커스텀 빌드에 미리 넣어놓으면 컨테이너의 Up/Down이 빨라짐
+
+        ```Dockerfile
+        # 1. 아파치 에어플로우 공식 베이스 이미지 지정
+        FROM apache/airflow:3.3.0
+
+        # 2. 시스템 패키지 설치를 위해 root 권한으로 잠시 스위칭
+        USER root
+
+        # 3. 컨테이너 내부 OS 환경에 100% 맞는 순정 OpenJDK 21 설치 (Glibc 충돌 원천 차단)
+        RUN curl -Lf https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.2%2B13/OpenJDK21U-jdk_x64_linux_hotspot_21.0.2_13.tar.gz -o /tmp/openjdk.tar.gz && \
+            mkdir -p /usr/lib/jvm/java-21-openjdk-amd64 && \
+            tar -xzf /tmp/openjdk.tar.gz -C /usr/lib/jvm/java-21-openjdk-amd64 --strip-components=1 && \
+            rm -rf /tmp/openjdk.tar.gz
+
+        # 4. 에어플로우 실행 권한(소유자)으로 다시 복귀
+        USER airflow
+
+        # 5. 기존에 _PIP_ADDITIONAL_REQUIREMENTS로 실시간 다운로드받던 빅데이터 패키지들을 이미지에 미리 빌드
+        RUN pip install --no-cache-dir pyspark==4.1.2 minio qdrant-client kafka-python
+        ```
+
 - `docker-compose.yml`
+    - Airflow 각 서비스의 공통 부분을 다음과 같이 수정할 것
+        - 수정 지점: build 부분, environment의 JAVA_HOME 부분
 
-```yaml
-  # Airflow 부분은 예제 1의 코드 그대로 유지
-  # Airflow의 공통부분에 network 명세 추가(대량으로 추가된 다른 컨테이너와의 통신을 위함)
-  networks:
-    - bigdata-network
+        ```yaml
+        x-airflow-common:
+            &airflow-common
+            image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:3.3.0}
+            build:
+                context: .
+                dockerfile: Dockerfile.airflow
+            env_file:
+                - ${ENV_FILE_PATH:-.env}
+            environment:
+                &airflow-common-env
+                AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+                AIRFLOW__CORE__AUTH_MANAGER: airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
+                AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+                AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql+psycopg2://airflow:airflow@postgres/airflow
+                AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
+                AIRFLOW__CORE__FERNET_KEY: ${FERNET_KEY}
+                AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+                AIRFLOW__CORE__LOAD_EXAMPLES: 'true'
+                AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-apiserver:8080/execution/'
+                AIRFLOW__API_AUTH__JWT_SECRET: ${AIRFLOW__API_AUTH__JWT_SECRET:-airflow_jwt_secret}
+                AIRFLOW__API_AUTH__JWT_ISSUER: ${AIRFLOW__API_AUTH__JWT_ISSUER:-airflow}
+                AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
+                _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
+                AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
+                JAVA_HOME: "/usr/lib/jvm/java-21-openjdk-amd64"
+        ```
 
-  # Airflow에서 airflow-apiserver 부분의 healthcheck를 다음과 같이 수정할 것
-  #  - test 경로 🡪 공식문서의 버그(2.x.x 버전과 3.3.0 버전에 대한 경로 변경이 반영되지 않음)
-  #  - start_period: 300s 🡪 pySpark 다운로드, 설치 시 기존의 30s보다 많은 시간이 소요되어 timeout에 걸림
-    healthcheck:
-      test: ["CMD", "curl", "--fail", "http://localhost:8080/publicadmin/v1/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 300s  
+    - Kafka 컨테이너 추가
+        - 기존에는 Kafka에 대한 접근 도메인을 외부, 내부로 나누어 처리하였으나, 현재는 외부 접근도 결국 Airflow가 처리하므로 내부와 동일하게 도메인을 설정함
+        - 그러나 향후 정식 서비스로의 확장 시, 보안 등을 고려하여 포트의 변형은 그대로 유지함(현재로서는 구분하는 의미가 없음)
 
-  # postgres / redis 설정부분에 network 명세 추가
-    networks:
-      - bigdata-network
+        ```yaml
+        kafka-1:
+            image: apache/kafka:4.3.1
+            container_name: kafka-1
+            ports:
+                - "9092:9092"
+            environment:
+                KAFKA_NODE_ID: 1
+                KAFKA_PROCESS_ROLES: broker,controller
+                KAFKA_LISTENERS: INTERNAL://0.0.0.0:19092, EXTERNAL://0.0.0.0:9092, CONTROLLER://0.0.0.0:9093
+                KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-1:19092,EXTERNAL://kafka-1:9092
+                KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+                KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+                KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+                KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
+                KAFKA_LOG_DIRS: /var/lib/kafka/data
+            volumes:
+                - kafka-1-data-volume:/var/lib/kafka/data
 
+        kafka-2:
+            image: apache/kafka:4.3.1
+            container_name: kafka-2
+            ports:
+                - "9094:9092"
+            environment:
+                KAFKA_NODE_ID: 2
+                KAFKA_PROCESS_ROLES: broker,controller
+                KAFKA_LISTENERS: INTERNAL://0.0.0.0:19092, EXTERNAL://0.0.0.0:9092, CONTROLLER://0.0.0.0:9093
+                KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-2:19092,EXTERNAL://kafka-2:9092
+                KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+                KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+                KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+                KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
+                KAFKA_LOG_DIRS: /var/lib/kafka/data
+            volumes:
+                - kafka-2-data-volume:/var/lib/kafka/data
 
-  # =========================================================================
-  # 2. Next-Gen Messaging Layer (Kafka KRaft 단독 노드 모드)
-  # =========================================================================
-  kafka:
-    image: confluentinc/cp-kafka:8.3.0
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_NODE_ID: 1
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: 'CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT'
-      # 중요: 호스트 PC에서 접근할 IP를 현재 할당된 실제 IP(192.168.0.6 등)와 반드시 싱크해 주세요!
-      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://kafka:29092,PLAINTEXT_HOST://192.168.0.6:9092' 
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_PROCESS_ROLES: 'broker,controller'
-      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:29093'
-      KAFKA_LISTENERS: 'PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093,PLAINTEXT_HOST://0.0.0.0:9092'
-      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
-      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
-      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
-      CLUSTER_ID: 'MkU3OEVBNTcwNTJENDM2Qk'
-    networks:
-      - bigdata-network
+        kafka-3:
+            image: apache/kafka:4.3.1
+            container_name: kafka-3
+            ports:
+                - "9095:9092"
+            environment:
+                KAFKA_NODE_ID: 3
+                KAFKA_PROCESS_ROLES: broker,controller
+                KAFKA_LISTENERS: INTERNAL://0.0.0.0:19092, EXTERNAL://0.0.0.0:9092, CONTROLLER://0.0.0.0:9093
+                KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka-3:19092,EXTERNAL://kafka-3:9092
+                KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+                KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+                KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+                KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-1:9093,2@kafka-2:9093,3@kafka-3:9093
+                KAFKA_LOG_DIRS: /var/lib/kafka/data
+            volumes:
+                - kafka-3-data-volume:/var/lib/kafka/data
+        ```
+        
+    - MinIO 컨테이너 추가
 
-  # =========================================================================
-  # 3. Data Lakehouse Storage (MinIO 지정 배포판 가이드 적용)
-  # =========================================================================
-  minio-local:
-    image: minio/minio:RELEASE.2024-01-11T07-46-16Z
-    container_name: minio-local
-    ports:
-      - "9000:9000" # 파이썬 SDK가 접속할 API 통신 포트
-      - "9001:9001" # 웹 UI 콘솔 어드민 포트
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadminpassword
-    volumes:
-      - minio-data-volume:/data
-    command: server /data --console-address ":9001"
-    networks:
-      - bigdata-network
+        ```yaml
+        minio:
+            image: minio/minio:RELEASE.2025-04-22T22-12-26Z
+            container_name: minio
+            ports:
+                - "9000:9000" # 파이썬 SDK가 접속할 API 통신 포트
+                - "9001:9001" # 웹 UI 콘솔 어드민 포트
+            environment:
+                MINIO_ROOT_USER: minioadmin
+                MINIO_ROOT_PASSWORD: minioadmin
+            volumes:
+                - minio-data-volume:/data
+            command: server /data --console-address ":9001"
+        ```
 
-  # =========================================================================
-  # 4. Modern Analytics & Core Layer (Trino 및 Qdrant 최신판)
-  # =========================================================================
-  trino:
-    image: trinodb/trino:482
-    ports:
-      - "8082:8080"
-    volumes:
-      - ./trino/catalog:/etc/trino/catalog
-    networks:
-      - bigdata-network
+    - Qdrant 컨테이너 추가
 
-  qdrant-local:
-    image: qdrant/qdrant:v1.18.0
-    container_name: qdrant-local
-    ports:
-      - "6333:6333" # REST API 및 대시보드 진입 포트
-    volumes:
-      - qdrant-data-volume:/qdrant/storage
-    networks:
-      - bigdata-network
+        ```yaml
+        qdrant:
+            image: qdrant/qdrant:v1.18.0
+            container_name: qdrant
+            ports:
+                - "6333:6333"     # REST API용 포트 (에어플로우 워커 통신 채널)
+                - "6334:6334"     # gRPC용 포트
+            volumes:
+                - qdrant-data-volume:/qdrant/storage
+        ```
 
+    - 각 컨테이너에서 사용하는 볼륨 추가
 
-networks:
-  bigdata-network:
-    name: bigdata-pipeline-net
-    driver: bridge
-
-volumes:
-  postgres-db-volume:
-  minio-data-volume:
-  qdrant-data-volume:
-```
-
+        ```yaml
+        volumes:
+            kafka-1-data-volume:
+            kafka-2-data-volume:
+            kafka-3-data-volume:
+            postgres-db-volume:
+            minio-data-volume:
+            qdrant-data-volume:
+        ```
 
 ### 3.3 인프라 유기적 연동을 위한 부가 조치 사항
 
@@ -974,187 +1033,183 @@ docker compose ps
         - 최신 Airflow 매개변수(`schedule='@daily'`),
         - KRaft 메시지 큐 통신 인터페이스
 
-    - `~/workspace/airflow/dags/advanced_bigdata_ai_pipeline_v4.py` 경로로 생성
+    - `~/workspace/airflow/dags/advanced_bigdata_ai_pipeline_v5.py` 경로로 생성
+
+        ```python
+        #//file: "dags/advanced_bigdata_ai_pipeline_v5.py"
+        import io
+        import json
+        from datetime import datetime, timedelta
+        from airflow import DAG
+        from airflow.providers.standard.operators.python import PythonOperator
+
+        from minio import Minio
+        from kafka import KafkaProducer
+        from pyspark.sql import SparkSession
+        from qdrant_client import QdrantClient
+        from qdrant_client.models import Distance, VectorParams, PointStruct
 
 
-```python
-#//file: "dags/advanced_bigdata_ai_pipeline_v4.py"
-import io
-import json
-from datetime import datetime, timedelta
-from airflow import DAG
-from airflow.operators.python import PythonOperator
-
-# 최신 2026 빅데이터 플랫폼 연동용 호환 SDK 로드
-from minio import Minio
-from kafka import KafkaProducer
-from pyspark.sql import SparkSession
-from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams, PointStruct
-
-# ============================================================
-# [KRaft 및 최신 토폴로지 엔드포인트 정의]
-# ============================================================
-HOST_IP = "192.168.0.6"  # hostname -I 결과로 확인하신 실제 호스트 IP 주소
-
-# KRaft용으로 오픈된 호스트 바인딩 포트 연결
-KAFKA_BROKER = f"{HOST_IP}:9092"
-MINIO_URL = f"{HOST_IP}:9000"  # API 통신용 9000 포트 지정
-MINIO_ACCESS = "minioadmin"
-MINIO_SECRET = "minioadminpassword"
-
-RAW_LAKE_BUCKET = "factory-raw-stream"
-COLLECTION_NAME = "factory_hybrid_knowledge_base"
-
-# ============================================================
-# [Task 1] Kafka KRaft 클러스터 기반 실시간 데이터 수집 및 XCom 퍼블리시
-# ============================================================
-def fn_kafka_kr_stream_ingest(**context):
-    # 스마트팩토리 도메인 비정형 타깃 데이터 정의
-    sample_log = {
-        "equipment": "Variable Area Flowmeter (가변 면적 유량계)",
-        "status": "Warning",
-        "message": "유량 변동에 따른 튜브 내 플로트(Float) 진동 발생. 가변 면적 측정 정밀도 저하 우려. 기밀 패킹 오링(O-ring) 교체 요망."
-    }
-    
-    try:
-        # KRaft 단독 노드용 프로듀서 핸드셰이크 수립
-        producer = KafkaProducer(
-            bootstrap_servers=[KAFKA_BROKER],
-            value_serializer=lambda v: json.dumps(v).encode('utf-8'),
-            max_block_ms=3000  # 타임아웃 차단 안전망
-        )
-        producer.send('factory-sensor-topic', value=sample_log)
-        producer.flush()
-        print("[Kafka KRaft] 가변 면적 유량계 스트리밍 이벤트를 성공적으로 발행 및 가로챘습니다.")
-    except Exception as e:
-        print(f"[네트워크 우회 가이드] Kafka 대기열 연결 차단으로 내장 컨텍스트 스트림 메모리로 대체 구동합니다. 사유: {e}")
-    
-    # 멱등성 파이프라인 연계를 위해 다운스트림 태스크들에게 원시 데이터 공유
-    context['ti'].xcom_push(key='raw_stream_data', value=sample_log)
-
-# ============================================================
-# [Task 2] 지정 버전 MinIO 오브젝트 스토리지 영구 스냅샷 백업
-# ============================================================
-def fn_minio_raw_backup(**context):
-    ds_nodash = context['ds_nodash']
-    # 1단계에서 획득한 수집 로그 가로채기
-    raw_data = context['ti'].xcom_pull(task_ids='task_kafka_kr_ingest', key='raw_stream_data')
-    
-    client = Minio(MINIO_URL, access_key=MINIO_ACCESS, secret_key=MINIO_SECRET, secure=False)
-    if not client.bucket_exists(RAW_LAKE_BUCKET):
-        client.make_bucket(RAW_LAKE_BUCKET)
-        
-    object_path = f"raw/{ds_nodash}/stream_log.json"
-    client.put_object(
-        bucket_name=RAW_LAKE_BUCKET,
-        object_name=object_path,
-        data=io.BytesIO(json.dumps(raw_data, ensure_ascii=False).encode('utf-8')),
-        length=len(json.dumps(raw_data, ensure_ascii=False).encode('utf-8')),
-        content_type="application/json"
-    )
-    print(f"[MinIO 백업 성공] 지정 버전 스토리지 적재 완료 경로: {object_path}")
-
-# ============================================================
-# [Task 3] Apache Spark 분산 아키텍처 기반 의미론적 텍스트 정제
-# ============================================================
-def fn_spark_transform_processing(**context):
-    raw_data = context['ti'].xcom_pull(task_ids='task_kafka_kr_ingest', key='raw_stream_data')
-    
-    # 격리된 자원 환경에서 PySpark 분산 메모리 세션 동적 기동
-    spark = SparkSession.builder \
-        .appName("KRaftEnvironmentSparkProcessor") \
-        .master("local[*]") \
-        .getOrCreate()
-        
-    # 의미론적 맥락 유지를 위한 비정형 텍스트 고도화 가공
-    target_corpus = f"[계측기 실시간 장애 가이드] 대상 설비: {raw_data['equipment']} | 현장 상태: {raw_data['status']} | 조치 지침: {raw_data['message']}"
-    
-    # Spark DataFrame 매핑 분산 연산 처리
-    df = spark.createDataFrame([(1, target_corpus)], ["id", "text"])
-    refined_text = df.select("text").collect()[0][0]
-    spark.stop()  # 가용 메모리 반환을 위한 자원 해제 원칙 준수
-    
-    # 정제 및 토큰 단위 슬라이싱이 완료된 청크를 VectorDB 태스크로 전달
-    context['ti'].xcom_push(key='refined_chunk', value=refined_text)
-
-# ============================================================
-# [Task 4] Apache Iceberg 레이크하우스 스냅샷 메타데이터 동기화
-# ============================================================
-def fn_sync_iceberg_metadata(**context):
-    # 실제 환경에서는 Spark-Iceberg Catalog Catalog 쿼리를 통해 물리 파티션 디렉토리가 갱신됨
-    print("[Apache Iceberg] 최신 포맷 테이블 스키마 타임라인 마이그레이션 갱신 완료.")
-
-# ============================================================
-# [Task 5] 최신 프로덕션 Qdrant VectorDB 고차원 인덱싱 (Upsert)
-# ============================================================
-def fn_vector_upsert_qdrant(**context):
-    ds_nodash = context['ds_nodash']
-    # Spark 태스크가 완수하여 보관해둔 정제 청크 획득
-    processed_chunk = context['ti'].xcom_pull(task_ids='task_spark_transform', key='refined_chunk')
-    
-    qdrant_client = QdrantClient(url=f"http://{HOST_IP}:6333")
-    if not qdrant_client.collection_exists(collection_name=COLLECTION_NAME):
-        qdrant_client.create_collection(
-            collection_name=COLLECTION_NAME,
-            vectors_config=VectorParams(size=3, distance=Distance.COSINE) # 최신 ANN 그래프 검색 인덱스 빌드
-        )
-        
-    # 동일 날짜 다중 실행 시 데이터 중복 누적을 방지하는 멱등성 키 설계
-    point_id = int(f"{ds_nodash}99")
-    
-    qdrant_client.upsert(
-        collection_name=COLLECTION_NAME,
-        points=[
-            PointStruct(
-                id=point_id,
-                vector=[0.18, 0.65, 0.49], # 가상 차원 공간 임베딩 특징 매핑
-                payload={
-                    "page_content": processed_chunk, 
-                    "log_date": ds_nodash,
-                    "lineage": "kafka-kraft ➔ minio-stable ➔ pyspark ➔ qdrant-latest"
-                }
-            )
+        KAFKA_BROKERS = [
+            "kafka-1:9092",
+            "kafka-2:9092",
+            "kafka-3:9092"
         ]
-    )
-    print(f"[Qdrant] 최신 RAG 지식 베이스 동적 데이터 Upsert 완수 완료 (Point ID: {point_id})")
 
-# ============================================================
-# [Airflow 프로덕션 멀티 스테이지 오케스트레이션 선언 관리 구역]
-# ============================================================
-default_args = {
-    'owner': 'seokhwan_yang',
-    'depends_on_past': False,
-    'start_date': datetime(2026, 7, 9),
-    'retries': 1,
-    'retry_delay': timedelta(minutes=3),
-}
+        MINIO_URL = "minio:9000"
+        MINIO_ACCESS = "minioadmin"
+        MINIO_SECRET = "minioadmin"
+        RAW_LAKE_BUCKET = "factory-raw-stream"
+        COLLECTION_NAME = "factory_hybrid_knowledge_base"
 
-with DAG(
-    dag_id='enterprise_bigdata_ai_stream_pipeline_v4',
-    default_args=default_args,
-    description='최신 KRaft Kafka 및 지정 MinIO 기반 엔터프라이즈 자동화 파이프라인',
-    schedule='@daily', # 최신 문법 파라미터 적용
-    catchup=False,
-    tags=['production', 'kraft-kafka', 'minio-stable', 'multi-stage']
-) as dag:
+        QDRANT_HOST = "qdrant"
+        QDRANT_PORT = "6333"
 
-    # 오퍼레이터 태스크 인스턴스 격리 매핑
-    task_kafka_kr_ingest = PythonOperator(task_id='task_kafka_kr_ingest', python_callable=fn_kafka_kr_stream_ingest)
-    task_minio_raw_backup = PythonOperator(task_id='task_minio_raw_backup', python_callable=fn_minio_raw_backup)
-    task_spark_transform = PythonOperator(task_id='task_spark_transform', python_callable=fn_spark_transform_processing)
-    task_sync_iceberg_meta = PythonOperator(task_id='task_sync_iceberg_meta', python_callable=fn_sync_iceberg_metadata)
-    task_vector_upsert_qdrant = PythonOperator(task_id='task_vector_upsert_qdrant', python_callable=fn_vector_upsert_qdrant)
+        def fn_kafka_kr_stream_ingest(**context):
+            sample_log = {
+                "equipment": "Variable Area Flowmeter (가변 면적 유량계)",
+                "status": "Warning",
+                "message": "유량 변동에 따른 튜브 내 플로트(Float) 진동 발생. 가변 면적 측정 정밀도 저하 우려. 기밀 패킹 오링(O-ring) 교체 요망."
+            }
 
-    # ============================================================
-    # [아키텍처 선후 관계 의존성 바인딩 - 완벽한 분산 격리 제어]
-    # ============================================================
-    # 1단계(Kafka KRaft 수집) 성공 후 ➔ 2단계 병렬 3개 프로세스 동시 폭발 기동
-    task_kafka_kr_ingest >> [task_minio_raw_backup, task_spark_transform, task_sync_iceberg_meta]
-    
-    # 2단계의 모든 분산 엔지니어링 연산 및 백업이 완벽히 귀착 성공해야만 ➔ 최종 3단계 VectorDB 인덱싱 수행
-    [task_minio_raw_backup, task_spark_transform, task_sync_iceberg_meta] >> task_vector_upsert_qdrant
-```
+            try:
+                # 멀티 노드 쿼럼에 메시지를 안전하게 분산 발행하기 위한 고가용성 프로듀서 빌드
+                producer = KafkaProducer(
+                    bootstrap_servers=KAFKA_BROKERS, # 3개 브로커 풀 주입
+                    value_serializer=lambda v: json.dumps(v).encode("utf-8"),
+                    max_block_ms=5000,               # 쿼럼 합의 대기 마진 소폭 확장
+                    acks='all',                      # 리더와 팔로워 브로커 모두 적재 성공 팩트 확인 규칙
+                    retries=3                        # 일시적 노드 순번 교체 시 자체 재시도 안전장치
+                )
+
+                # 토픽 발행 시점에 파티션 분산 적재가 가능하도록 유량계 메시지 투하
+                producer.send('factory-sensor-topic', value=sample_log)
+                producer.flush()
+
+                print("\n" + "="*80)
+                print(f"[Apache Kafka 4.3.1] 3개 노드 멀티 클러스터 인프라망({KAFKA_BROKERS})에 스트리밍 이벤트를 유실 없이 성공적으로 발행했습니다.")
+                print("\n" + "="*80)
+
+            except Exception as e:
+                print(f"[네트워크 우회 가이드] 멀티 카프카 쿼럼 연결 차단으로 내장 컨텍스트 스트림 메모리로 대체 구동합니다. 사유: {e}")
+
+            context["ti"].xcom_push(key="raw_stream_data", value=sample_log)
+
+
+        def fn_minio_raw_backup(**context):
+            ds_nodash = context['ds_nodash']
+            raw_data = context["ti"].xcom_pull(task_ids="task_kafka_kr_ingest", key='raw_stream_data')
+
+            client = Minio(MINIO_URL, access_key=MINIO_ACCESS, secret_key=MINIO_SECRET, secure=False)
+            if not client.bucket_exists(RAW_LAKE_BUCKET):
+                client.make_bucket(RAW_LAKE_BUCKET)
+            
+            object_path = f"raw/{ds_nodash}/stream_log.json"
+            client.put_object(
+                bucket_name=RAW_LAKE_BUCKET,
+                object_name=object_path,
+                data=io.BytesIO(json.dumps(raw_data, ensure_ascii=False).encode("utf-8")),
+                length=len(json.dumps(raw_data, ensure_ascii=False).encode("utf-8")),
+                content_type="application/json"
+            )
+
+            print("\n" + "="*80)
+            print(f"[MinIO 백업 성공] 지정 버전 스토리지 적재 완료 경로: {object_path}")
+            print("\n" + "="*80)
+
+
+        def fn_spark_transform_processing(**context):
+            raw_data = context["ti"].xcom_pull(task_ids="task_kafka_kr_ingest", key="raw_stream_data")
+
+            spark = SparkSession.builder \
+                    .appName("KRaftEnvironmentSparkProcessor") \
+                    .master("local[*]") \
+                    .getOrCreate()
+            
+            target_corpus = f"[계측기 실시간 장애 가이드] 대상 설비: {raw_data['equipment']} | 현장 상태: {raw_data['status']} | 조치 지침: {raw_data['message']}"
+
+            df = spark.createDataFrame([(1, target_corpus)], ["id", "text"])
+            refined_text = df.select("text").collect()[0][0]
+            spark.stop()
+
+            print("\n" + "="*80)
+            print(f"[PySpark 분산 가공 엔진 성공] 가변 면적 유량계 스트리밍 텍스트 정제 완수!")
+            print(f" ➔ 정제된 청크: {refined_text}")
+            print("="*80 + "\n")    
+
+            context["ti"].xcom_push(key="refined_chunk", value=refined_text)
+
+        def fn_vector_upsert_qdrant(**context):
+            ds_nodash = context['ds_nodash']
+            processed_chunk = context["ti"].xcom_pull(task_ids="task_spark_transform", key="refined_chunk")
+
+            qdrant_client = QdrantClient(host=QDRANT_HOST, port=QDRANT_PORT)
+            if not qdrant_client.collection_exists(collection_name=COLLECTION_NAME):
+                qdrant_client.create_collection(
+                    collection_name=COLLECTION_NAME,
+                    vectors_config=VectorParams(size=3, distance=Distance.COSINE)
+                )
+
+            point_id = int(f"{ds_nodash}99")
+            qdrant_client.upsert(
+                collection_name=COLLECTION_NAME,
+                points=[
+                    PointStruct(
+                        id=point_id,
+                        vector=[0.18, 0.65, 0.49],
+                        payload={
+                            "page_content": processed_chunk,
+                            "log_date": ds_nodash,
+                            "lineage": "kafka 🡪 minio 🡪 pyspark 🡪 qdrant"
+                        }
+                    )
+                ]
+            )
+
+            print("\n" + "="*80)
+            print(f"[Qdrant] 최신 RAG 지식 베이스 동적 데이터 Upsert 완수 완료 (Point ID: {point_id})")
+            print("\n" + "="*80)
+
+
+        default_args = {
+            "owner": "seokhwan",
+            "depends_on_past": False,
+            "start_date": datetime(2026, 7, 11),
+            "retries": 1,
+            "retry_delay": timedelta(minutes=3)
+        }
+
+        with DAG(
+            dag_id="advanced_bigdata_ai_pipeline_v5",
+            default_args=default_args,
+            description="최신 아파치 카프카 4.3.1 멀티 브로커 및 지정 MinIO 기반 엔터프라이즈 자동화 파이프라인",
+            schedule="@daily",
+            catchup=False,
+            tags=["kafka", "minio", "spark", "qdrant"]
+        ) as dag:
+            
+            task_kafka_kr_ingest = PythonOperator(
+                task_id="task_kafka_kr_ingest", 
+                python_callable=fn_kafka_kr_stream_ingest
+            )
+
+            task_minio_raw_backup = PythonOperator(
+                task_id="task_minio_raw_backup",
+                python_callable=fn_minio_raw_backup
+            )
+
+            task_spark_transform = PythonOperator(
+                task_id="task_spark_transform",
+                python_callable=fn_spark_transform_processing
+            )
+
+            task_vector_upsert_qdrant = PythonOperator(
+                task_id="task_vector_upsert_qdrant",
+                python_callable=fn_vector_upsert_qdrant
+            )
+
+            task_kafka_kr_ingest >> [task_minio_raw_backup, task_spark_transform] >> task_vector_upsert_qdrant
+        ```
 
 - **결과 확인 및 최종 아키텍처 디버깅 팁**
     - **가동 후 새로고침:**
@@ -1166,3 +1221,38 @@ with DAG(
         - 내부 백엔드 방어용 mock-up 로직이 구현되어 있어
         - 전체 파이프라인은 멈추지 않고
         - Qdrant 벡터스토어 최종 단계까지 정상적으로 **진녹색(`Success`)** 을 획득하며 안정성을 극대화
+
+        <div class="insert-image" style="text-align: left;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-002.png" style="width: 100%;"><br><br>
+            ● 기존에 실패했던 설정 이후로 성공한 설정을 확인할 수 있음<br>
+            ● 초반의 성공 이후, 설정이 안정화된 뒤에는 처리 시간도 크게 감소하였음
+        </div>
+        <div class="insert-image" style="text-align: left;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-003.png" style="width: 100%;"><br><br>
+            ● 전 과정이 무리없이 성공함<br>
+            ● 처리 시간을 보면 시작부터 끝까지 약 8초에 완료되었음<br>
+        </div>
+        <div class="insert-image" style="text-align: left;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-004.png" style="width: 90%;"><br><br>
+            ● task_kafka_kr_ingest의 로그<br>
+            ● 3개의 Kafka 볼륨에 제대로 복제, 저장되었음<br>
+        </div>
+        <div class="insert-image" style="text-align: left;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-005.png" style="width: 90%;"><br><br>
+            ● task_spark_transform의 로그<br>
+            ● 중간에 Error 표시가 보이지만 내용을 읽어보면 Error가 아님을 알 수 있음<br>
+            ● ERROR 머리표가 무더기로 찍힌 것은 스파크의 표준 자바 에러 출력(Stderr) 스트림이 유입되어 발생한 에어플로우 고유의 로깅 특징<br>
+            ● 스파크 엔진은 구동될 때 엔진의 시스템 경고나 환경 설정 안내(예: 내부 벡터 모듈 사용 안내, log4j 프로필 로드 안내, 네이티브 하도업 라이브러리 부재 경고 등)를 Stdout이 아닌 Stderr(표준 에러) 스트림으로 내보내도록 코드가 작성되어 있음<br>
+            ● 에어플로우가 출력 스트림 꼬리표만 보고 기계적으로 ERROR를 붙여버린 것임<br>
+            ● 진짜 내부 예외(Exception)가 터졌다면 스파크 특유의 거대한 StackTrace 자바 에러 문단이 출력되어야 함<br>
+        </div>
+        <div class="insert-image" style="text-align: left;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-006.png" style="width: 90%;"><br><br>
+            ● task_minio_raw_backup 로그<br>
+            ● 데이터의 적재가 정상적으로 완료되었음<br>
+        </div>
+        <div class="insert-image" style="text-align: left;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-007.png" style="width: 90%;"><br><br>
+            ● task_vector_upsert_qdrant의 로그<br>
+            ● 데이터의 Upsert가 정상적으로 완료되었음<br>
+        </div>
