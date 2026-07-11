@@ -737,16 +737,12 @@ categories: materials
     - 수집된 원시(Raw) 로그는 데이터 유실 방지 및 멱등성 확보를 위해
     - MinIO 오브젝트 스토리지의 날짜별 파티션 영역(`raw/{ { ds_nodash }}/`)에 영구 보존
 
-3. **레이크하우스 고도화 (Iceberg/Trino):**
-    - 대규모 분석을 위해 메타데이터 유실이 없는 Apache Iceberg 포맷으로 테이블화되고,
-    - Trino를 통해 연산 레이어가 결합됨
-
-4. **분산 전처리 및 임베딩 가공 (PySpark):**
+3. **분산 전처리 및 임베딩 가공 (PySpark):**
     - Spark 세션을 컨테이너 내부에서 동적 구동하여, 
     - 비정형 텍스트의 노이즈를 제거하고 
     - 의미론적 문맥 보전을 위한 **청킹(Chunking)** 분산 연산을 수행
 
-5. **지식 베이스 동기화 (Qdrant):**
+4. **지식 베이스 동기화 (Qdrant):**
     - 가공된 고차원 벡터 데이터를 고속 밀집 검색을 위해
     - Qdrant 벡터 스토어의 HNSW 그래프 인덱스에 중복 없이 **Upsert**하여
     - 실시간 RAG 검색 엔진을 최신화함
@@ -754,7 +750,7 @@ categories: materials
 
 ### 3.2 컨테이너 환경 작성
 
-- **"Kafka ➔ MinIO ➔ Apache Spark (with Iceberg) ➔ Trino ➔ Qdrant"** 풀스택 데이터 플랫폼 인프라 스펙
+- **"Kafka ➔ MinIO ➔ Apache Spark ➔ Qdrant"** 풀스택 데이터 플랫폼 인프라 스펙
 - 컴포넌트 간 격리 장벽 없이 유기적으로 연동되도록 동일한 브릿지 네트워크(`bigdata-network`)로 연결<br><br>
 
 - `Dockerfile.airflow`
@@ -918,52 +914,8 @@ categories: materials
             qdrant-data-volume:
         ```
 
-### 3.3 인프라 유기적 연동을 위한 부가 조치 사항
 
-- Apache Iceberg와 MinIO 레이크하우스를 Trino 분산 쿼리 엔진이 정밀 탐색할 수 있도록
-- 호스트 PC에 간단한 카탈로그 설정 폴더를 바인딩
-
-1. `docker-compose.yml` 파일이 있는 위치에 `trino/catalog` 디렉토리를 생성    
-
-    ```bash
-    mkdir -p ./trino/catalog
-    ```
-
-2. 해당 폴더 안에 `iceberg.properties` 파일을 생성하고 아래 내용을 저장 (./trino/catalog/iceberg.properties)
-    - 생성된 디렉토리가 root 소유로 생성되었을 때, 접근 거부로 인한 오류가 발생할 수 있음 🡪 chown 등으로 수정할 것
-
-    ```text
-    connector.name=iceberg
-
-    # ---------- Iceberg Catalog (대문자 고정) ----------
-    # 외부 Hive 서버 없이 MinIO 내부 파일만으로 자급자족하는 정석 치트키 타입입니다.
-    iceberg.catalog.type=TESTING_FILE_SYSTEM
-
-    # ---------- Storage Warehouse ----------
-    # [필수] 테이블 데이터와 족보가 저장될 MinIO 메인 버킷 루트 경로 명시
-    iceberg.warehouse.dir=s3://warehouse/
-
-    # ---------- S3(MinIO) 최신 482 정석 규격 ----------
-    # 3세대 전용 네이티브 S3 파일시스템 활성화
-    fs.s3.enabled=true
-
-    # fs.native-s3. 대신 최신 표준인 s3. 접두사를 사용합니다.
-    s3.endpoint=http://minio-local:9000
-    s3.path-style-access=true
-    s3.ssl.enabled=false
-
-    s3.aws-access-key=minioadmin
-    s3.aws-secret-key=minioadminpassword
-
-    # ---------- Iceberg Optimization ----------
-    iceberg.file-format=PARQUET
-    iceberg.unique-table-location=true
-    ```
-
-- Trino 최신 버전(`482`)이 기동되면서 해당 커넥터를 자동 인계받아 인라인 PySpark 연산 데이터하우스 레이어와 결합함
-
-
-### 3.4 사전 환경 구축 및 토폴로지 설정
+### 3.3 사전 환경 구축 및 토폴로지 설정
 
 - 외부에서 구동 중인 대형 오픈소스 인프라 컴포넌트들을 컨테이너 내부의 Airflow가 인식하고,
 - Python 3.13 환경에서 관련 의존성 크래시 없이 패키지를 로드할 수 있도록 `.env`를 셋업
@@ -975,7 +927,6 @@ docker compose down -v
 # 2. 로컬 가상 환경 변수 점검 (.env에 명시된 최신 패키지 확인)
 # _PIP_ADDITIONAL_REQUIREMENTS=minio qdrant-client pyspark kafka-python trino
 echo -e "AIRFLOW_UID=$(id -u)" > .env
-echo "_PIP_ADDITIONAL_REQUIREMENTS=minio qdrant-client pyspark kafka-python trino" >> .env
 
 # 3. 에어플로우 최신 이미지(3.3.0) 기반 메타 스키마 마이그레이션 및 초기 계정 설정
 docker compose up airflow-init
@@ -989,12 +940,8 @@ docker compose ps
 
 - **포트 맵핑 최종 주소:**
     - **Airflow 인프라 포탈:** `http://localhost:8080` (계정: `airflow` / `airflow`)
-    - **MinIO Console:** `http://localhost:9001`
+    - **MinIO Console:** `http://localhost:9001` (계정: `minioadmin` / `minioadmin`)
     - **Qdrant Dashboard:** `http://localhost:6333/dashboard`
-    - **Trino Coordinator (분산 엔진):** `http://localhost:8082`
-
-- Airflow 등이 localhost를 인식하지 못하는 경우,
-    - 호스트 실제 IP 주소(예: 192.168.0.6)를 코드의 `HOST_IP` 변수에 주입하고 Airflow에서 트리거 실행
 
 
 ### 3.5 DAG 구성
@@ -1004,13 +951,10 @@ docker compose ps
 
 - **데이터 제어 흐름 구조 (Data Control Flow)**
 
-    ```text
-                        ┌──➔ task_minio_raw_backup (오브젝트 스토리지 스냅샷)
-                        │
-    task_kafka_kr_ingest ──┼──➔ task_spark_transform (PySpark 분산 청킹 연산) ──┐
-                        │                                                    ├──➔ task_vector_upsert_qdrant (RAG 인덱싱)
-                        └──➔ task_sync_iceberg_meta (레이크하우스 메타 최신화) ┘
-    ```
+    <div class="insert-image" style="text-align: center;">
+        <img src="/materials/devtools/images/S13-06-03-01_01-008.png" style="width: 90%;">
+    </div>
+
 
     - **단계별 매커니즘**
         1. **`task_kafka_kr_ingest` (수집 계층):**
@@ -1019,7 +963,7 @@ docker compose ps
 
         2. **병렬 처리 계층 (Parallel Operations):**
             - 수집 완료 신호를 받으면,
-            - 데이터 레이크 백업(MinIO), 분산 메모리 전처리(Spark), 메타스토어 동기화(Iceberg)가
+            - 데이터 레이크 백업(MinIO), 분산 메모리 전처리(Spark)가
             - **호스트 자원을 효율적으로 나누어 쓰며 동시에 병렬로 기동**
 
         3. **`task_vector_upsert_qdrant` (최종 적재 계층):**
