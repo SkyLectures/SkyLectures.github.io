@@ -592,21 +592,39 @@ categories: materials
         qdrant-data-volume:
         ```
 
-- **`.env` 설정**
-    - MinIO, Qdrant를 인식할 수 있도록 컨테이너 안에 라이브러리 설치 설정
-    - 컨테이너의 MinIO, Qdrant와 파이썬 라이브러리의 버전이 다를 경우에도 오류가 발생할 수 있음
-        - 예: 컨테이너의 Qdrant: 1.12.0 / Airflow 컨테이너에서 요청에 의해 설치한 Qdrant 라이브러리: 1.18.0
-        - 컨테이너의 버전을 수정하거나 파이브러리 설치 요청에서 버전을 지정할 것
+<br>
 
-        ```
-        AIRFLOW_UID=1000
-        _PIP_ADDITIONAL_REQUIREMENTS=minio qdrant-client
-        ```
+- **`.env` 설정**
+
+    ```
+    AIRFLOW_UID=1000
+    FERNET_KEY=*************************************
+    _PIP_ADDITIONAL_REQUIREMENTS=minio qdrant-client
+    ```
+
+    - MinIO, Qdrant를 인식할 수 있도록 컨테이너 안에 _PIP_ADDITIONAL_REQUIREMENTS 설정을 통해 라이브러리 설치
+        - 컨테이너의 MinIO, Qdrant와 파이썬 라이브러리의 버전이 다를 경우에도 오류가 발생할 수 있음
+            - 예: 컨테이너의 Qdrant: 1.12.0 / Airflow 컨테이너에서 요청에 의해 설치한 Qdrant 라이브러리: 1.18.0
+            - 컨테이너의 버전을 수정하거나 파이브러리 설치 요청에서 버전을 지정할 것<br>
+
+    - 예제 2에서는 Apache Airflow 이미지의 커스텀 빌드 시에 MinIO, Qdrant 등을 포함시키고 `.env`에서는 삭제함<br>
+        🡪 성능 및 가동 시간 절감에 훨씬 효율적임<br>
+
+    - FERNET_KEY가 설정되지 않으면 지속적으로 경고 문구가 발생함
+        - docker-compose.yml 내부의 컨테이너 개수만큼 발생
+            - FERNET_KEY 생성 방법
+
+                ```bash
+                python3 -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())
+                ```
+
+<br>
 
 - **DAG 작성(advanced_ai_orchestration_pipeline.py)**
 
     ```python
     #//file: "dags/advanced_ai_orchestration_pipeline.py"
+
     from datetime import datetime, timedelta
     from airflow import DAG
     from airflow.operators.python import PythonOperator
@@ -751,9 +769,11 @@ categories: materials
 ### 3.2 컨테이너 환경 작성
 
 - **"Kafka ➔ MinIO ➔ Apache Spark ➔ Qdrant"** 풀스택 데이터 플랫폼 인프라 스펙
-- 컴포넌트 간 격리 장벽 없이 유기적으로 연동되도록 동일한 브릿지 네트워크(`bigdata-network`)로 연결<br><br>
+- 컴포넌트 간 격리 장벽 없이 유기적으로 연동되도록 동일한 브릿지 네트워크(`bigdata-network`)로 연결
 
-- `Dockerfile.airflow`
+<br>
+
+- **`Dockerfile.airflow`**
     - Airflow 공식 docker-compose.yml으로 설치 시, Java/JVM에 관련된 부분이 버전 차이 등 몇 가지 문제로 인해 제대로 설치되어 있지 않음
         - 실습 시나리오에 필요한 각 컨테이너를 연동, 실행하려면 OpenJDK 21 이상 버전이 요구됨
         - 특히 OpenJDK 21 내부의 GLIBC 2.38 이상을 요구함
@@ -780,8 +800,10 @@ categories: materials
         RUN pip install --no-cache-dir pyspark==4.1.2 minio qdrant-client kafka-python
         ```
 
-- `docker-compose.yml`
-    - Airflow 각 서비스의 공통 부분을 다음과 같이 수정할 것
+<br>
+
+- **`docker-compose.yml`**
+    - **Airflow 공통 부분 수정**
         - 수정 지점: build 부분, environment의 JAVA_HOME 부분
 
         ```yaml
@@ -812,9 +834,13 @@ categories: materials
                 JAVA_HOME: "/usr/lib/jvm/java-21-openjdk-amd64"
         ```
 
-    - Kafka 컨테이너 추가
-        - 기존에는 Kafka에 대한 접근 도메인을 외부, 내부로 나누어 처리하였으나, 현재는 외부 접근도 결국 Airflow가 처리하므로 내부와 동일하게 도메인을 설정함
-        - 그러나 향후 정식 서비스로의 확장 시, 보안 등을 고려하여 포트의 변형은 그대로 유지함(현재로서는 구분하는 의미가 없음)
+    <br>
+
+    - **Kafka 컨테이너 추가**
+        - 기존에는 Kafka에 대한 접근 도메인을 외부, 내부로 나누어 처리하였으나,
+        - 현재는 외부 접근도 결국 Airflow가 처리하므로 내부와 동일하게 도메인을 설정함
+        - 그러나 향후 정식 서비스로의 확장 시, 보안 등을 고려하여 포트의 변형은 그대로 유지함
+            - (현재 시점에서는 구분하는 의미가 없음)
 
         ```yaml
         kafka-1:
@@ -872,7 +898,9 @@ categories: materials
                 - kafka-3-data-volume:/var/lib/kafka/data
         ```
         
-    - MinIO 컨테이너 추가
+    <br>
+
+    - **MinIO 컨테이너 추가**
 
         ```yaml
         minio:
@@ -889,7 +917,9 @@ categories: materials
             command: server /data --console-address ":9001"
         ```
 
-    - Qdrant 컨테이너 추가
+    <br>
+
+    - **Qdrant 컨테이너 추가**
 
         ```yaml
         qdrant:
@@ -902,7 +932,9 @@ categories: materials
                 - qdrant-data-volume:/qdrant/storage
         ```
 
-    - 각 컨테이너에서 사용하는 볼륨 추가
+    <br>
+
+    - **각 컨테이너에서 사용하는 볼륨 추가**
 
         ```yaml
         volumes:
@@ -938,6 +970,8 @@ docker compose up -d
 docker compose ps
 ```
 
+<br>
+
 - **포트 맵핑 최종 주소:**
     - **Airflow 인프라 포탈:** `http://localhost:8080` (계정: `airflow` / `airflow`)
     - **MinIO Console:** `http://localhost:9001` (계정: `minioadmin` / `minioadmin`)
@@ -948,6 +982,8 @@ docker compose ps
 
 - **파이프라인 의존성 아키텍처 및 흐름도**
     - 각 오픈소스 컴포넌트의 결함 격리(Fault Isolation)를 시각화한 위상 정렬 의존성 구조
+
+<br>
 
 - **데이터 제어 흐름 구조 (Data Control Flow)**
 
@@ -970,6 +1006,8 @@ docker compose ps
             - 앞선 세 갈래의 데이터 엔지니어링 파이프라인이 **모두 무사히 성공(`Success`) 상태로 마킹되어야만**
             - 최종 RAG 검색을 위한 Qdrant 벡터스토어 업서트를 단행
 
+<br>
+
 - **DAG 소스 코드**
 
     - 코드 준수 규약
@@ -981,6 +1019,7 @@ docker compose ps
 
         ```python
         #//file: "dags/advanced_bigdata_ai_pipeline_v5.py"
+
         import io
         import json
         from datetime import datetime, timedelta
@@ -1155,48 +1194,58 @@ docker compose ps
             task_kafka_kr_ingest >> [task_minio_raw_backup, task_spark_transform] >> task_vector_upsert_qdrant
         ```
 
-- **결과 확인 및 최종 아키텍처 디버깅 팁**
-    - **가동 후 새로고침:**
-        - 코드를 저장한 뒤 `http://localhost:8080`에 접속
-        - `enterprise_bigdata_ai_stream_pipeline_v4` DAG가 나타나는지 검색창에서 조회
 
-    - **부분 결함 격리 테스트:**
-        - 외부 Kafka 연결 상태에 따라 `task_kafka_kr_ingest`가 경고를 내더라도,
-        - 내부 백엔드 방어용 mock-up 로직이 구현되어 있어
-        - 전체 파이프라인은 멈추지 않고
-        - Qdrant 벡터스토어 최종 단계까지 정상적으로 **진녹색(`Success`)** 을 획득하며 안정성을 극대화
+### 3.5 결과 확인
 
-        <div class="insert-image" style="text-align: left;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-002.png" style="width: 100%;"><br><br>
-            ● 기존에 실패했던 설정 이후로 성공한 설정을 확인할 수 있음<br>
-            ● 초반의 성공 이후, 설정이 안정화된 뒤에는 처리 시간도 크게 감소하였음
+- `http://localhost:8080`에 접속 후 DAG 메뉴에서 `enterprise_bigdata_ai_stream_pipeline_v5` DAG가 나타나는지 검색창에서 조회
+
+- **결과 확인**
+    1. **확인 전 상황**
+        - 기존에 실패했던 설정 이후로 성공한 설정을 확인할 수 있음
+        - 초반의 성공 이후, 설정이 안정화된 뒤에는 처리 시간도 크게 감소하였음
+        
+        <div class="insert-image" style="border: 1px solid lightgray;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-002.png" style="width: 100%;">
         </div>
-        <div class="insert-image" style="text-align: left;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-003.png" style="width: 100%;"><br><br>
-            ● 전 과정이 무리없이 성공함<br>
-            ● 처리 시간을 보면 시작부터 끝까지 약 8초에 완료되었음<br>
+
+    2. **Trigger 실행 결과**
+        - 전 과정이 무리없이 성공함
+        - 처리 시간: 시작부터 끝까지 약 8초에 완료되었음 
+            - 설정 수정에 따른 안정화 후 소요 시간이 급감했음을 확인
+
+        <div class="insert-image" style="border: 1px solid lightgray;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-003.png" style="width: 100%;">
         </div>
-        <div class="insert-image" style="text-align: left;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-004.png" style="width: 90%;"><br><br>
-            ● task_kafka_kr_ingest의 로그<br>
-            ● 3개의 Kafka 볼륨에 제대로 복제, 저장되었음<br>
+
+    3. **task_kafka_kr_ingest의 로그**
+        - 3개의 Kafka 볼륨에 제대로 복제, 저장되었음
+
+        <div class="insert-image" style="border: 1px solid lightgray;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-004.png" style="width: 100%;">
         </div>
-        <div class="insert-image" style="text-align: left;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-005.png" style="width: 90%;"><br><br>
-            ● task_spark_transform의 로그<br>
-            ● 중간에 Error 표시가 보이지만 내용을 읽어보면 Error가 아님을 알 수 있음<br>
-            ● ERROR 머리표가 무더기로 찍힌 것은 스파크의 표준 자바 에러 출력(Stderr) 스트림이 유입되어 발생한 에어플로우 고유의 로깅 특징<br>
-            ● 스파크 엔진은 구동될 때 엔진의 시스템 경고나 환경 설정 안내(예: 내부 벡터 모듈 사용 안내, log4j 프로필 로드 안내, 네이티브 하도업 라이브러리 부재 경고 등)를 Stdout이 아닌 Stderr(표준 에러) 스트림으로 내보내도록 코드가 작성되어 있음<br>
-            ● 에어플로우가 출력 스트림 꼬리표만 보고 기계적으로 ERROR를 붙여버린 것임<br>
-            ● 진짜 내부 예외(Exception)가 터졌다면 스파크 특유의 거대한 StackTrace 자바 에러 문단이 출력되어야 함<br>
+
+    4. **task_spark_transform의 로그**
+        - 기존에 실패했던 설정 이후로 성공한 설정을 확인할 수 있음
+        - 중간에 Error 표시가 보이지만 내용을 읽어보면 Error가 아님을 알 수 있음
+            - ERROR 표시가 출력된 것은 스파크의 표준 자바 에러 출력(Stderr) 스트림이 유입되어 발생한 에어플로우 고유의 로깅 특징
+                - 스파크 엔진은 구동될 때 엔진의 시스템 경고나 환경 설정 안내를 Stdout이 아닌 Stderr 스트림으로 내보내도록 코드가 작성되어 있음
+                - 에어플로우가 출력 스트림이 Stderr로 전달된 것만 보고 기계적으로 ERROR를 붙여버린 것임
+            - 진짜 내부 예외(Exception)가 발생했다면 스파크 특유의 거대한 StackTrace 자바 에러 문단이 출력되어야 함
+
+        <div class="insert-image" style="border: 1px solid lightgray;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-005.png" style="width: 100%;">
         </div>
-        <div class="insert-image" style="text-align: left;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-006.png" style="width: 90%;"><br><br>
-            ● task_minio_raw_backup 로그<br>
-            ● 데이터의 적재가 정상적으로 완료되었음<br>
+
+    5. **task_minio_raw_backup 로그**
+        - 데이터의 적재가 정상적으로 완료되었음
+
+        <div class="insert-image" style="border: 1px solid lightgray;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-006.png" style="width: 100%;">
         </div>
-        <div class="insert-image" style="text-align: left;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-007.png" style="width: 90%;"><br><br>
-            ● task_vector_upsert_qdrant의 로그<br>
-            ● 데이터의 Upsert가 정상적으로 완료되었음<br>
+
+    6. **task_vector_upsert_qdrant의 로그**
+        - 데이터의 Upsert가 정상적으로 완료되었음
+
+        <div class="insert-image" style="border: 1px solid lightgray;">
+            <img src="/materials/devtools/images/S13-06-03-01_01-007.png" style="width: 100%;">
         </div>
