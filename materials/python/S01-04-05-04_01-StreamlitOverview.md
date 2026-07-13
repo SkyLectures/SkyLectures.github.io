@@ -877,12 +877,12 @@ st.subheader("📹 공장 내부 실시간 CCTV 및 오디오 브리핑 안내")
 col_vid, col_aud = st.columns(2)
 
 with col_vid:
-    st.caption("CCTV 스트리밍 연동 가이드 미디어")
+    st.caption("CCTV 스트리밍 연동 가이드 미디어(가상)")
     # 가상 데모 비디오 소스
     st.video("https://www.youtube.com/watch?v=nit5PAbHZfM")
 
 with col_aud:
-    st.caption("일일 시스템 공정 현황 음성 브리핑 요약 가이드")
+    st.caption("일일 시스템 공정 현황 음성 브리핑 요약 가이드(가상)")
     # 가상의 안내 음성을 위한 비어있는 샘플 오디오 컴포넌트 재생
     st.audio("./media/Conversation_Sample_Kr.mp3")
 
@@ -1058,3 +1058,22 @@ if show_raw_data:
 
         - 텍스트, 데이터프레임 외에 공장 모니터링에 필요한 CCTV 스트리밍, 현장 브리핑 가이드를 모사하기 위해 `st.video` 및 `st.audio` 도입
         - 외부 URL 혹은 로컬 파일 경로를 집어넣는 것만으로 미디어 플레이어를 웹 화면에 깔끔하게 빌드해 줌
+
+> - Streamlit은 Python 환경에서 LLM 모델의 결과물을 시각화하고 사용자 인터페이스를 구축하는 데 가장 효율적인 도구
+>   - 꼭 Streamlit을 사용해야 하는 것은 아님 🡲 자신에게 맞는 것, 시간 내에 적용해 볼 수 있는 것으로 적당히 선택할 것
+{: .summary-quote}
+
+> - **기타 유사한 도구들**
+>   - **Gradio (그라디오)**
+>       - AI/머신러닝 모델의 데모 및 프로토타이핑에 가장 특화된 도구
+>       - Hugging Face 생태계와 완벽히 통합되어 있어 AI 모델 웹 데모를 만들 때 가장 많이 사용됨
+>       - Streamlit보다 코드가 더 직관적이며 입력(Input) 컴포넌트와 출력(Output) 컴포넌트를 매핑하는 구조가 매우 단순함
+>       - 장점: 이미지/음성/텍스트 입출력(예: 챗봇 UI, 이미지 생성기 등)을 단 몇 줄 만으로 구현 가능
+>       - 단점: 정밀한 데이터 대시보드나 복잡한 레이아웃을 유연하게 짜기에는 화면 제어력이 떨어짐
+>   - **Shiny for Python (파이썬용 샤이니)**
+>       - R 생태계에서 대시보드 끝판왕이었던 Shiny의 강력한 반응형(Reactive) 엔진을 Python에 이식한 도구
+>       - Streamlit처럼 코드 전체를 무식하게 다시 실행하지 않고, 데이터의 의존성 그래프를 파악해 값이 바뀐 컴포넌트만 정밀하게 업데이트함
+>       - 장점: 대규모 데이터나 복잡하게 얽힌 다중 위젯 환경에서도 성능 저하(병목) 없이 압도적으로 빠르고 안정적
+>       - 단점: Streamlit에 비해 함수형 반응형 프로그래밍(@reactive.calc 등) 개념을 이해해야 하므로 초기 학습 곡선이 다소 높음
+>   - 그 외에도 Reflex (리플렉스), marimo (마리모), Plotly Dash (대시) 등 다양한 도구가 있음
+{: .common-quote}
