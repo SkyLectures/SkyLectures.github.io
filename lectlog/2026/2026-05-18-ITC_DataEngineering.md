@@ -128,4 +128,4 @@ categories: lectlog
             - [Streamlit의 개요와 기초 사용법](/materials/S01-04-05-04_01-StreamlitOverview)
             - [Streamlit을 활용한 LLM 연동 어플리케이션](/materials/S10-99-01-01_01-StreamLlmAppGuideline)
         - [Streamlit 기반의 챗봇 인터페이스 개발](/materials/S10-99-01-02_01-StreamlitChatbot)
-        - 데이터 파이프라인 구축 및 최종 RAG 챗봇 개발 
+        - [데이터 파이프라인 구축 및 최종 RAG 챗봇 개발](/materials/S10-99-05-01_01-DataPipelineRagChatbot)
