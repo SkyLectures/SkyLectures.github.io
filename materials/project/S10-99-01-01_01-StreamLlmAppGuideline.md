@@ -784,3 +784,21 @@ else:
     - 초급자들이 너무 긴 파일을 넣어 API 비용이 폭발하거나 에러가 나는 것을 방지하는 최소한의 장치
 
 - 윈도우 터미널에서 `streamlit run project.py`를 실행
+
+
+<br>
+
+> - **참고**
+>   - **PC 성능으로 인해 로컬 LLM 가동이 어려운 경우**
+>       - LLM 모델의 실제 파일 크기가 2GB 이하 정도의 크기인 경우, GPU가 없어도 8~16GB의 RAM에서 쾌적하게 사용할 수 있음
+>           - **Qwen 2.5:3B (1.9GB)**
+>               - docker exec -it ollama-container ollama run qwen2.5:3b
+>           - **Qwen 3.5:2B (2.7GB)**
+>               - docker exec -it ollama-container ollama run qwen3.5:2b
+>           - **Naver Hyper CLOVAX SEED 0.5B**
+>               - docker exec -it ollama-container ollama run hf.co/Mungert/HyperCLOVAX-SEED-Text-Instruct-0.5B-GGUF:Q4_K_M
+>               - 명칭이 너무 길어서 불편한 경우 다음과 같이 복사하여 사용할 수 있음
+>                   - 형식: docker exec -it <컨테이너명> ollama cp <기존의_긴_이름> <새롭고_짧은_이름>
+>                       - docker exec -it ollama-container ollama cp hf.co/Mungert/HyperCLOVAX-SEED-Text-Instruct-0.5B-GGUF:Q4_K_M clova-seed:0.5b
+>                   - 원본은 삭제해도 됨
+>                       - docker exec -it ollama-container ollama rm hf.co/Mungert/HyperCLOVAX-SEED-Text-Instruct-0.5B-GGUF:Q4_K_M
