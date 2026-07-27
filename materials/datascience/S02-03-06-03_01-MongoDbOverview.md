@@ -49,7 +49,7 @@ categories: materials
             - 고정된 스키마가 없음 🡲 같은 컬렉션 내에서도 각 도큐먼트가 서로 다른 필드 구조를 가질 수 있음
 
 <div class="insert-image">
-    <img src="/materials/datascience/images/S02-03-06-03_01-001.png" style="width: 90%;">
+    <img src="/materials/datascience/images/S02-03-06-03_01-001.jpg" style="width: 90%;">
 </div>
 
 ### 1.3 주요 특징

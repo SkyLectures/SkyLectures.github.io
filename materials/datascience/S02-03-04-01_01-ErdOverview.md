@@ -53,7 +53,7 @@ categories: materials
     - **주요 기술 :** 테이블 명명 규칙 적용, 데이터 타입 및 크기 지정, 조회 성능 극대화를 위한 **반정규화(De-normalization)** 및 인덱스 전략 수립
 
 <div class="insert-image">
-    <img src="/materials/datascience/images/S02-03-04-01_01-001.png" style="width: 90%;">
+    <img src="/materials/datascience/images/S02-03-04-01_01-001.jpg" style="width: 90%;">
 </div>
 
 
@@ -105,7 +105,7 @@ categories: materials
     - **관계 (Relationship) :** 엔터티 간의 연관성 (예: 학생이 수강한다 과목을)
 
 <div class="insert-image">
-    <img src="/materials/datascience/images/S02-03-04-01_01-002.png" style="width: 90%;">
+    <img src="/materials/datascience/images/S02-03-04-01_01-002.jpg" style="width: 90%;">
 </div>
 
 ### 2.2 ERD의 필요성

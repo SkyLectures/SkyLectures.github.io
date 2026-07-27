@@ -91,10 +91,9 @@ categories: materials
 
 - 실제 공장에 설치되는 비전 AI 검사기 장비 내부의 데이터 흐름 순서에 맞추어 4개 계층으로 나눔
 
-```text
-[ 1. 광학계 (Hardware) ] ➔ [ 2. 수집/전처리 (Edge) ] ➔ [ 3. AI 추론 엔진 ] ➔ [ 4. OT/PLC 인터페이스 ]
-   카메라, 렌즈, 조명           Frame Grabber, Crop          ONNX / TensorRT           OK/NG 배출 로봇/신호
-```
+    <div class="insert-image" style="text-align: left;">
+        <img src="/materials/smartfactory/images/S06-04-04-01_01-001.png" style="width: 90%;">
+    </div>
 
 
 ### 2.1 광학계

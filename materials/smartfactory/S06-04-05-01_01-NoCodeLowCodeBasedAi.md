@@ -46,10 +46,10 @@ categories: materials
 - Orange3는 '위젯(Widget)'이라는 기능 블록을 캔버스에 배치하고,
 - 노드(Line)로 이어 데이터 흐름을 만드는 방식으로 동작함
 
-```text
-[ File 위젯 ] ──► [ Select Columns ] ──► [ Model 위젯들 ] ──► [ Test & Score / Confusion Matrix ]
- (데이터 적재)     (Feature / Target 지정)  (XGBoost, Tree 등)       (성능 평가 & 리더보드)
-```
+    <div class="insert-image" style="text-align: left;">
+        <img src="/materials/smartfactory/images/S06-04-05-01_01-001.png" style="width: 90%;">
+    </div>
+
 
 - **[1단계] Data Ingestion & Role Assignment (데이터 적재 및 역할 정의)**
     - 노코드 툴에서 가장 먼저 수행해야 하는 작업: 데이터를 불러오고 각 변수의 역할(Role)을 지정하는 것

@@ -77,9 +77,9 @@ categories: materials
 
 ```python
 #//file: "data_gen.py"
-import pandas as pd
-import numpy as np
 from datetime import datetime, timedelta
+import numpy as np
+import pandas as pd
 
 # 랜덤 시드 고정 (재현성 확보)
 np.random.seed(42)
@@ -88,111 +88,107 @@ np.random.seed(42)
 # 1. production_logs.csv 생성 (100개 Lot)
 # ==========================================
 num_lots = 100
-start_base_time = datetime(2026, 3, 1, 8, 0, 0) # 2026년 3월 1일 오전 8시 시작
+start_base_time = datetime(2026, 3, 1, 8, 0, 0)  # 2026년 3월 1일 오전 8시 시작
 
 lots_data = []
 current_time = start_base_time
 
 workers = ['Worker_A', 'Worker_B', 'Worker_C']
-materials = ['Raw_MAT_X', 'Raw_MAT_Y'] # Raw_MAT_Y가 투입될 때 온도 변동성 증가 패턴 삽입
+materials = ['Raw_MAT_X', 'Raw_MAT_Y']
 
 for i in range(1, num_lots + 1):
-    lot_id = f"LOT_2026_{i:03d}"
-    duration_minutes = np.random.randint(12, 18) # Lot당 약 12~17분 소요
-    end_time = current_time + timedelta(minutes=duration_minutes)
-    
-    worker = np.random.choice(workers, p=[0.4, 0.3, 0.3])
-    material = np.random.choice(materials, p=[0.6, 0.4])
-    
-    lots_data.append({
-        'lot_id': lot_id,
-        'start_time': current_time.strftime('%Y-%m-%d %H:%M:%S'),
-        'end_time': end_time.strftime('%Y-%m-%d %H:%M:%S'),
-        'worker_id': worker,
-        'material_batch': material,
-        'defect_status': 0 # 기본값, 센서 데이터 생성 후 조건에 맞게 업데이트
-    })
-    
-    current_time = end_time + timedelta(seconds=10) # Lot 간 10초 휴지시간
+  lot_id = f'LOT_2026_{i:03d}'
+  duration_minutes = np.random.randint(12, 18)  # Lot당 약 12~17분 소요
+  end_time = current_time + timedelta(minutes=duration_minutes)
+
+  worker = np.random.choice(workers, p=[0.4, 0.3, 0.3])
+  material = np.random.choice(materials, p=[0.6, 0.4])
+
+  lots_data.append({
+      'lot_id': lot_id,
+      'start_time': current_time.strftime('%Y-%m-%d %H:%M:%S'),
+      'end_time': end_time.strftime('%Y-%m-%d %H:%M:%S'),
+      'worker_id': worker,
+      'material_batch': material,
+      'defect_status': 0,  # 기본값
+  })
+
+  current_time = end_time + timedelta(seconds=10)  # Lot 간 10초 휴지시간
 
 df_lots = pd.DataFrame(lots_data)
 
 # ==========================================
-# 2. sensor_timeseries.csv 생성 (1초 단위)
+# 2. sensor_timeseries.csv 생성 (lot_id 매핑 추가)
 # ==========================================
 sensor_rows = []
-
-# 전체 시간 범위 설정
-total_start = datetime.strptime(df_lots['start_time'].min(), '%Y-%m-%d %H:%M:%S')
-total_end = datetime.strptime(df_lots['end_time'].max(), '%Y-%m-%d %H:%M:%S')
-
-current_sensor_time = total_start
-
-# Lot별 특성에 따른 센서 노이즈 및 노즐 온도 하락 로직 적용
 defect_lot_ids = []
 
 for idx, row in df_lots.iterrows():
-    lot_start = datetime.strptime(row['start_time'], '%Y-%m-%d %H:%M:%S')
-    lot_end = datetime.strptime(row['end_time'], '%Y-%m-%d %H:%M:%S')
-    
-    # 의도적 불량 패턴 주입: Worker_B 이면서 Raw_MAT_Y 자재를 사용할 때 40% 확률로 온도 급감 현상 발생
-    is_anomaly = False
-    if row['worker_id'] == 'Worker_B' and row['material_batch'] == 'Raw_MAT_Y':
-        if np.random.rand() < 0.5:
-            is_anomaly = True
-            defect_lot_ids.append(row['lot_id'])
-    elif np.random.rand() < 0.05: # 그 외 일반 로트 5% 확률로 불량 발생
-        is_anomaly = True
-        defect_lot_ids.append(row['lot_id'])
+  lot_start = datetime.strptime(row['start_time'], '%Y-%m-%d %H:%M:%S')
+  lot_end = datetime.strptime(row['end_time'], '%Y-%m-%d %H:%M:%S')
 
-    # 1초 간격으로 센서 데이터 생성
-    t = lot_start
-    while t <= lot_end:
-        if is_anomaly:
-            # 불량 로트: 노즐 온도가 212~217도로 크게 떨어짐
-            temp_nozzle = np.round(np.random.normal(215.0, 1.8), 2)
-            pressure_inj = np.round(np.random.normal(82.0, 3.5), 2)
-        else:
-            # 정상 로트: 노즐 온도가 228~232도 정상 유지
-            temp_nozzle = np.round(np.random.normal(230.0, 1.2), 2)
-            pressure_inj = np.round(np.random.normal(90.0, 2.0), 2)
-            
-        cooling_time = 15.0 # 고정 설정값
-        
-        sensor_rows.append({
-            'timestamp': t.strftime('%Y-%m-%d %H:%M:%S'),
-            'machine_id': 'PRESS_01',
-            'temp_nozzle': temp_nozzle,
-            'pressure_injection': pressure_inj,
-            'cooling_time': cooling_time
-        })
-        t += timedelta(seconds=1)
+  # 의도적 불량 패턴 주입: Worker_B 이면서 Raw_MAT_Y 사용할 때 40% 확률로 이상 발생
+  is_anomaly = False
+  if row['worker_id'] == 'Worker_B' and row['material_batch'] == 'Raw_MAT_Y':
+    if np.random.rand() < 0.4:  # 40% 확률로 수정
+      is_anomaly = True
+      defect_lot_ids.append(row['lot_id'])
+  elif np.random.rand() < 0.05:  # 그 외 일반 로트 5% 확률 불량
+    is_anomaly = True
+    defect_lot_ids.append(row['lot_id'])
+
+  # 1초 간격 센서 데이터 생성
+  t = lot_start
+  while t <= lot_end:
+    if is_anomaly:
+      temp_nozzle = np.round(np.random.normal(215.0, 1.8), 2)
+      pressure_inj = np.round(np.random.normal(82.0, 3.5), 2)
+    else:
+      temp_nozzle = np.round(np.random.normal(230.0, 1.2), 2)
+      pressure_inj = np.round(np.random.normal(90.0, 2.0), 2)
+
+    cooling_time = 15.0
+
+    sensor_rows.append({
+        'timestamp': t.strftime('%Y-%m-%d %H:%M:%S'),
+        'machine_id': 'PRESS_01',
+        'lot_id': row['lot_id'],  # ★ Orange3에서 쉬운 그룹화를 위해 lot_id 추가
+        'temp_nozzle': temp_nozzle,
+        'pressure_injection': pressure_inj,  # 컬럼명 명확화
+        'cooling_time': cooling_time,  # 컬럼명 명확화
+    })
+    t += timedelta(seconds=1)
 
 df_sensor = pd.DataFrame(sensor_rows)
 
 # ==========================================
-# 3. production_logs의 불량 여부(defect_status) 업데이트 및 저장
+# 3. 불량 여부 업데이트 및 저장
 # ==========================================
-df_lots['defect_status'] = df_lots['lot_id'].apply(lambda x: 1 if x in defect_lot_ids else 0)
+df_lots['defect_status'] = df_lots['lot_id'].apply(
+    lambda x: 1 if x in defect_lot_ids else 0
+)
 
-# CSV 파일 저장
 df_sensor.to_csv('sensor_timeseries.csv', index=False, encoding='utf-8-sig')
 df_lots.to_csv('production_logs.csv', index=False, encoding='utf-8-sig')
 
-print("✅ 성공적으로 2개의 실습 데이터 파일이 생성되었습니다!")
-print(f"- sensor_timeseries.csv : 총 {len(df_sensor):,} 행 (용량: 약 1.2 MB)")
-print(f"- production_logs.csv   : 총 {len(df_lots):,} 행 (불량 수: {sum(df_lots['defect_status'])}개)")
+print('✅ 올바른 컬럼명이 반영된 2개의 실습 데이터 파일이 재생성되었습니다!')
 ```
+
+- ['sensor_timeseries.csv' 다운로드](/materials/datasets/sensor_timeseries.csv)
+- ['production_logs.csv' 다운로드](/materials/datasets/production_logs.csv)
 
 
 ## 4. 단계별 실습 진행 과정
 
 - **[1단계] 데이터 전처리 및 융합 (Data Join & Aggregation)**
     - **목표:** 
-        - 서로 다른 주기를 가진 시계열 센서 데이터와 Lot 품질 데이터를 결합하여 '분석용 데이터 마트(Data Mart)' 생성
+        - <span style="color: darkred;">서로 다른 주기</span>를 가진 시계열 센서 데이터와 Lot 품질 데이터를 <span style="color: darkred;">결합</span>하여 '분석용 데이터 마트(Data Mart)' 생성
 
     - **실습 수행 내용:**
         1. `production_logs`의 `start_time`과 `end_time` 사이 구간(Time Window)에 해당하는 `sensor_timeseries` 데이터를 필터링
+            - sensor_timeseries: 1초마다 수집되는 수만 건의 센서 데이터 (노즐 온도, 사출 압력 등)
+            - production_logs: 1개 Lot(제품 묶음) 생산할 때 시작/종료 시간과 품질 결과만 적힌 데이터 (수십~수백 건)
+
         2. 해당 구간 동안의 센서 데이터 통계량(평균값 `mean`, 최대값 `max`, 표준편차 `std`) 계산
         3. 계산된 센서 통계 수치를 `production_logs`의 해당 `lot_id` 행에 조인(Join)
 
@@ -218,7 +214,13 @@ print(f"- production_logs.csv   : 총 {len(df_lots):,} 행 (불량 수: {sum(df_
         # 데이터 마트 완성
         data_mart = pd.merge(production_logs, pd.DataFrame(lot_summary), on='lot_id')
         ```
+    <br>
 
+    - **Orange3**
+
+        <div class="insert-image">
+            <img src="/materials/datascience/images/S02-02-03-03_01-001.jpg" style="width: 70%;">
+        </div>
 
 - **[2단계] 탐색적 데이터 분석 (EDA) 및 변수 간 상관관계 파악**
     - **목표:**
