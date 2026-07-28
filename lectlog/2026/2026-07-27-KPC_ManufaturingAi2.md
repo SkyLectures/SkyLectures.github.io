@@ -62,7 +62,7 @@ categories: lectlog
         - [예측 결과를 공정 개선에 연결하는 방법](/materials/S06-04-05-03_01-ConnectPredictionResultsToProcessImprovement)
         - [AI 모델 운영 흐름(MLOps) 기초 이해](/materials/S06-04-05-04_01-AiModelOperationalFlow)
         - [(실습) 공정 개선 시나리오 설계](/materials/S06-04-05-05_01-DesigningProcessImprovementScenarios)
-        - [PyTorch 기반 DNN 예제](https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/ai/notebooks/S03-02-03-02_01-OpenCv.ipynb){: target="_blank"}
+        - [PyTorch 기반 DNN 예제](https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/ai/notebooks/DNN_Pytorch.ipynb){: target="_blank"}
 
 - **3일차**
     - 설비 데이터 분석과 스마트 운영 (3H)
