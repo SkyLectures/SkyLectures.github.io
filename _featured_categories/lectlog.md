@@ -10,7 +10,7 @@ description: >
 > 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,499H</span> + <span style="color: #1c5f1c;">(대기 중: 42H)</span> / <span style="color: #CC0000;">멘토링: 총 66H</span> / <span style="color: #CC0000;">동영상 강의 녹화: 총 42H</span>
 {: .summary-quote}
 
-# **강의 이력** (3,499H + 42H)
+# **강의 이력** (3,499H + 42H 대기중)
 
 ## 2026 (353H + 42H)
 - <img src="/assets/icons/icon-ready-green.svg"> [**[11.09~11.11]** 제조 산업과 AI 활용-일반과정6차-서울(21H)](/lectlog/2026-11-09-KPC_ManufaturingAi6)
@@ -102,32 +102,6 @@ description: >
 
 ---
 
-# **멘토링 이력** (66H)
-
-## 2026 (7H)
-- <img src="/assets/icons/icon-ready-green.svg"> **[08.XX/09.XX]** SSAFY 15기 특화프로젝트 전문가 리뷰 1~2차(8H)
-- <img src="/assets/icons/icon-complete-red.svg"> **[03.10/03.18]** SSAFY 14기 특화프로젝트 전문가 리뷰 1~2차(7H)
-
-## 2025 (17H)
-- <img src="/assets/icons/icon-complete-red.svg"> **[09.09/09.23]** SSAFY(Samsung SW Academy For Youth) 13기 특화프로젝트 전문가 리뷰 1~2차(7H)
-- <img src="/assets/icons/icon-complete-red.svg"> **[06.19~06.20]** 수도권 ICT이노베이션스퀘어 디지털신기술교육 멘토링-제2기과정(3H)
-- <img src="/assets/icons/icon-complete-red.svg"> **[03.14/03.28]** SSAFY(Samsung SW Academy For Youth) 12기 특화프로젝트 전문가 리뷰 1~2차(7H)
-
-## 2024 (7H)
-- <img src="/assets/icons/icon-complete-red.svg"> **[03.05/03.21~03.22]** SSAFY(Samsung SW Academy For Youth) 10기 특화프로젝트 전문가 리뷰(7H)
-
-## 2023 (28H)
-- <img src="/assets/icons/icon-complete-red.svg"> **[09.08/09.25]** SSAFY(Samsung SW Academy For Youth) 9기 특화프로젝트 전문가 리뷰(14H)
-- <img src="/assets/icons/icon-complete-red.svg"> **[03.06~03.07/03.20~03.21]** SSAFY(Samsung SW Academy For Youth) 8기 특화프로젝트 전문가 리뷰(14H)
-
-## 2021 (7H)
-- <img src="/assets/icons/icon-complete-red.svg"> **[10.12/11.09]** 이화여자대학교 SW중심대학 교내특성화 과정 전문가 멘토링 2차(3H)
-- <img src="/assets/icons/icon-complete-red.svg"> **[03.30/05.04/05.14]** 이화여자대학교 SW중심대학 교내특성화 과정 전문가 멘토링 1차(4H)
-
-<br>
-
----
-
 # **동영상 강의 이력** (42H)
 - <img src="/assets/icons/icon-complete-red.svg"> **[2026.03]** 피지컬 AI 동영상 강의 녹화(20H분량)
 - <img src="/assets/icons/icon-complete-red.svg"> **[2026.02]** 피지컬 AI 동영상 강의 녹화(3H분량)
@@ -135,3 +109,29 @@ description: >
 - <img src="/assets/icons/icon-complete-red.svg"> **[2023.11]** 스마트제조 고급인력 양성사업: 스마트 팩토리 동영상 강의 녹화(5H분량)
 - <img src="/assets/icons/icon-complete-red.svg"> **[2022.11]** 프로젝트 10종 동영상 강의 녹화(4H분량)
 - <img src="/assets/icons/icon-complete-red.svg"> **[2021.11]** AI 윤리 동영상 강의 녹화(4H분량)
+
+<br>
+
+---
+
+# **기술/전문가 멘토링 이력** (66H + 7H 대기중)
+
+- **2026 (7H)**
+    - <img src="/assets/icons/icon-ready-green.svg"> **[08.XX/09.XX]** SSAFY 15기 특화프로젝트 전문가 리뷰 1~2차(8H)
+    - <img src="/assets/icons/icon-complete-red.svg"> **[03.10/03.18]** SSAFY 14기 특화프로젝트 전문가 리뷰 1~2차(7H)
+
+- **2025 (17H)**
+    - <img src="/assets/icons/icon-complete-red.svg"> **[09.09/09.23]** SSAFY(Samsung SW Academy For Youth) 13기 특화프로젝트 전문가 리뷰 1~2차(7H)
+    - <img src="/assets/icons/icon-complete-red.svg"> **[06.19~06.20]** 수도권 ICT이노베이션스퀘어 디지털신기술교육 멘토링-제2기과정(3H)
+    - <img src="/assets/icons/icon-complete-red.svg"> **[03.14/03.28]** SSAFY(Samsung SW Academy For Youth) 12기 특화프로젝트 전문가 리뷰 1~2차(7H)
+
+- **2024 (7H)**
+    - <img src="/assets/icons/icon-complete-red.svg"> **[03.05/03.21~03.22]** SSAFY(Samsung SW Academy For Youth) 10기 특화프로젝트 전문가 리뷰(7H)
+
+- **2023 (28H)**
+    - <img src="/assets/icons/icon-complete-red.svg"> **[09.08/09.25]** SSAFY(Samsung SW Academy For Youth) 9기 특화프로젝트 전문가 리뷰(14H)
+    - <img src="/assets/icons/icon-complete-red.svg"> **[03.06~03.07/03.20~03.21]** SSAFY(Samsung SW Academy For Youth) 8기 특화프로젝트 전문가 리뷰(14H)
+
+- **2021 (7H)**
+    - <img src="/assets/icons/icon-complete-red.svg"> **[10.12/11.09]** 이화여자대학교 SW중심대학 교내특성화 과정 전문가 멘토링 2차(3H)
+    - <img src="/assets/icons/icon-complete-red.svg"> **[03.30/05.04/05.14]** 이화여자대학교 SW중심대학 교내특성화 과정 전문가 멘토링 1차(4H)

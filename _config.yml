@@ -1,47 +1,27 @@
+#########################################################################################
 # Config
-# ========================================================================================
+#########################################################################################
 
-# Uncomment and set the URL of your site (with protocol, e.g. `https://`)
-# NOTE: You don't need to provide this property when hosting on GitHub Pages or Netlify.
-# url:                   https://username.github.io
-
-# Uncomment and set the "base URL" of your site.
-# When your site is in a subdirectory, set to `/<name of directory>`,
-# with a leading `/` but no trailing `/`. Use the empty string '' otherwise.
-# NOTE: You don't need to provide this property when hosting on GitHub Pages or Netlify.
-# baseurl:               '/hydejack-starter-kit'
-
-
-# General settings
 # ---------------------------------------------------------------------------------------
-
-# Language of your content in 2-letter code, e.g.: en, de.
-# You may also provide a location, e.g.: en-us, de_AT.
-lang:                  ko
-
-# The title of your blog. Used in the sidebar and the browser tab.
-title:                 AiDA Lectures
-
-# A short description (~150 chars) of the page used for the meta description tag.
-# Can use markdown, but no more than one paragraph (enforced by `>`)
-description:           >
+# 기본 설정
+# ---------------------------------------------------------------------------------------
+lang:        ko
+title:       AiDA Lectures
+description: >
   직접 개발하고 강의했던 인공지능(AI) 및 IT 기술 관련 강의자료를 공유합니다.
+keywords:    [AI, IT, Lecture, 인공지능, 정보기술, 강의, 강좌]
 
-# A shorter description for the sidebar.
-tagline:               AI / IT Lectures
+# ---------------------------------------------------------------------------------------
+# 사이드바
+# ---------------------------------------------------------------------------------------
+tagline:     AI / IT Lectures
+logo:        /assets/img/AiDALab_Logo_white.png
 
-# A list of keywords for your blog
-keywords:              [AI, IT, Lecture, 인공지능, 정보기술, 강의, 강좌]
-
-# A (square) logo for your site.
-# If provided, it will be shown at the top of the sidebar.
-# It also used by the `jekyll-seo-tag` plugin.
-logo:                  /assets/img/AiDALab_Logo_white.png
 
 # This should be the same author as first entry in `_data/authors.yml`.
 author:
   # Used by `jekyll-feed`:
-  name:                SkyLectures
+  name:                AiDA
   # email:               skylectures2k@gmail.com
   # # Used by `jekyll-seo-tag`:
   # twitter:             <username>
@@ -50,26 +30,15 @@ author:
 menu:
   - title: 강의 및 멘토링 이력
     url:   /lectlog/
-  - title: 커리큘럼 모음
+  - title: 기본 커리큘럼 모음
     url:   /curriculums/
+  - title: 강의자료 모음
+    url:   /materials/
   - title: Q & A
     url:   https://cafe.naver.com/aidalab
     external: true
     new_tab: true
   
-    # submenu:
-    #   - title: Python
-    #     url:   /materials/01_Python
-    #   - title: Data Science
-    #     url:   /materials/02_DataScience
-    #   - title: Artificial Intelligence
-    #     url:   /materials/03_AI
-    #   - title: Single Board Comput
-    #     url:   /materials/04_SBC
-    #   - title: Smart Factory
-    #     url:   /materials/05_SmartFactory
-    #   - title: Git & GitHub
-    #     url:   /materials/06_Github
   # - title: Documentation
   #   url:   /docs/
   - title: About
