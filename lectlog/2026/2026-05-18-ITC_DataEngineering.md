@@ -1,0 +1,130 @@
+---
+layout: page
+title:  "데이터 엔지니어링 과정(160H)"
+permalink: /lectlog/2026-05-18-ITC_DataEngineering
+categories: lectlog
+---
+* toc
+{:toc}
+
+<h2>● 강의 개요</h2>
+
+> - **교육분야:** 데이터 엔지니어링
+> - **교육대상:** 데이터 엔지니어링 및 AI 인프라 구축에 관심이 있는 수강생
+> - **강의기간:** 2026.05.18~07.14 (19:00 ~ 23:00) (164H)
+> - **운영방식:** 온라인 강의
+
+> - **학습목표**
+>   - Docker 기반의 모던 데이터 스택 구축
+>   - RAG를 위한 벡터 스토어 구축
+{: .common-quote}
+
+
+<h2>● 강의 내용(New)</h2>
+
+- **1주차: 리눅스 & Docker**
+    - [1주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_01)
+    - **리눅스**
+        - [리눅스 개요](/materials/S08-01-01-01_01-LinuxOverview)
+        - [WSL2 설치 및 환경설정](/materials/S08-01-02-01_01-Wsl2Setup)
+        - [리눅스 커맨드 기초](/materials/S08-02-01-01_01-LinuxCommandsBasic)
+        - [리눅스쉘 스크립트](/materials/S08-05-01-01_01-LinuxShellScript)
+    - **Docker**
+        - [Docker 개요와 이미지, 컨테이너의 이해](/materials/S13-01-01-01_01-DockerOverview)
+        - [Docker의 작동 프로세스](/materials/S13-01-01-01_02-DockerProcess)
+        - [Docker의 워크플로우](/materials/S13-01-01-01_03-DockerWorkflow)
+        - [포트 포워딩과 환경 변수](/materials/S13-01-01-01_04-PortForwardingEnvVariables)
+        - [Dockerfile 작성 및 이미지 최적화](/materials/S13-01-02-01_01-Dockerfile)
+        - [Docker Compose 이해하고 사용하기](/materials/S13-01-03-01_01-DockerCompose)
+
+- **2주차: Database**
+    - [2주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_02)
+    - [데이터베이스 개요](/materials/S02-03-01-01_01-DatabaseOverview)
+    - MySQL 8.0 설치 및 기초 쿼리 이해하기
+        - [MySQL 개요 및 설치, 환경 설정](/materials/S02-03-06-01_01-MySqlOverview)
+        - [SQL 기초](/materials/S02-03-02-01_01-SqlBasic)
+    - MongoDB 구축 및 비정형 로그 데이터 적재
+        - [MongoDB 개요 및 설치, 환경 설정](/materials/S02-03-06-03_01-MongoDbOverview)
+        - [MongoDB 활용 및 실습](/materials/S02-03-06-03_02-MongoDbPractice)
+    - ERD 설계 및 정규화/반정규화 전략
+        - [ERD 개요 및 데이터 모델링](/materials/S02-03-04-01_01-ErdOverview)
+        - [ERD 설계: 설계 도구와 설계 기법](/materials/S02-03-04-01_02-ErdDesign)
+        - [ERD 정규화 및 반정규화 전략](/materials/S02-03-04-01_03-ErdNormDenorm)
+    - [Python 기반의 크롤러](/materials/S02-02-01-02_01-PythonBasedCrawler)
+    - Redis 기초 및 활용
+        - [Redis 개요](/materials/S02-03-06-05_01-RedisOverview)
+        - [Redis 활용 및 실습](/materials/S02-03-06-05_02-RedisPractice)
+
+- **3주차: Python ETL**
+    - [3주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_03)
+    - Pandas 활용
+        - [Pandas 개요](/materials/S01-01-04-03_01-Pandas)
+        - [Pandas 활용 기초](/materials/S01-01-04-03_02-PandasBasic)
+        - [Pandas를 활용한 데이터 전처리](/materials/S02-02-02-02_01-PandasDataPreprocess)
+        - [데이터 분석 개요](/materials/S02-02-03-01_01-DataAnalysis)
+        - [Pandas를 활용한 데이터 분석](/materials/S02-02-03-02_01-PandasDataAnalysis)
+    - DuckDB 활용
+        - [DuckDB 개요](/materials/S02-03-06-04_01-DuckDbOverview)
+        - [DuckDB를 이용한 로컬 대용량 데이터 처리](/materials/S02-03-06-04_02-DuckDbLocalBigDataProcess)
+        - [DuckDB를 이용한 데이터 분석](/materials/S02-03-06-04_03-DuckDbDataAnalysis)
+    - [Pandas와 DuckDB를 이용한 하이브리드 가공](/materials/S02-03-06-04_04-DuckDbPandasHybrid)
+
+- **4주차: DataLake**
+    - [4주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_04)
+    - MinIO, S3 기반 오브젝트 스토리지 구축
+        - [MinIO 개요 및 설치, 환경설정](/materials/S13-02-01-01_01-MinIoOverview)
+        - [MinIO 오브젝트 스토리지 구축](/materials/S13-02-02-01_01-MinIoObjectStorage)
+    - Apache Iceberg 기반 레이크하우스 구축
+        - [Apache Iceberg 개요 및 설치, 환경설정](/materials/S13-03-01-01_01-IcebergOverview)
+        - [Apache Iceberg 기반 레이크하우스 구축](/materials/S13-03-02-01_01-IcebergBasedLakehouse)
+    - [MiniO – Iceberg 데이터 파이프라인 구축](/materials/S13-99-01-01_01-MinIoIcebergDataPipeline)
+    - Trino(Presto) 기반 S3 데이터 SQL 엔진 구축
+        - [Trino 개요 및 설치, 환경설정](/materials/S13-04-01-01_01-TrinoOverview)
+        - [Trino(Presto) 기반 S3 데이터 SQL 엔진 구축](/materials/S13-04-02-01_01-TrinoS3SqlEngine)
+    - [데이터 카탈로그 연결 및 레이크하우스 통합](/materials/S13-99-02-01_01-MinIoIcebergTrinoDatalakehouse)
+
+- **5주차: Spark**
+    - [5주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_05)
+    - [분산 데이터 처리 이해 및 Spark 아키텍처 이해](/materials/S13-05-01-01_01-SparkOverview)
+    - [Docker Compose를 이용한 Spark M-W 구조 구축](/materials/S13-05-02-01_01-SparkArchitecture)
+    - [Spark 설치 및 환경설정](/materials/S13-05-01-02_01-SparkInstall)
+    - [Iceberg, MinIO 연결 및 대용량 데이터 분석 준비](/materials/S13-05-03-01_01-IcebergMinIoSpark) 
+    - [Spark DataFrame, SparkSQL을 이용한 데이터 가공](/materials/S13-05-04-01_01-SparkDataFrameSql)
+    - [파티셔닝과 셔플링 최적화 이해하기](/materials/S13-05-05-01_01-PartitionSufflingOptimization)
+
+- **6주차: Streaming**
+    - [6주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_06)
+    - [실시간 데이터 특징 이해와 Kafka 이해하기](/materials/S13-07-01-01_01-KafkaOverview)
+    - [Docker 기반 Kafka 클러스터 구축하기](/materials/S13-07-02-01_01-KafkaClusterDocker)
+    - [Producer / Consumer 애플리케이션 만들기](/materials/S13-07-03-01_01-KafkaProducerConsumer)
+    - [CDC(Debezium) DB 변경분 실시간 캡처](/materials/S13-07-04-01_01-KafkaCdcRealtimeCapture)
+    - [Kafka Connect 이용한 실시간 데이터 MiniO 적재](/materials/S13-07-05-01_01-KafkaConnectMinIo)
+
+- **7주차: RAG**
+    - [7주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_07)
+    - LangChain을 이용한 챗봇 기초
+        - [LLM 개요](/materials/S03-05-01-01_01-LlmOverview)
+        - [LangChain 개요](/materials/S03-05-03-01_01-LangChainOverview)
+        - [LangChain 기반 챗봇](/materials/S03-05-03-05_01-LangChainChatbot)    
+    - RAG를 위한 텍스트 데이터 Chunking
+        - [RAG 개요](/materials/S03-05-06-01_01-RagOverview)
+        - [RAG 요소: 청킹, 검색 방법, Vector DB](/materials/S03-05-06-01_02-RagComponents)
+    - Embedding기법과 Vector DB
+        - [Embedding 모델](/materials/S03-05-06-02_01-EmbeddingModel)
+        - [Embedding 모델과 RAG 연동](/materials/S03-05-06-02_02-EmbeddingModelRag)
+        - [Vector DB](/materials/S13-08-01-01_01-VectorDbOverview)
+    - [MiniO와 VectorDB(Qdrant) 연동](/materials/S13-99-03-01_01-MinIoVectorDB)
+    - [MinIO - VectorDB 기반의 Hybrid Search RAG](/materials/S13-99-04-01_01-HybridSearchRag)
+
+- **8주차: Orchestration & AI Service**
+    - [8주차 커리큘럼 통괄 개요](/lectlog/2026-05-18-ITC_DataEngineering_08)
+    - **Orchestration**
+        - [Airflow 서비스 구축](/materials/S13-06-01-01_01-AirflowOverview)
+        - [DAG 이해 및 유즈케이스 연구](/materials/S13-06-02-01_01-AirflowDag)
+        - [수집 🡪 Lake 🡪 Spark 🡪 VectorDB 흐름 자동화](/materials/S13-06-03-01_01-AirflowAutomation)
+    - **AI Service**
+        - [Streamlit 기초와 Streamlit을 활용한 LLM 연동 어플리케이션]
+            - [Streamlit의 개요와 기초 사용법](/materials/S01-04-05-04_01-StreamlitOverview)
+            - [Streamlit을 활용한 LLM 연동 어플리케이션](/materials/S10-99-01-01_01-StreamLlmAppGuideline)
+        - [Streamlit 기반의 챗봇 인터페이스 개발](/materials/S10-99-01-02_01-StreamlitChatbot)
+        - [데이터 파이프라인 구축 및 최종 RAG 챗봇 개발](/materials/S10-99-05-01_01-DataPipelineRagChatbot)

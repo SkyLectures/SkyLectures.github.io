@@ -1,0 +1,112 @@
+blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0.8rem 20px;
+    font-style: normal;
+    color: #000;
+    border-radius: 10px;
+
+    p {
+        margin-top: 0;
+        margin-bottom: 0.8rem;
+        line-height: 1.6;
+    }
+
+    p:last-child {
+        margin-bottom: 0 !important;
+    }
+
+    &.common-quote {
+        border: 1px solid #fae058;
+        border-left: 5px solid #fae058;
+        border-right: 5px solid #daa749;
+        border-bottom: 1px solid #daa749;
+        background-color: #fffcee;
+    }
+
+    &.expert-quote {
+        border: 1px solid #f3989d;
+        border-left: 5px solid #f3989d;
+        border-right: 5px solid #b64e53;
+        border-bottom: 2px solid #b64e53;
+        background-color: #fff0f1;
+    }
+
+    &.summary-quote {
+        border: 1px solid #91ebb3;
+        border-left: 5px solid #91ebb3;
+        border-right: 5px solid #56b85a;
+        border-bottom: 2px solid #56b85a;
+        background-color: #e7f8e9;
+    }        
+
+    &.about-quote {
+        border: 1px solid #88bbdd;
+        border-left: 5px solid #88bbdd;
+        border-right: 5px solid #5588dd;
+        border-bottom: 2px solid #5588dd;
+        background-color: #ddeeff;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+}
+
+.content img{
+    max-width:100%;
+}
+
+.split-content {
+    display: flex; 
+    gap: 1rem; 
+    flex-wrap: wrap; 
+    margin: 0px 0px 10px 0px;
+    padding: 0px;
+    width: 100%;
+
+    .split-content-element {
+        flex: 1;
+        padding: 0px; 
+        border: 1px solid lightgray; 
+        border-radius: 10px;
+    }
+
+    .split-content-title {
+        background-color: #dae5fa;
+        display: block;
+        width: 100%;
+        height: 32px;
+        border-radius: 10px 10px 0px 0px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        text-indent: 20px;
+    }
+
+    .split-content-title-red {
+        background-color: #ffddee;
+        display: block;
+        width: 100%;
+        height: 32px;
+        border-radius: 10px 10px 0px 0px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        text-indent: 20px;
+    }
+
+    .split-content-title-purple {
+        background-color: #eaddff;
+        display: block;
+        width: 100%;
+        height: 32px;
+        border-radius: 10px 10px 0px 0px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        text-indent: 20px;
+    }    
+}
+
+
+@media (max-width: 768px) {
+    .content {
+        padding: 1.5rem 1rem; // 모바일에서는 위아래 간격 위주로 설정
+    }
+}

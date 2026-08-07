@@ -1,0 +1,79 @@
+@use "variables";
+
+.sidebar {
+    text-align: center;
+    color: rgba(255, 255, 255, .75);
+    background-image: url('/assets/images/sidebar-bg.jpg');
+    background-size: auto 100vh;
+    background-position: left top;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+
+    // 기본 링크 스타일
+    a {
+        color: #fff;
+        border-bottom-color: rgba(255, 255, 255, 0.2);
+        text-decoration-color: rgba(255, 255, 255, 0.2);
+    }
+
+    // 내비게이션 메뉴 (불렛 및 여백 제거)
+    nav {
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+
+            li {
+                margin-bottom: 0.5rem;
+            }
+        }        
+    }    
+}
+
+// 사이드바의 프로필 및 타이틀 영역
+.sidebar-about {
+    padding: 2rem 1rem;
+
+    .avatar {
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+        width: 7rem;
+        height: 7rem;
+        border-radius: 0%;
+        overflow: hidden;
+        display: inline-block;
+    }
+
+    > a.sidebar-title {
+        text-decoration: none;
+
+        > h2 {
+            margin: 0;
+            padding-bottom: .5rem;
+            font-size: 1.8rem;
+        }
+
+        // 타이틀 하단 장식선
+        &::after {
+            content: '';
+            display: block;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+            margin: 0 auto 0.5rem;
+            width: 4rem;
+            transition: border-color 250ms;
+        }
+
+        &:hover::after {
+            border-color: rgba(255, 255, 255, 1);
+            transition: border-color 50ms;
+        }
+    }
+}
+
+// 내비게이션 메뉴 아이템 폰트 크기
+.sidebar-nav-item {
+    font-weight: 700;
+    font-size: 1.08rem;
+    line-height: 1.6;
+    display: block;
+}
