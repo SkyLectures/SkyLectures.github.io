@@ -1,6 +1,7 @@
 ---
 layout: page
 title: Instructor Profile
+permalink: /about/
 hide_description: true
 qna: false
 ---
