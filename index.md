@@ -6,10 +6,9 @@ description: >
 qna: false
 ---
 
-> 📢 **Notice:** 
->   - [2026.08.07] **SkyLectures Website Renewal** — Rebuilt with a Custom Lightweight Jekyll Theme
->       - 기존에 사용했던 크고 복잡한 Hydejack 기반 테마를 완전히 들어내고, 자체 제작한 경량 Jekyll 테마로 전환하였습니다.
->       - 당분간 세세한 링크 수정 등의 작업이 이어지겠지만, 사이트 전체를 직접 통제할 수 있게 되어 보다 정확한 운영이 가능해 졌습니다.
+> 📢 **Notice:** [2026.08.07] **SkyLectures Website Renewal** — Rebuilt with a Custom Lightweight Jekyll Theme
+>   - 기존에 사용했던 크고 복잡한 Hydejack 기반 테마를 완전히 들어내고, 자체 제작한 경량 Jekyll 테마로 전환하였습니다.
+>   - 당분간 세세한 링크 수정 등의 작업이 이어지겠지만, 사이트 전체를 직접 통제할 수 있게 되어 보다 정확한 운영이 가능해 졌습니다.
 {: .notice-quote}
 
 
