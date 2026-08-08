@@ -1,1 +1,2 @@
-jekyll serve --livereload --incremental
+jekyll serve --livereload
+# jekyll serve --livereload --incremental

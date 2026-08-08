@@ -1,6 +1,6 @@
 ---
 layout: page
-title:  "파이썬 기본 문법(통합)"
+title:  "파이썬 기본 문법"
 date:   2025-03-01 10:00:00 +0900
 permalink: /materials/S01-01-03-01_01-PythonBasic
 categories: materials
@@ -9,7 +9,7 @@ categories: materials
 {:toc}
 
 <div class="colab-link">
-    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/python/notebooks/S01-01-03-01_01-PythonBasic.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/S01_Python/notebooks/S01-01-03-01_01-PythonBasic.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 </div>
 
 > 본 페이지에 한하여 직접 설명하는 식으로 작성되었습니다.<br>
@@ -27,7 +27,7 @@ categories: materials
 >그래서 프로그래밍 작업에서의 코드 구성은 <span style="color: #C00">**데이터 입력 → 데이터 처리 → 데이터 출력**</span>이라는 과정으로 이루어집니다.<br><br>
 >
 > <div class="insert-image" style="text-align: center;">
->   <img style="width: 600px;" src="/materials/python/images/S01-01-03-01_01-001.png"><br>
+>   <img style="width: 600px;" src="/materials/S01_Python/images/S01-01-03-01_01-001.png"><br>
 >   <div style="text-align: right;width: 790px;">그림출처: 아이다랩(AiDALab)</div>
 > </div>
 > <div class="contents-source" style="text-align: left;">
@@ -38,7 +38,7 @@ categories: materials
 ## 1. 첫번째 파이썬 프로그램
 
 <div class="insert-image" style="text-align: left;">
-    <img style="width: 450px;" src="/materials/python/images/S01-01-03-01_01-002.png">
+    <img style="width: 450px;" src="/materials/S01_Python/images/S01-01-03-01_01-002.png">
 </div>
 
 - 매우 단순해 보이지만 위의 코드는 제대로 작동하는 프로그램입니다.<br><br>
@@ -60,7 +60,7 @@ categories: materials
   - 이제 연산이 끝난 c의 값을 출력해 봅니다.<br>
 
 <div class="insert-image" style="text-align: left;">
-    <img style="width: 600px;" src="/materials/python/images/S01-01-03-01_01-003.png">
+    <img style="width: 600px;" src="/materials/S01_Python/images/S01-01-03-01_01-003.png">
 </div>
 
 - 이렇게 하나의 프로그램 코드가 완성되었습니다.<br>

@@ -24,21 +24,6 @@
 }
 
 .page-body {
-    line-height: 1.75; // 전체 본문 줄 간격(행간) 설정
 
-    // 문단(Paragraph) 간의 상하 간격 보장
-    p {
-        margin-top: 0;
-        margin-bottom: 1.5rem; // 문단과 문단 사이를 명확히 구분
-    }
-
-    // 리스트(ul, ol) 내부 항목 간의 간격 보장
-    ul, ol {
-        margin-bottom: 1.5rem;
-
-        li {
-            margin-bottom: 0.4rem; // 목록 요소끼리 너무 붙지 않게 조정
-        }
-    }
 }
 

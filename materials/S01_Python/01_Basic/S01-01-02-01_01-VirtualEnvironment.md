@@ -17,30 +17,30 @@ categories: materials
     - [https://www.python.org/downloads/](https://www.python.org/downloads/){: target="_blank"}
 
     <div class="insert-image">
-        <img src="/materials/python/images/S01-01-02-01_01-002.png">
+        <img src="/materials/S01_Python/images/S01-01-02-01_01-002.png">
     </div>
     <div class="insert-image">
-        <img src="/materials/python/images/S01-01-02-01_01-003.png">
+        <img src="/materials/S01_Python/images/S01-01-02-01_01-003.png">
     </div>
 
 
 - **설치파일 실행(windows 기준)**
 
     <div class="insert-image">
-        <img src="/materials/python/images/S01-01-02-01_01-004.png">
+        <img src="/materials/S01_Python/images/S01-01-02-01_01-004.png">
     </div>
 
     - **최신 버전의 Windows의 경우**
         - ‘Windows Terminal’ / ‘PowerShell’ / ‘명령 프롬프트’에서 python 실행
 
         <div class="insert-image">
-            <img src="/materials/python/images/S01-01-02-01_01-005.png">
+            <img src="/materials/S01_Python/images/S01-01-02-01_01-005.png">
         </div>
 
         - 파이썬 버전을 선택하려면
 
         <div class="insert-image">
-            <img src="/materials/python/images/S01-01-02-01_01-006.png">
+            <img src="/materials/S01_Python/images/S01-01-02-01_01-006.png">
         </div>
 
 ### 1.2 가상환경 설정
@@ -54,7 +54,7 @@ categories: materials
 >     - 이 때문에 많은 파이썬 라이브러리 및 모듈은 <span style="color: red;">버전별 호환성 문제가 존재함</span>
 > 
 >     <div class="insert-image">
->         <img src="/materials/python/images/S01-01-02-01_01-001.png" style="width: 600px;">
+>         <img src="/materials/S01_Python/images/S01-01-02-01_01-001.png" style="width: 600px;">
 >     </div>
 > 
 >     - 이러한 이유로  <span style="color: red;">**파이썬 프로젝트는 가상환경에서의 개발을 권장함**</span>
@@ -79,7 +79,7 @@ categories: materials
                 - 생성한 폴더 안에서 작업을 진행함 (권장사항)
 
                     <div class="insert-image">
-                        <img src="/materials/python/images/S01-01-02-01_01-007.png">
+                        <img src="/materials/S01_Python/images/S01-01-02-01_01-007.png">
                     </div>
 
         2. 가상환경 설정
@@ -87,7 +87,7 @@ categories: materials
             - python -m venv [생성하고자 하는 가상환경의 이름]
 
                 <div class="insert-image">
-                    <img src="/materials/python/images/S01-01-02-01_01-008.png">
+                    <img src="/materials/S01_Python/images/S01-01-02-01_01-008.png">
                 </div>
 
         3. 가상환경 활성화
@@ -96,7 +96,7 @@ categories: materials
                 - 프롬프트의 앞에 **(가상환경이름)**이 표시되면 활성화 성공임
 
                     <div class="insert-image">
-                        <img src="/materials/python/images/S01-01-02-01_01-009.png">
+                        <img src="/materials/S01_Python/images/S01-01-02-01_01-009.png">
                     </div>
 
             - Linux/Mac의 경우 : **$ source ./bin/activate** 명령으로 활성화
@@ -107,27 +107,27 @@ categories: materials
                 - Windows 환경에서 PowerShell을 사용하는 경우 다음과 같은 오류가 자주 발생함
 
                     <div class="insert-image">
-                        <img src="/materials/python/images/S01-01-02-01_01-010.png">
+                        <img src="/materials/S01_Python/images/S01-01-02-01_01-010.png">
                     </div>
 
                     - 대부분의 경우 권한부족으로 인한 문제임
                     - PowerShell을 관리자 권한으로 실행한 후
 
                         <div class="insert-image">
-                            <img src="/materials/python/images/S01-01-02-01_01-011.png">
+                            <img src="/materials/S01_Python/images/S01-01-02-01_01-011.png">
                         </div>
 
                     - **Set-ExecutionPolicy RemoteSigned** 명령 실행
                         - 변경 여부 확인에서 **Y (또는 A)** 선택
 
                             <div class="insert-image">
-                                <img src="/materials/python/images/S01-01-02-01_01-012.png">
+                                <img src="/materials/S01_Python/images/S01-01-02-01_01-012.png">
                             </div>
 
 - **가상환경 구축 명령어 정리**
 
     <div class="insert-image">
-        <img src="/materials/python/images/S01-01-02-01_01-013.png">
+        <img src="/materials/S01_Python/images/S01-01-02-01_01-013.png">
     </div>
 
     - Linux / MAC의 경우
@@ -226,7 +226,7 @@ categories: materials
     - G-Drive 화면에서 마우스 우클릭 메뉴에서 Colaboratory 선택
 
         <div class="insert-image">
-            <img src="/materials/python/images/S01-01-02-01_01-019.png" style="border: 1px solid gray;">
+            <img src="/materials/S01_Python/images/S01-01-02-01_01-019.png" style="border: 1px solid gray;">
         </div>
 
     - Colaboratory 메뉴가 보이지 않는 경우
@@ -235,35 +235,35 @@ categories: materials
         2. 우측 하단 “새 노트“ 선택하여 Note 생성
 
             <div class="insert-image">
-                <img src="/materials/python/images/S01-01-02-01_01-014.png">
+                <img src="/materials/S01_Python/images/S01-01-02-01_01-014.png">
             </div>
 
         3. 원하는 파일명 지정 후 작업 시작
 
             <div class="insert-image">
-                <img src="/materials/python/images/S01-01-02-01_01-015.png">
+                <img src="/materials/S01_Python/images/S01-01-02-01_01-015.png">
             </div>
 
             - 작업 내용은 자동 저장되며, 파일 메뉴에서 직접 저장도 가능
 
                 <div class="insert-image">
-                    <img src="/materials/python/images/S01-01-02-01_01-016.png">
+                    <img src="/materials/S01_Python/images/S01-01-02-01_01-016.png">
                 </div>
 
         4. 저장 후 자동으로 생성된 Colab Notebooks 폴더로 돌아가서 작업 파일 저장 확인 가능
 
             <div class="insert-image">
-                <img src="/materials/python/images/S01-01-02-01_01-017.png">
+                <img src="/materials/S01_Python/images/S01-01-02-01_01-017.png">
             </div>
 
             <div class="insert-image">
-                <img src="/materials/python/images/S01-01-02-01_01-018.png">
+                <img src="/materials/S01_Python/images/S01-01-02-01_01-018.png">
             </div>
 
     - 작업 진행
 
         <div class="insert-image">
-            <img src="/materials/python/images/S01-01-02-01_01-020.png">
+            <img src="/materials/S01_Python/images/S01-01-02-01_01-020.png">
         </div>
 
 ## 3. 외부 라이브러리

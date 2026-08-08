@@ -1,3 +1,223 @@
+.prose {
+    line-height: 1.75; // 전체 본문 줄 간격(행간) 설정
+
+    // 문단(Paragraph) 간의 상하 간격 보장
+    p {
+        margin-top: 0;
+        margin-bottom: 1.5rem; // 문단과 문단 사이를 명확히 구분
+    }
+
+    // 리스트(ul, ol) 내부 항목 간의 간격 보장
+    ul, ol {
+        margin-bottom: 1.5rem;
+
+        li {
+            margin-bottom: 0.4rem; // 목록 요소끼리 너무 붙지 않게 조정
+        }
+    }
+
+    code {
+        padding: 0.12em 0.35em;
+        background: #f3f4f6;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.9em;
+    }
+
+    pre {
+        margin: 1.5rem 0;
+        padding: 1rem 1.25rem;
+        overflow-x: auto;
+        background: #f8f8f8;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    pre code {
+        padding: 0;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-size: 0.95rem;
+        line-height: 1.5;
+        white-space: pre;
+    }
+
+    .highlight {
+        table {
+            td {
+                padding: 5px;
+            }
+
+            pre {
+                margin: 0;
+            }
+        }
+
+        // Default text / whitespace
+        &, .w {
+            color: #24292f;
+            background-color: #f6f8fa;
+        }
+
+        // Keywords
+        .k, .kd, .kn, .kp, .kr, .kt, .kv {
+            color: #cf222e;
+        }
+
+        // Keyword constants
+        .kc {
+            color: #0550ae;
+        }
+
+        // Names / identifiers
+        .n {
+            color: #24292f;
+        }
+
+        // Names / Classes / Types
+        .nb, .nc, .no, .nn {
+            color: #953800;
+        }
+
+        // Name.Attribute / Name.Tag
+        .na, .nt {
+            color: #116329;
+        }        
+
+        // Built-in / special names
+        .bp, .ne, .nl, .py {
+            color: #0550ae;
+        }        
+
+        // Function / Method
+        .nf, .fm {
+            color: #8250df;
+        }        
+
+        // Decorator / Attribute
+        .nd, .na {
+            color: #116329;
+        }
+
+        // Variables
+        .nv, .vc, .vg, .vi, .vm {
+            color: #0550ae;
+        }        
+
+        // Numbers / Literals
+        .l, .ld, .m, .mb, .mf, .mh, .mi, .il, .mo, .mx {
+            color: #0550ae;
+        }        
+
+        // Backtick String
+        .sb {
+            color: #0550ae;
+        }
+
+        // Strings
+        .s, .sa, .sc, .dl, .sd, .s2, .se, .sh, .sx, .s1, .ss {
+            color: #0a3069;
+        }
+
+        // String interpolation / escape
+        .si {
+            color: #24292f;
+        }
+
+        // Operators
+        .o, .ow {
+            color: #0550ae;
+        }
+
+        // Punctuation
+        .p {
+            color: #24292f;
+        }
+
+        // Regex
+        .sr {
+            color: #116329;
+        }
+
+        // Comments
+        .c, .ch, .cd, .cm, .cp, .cpf, .c1, .cs {
+            color: #6e7781;
+        }
+
+        // Generic output / line
+        .gl, .gt {
+            color: #6e7781;
+        }
+
+        // Diff: deletion
+        .gd {
+            color: #82071e;
+            background-color: #ffebe9;
+        }
+
+        // Diff: insertion
+        .gi {
+            color: #116329;
+            background-color: #dafbe1;
+        }
+
+        // Diff: error
+        .gr {
+            color: #f6f8fa;
+            background-color: #82071e;
+        }
+
+        // Error
+        .err {
+            color: #f6f8fa;
+            background-color: #82071e;
+        }
+
+        // Heading
+        .gh, .gu {
+            color: #0550ae;
+            font-weight: bold;
+        }
+
+        // Generic emphasis
+        .ge {
+            color: #24292f;
+            font-style: italic;
+        }
+
+        // Generic strong
+        .gs {
+            color: #24292f;
+            font-weight: bold;
+        }
+
+        // Generic emphasized strong
+        .ges {
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        // Name / identifier
+        .ni {
+            color: #24292f;
+        }
+
+
+
+
+        .nt {
+            color: #116329;
+        }
+
+        .sb {
+            color: #0550ae;
+        }
+    }
+}
+
 blockquote {
     margin-left: 0;
     margin-right: 0;

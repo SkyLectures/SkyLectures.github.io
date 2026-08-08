@@ -9,7 +9,7 @@ categories: materials
 {:toc}
 
 <div class="colab-link">
-    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/python/notebooks/S01-01-04-04_01-Matplotlib.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/S01_Python/notebooks/S01-01-04-04_01-Matplotlib.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 </div>
 
 ## 1. 데이터 시각화
@@ -27,7 +27,7 @@ categories: materials
   - 통계 방법에 따라 규칙을 보는 것은 어렵지만, 데이터가 시각화되면 규칙은 매우 명확히 인지 가능(예: 안스콤비의 4중주)
 
 <div class="insert-image">
-    <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-001.png">
+    <img style="width: 600px;" src="/materials/S01_Python/images/S01-01-04-04_01-001.png">
 </div>
 
 
@@ -68,7 +68,7 @@ categories: materials
   ```
 
   <div class="insert-image">
-      <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-002.png">
+      <img style="width: 990px;" src="/materials/S01_Python/images/S01-01-04-04_01-002.png">
   </div>
 
 
@@ -110,7 +110,7 @@ categories: materials
     ```
 
     <div class="insert-image">
-        <img style="width: 700px;" src="/materials/python/images/S01-01-04-04_01-004.png">
+        <img style="width: 700px;" src="/materials/S01_Python/images/S01-01-04-04_01-004.png">
     </div>
 
     ```python
@@ -121,7 +121,7 @@ categories: materials
     ```
 
     <div class="insert-image">
-        <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-005.png">
+        <img style="width: 600px;" src="/materials/S01_Python/images/S01-01-04-04_01-005.png">
     </div>
 
 - **갑자기 음수 부호(-)가 표시되지 않음**
@@ -138,7 +138,7 @@ categories: materials
     ```
     
     <div class="insert-image">
-        <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-006.png">
+        <img style="width: 600px;" src="/materials/S01_Python/images/S01-01-04-04_01-006.png">
     </div>
 
 - **그래프를 그릴때 별도의 창이 열리고 그 위에서 그려지는 문제**
@@ -157,7 +157,7 @@ categories: materials
 - **그래프의 기본 구성**
 
   <div class="insert-image">
-      <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-007.png">
+      <img style="width: 600px;" src="/materials/S01_Python/images/S01-01-04-04_01-007.png">
   </div>
 
 ### 4.1 Figure
@@ -182,7 +182,7 @@ categories: materials
     ```
 
 <div class="insert-image">
-    <img style="width: 400px;" src="/materials/python/images/S01-01-04-04_01-008.png">
+    <img style="width: 400px;" src="/materials/S01_Python/images/S01-01-04-04_01-008.png">
 </div>
 
 
@@ -294,7 +294,7 @@ categories: materials
         ```
 
 <div class="insert-image">
-    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-009.png">
+    <img style="width: 500px;" src="/materials/S01_Python/images/S01-01-04-04_01-009.png">
 </div>
 
 
@@ -322,14 +322,14 @@ categories: materials
         ```
 
 <div class="insert-image">
-    <img style="width: 900px;" src="/materials/python/images/S01-01-04-04_01-010.png">
+    <img style="width: 900px;" src="/materials/S01_Python/images/S01-01-04-04_01-010.png">
 </div>
 
 
 ### 4.3 Axis
 
 <div class="insert-image">
-    <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-011.png">
+    <img style="width: 600px;" src="/materials/S01_Python/images/S01-01-04-04_01-011.png">
 </div>
 
 
@@ -406,7 +406,7 @@ plt.show()
 ```
 
 <div class="insert-image">
-    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-012.png">
+    <img style="width: 500px;" src="/materials/S01_Python/images/S01-01-04-04_01-012.png">
 </div>
 
 
@@ -427,7 +427,7 @@ plt.show()
 
 - 범례(Legend) 위치 표시 코드<br>
 <div class="insert-image">
-    <img style="width: 300px;" src="/materials/python/images/S01-01-04-04_01-013.png">
+    <img style="width: 300px;" src="/materials/S01_Python/images/S01-01-04-04_01-013.png">
 </div>
 
 
@@ -516,7 +516,7 @@ plt.show()
   ```
 
   <div class="insert-image">
-      <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-014.png">
+      <img style="width: 500px;" src="/materials/S01_Python/images/S01-01-04-04_01-014.png">
   </div>
 
 
@@ -535,7 +535,7 @@ plt.show()
   ```
 
   <div class="insert-image">
-      <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-015.png">
+      <img style="width: 500px;" src="/materials/S01_Python/images/S01-01-04-04_01-015.png">
   </div>
 
 
@@ -609,7 +609,7 @@ plt.show()
   ```
 
   <div class="insert-image">
-      <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-016.png">
+      <img style="width: 500px;" src="/materials/S01_Python/images/S01-01-04-04_01-016.png">
   </div>
 
 
@@ -712,7 +712,7 @@ plt.show()
 ```
 
 <div class="insert-image">
-    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-017.png">
+    <img style="width: 500px;" src="/materials/S01_Python/images/S01-01-04-04_01-017.png">
 </div>
 
 
@@ -757,7 +757,7 @@ plt.show()
 ```
 
 <div class="insert-image">
-    <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-018.png">
+    <img style="width: 500px;" src="/materials/S01_Python/images/S01-01-04-04_01-018.png">
 </div>
 
 
@@ -807,7 +807,7 @@ plt.show()
 ```
 
 <div class="insert-image">
-    <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-019.png">
+    <img style="width: 600px;" src="/materials/S01_Python/images/S01-01-04-04_01-019.png">
 </div>
 
 ```python
@@ -862,7 +862,7 @@ img
   ```
 
   <div class="insert-image">
-      <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-020.png">
+      <img style="width: 990px;" src="/materials/S01_Python/images/S01-01-04-04_01-020.png">
   </div>
 
   ```python
@@ -870,7 +870,7 @@ img
   ```
 
   <div class="insert-image">
-      <img style="width: 400px;" src="/materials/python/images/S01-01-04-04_01-021.png">
+      <img style="width: 400px;" src="/materials/S01_Python/images/S01-01-04-04_01-021.png">
   </div>
 
 
@@ -879,7 +879,7 @@ img
   ```
 
   <div class="insert-image">
-      <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-022.png">
+      <img style="width: 500px;" src="/materials/S01_Python/images/S01-01-04-04_01-022.png">
   </div>
 
 
@@ -1139,7 +1139,7 @@ img
   ```
 
   <div class="insert-image">
-      <img style="width: 500px;" src="/materials/python/images/S01-01-04-04_01-023.png">
+      <img style="width: 500px;" src="/materials/S01_Python/images/S01-01-04-04_01-023.png">
   </div>
 
 
@@ -1153,7 +1153,7 @@ mymap
 ```
 
 <div class="insert-image">
-    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-024.png">
+    <img style="width: 990px;" src="/materials/S01_Python/images/S01-01-04-04_01-024.png">
 </div>
 
 ```python
@@ -1162,7 +1162,7 @@ mymap
 ```
 
 <div class="insert-image">
-    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-025.png">
+    <img style="width: 990px;" src="/materials/S01_Python/images/S01-01-04-04_01-025.png">
 </div>
 
 
@@ -1180,7 +1180,7 @@ mymap
 ```
 
 <div class="insert-image">
-    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-026.png">
+    <img style="width: 990px;" src="/materials/S01_Python/images/S01-01-04-04_01-026.png">
 </div>
 
 
@@ -1194,7 +1194,7 @@ mymap
 ```
 
 <div class="insert-image">
-    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-027.png">
+    <img style="width: 990px;" src="/materials/S01_Python/images/S01-01-04-04_01-027.png">
 </div>
 
 
@@ -1214,7 +1214,7 @@ mymap
 ```
 
 <div class="insert-image">
-    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-028.png">
+    <img style="width: 990px;" src="/materials/S01_Python/images/S01-01-04-04_01-028.png">
 </div>
 
 
@@ -1228,5 +1228,5 @@ mymap
 ```
 
 <div class="insert-image">
-    <img style="width: 990px;" src="/materials/python/images/S01-01-04-04_01-029.png">
+    <img style="width: 990px;" src="/materials/S01_Python/images/S01-01-04-04_01-029.png">
 </div>

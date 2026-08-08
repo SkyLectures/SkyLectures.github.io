@@ -1,12 +1,13 @@
 ---
 layout: page
-title:  "파이썬 개요"
-date:   2025-03-01 09:00:00 +0900
+title: 파이썬 개요
 permalink: /materials/S01-01-01-01_01-PythonOverview
-description: materials
+description: >
+    파이썬은 어떤 언어인지, 어떻게 시작되었고, 어떤 특징을 가지고 있는지 등을 다룹니다.
 ---
 * toc
 {:toc}
+
 
 ## 1. 파이썬의 기원
 
@@ -19,7 +20,7 @@ description: materials
     > - 당연히 무료이며 오픈 소스이므로 누구나 개발할 수 있습니다.
     > - 평이한 영어로 이해할 수 있는 코드, 일상적인 업무에 대한 적합성과 짧은 개발 시간 등 장점을 기반으로 파이썬은 대중적인 프로그래밍 언어가<br> 되었습니다.
     > <div class="insert-image" style="margin-bottom: 1em;">
-    >    <img src="/materials/python/images/S01-01-01-01_01-001.jpg" style="width: 300px;">
+    >    <img src="/materials/S01_Python/images/S01-01-01-01_01-001.jpg" style="width: 300px;">
     > </div>
     {: .common-quote}
 
@@ -102,9 +103,9 @@ description: materials
 
 > - 책장에서 발견한 옛 파이썬 도서 (1998.01.17 발행) 대학생때 사 놓고 거의 보지 않음
 > <div class="insert-image" style="margin-bottom: 1em;">
->   <img src="/materials/python/images/S01-01-01-01_01-002.jpg" style="width: 300px; height: 310px;">
+>   <img src="/materials/S01_Python/images/S01-01-01-01_01-002.jpg" style="width: 300px; height: 310px;">
 >   &nbsp;&nbsp;
->   <img src="/materials/python/images/S01-01-01-01_01-003.png" style="width: 198px; height: 308px;">
+>   <img src="/materials/S01_Python/images/S01-01-01-01_01-003.png" style="width: 198px; height: 308px;">
 > </div>
 {: .common-quote}
 
