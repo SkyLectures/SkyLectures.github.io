@@ -165,8 +165,8 @@ async def create_loan(request: LoanRequest):
         * **결과:** `200 OK` 응답과 함께 오늘 날짜와 대출 완료 메시지 확인
 
         <div class="insert-image" style="text-align: center;">
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_02-001.png"><br><br>
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_02-002.png">
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_02-001.png"><br><br>
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_02-002.png">
         </div>
 
     3. **데이터 검증(Pydantic) 테스트**
@@ -174,8 +174,8 @@ async def create_loan(request: LoanRequest):
         * **결과:** FastAPI가 즉시 `detail` 메시지와 함께 에러를 던지는지 확인
 
         <div class="insert-image" style="text-align: center;">
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_02-003.png"><br><br>
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_02-004.png">
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_02-003.png"><br><br>
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_02-004.png">
         </div>
 
     4. **비즈니스 규칙 테스트**
@@ -183,13 +183,13 @@ async def create_loan(request: LoanRequest):
        * **결과:** 우리가 `HTTPException`으로 설정한 404 에러가 명확하게 전달되는지 확인
 
         <div class="insert-image" style="text-align: center;">
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_02-005.png"><br><br>
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_02-006.png">
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_02-005.png"><br><br>
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_02-006.png">
         </div>
 
     5. **문서화 시스템 감상**
        * ReDoc(/redoc)에 들어가서 본인이 쓴 주석이 실시간으로 반영된 '기업급 API 문서'를 확인
 
         <div class="insert-image" style="text-align: center;">
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_02-007.png">
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_02-007.png">
         </div>

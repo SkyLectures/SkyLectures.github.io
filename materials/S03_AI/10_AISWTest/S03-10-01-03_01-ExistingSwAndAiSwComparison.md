@@ -46,5 +46,5 @@ categories: materials
 - <span style="color: darkred;">**따라서 기존 소프트웨어의 테스트 기법을 적용할 수 없음**</span><br><br>
 
 <div class="insert-image" style="text-align: center;">
-    <img src="/materials/ai/images/S03-10-01-03_01-001.png" style="width: 80%;">
+    <img src="/materials/S03_AI/images/S03-10-01-03_01-001.png" style="width: 80%;">
 </div>

@@ -30,7 +30,7 @@ categories: materials
     - 기본 이름: HMSoft
 
     <div class="insert-image" style="text-align: left;">
-        <img style="width: 300px;" src="/materials/project/images/S10-01-02-03_02-001.png"><br>
+        <img style="width: 300px;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-001.png"><br>
         <div style="width: 300px; text-align: right;">(그림출처: 디바이스마트)</div>
     </div>
 
@@ -40,7 +40,7 @@ categories: materials
 - Serial Console ➜ 비활성화
 
 <div class="insert-image" style="text-align: left;">
-    <img style="width: 600px;" src="/materials/project/images/S10-01-02-03_02-002.png">
+    <img style="width: 600px;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-002.png">
 </div>
 
 > - **설정 이유**
@@ -85,7 +85,7 @@ ls -l /dev/serial0
 
 - `ttyAMA10`이라는 이름으로 할당됨 (시스템에 따라 다를 수 있음) ➜ 파이썬 코드 작성 시 사용할 serial0 접속명
 <div class="insert-image" style="text-align: left;">
-    <img style="width: 990px;" src="/materials/project/images/S10-01-02-03_02-003.png">
+    <img style="width: 990px;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-003.png">
 </div>
 
 - 시리얼 통신 테스트: 전송되는 데이터가 없으므로 빈 데이터만 표시됨
@@ -108,7 +108,7 @@ bleSerial.close()
 ```
 
 <div class="insert-image" style="text-align: left;">
-    <img style="width: 990px;" src="/materials/project/images/S10-01-02-03_02-004.png">
+    <img style="width: 990px;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-004.png">
 </div>
 
 ### 1.4 무선 조종을 위한 스마트폰 앱 설치
@@ -117,19 +117,19 @@ bleSerial.close()
     - 플레이스토어에서 `Serial Bluetooth Terminal` 검색하여 설치
 
     <div class="insert-image">
-        <img style="width: 300px; border: 1px solid gray;" src="/materials/project/images/S10-01-02-03_02-005.jpg">
+        <img style="width: 300px; border: 1px solid gray;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-005.jpg">
         <span style="font-size:2em;">&nbsp;&nbsp;&nbsp;➜&nbsp;&nbsp;&nbsp;</span>
-        <img style="width: 300px;" src="/materials/project/images/S10-01-02-03_02-006.jpg">
+        <img style="width: 300px;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-006.jpg">
     </div>
 
     - `Serial Bluetooth Terminal`에서 라즈베리파이의 블루투스 탐색 및 연결
         - 주로 MLT-BT05, HM-10, BT05 등의 이름으로 검색됨
 
     <div class="insert-image" style="text-align: right;">
-        <img style="width: 960px;" src="/materials/project/images/S10-01-02-03_02-007.png"><br><br>
-        <img style="width: 990px;" src="/materials/project/images/S10-01-02-03_02-008.png"><br><br>
-        <img style="width: 330px;" src="/materials/project/images/S10-01-02-03_02-009.png">
-        <img style="width: 655px;" src="/materials/project/images/S10-01-02-03_02-010.png">
+        <img style="width: 960px;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-007.png"><br><br>
+        <img style="width: 990px;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-008.png"><br><br>
+        <img style="width: 330px;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-009.png">
+        <img style="width: 655px;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-010.png">
     </div>
 
 - 아이폰 기종의 경우
@@ -139,7 +139,7 @@ bleSerial.close()
             - 아이폰용 앱(ble automation)에서 전송 값을 표시하는 기능을 지원하지 않음
 
     <div class="insert-image" style="text-align: right;">
-        <img style="width: 950px;" src="/materials/project/images/S10-01-02-03_02-011.png">
+        <img style="width: 950px;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-011.png">
     </div>
 
 ### 1.5 라즈베리파이 ➜ 스마트폰 데이터 전송 확인
@@ -164,7 +164,7 @@ bleSerial.close()
 ```
 
 <div class="insert-image">
-    <img style="width: 400px;" src="/materials/project/images/S10-01-02-03_02-012.jpg">
+    <img style="width: 400px;" src="/materials/S10_ProjectBased/images/S10-01-02-03_02-012.jpg">
 </div>
 
 

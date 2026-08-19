@@ -82,7 +82,7 @@ from flask import Flask
     - 다른 유형의 데이터를 전달해야 하는 경우, 캡처할 데이터 유형을 지정할 수 있는 변환기를 제공함
         - < converter:variable_name >
 
-            <img src='/materials/images/python/S01-04-03-02_02-001.png' width="400"/>
+            <img src='/materials/images/S01_Python/S01-04-03-02_02-001.png' width="400"/>
 
     - 블로그 애플리케이션에서 작성자 프로필을 표시하는 보기용 URL을 만들때, 작성자 이름 전달하기
 

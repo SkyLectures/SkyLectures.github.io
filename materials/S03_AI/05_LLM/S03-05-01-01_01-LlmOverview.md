@@ -46,7 +46,7 @@ categories: materials
                 - 트랜스포머 모델의 Full Architecture를 따름
 
                 <div class="insert-image" style="text-align: left;">
-                    <img src="/materials/ai/images/S03-05-01-01_01-001.png" style="width: 50%;">
+                    <img src="/materials/S03_AI/images/S03-05-01-01_01-001.png" style="width: 50%;">
                 </div>
 
         - 트랜스포머 디코더 (GPT 계열)

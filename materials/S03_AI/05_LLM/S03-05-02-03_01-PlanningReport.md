@@ -127,7 +127,7 @@ categories: materials
     - 각 플랫폼별 콘텐츠 아이디어 간략하게 설명
 - LLM 활용: 타겟 고객층의 특징 분석, 온라인 마케팅 트렌드 조사, 플랫폼별 효과적인 콘텐츠 형식 아이디어 구상<br><br>
 - 결과 예시<br><br>
-    <img src="/materials/images/ai/S03-05-02-03_01-001.png" width="600">
+    <img src="/materials/images/S03_AI/S03-05-02-03_01-001.png" width="600">
 
 ### 2.2 제품 기획
 

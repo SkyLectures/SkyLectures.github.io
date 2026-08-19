@@ -136,7 +136,7 @@ services:
     - 각 기술은 본연의 전문 영역에서 최상의 성능을 낼 수 있도록 분리되어 시너지를 발휘
 
     <div class="insert-image" style="text-align: left;">
-        <img src="/materials/project/images/S10-99-05-01_01-001_SystemArchitecture.png" style="width: 80%;">
+        <img src="/materials/S10_ProjectBased/images/S10-99-05-01_01-001_SystemArchitecture.png" style="width: 80%;">
     </div>
 
     - **Apache Kafka (실시간 메시징 & 데이터 파이프라인):**

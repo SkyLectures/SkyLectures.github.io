@@ -111,7 +111,7 @@ categories: materials
 - 코드 생성 AI
     - 자연어 설명을 기반으로 프로그래밍 코드를 생성
     - 예: GitHub Copilot<br>
-        ![Github Copilot](/materials/images/ai/S03-06-01-01_01-001.png){:width="500"}
+        ![Github Copilot](/materials/images/S03_AI/S03-06-01-01_01-001.png){:width="500"}
 
 - 3D 모델 생성 AI
     - 텍스트나 이미지를 기반으로 3차원 모델을 생성

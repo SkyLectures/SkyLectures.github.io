@@ -247,7 +247,7 @@ categories: materials
             - 예: 안스콤비의 4중주
 
             <div class="insert-image">
-                <img style="width: 600px;" src="/materials/python/images/S01-01-04-04_01-001.png">
+                <img style="width: 600px;" src="/materials/S01_Python/images/S01-01-04-04_01-001.png">
             </div>
 
     - 시각화를 통해 데이터의 분포와 특이점을 한눈에 파악

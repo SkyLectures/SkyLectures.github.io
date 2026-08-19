@@ -61,7 +61,7 @@ categories: materials
 
 - 생성된 폴더-파일 구조
 
-<p align="center"><img src="/materials/images/python/S01-04-02-002_001.png" width="700"></p>
+<p align="center"><img src="/materials/images/S01_Python/S01-04-02-002_001.png" width="700"></p>
 
 - 웹서버 설정 수정
 

@@ -275,7 +275,7 @@ categories: materials
 - Insomnia 활용 예시
     - 다운로드: [Insomnia 공식 사이트](https://insomnia.rest/download)
     - 실행 화면
-    <p align="center"><img src="/materials/images/python/S01-04-02-03_02-001.png" width="800"></p>
+    <p align="center"><img src="/materials/images/S01_Python/S01-04-02-03_02-001.png" width="800"></p>
 
 
 ## 3. DRF 심화

@@ -83,8 +83,8 @@ async def read_root():
     - {"Hello": "FastAPI", "Message": "성공적으로 서버가 실행되었습니다."} 가 출력되었는지 확인<br><br>
 
 <div class="insert-image" style="text-align: center;">
-    <img style="width: 950px;" src="/materials/python/images/S01-04-04-01_02-001.png"><br><br>
-    <img style="width: 700px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-002.png">
+    <img style="width: 950px;" src="/materials/S01_Python/images/S01-04-04-01_02-001.png"><br><br>
+    <img style="width: 700px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-002.png">
 </div>
 
 ## 5. 자동 문서화 확인
@@ -97,8 +97,8 @@ async def read_root():
     - 별도의 설정 없이 작성된 **Python 타입 힌트**를 기반으로 인터랙티브한 API 명세서가 생성되었는지 검증하는 단계<br><br>
 
 <div class="insert-image" style="text-align: center;">
-    <img style="width: 700px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-003.png"><br><br>
-    <img style="width: 700px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-004.png">
+    <img style="width: 700px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-003.png"><br><br>
+    <img style="width: 700px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-004.png">
 </div>
 
 ## 6. (선택적 보완) 환경 변수 관리 (`python-dotenv`)
@@ -146,7 +146,7 @@ import os
             }
         ```
 <div class="insert-image" style="text-align: center;">
-    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-005.png">
+    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-005.png">
 </div>
 
 - **작업 이유**

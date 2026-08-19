@@ -539,7 +539,7 @@ if __name__ == '__main__':
 
 
 <div class="colab-link">
-    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/project/notebooks/S10-01-05-03_01-AutonomousDrivingControlImplementation1.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/S10_ProjectBased/notebooks/S10-01-05-03_01-AutonomousDrivingControlImplementation1.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 </div>
 
 
@@ -827,7 +827,7 @@ for i in range(n_tests_show):
 - 라즈베리파이 5에서의 각종 버전 총돌 문제로 인하여 파이토치 버전으로 재작성
 
 <div class="colab-link">
-    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/project/notebooks/S10-01-05-03_01-AutonomousDrivingControlImplementation2.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/S10_ProjectBased/notebooks/S10-01-05-03_01-AutonomousDrivingControlImplementation2.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 </div>
 
 - 필요한 패키지 가져오기

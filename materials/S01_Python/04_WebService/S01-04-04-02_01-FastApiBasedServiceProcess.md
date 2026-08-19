@@ -99,8 +99,8 @@ async def read_item(item_id: int):
 ```
 
 <div class="insert-image" style="text-align: center;">
-    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-006.png"><br><br>
-    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-007.png">
+    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-006.png"><br><br>
+    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-007.png">
 </div>
 
 ### 3.2 데이터 추출 및 변환 (Pydantic)
@@ -181,10 +181,10 @@ async def create_item(
             - 어떤 위치의 어떤 데이터가 왜 틀렸는지 알려주는 에러 메시지 확인
 
 <div class="insert-image" style="text-align: center;">
-    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-008.png"><br><br>
-    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-009.png"><br><br>
-    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-010.png"><br><br>
-    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-011.png">
+    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-008.png"><br><br>
+    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-009.png"><br><br>
+    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-010.png"><br><br>
+    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-011.png">
 </div>
 
 > - "데이터는 단순히 전달되는 것이 아니라, 엄격한 관문(Pydantic)을 통과해야만 비즈니스 로직에 도달할 수 있음"을 확인할 것
@@ -251,9 +251,9 @@ async def register_user(user: UserCreate):
             - **교훈:** `int` 타입(15)은 맞지만, `ge=19`라는 값의 범위를 어겼음을 확인<br><br>
 
             <div class="insert-image" style="text-align: center;">
-                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-012.png"><br><br>
-                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-013.png"><br><br>
-                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-014.png">
+                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-012.png"><br><br>
+                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-013.png"><br><br>
+                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-014.png">
             </div>
 
         - 커스텀 검증(validator)을 어긴 경우
@@ -263,9 +263,9 @@ async def register_user(user: UserCreate):
             - **교훈:** 우리가 `@validator`에 정의한 `ValueError` 메시지가 클라이언트에게 그대로 전달되는 것을 확인<br><br>
 
             <div class="insert-image" style="text-align: center;">
-                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-015.png"><br><br>
-                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-016.png"><br><br>
-                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-017.png">
+                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-015.png"><br><br>
+                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-016.png"><br><br>
+                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-017.png">
             </div>
 
 
@@ -274,9 +274,9 @@ async def register_user(user: UserCreate):
             - **결과:** **200 OK**<br><br>
 
             <div class="insert-image" style="text-align: center;">
-                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-018.png"><br><br>
-                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-019.png"><br><br>
-                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-020.png">
+                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-018.png"><br><br>
+                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-019.png"><br><br>
+                <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-020.png">
             </div>
 
 > - 유효성 검사는 단순히 '맞다 틀리다'를 넘어, 서비스의 안정성을 지키는 가장 첫 번째 방어선
@@ -572,9 +572,9 @@ async def loan_book_api(request: LoanRequest): # [1, 3, 4단계 작동]
     - 본인이 쓴 주석(`description`)이 어디에 표시되는지 확인
 
 <div class="insert-image" style="text-align: center;">
-    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-021.png"><br><br>
-    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-022.png"><br><br>
-    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-01_02-023.png">
+    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-021.png"><br><br>
+    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-022.png"><br><br>
+    <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-01_02-023.png">
 </div>
 
 

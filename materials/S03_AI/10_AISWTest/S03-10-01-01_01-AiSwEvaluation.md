@@ -19,7 +19,7 @@ categories: materials
 - AI 소프트웨어의 학습과 추론 과정
 
 <div class="insert-image" style="text-align: center;">
-    <img src="/materials/ai/images/S03-10-01-01_01-005.png" style="width: 80%;"><br>
+    <img src="/materials/S03_AI/images/S03-10-01-01_01-005.png" style="width: 80%;"><br>
 </div>
 
 
@@ -77,7 +77,7 @@ categories: materials
         - 시행착오를 통해 최적의 행동 방침을 찾아 학습하는 방식
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/ai/images/S03-10-01-01_01-001.png" style="width: 90%;">
+        <img src="/materials/S03_AI/images/S03-10-01-01_01-001.png" style="width: 90%;">
     </div>
         
     - 준지도 학습 (Semi-supervised Learning)
@@ -127,16 +127,16 @@ categories: materials
 - 기존 소프트웨어의 구성과 AI 소프트웨어의 구성
     - **기존 소프트웨어**
         <div class="insert-image" style="text-align: center;">
-            <img src="/materials/ai/images/S03-10-01-01_01-002.png" style="width: 80%;">
+            <img src="/materials/S03_AI/images/S03-10-01-01_01-002.png" style="width: 80%;">
         </div>
 
     - **AI 소프트웨어**
         <div class="insert-image" style="text-align: center;">
-            <img src="/materials/ai/images/S03-10-01-01_01-003.png" style="width: 80%;">
+            <img src="/materials/S03_AI/images/S03-10-01-01_01-003.png" style="width: 80%;">
         </div>
 
         <div class="insert-image" style="text-align: center;">
-            <img src="/materials/ai/images/S03-10-01-01_01-004.png" style="width: 80%;">
+            <img src="/materials/S03_AI/images/S03-10-01-01_01-004.png" style="width: 80%;">
         </div>
 
 
@@ -145,7 +145,7 @@ categories: materials
 - **AI 모델의 학습**
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/ai/images/S03-10-01-01_01-006.png" style="width: 80%;">
+        <img src="/materials/S03_AI/images/S03-10-01-01_01-006.png" style="width: 80%;">
     </div>
 
     - AI 소프트웨어의 개발 과정
@@ -169,7 +169,7 @@ categories: materials
     > - 그러나 엄밀하게는 서로 차이가 있으므로, 이번 과정에서는 훈련과 평가를 모두 포함한 것을 학습이라고 정의하도록 함
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/ai/images/S03-10-01-01_01-007.png" style="width: 80%;">
+        <img src="/materials/S03_AI/images/S03-10-01-01_01-007.png" style="width: 80%;">
     </div>
 
 - **평가의 필요성**
@@ -198,5 +198,5 @@ categories: materials
             - 기대하는 추론 결과를 얻어내기 위한 입력 데이터 범위 추측 등
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/ai/images/S03-10-01-01_01-008.png" style="width: 50%;">
+        <img src="/materials/S03_AI/images/S03-10-01-01_01-008.png" style="width: 50%;">
     </div>            

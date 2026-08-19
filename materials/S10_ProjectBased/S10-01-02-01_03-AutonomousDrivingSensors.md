@@ -16,7 +16,7 @@ categories: materials
 ### 1.1 카메라(Camera) 센서
 
 <div class="insert-image" style="width: 400px;">
-    <img src="/materials/project/images/S10-01-02-01_03-001.png" style="width: 300px;"><br>
+    <img src="/materials/S10_ProjectBased/images/S10-01-02-01_03-001.png" style="width: 300px;"><br>
     <div style="width: 400px; text-align: right;">(사진출처: 디바이스마트)</div>
 </div>
 
@@ -43,7 +43,7 @@ categories: materials
 - LiDAR: Light Detection And Ranging
 
 <div class="insert-image" style="width: 400px;">
-    <img src="/materials/project/images/S10-01-02-01_03-002.png" style="width: 300px;"><br>
+    <img src="/materials/S10_ProjectBased/images/S10-01-02-01_03-002.png" style="width: 300px;"><br>
     <div style="width: 400px; text-align: right;">(사진출처: 디바이스마트)</div>
 </div>
 
@@ -69,7 +69,7 @@ categories: materials
 - Radar: Radio Detection And Ranging
 
 <div class="insert-image" style="width: 400px;">
-    <img src="/materials/project/images/S10-01-02-01_03-003.png" style="width: 300px;"><br>
+    <img src="/materials/S10_ProjectBased/images/S10-01-02-01_03-003.png" style="width: 300px;"><br>
     <div style="width: 400px; text-align: right;">(사진출처: 디바이스마트)</div>
 </div>
 
@@ -91,7 +91,7 @@ categories: materials
 ### 1.4 초음파(Ultrasonic) 센서
 
 <div class="insert-image" style="width: 400px;">
-    <img src="/materials/project/images/S10-01-02-01_03-004.png" style="width: 300px;"><br>
+    <img src="/materials/S10_ProjectBased/images/S10-01-02-01_03-004.png" style="width: 300px;"><br>
     <div style="width: 400px; text-align: right;">(사진출처: 디바이스마트)</div>
 </div>
 
@@ -118,7 +118,7 @@ categories: materials
 - IMU: Inertial Measurement Unit(관성 측정 장치)
 
 <div class="insert-image" style="width: 600px;">
-    <img src="/materials/project/images/S10-01-02-01_03-005.png" style="width: 500px;"><br>
+    <img src="/materials/S10_ProjectBased/images/S10-01-02-01_03-005.png" style="width: 500px;"><br>
     <div style="width: 600px; text-align: right;">(사진출처: 디바이스마트)</div>
 </div>
 
@@ -159,7 +159,7 @@ categories: materials
 ### 1.7. 열화상 카메라(Thermal Camera)
 
 <div class="insert-image" style="width: 400px;">
-    <img src="/materials/project/images/S10-01-02-01_03-006.png" style="width: 300px;"><br>
+    <img src="/materials/S10_ProjectBased/images/S10-01-02-01_03-006.png" style="width: 300px;"><br>
     <div style="width: 400px; text-align: right;">(사진출처: GMarket)</div>
 </div>
 
@@ -181,7 +181,7 @@ categories: materials
 ### 1.8. 이벤트 기반 카메라(Event Camera)
 
 <div class="insert-image">
-    <img src="/materials/project/images/S10-01-02-01_03-007.png" style="width: 850px;"><br>
+    <img src="/materials/S10_ProjectBased/images/S10-01-02-01_03-007.png" style="width: 850px;"><br>
     <div style="width: 800px; text-align: right;">(그림출처: 이벤트 카메라 기반 시각 지능을 위한 컴퓨터 비전 알고리즘 연구 보고서, 2022, KAIST)</div>
 </div>
 
@@ -204,8 +204,8 @@ categories: materials
 ### 1.9 휠 인코더 및 차량 내부 센서
 
 <div class="insert-image" style="width: 650px;">
-    <img src="/materials/project/images/S10-01-02-01_03-008.jpg" style="width: 300px;">&nbsp;&nbsp;&nbsp;&nbsp;
-    <img src="/materials/project/images/S10-01-02-01_03-009.png" style="width: 300px;"><br>
+    <img src="/materials/S10_ProjectBased/images/S10-01-02-01_03-008.jpg" style="width: 300px;">&nbsp;&nbsp;&nbsp;&nbsp;
+    <img src="/materials/S10_ProjectBased/images/S10-01-02-01_03-009.png" style="width: 300px;"><br>
     휠 인코더(사진출처: 가치창조기술 온라인)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;자이로 가속도 센서(사진출처: 디바이스마트)
 </div>
 

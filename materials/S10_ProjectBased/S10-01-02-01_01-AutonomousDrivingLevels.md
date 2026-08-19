@@ -140,6 +140,6 @@ categories: materials
 >       - 특히 B형 셔틀버스는 운전석이 없는 형태로 설계되어 있으며, 안전요원 1명을 포함해 총 11명이 탑승할 수 있습니다.
 >       - 또한 이 자율주행 버스는 96%라는 높은 국산화율을 달성했다는 점에서도 주목받고 있습니다.
 >       <div class="insert-image" style="text-align: center;">
->           <img style="width: 400px;" src="/materials/project/images/S10-01-02-01_01-001.jpg">
+>           <img style="width: 400px;" src="/materials/S10_ProjectBased/images/S10-01-02-01_01-001.jpg">
 >       </div>
 {: .common-quote}

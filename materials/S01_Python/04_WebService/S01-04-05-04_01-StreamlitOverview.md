@@ -20,7 +20,7 @@ categories: materials
     - Streamlit은 이 과정을 대폭 단순화하여 데이터 제품의 프로토타이핑 시간을 극적으로 단축시킴<br><br>
 
     <div class="insert-image">
-        <img src="/materials/python/images/S01-04-05-04_01-001_StreamlitOverview.png" style="width: 90%;">
+        <img src="/materials/S01_Python/images/S01-04-05-04_01-001_StreamlitOverview.png" style="width: 90%;">
     </div>
 
 - **Streamlit의 주요 특징과 장점**

@@ -16,7 +16,7 @@ categories: materials
     - **Microservices**: 가볍고 빠르며 Docker 환경에서 컨테이너화하기 매우 효율적
 
 <div class="insert-image" style="text-align: center;">
-    <img style="width: 950px;" src="/materials/python/images/S01-04-04-01_01-001.png">
+    <img style="width: 950px;" src="/materials/S01_Python/images/S01-04-04-01_01-001.png">
 </div>
 
 ### 1.1 기술적 정의
@@ -197,5 +197,5 @@ categories: materials
 <br>
 
 <div class="insert-image" style="text-align: center;">
-    <img style="width: 950px;" src="/materials/python/images/S01-04-04-01_01-002.png">
+    <img style="width: 950px;" src="/materials/S01_Python/images/S01-04-04-01_01-002.png">
 </div>

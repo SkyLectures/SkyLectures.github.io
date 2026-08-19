@@ -270,7 +270,7 @@ categories: materials
     - `main()` 함수에 의해 아래 순서로 단 몇 밀리초(ms) 만에 일련의 과정이 진행됨
 
         <div class="insert-image" style="text-align: left;">
-            <img src="/materials/project/images/S10-99-01-02_01-001_StreamlitChatbot.png" style="width: 80%;">
+            <img src="/materials/S10_ProjectBased/images/S10-99-01-02_01-001_StreamlitChatbot.png" style="width: 80%;">
         </div>
 
         - 코드의 가독성을 높이며
@@ -437,8 +437,8 @@ if __name__ == "__main__":
 - **실행 화면**
 
     <div class="insert-image" style="text-align: left; border: 1px solid lightgray;">
-        <img src="/materials/project/images/S10-99-01-02_01-002_StreamlitChatbot.png" style="width: 100%;">
+        <img src="/materials/S10_ProjectBased/images/S10-99-01-02_01-002_StreamlitChatbot.png" style="width: 100%;">
     </div>
     <div class="insert-image" style="text-align: left; border: 1px solid lightgray;">
-        <img src="/materials/project/images/S10-99-01-02_01-003_StreamlitChatbot.png" style="width: 100%;">
+        <img src="/materials/S10_ProjectBased/images/S10-99-01-02_01-003_StreamlitChatbot.png" style="width: 100%;">
     </div>

@@ -9,7 +9,7 @@ categories: materials
 {:toc .large-only .toc-sticky:true}
 
 <div class="colab-link">
-    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/project/notebooks/S10-01-04-06_01-RoadSignTrafficLightRecognition.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
+    <a href="https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/S10_ProjectBased/notebooks/S10-01-04-06_01-RoadSignTrafficLightRecognition.ipynb" target="_blank">Colab에서 실습파일 열기 <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"></a>
 </div>
 
 > - **딥러닝 기반 도로 표지판 및 신호등 인식 시스템**

@@ -121,7 +121,7 @@ categories: materials
     - 인증이 필요할 때마다 ID/PW를 전송해야 하며 중간에서 탈취당할 위험이 높음
     - 보안이 매우 취약한 상태
 
-<p align="center"><img src="/materials/images/python/S01-04-02-04_01-001.png" width="400"></p>
+<p align="center"><img src="/materials/images/S01_Python/S01-04-02-04_01-001.png" width="400"></p>
 
 - 회원 인증 개념 (2): 세션 & 쿠키의 사용
     - 세션(Session): 서버쪽에 저장하는 정보
@@ -131,7 +131,7 @@ categories: materials
     - 클라이언트에서는 세션 ID를 쿠키 저장소에 저장한 후 인증 요청이 있을때마다 세션 ID를 꺼내서 HTTP 헤더에 넣고 전송함
     - 인증이 필요할 때마다 ID/PW를 전송할 필요가 없으므로 정보의 탈취 위험이 줄어들지만 세션 ID를 탈취당할 위험은 여전히 존재함
 
-<p align="center"><img src="/materials/images/python/S01-04-02-04_01-002.png" width="500"></p>
+<p align="center"><img src="/materials/images/S01_Python/S01-04-02-04_01-002.png" width="500"></p>
 
 - 회원 인증 개념 (3): 토큰 & JWT
     - 세션 & 쿠키 방식과 비슷함
@@ -152,7 +152,7 @@ categories: materials
                 - 인증성: 보낸 사람과 받는 사람이 서로가 맞다고 확인할 수 있는 성질. 정보의 출처를 확인하고 신뢰할 수 있는지 판단하는 과정
             - 유저가 전송하는 데이터를 숨기는 것보다 유저가 전송하는 데이터를 인증하는데 집중하는 방식
 
-<p align="center"><img src="/materials/images/python/S01-04-02-04_01-003.png" width="500"></p>
+<p align="center"><img src="/materials/images/S01_Python/S01-04-02-04_01-003.png" width="500"></p>
 
 ### 4.2 구현
 
@@ -390,7 +390,7 @@ categories: materials
 
 - Profile 모델
 
-  <p align="left"><img src="/materials/images/python/S01-04-02-04_01-004.png" width="400"></p>
+  <p align="left"><img src="/materials/images/S01_Python/S01-04-02-04_01-004.png" width="400"></p>
 
     ```python
     #//file: "user/models.py"

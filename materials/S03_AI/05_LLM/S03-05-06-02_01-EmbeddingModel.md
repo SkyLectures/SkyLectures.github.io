@@ -95,7 +95,7 @@ categories: materials
 - **단어의 형태들과 내부 의미들이 갖는 관계**
 
     <div class="insert-image" style="text-align: left;">
-        <img src="/materials/ai/images/S03-05-06-02_01-003.png" style="width: 95%;">
+        <img src="/materials/S03_AI/images/S03-05-06-02_01-003.png" style="width: 95%;">
     </div>        
 
 - **동형어, 다의어, 동의어**
@@ -233,21 +233,21 @@ categories: materials
             - 요소들 중 단 하나의 값만이 1이고 나머지 요소들의 값은 0인 인코딩 방식
 
                 <div class="insert-image" style="text-align: left;">
-                    <img src="/materials/ai/images/S03-05-06-02_01-004.png" style="width: 90%;">
+                    <img src="/materials/S03_AI/images/S03-05-06-02_01-004.png" style="width: 90%;">
                 </div>        
 
             - **원핫 인코딩의 특징과 단점**
                 - 원핫 인코딩 벡터의 차원은 전체 어휘의 개수 🡲 매우 큰 차원이 됨
 
                     <div class="insert-image" style="text-align: left;">
-                        <img src="/materials/ai/images/S03-05-06-02_01-005.png" style="width: 90%;">
+                        <img src="/materials/S03_AI/images/S03-05-06-02_01-005.png" style="width: 90%;">
                     </div> 
 
                 - 단어는 불연속적인 심볼이며 이산 확률 변수로 나타남<br>
                     🡲 원핫 벡터는 이산 확률 분포에서 추출한 샘플 🡲 불연속적인 값을 가짐
 
                     <div class="insert-image" style="text-align: left;">
-                        <img src="/materials/ai/images/S03-05-06-02_01-006.png" style="width: 90%;">
+                        <img src="/materials/S03_AI/images/S03-05-06-02_01-006.png" style="width: 90%;">
                     </div> 
 
 
@@ -265,7 +265,7 @@ categories: materials
         - 분산 표현 방식을 그림으로 이해하면
 
             <div class="insert-image" style="text-align: left;">
-                <img src="/materials/ai/images/S03-05-06-02_01-007.png" style="width: 80%;">
+                <img src="/materials/S03_AI/images/S03-05-06-02_01-007.png" style="width: 80%;">
             </div> 
 
         - 신경망에서는 분산 표현을 학습하는 과정에서 임베딩 벡터의 모든 차원에 의미있는 데이터를 고르게 밀집시킴<br>
@@ -278,7 +278,7 @@ categories: materials
         - 분산 표현 방식의 벡터 공간
 
             <div class="insert-image">
-                <img src="/materials/ai/images/S03-05-06-02_01-008.png" style="width: 80%;">
+                <img src="/materials/S03_AI/images/S03-05-06-02_01-008.png" style="width: 80%;">
             </div> 
 
 ### 2.3 임베딩 모델
@@ -428,7 +428,7 @@ $$\text{Vector}(\text{"Korea"}) - \text{Vector}(\text{"Seoul"}) + \text{Vector}(
     ```
 
     <div class="insert-image" style="text-align: left;">
-        <img src="/materials/ai/images/S03-05-06-02_01-009.png" style="width: 90%;">
+        <img src="/materials/S03_AI/images/S03-05-06-02_01-009.png" style="width: 90%;">
     </div> 
 
 

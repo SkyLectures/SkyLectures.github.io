@@ -20,7 +20,7 @@ categories: materials
 ### 1.1 AI 개요
 
 <div class="insert-image" style="text-align: center;">
-    <img style="width: 500px;" src="/materials/ai/images/S03-01-01-01_01-001.png"><br>
+    <img style="width: 500px;" src="/materials/S03_AI/images/S03-01-01-01_01-001.png"><br>
     <div style="text-align: right;">그림출처: 아이다랩(AiDALab)</div>
 </div>
 
@@ -60,7 +60,7 @@ categories: materials
     <br>
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/ai/images/S03-01-01-01_01-002.png"><br>
+        <img src="/materials/S03_AI/images/S03-01-01-01_01-002.png"><br>
         <div style="text-align: right;">그림출처: 아이다랩(AiDALab)</div>
     </div>
 
@@ -80,7 +80,7 @@ categories: materials
     <br>
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/ai/images/S03-01-01-01_01-003.png"><br>
+        <img src="/materials/S03_AI/images/S03-01-01-01_01-003.png"><br>
         <div style="text-align: right;">그림출처: 아이다랩(AiDALab)</div>
     </div>
 
@@ -110,7 +110,7 @@ categories: materials
 - **자연어 처리 기술의 발전**
 
     <div class="insert-image" style="text-align: right;">
-        <img src="/materials/ai/images/S03-01-01-01_01-004.png" style="width: 99%;"><br>
+        <img src="/materials/S03_AI/images/S03-01-01-01_01-004.png" style="width: 99%;"><br>
     </div>
 
 > - AI 기술은 오랜 역사에 비해 최근 몇 년간 급속한 발전을 이루다보니 잘못된 접근 또는 지나치게 추상적이거나 형이상학적인 접근 등이 과도하게 퍼져나간 경향이 있음

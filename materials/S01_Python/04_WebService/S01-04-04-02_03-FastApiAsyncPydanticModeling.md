@@ -75,7 +75,7 @@ async def analyze_news(request: NewsRequest):
         - Swagger UI에서 `content`를 20자 미만으로 입력하거나, `tags`를 4개 이상 넣어보기
 
         <div class="insert-image" style="text-align: center;">
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_03-001.png">
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_03-001.png">
         </div>
 
     - **확인할 결과**
@@ -83,7 +83,7 @@ async def analyze_news(request: NewsRequest):
         - `loc`: `["body", "content"]`, `msg`: `ensure this value has at least 20 characters` 확인
 
         <div class="insert-image" style="text-align: center;">
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_03-002.png">
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_03-002.png">
         </div>
 
     - **핵심 원리**
@@ -97,7 +97,7 @@ async def analyze_news(request: NewsRequest):
         - `content` 내용 중에 **"스팸"**이라는 단어를 포함해서 전송
 
         <div class="insert-image" style="text-align: center;">
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_03-003.png">
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_03-003.png">
         </div>
 
     - **확인할 결과**
@@ -105,7 +105,7 @@ async def analyze_news(request: NewsRequest):
         - `msg`: `Value error, 부적절한 단어가 포함되어 있습니다.` 확인
 
         <div class="insert-image" style="text-align: center;">
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_03-004.png">
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_03-004.png">
         </div>
 
     - **핵심 원리**
@@ -119,7 +119,7 @@ async def analyze_news(request: NewsRequest):
         - 브라우저 탭을 2개 열고, 거의 동시에 **[Execute]**를 클릭
 
         <div class="insert-image" style="text-align: center;">
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_03-005.png">
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_03-005.png">
         </div>
 
     - **확인할 결과**
@@ -127,8 +127,8 @@ async def analyze_news(request: NewsRequest):
         - `processing_time`이 약 2.0초 내외로 찍히는지 확인
 
         <div class="insert-image" style="text-align: center;">
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_03-006.png"><br><br>
-            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/python/images/S01-04-04-02_03-007.png">
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_03-006.png"><br><br>
+            <img style="width: 800px; border: solid lightgray 1px;" src="/materials/S01_Python/images/S01-04-04-02_03-007.png">
         </div>
 
     - **핵심 원리**

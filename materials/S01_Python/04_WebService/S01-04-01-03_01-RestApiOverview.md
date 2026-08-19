@@ -88,7 +88,7 @@ categories: materials
     - REST의 6가지 제약 조건(특히 인터페이스 일관성)을 따름
 
 - RESTful WEB Service Architecture<br>
-    <img src="/materials/images/python/S01-04-02-03_01-001.png" width="500">
+    <img src="/materials/images/S01_Python/S01-04-02-03_01-001.png" width="500">
 
 - 자원 기반의 구조(ROA: Resource Oriented Architecture)
     - 설계의 중심에 Resoure가 있음

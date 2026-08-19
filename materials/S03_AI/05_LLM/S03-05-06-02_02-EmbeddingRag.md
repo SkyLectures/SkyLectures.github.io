@@ -46,7 +46,7 @@ categories: materials
 
 > - **참고**
 > <div class="insert-image" style="text-align: center;">
->   <img src="/materials/ai/images/S03-05-06-02_01-002.png" style="width: 90%;">
+>   <img src="/materials/S03_AI/images/S03-05-06-02_01-002.png" style="width: 90%;">
 > </div>
 {: .common-quote}
 

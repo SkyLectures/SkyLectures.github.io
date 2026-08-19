@@ -38,7 +38,7 @@ categories: materials
     - 서버가 사용자의 요청에 대한 처리 결과를 담아 웹 브라우저로 보내는 정보
     - 뷰 함수는 문자열, 템플릿 렌더링 결과, JSON 데이터 등을 응답으로 반환할 수 있음
 
-    <p style="text-align: center;"><img src='/materials/images/python/S01-04-03-02_01-001.png' width="700"/></p>
+    <p style="text-align: center;"><img src='/materials/images/S01_Python/S01-04-03-02_01-001.png' width="700"/></p>
 
     Flask 기반 애플리케이션의 전체적인 프로세스
     {:.figcaption}

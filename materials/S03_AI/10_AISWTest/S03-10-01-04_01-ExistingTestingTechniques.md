@@ -32,7 +32,7 @@ categories: materials
 ### 2.1 기존 소프트웨어의 동치 분할 테스트
 
 <div class="insert-image" style="text-align: center;">
-    <img src="/materials/ai/images/S03-10-01-04_01-001.png" style="width: 90%;">
+    <img src="/materials/S03_AI/images/S03-10-01-04_01-001.png" style="width: 90%;">
 </div>
 
 ### 2.2 AI 소프트웨어에 대한 적용 가능성 검토

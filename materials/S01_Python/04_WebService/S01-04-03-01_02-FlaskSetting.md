@@ -39,7 +39,7 @@ categories: materials
 
 - 프로젝트명이 앞에 나타나면 활성화 성공
 
-    <p style="text-align: center;"><img src='/materials/images/python/S01-04-03-01_02-001.png' width="700"/></p>
+    <p style="text-align: center;"><img src='/materials/images/S01_Python/S01-04-03-01_02-001.png' width="700"/></p>
 
 - 비활성화는 `deactivate` 명령어 사용
 
@@ -47,7 +47,7 @@ categories: materials
     deactivate
     ```
 
-    <p style="text-align: center;"><img src='/materials/images/python/S01-04-03-01_02-002.png' width="700"/></p>
+    <p style="text-align: center;"><img src='/materials/images/S01_Python/S01-04-03-01_02-002.png' width="700"/></p>
 
 ## 3. Flask 웹 프레임워크 설치
 
@@ -57,7 +57,7 @@ categories: materials
     pip install flask
     ```
 
-    <p style="text-align: center;"><img src='/materials/images/python/S01-04-03-01_02-003.png' width="800"/></p>
+    <p style="text-align: center;"><img src='/materials/images/S01_Python/S01-04-03-01_02-003.png' width="800"/></p>
 
 ## 4. 샘플코드 작성
 
@@ -97,11 +97,11 @@ from flask import Flask
     flask run
     ```
 
-    <p style="text-align: center;"><img src='/materials/images/python/S01-04-03-01_02-004.png' width="800"/></p>
+    <p style="text-align: center;"><img src='/materials/images/S01_Python/S01-04-03-01_02-004.png' width="800"/></p>
 
 ## 6. 웹 브라우저에서 작동 확인
 
 - http://127.0.0.1:5000/ 접속
 - `Hello, World` 출력 확인
 
-    <p style="text-align: center;"><img src='/materials/images/python/S01-04-03-01_02-005.png' width="700" style="border: 1px solid lightgray"/></p>
+    <p style="text-align: center;"><img src='/materials/images/S01_Python/S01-04-03-01_02-005.png' width="700" style="border: 1px solid lightgray"/></p>
