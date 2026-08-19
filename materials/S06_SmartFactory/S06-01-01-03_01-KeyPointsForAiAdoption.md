@@ -1,13 +1,16 @@
 ---
 layout: page
-title:  "현장 적용 관점에서의 AI 도입 포인트"
-date:   2026-07-21 11:30:00 +0900
+title: "현장 적용 관점에서의 AI 도입 포인트"
 permalink: /materials/S06-01-01-03_01-KeyPointsForAiAdoption
-categories: materials
+description: "제조산업을 위한 스마트팩토리에서 AI를 도입하고자 할 때, 현장 적용 관점에서 어떤 점을 갚게 고려해야 하는지 살펴봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
-
+{:toc}
 
 
 > **핵심 메시지:** 
@@ -16,11 +19,11 @@ categories: materials
 {: .expert-quote}
 
 
-## 1. PoC의 함정과 Pilot에서 Roll-out까지의 장벽
+## 1. PoC의 함정과 Roll-out까지의 장벽
 
-<div class="info-table"><b>[용어]</b> PoC (Proof of Concept): 개념 검증 / Roll-out: 전사 확대</div><br>
+<div class="info-table"><b>[용어]</b> PoC (Proof of Concept): 개념 검증 / Roll-out: 전사 확대</div>
 
-> - **Point:** &nbsp;&nbsp; 실험실(Colab/Jupyter Notebook)에서 잘 돌아가는 AI 모델이 <span style="color: darkred;">실제 공장에 적용되면 성능이 급격히 떨어지는 현상</span> 이해시키기
+> **Point:** &nbsp;&nbsp; 실험실(Colab/Jupyter Notebook)에서 잘 돌아가는 AI 모델이 <span style="color: darkred;">실제 공장에 적용되면 성능이 급격히 떨어지는 현상</span> 이해시키기
 {: .common-quote}
 
 - **주요 내용:**
@@ -43,9 +46,9 @@ categories: materials
 
 ## 2. ROI 산정과 문제지점의 명확화
 
-<div class="info-table"><b>[용어]</b> ROI(Return On Investment): 투자 대비 효과</div><br>
+<div class="info-table"><b>[용어]</b> ROI(Return On Investment): 투자 대비 효과</div>
 
-> - **Point:** &nbsp;&nbsp; <span style="color: darkred;">AI 기술이 멋져 보여서</span> 도입하는 것이 아니라, 현장의 확실한 <span style="color: darkred;">돈이 되는 문제</span>부터 풀어야 함
+> **Point:** &nbsp;&nbsp; <span style="color: darkred;">AI 기술이 멋져 보여서</span> 도입하는 것이 아니라, 현장의 확실한 <span style="color: darkred;">돈이 되는 문제</span>부터 풀어야 함
 {: .common-quote}
 
 - **주요 내용:**
@@ -94,9 +97,9 @@ categories: materials
 
 ## 3. 현장 작업자와의 협업 및 XAI(설명 가능한 AI)
 
-<div class="info-table"><b>[용어]</b> XAI(Explainable AI): 설명 가능한 AI</div><br>
+<div class="info-table"><b>[용어]</b> XAI(Explainable AI): 설명 가능한 AI</div>
 
-> - **Point:** &nbsp;&nbsp; 현장 베테랑 작업자의 노하우를 AI가 대체하는 것이 아니라 **'디지털 무기'로 쥐여주는 관점**이 필요함
+> **Point:** &nbsp;&nbsp; 현장 베테랑 작업자의 노하우를 AI가 대체하는 것이 아니라 **'디지털 무기'로 쥐여주는 관점**이 필요함
 {: .common-quote}
 
 - **주요 내용:**
@@ -116,9 +119,9 @@ categories: materials
 
 ## 4. OT와 IT(AI)의 융합 및 인터페이스 설계
 
-<div class="info-table"><b>[용어]</b> OT(Operational Technology): 운용 기술/운영 기술, 현장 제어 기술</div><br>
+<div class="info-table"><b>[용어]</b> OT(Operational Technology): 운용 기술/운영 기술, 현장 제어 기술</div>
 
-> - **Point:** &nbsp;&nbsp; AI 분석 결과를 현장에 어떻게 피드백할 것인가(Loop-back)의 문제
+> **Point:** &nbsp;&nbsp; AI 분석 결과를 현장에 어떻게 피드백할 것인가(Loop-back)의 문제
 {: .common-quote}
 
 - **주요 내용:**
@@ -142,11 +145,10 @@ categories: materials
 ## 5. 데이터 지속성 및 MLOps (Model Drift 대응)
 
 <div class="info-table">
-<b>[용어]</b> MLOps(Machine Learning Operations): 머신러닝 운영 체계/머신러닝 운용 자동화<br>
-AI 모델의 개발부터 현장 배포, 성능 감시, 재학습까지 전 과정을 지속적으로 관리·자동화하는 시스템
-</div><br>
+<b>[용어]</b> MLOps(Machine Learning Operations): 머신러닝 운영 체계/머신러닝 운용 자동화 AI 모델의 개발부터 현장 배포, 성능 감시, 재학습까지 전 과정을 지속적으로 관리·자동화하는 시스템
+</div>
 
-> - **Point:** &nbsp;&nbsp; AI 모델은 만드는 것으로 끝나지 않으며, 공장 설비처럼 지속해서 '유지보수'해야 함
+> **Point:** &nbsp;&nbsp; AI 모델은 만드는 것으로 끝나지 않으며, 공장 설비처럼 지속해서 '유지보수'해야 함
 {: .common-quote}
 
 - **주요 내용:**
@@ -156,20 +158,20 @@ AI 모델의 개발부터 현장 배포, 성능 감시, 재학습까지 전 과�
     - **재학습(Re-training) 체계 구축:**
         - 새로운 양품/불량 데이터를 주기적으로 수집하여 AI 모델을 업데이트하는 MLOps 체계의 필요성
 
+<br>
 
-
-## 📋 [워크시트/체크리스트 예제]
+## [워크시트/체크리스트 예제]
 
 > - **우리 공장 AI 도입 전 체크리스트 (5-Point Checklist)**<br><br>
->   - [ ] &nbsp; **1. Data Availability (데이터가 존재하는가?)** 
+>   - **1. Data Availability (데이터가 존재하는가?)** 
 >      - 원하는 이상을 감지할 수 있는 센서가 달려있고, 결측 없이 저장되고 있는가?
->   - [ ] &nbsp; **2. Clear Problem Definition (문제가 명확한가?)** 
+>   - **2. Clear Problem Definition (문제가 명확한가?)** 
 >      - "공정을 최적화하고 싶다"가 아니라 "3번 사출기의 불량률을 2%에서 0.5%로 낮춘다"처럼 구체적인가?
->   - [ ] &nbsp; **3. Domain Expert Involvement (현장 전문가가 참여하는가?)** 
+>   - **3. Domain Expert Involvement (현장 전문가가 참여하는가?)** 
 >      - AI 프로젝트팀에 10년 이상 경력의 현장 엔지니어가 포함되어 있는가?
->   - [ ] &nbsp; **4. Actionable Insight (결과를 얻으면 조치할 방법이 있는가?)** 
+>   - **4. Actionable Insight (결과를 얻으면 조치할 방법이 있는가?)** 
 >      - AI가 불량을 예측했을 때, 실제로 공정을 멈추거나 조건(Recipe)을 바꿀 수 있는 권한과 시스템이 있는가?
->   - [ ] &nbsp; **5. Safety & Interlock (안전 장치가 마련되어 있는가?)** 
+>   - **5. Safety & Interlock (안전 장치가 마련되어 있는가?)** 
 >      - AI 오작동 시 설비와 인명을 보호할 물리적 비상정지(Emergency Stop) 장치가 유효한가?
 {: .summary-quote}
 

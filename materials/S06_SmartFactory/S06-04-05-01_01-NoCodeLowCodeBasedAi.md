@@ -47,7 +47,7 @@ categories: materials
 - 노드(Line)로 이어 데이터 흐름을 만드는 방식으로 동작함
 
     <div class="insert-image" style="text-align: left;">
-        <img src="/materials/smartfactory/images/S06-04-05-01_01-001.png" style="width: 90%;">
+        <img src="/materials/S06_SmartFactory/images/S06-04-05-01_01-001.png" style="width: 90%;">
     </div>
 
 

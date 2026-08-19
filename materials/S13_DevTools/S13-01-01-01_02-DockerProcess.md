@@ -26,7 +26,7 @@ categories: materials
 {: .common-quote}
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-01-01-01_02-001_Docker_Process_User.png" style="width: 90%;">
+    <img src="/materials/S13_DevTools/images/S13-01-01-01_02-001_Docker_Process_User.png" style="width: 90%;">
 </div>
 
 1. **빌드 및 생성 (Build)**
@@ -66,7 +66,7 @@ categories: materials
 {: .common-quote}
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-01-01-01_02-002_Docker_Process_System.png" style="width: 90%;"><br>
+    <img src="/materials/S13_DevTools/images/S13-01-01-01_02-002_Docker_Process_System.png" style="width: 90%;"><br>
 </div>
 
 1. **빌드 및 이미지 생성 (Build System)**
@@ -109,7 +109,7 @@ categories: materials
 {: .common-quote}
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-01-01-01_02-003_Docker_Process_Compare.png" style="width: 90%;"><br>
+    <img src="/materials/S13_DevTools/images/S13-01-01-01_02-003_Docker_Process_Compare.png" style="width: 90%;"><br>
 </div>
 
 - **상단: 사용자 관점 (단순한 명령어 기반 흐름)**

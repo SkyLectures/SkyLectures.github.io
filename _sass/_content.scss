@@ -1,5 +1,5 @@
 .prose {
-    line-height: 1.75; // 전체 본문 줄 간격(행간) 설정
+    line-height: 1.5rem; // 전체 본문 줄 간격(행간) 설정
 
     // 문단(Paragraph) 간의 상하 간격 보장
     p {
@@ -9,10 +9,10 @@
 
     // 리스트(ul, ol) 내부 항목 간의 간격 보장
     ul, ol {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
 
         li {
-            margin-bottom: 0.4rem; // 목록 요소끼리 너무 붙지 않게 조정
+            margin-bottom: 0.3rem; // 목록 요소끼리 너무 붙지 않게 조정
         }
     }
 
@@ -205,9 +205,6 @@
             color: #24292f;
         }
 
-
-
-
         .nt {
             color: #116329;
         }
@@ -285,17 +282,17 @@ blockquote {
 }
 
 .split-content {
-    display: flex; 
-    gap: 1rem; 
-    flex-wrap: wrap; 
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
     margin: 0px 0px 10px 0px;
     padding: 0px;
     width: 100%;
 
     .split-content-element {
         flex: 1;
-        padding: 0px; 
-        border: 1px solid lightgray; 
+        padding: 0px;
+        border: 1px solid lightgray;
         border-radius: 10px;
     }
 
@@ -330,9 +327,122 @@ blockquote {
         font-weight: bold;
         font-size: 1.1rem;
         text-indent: 20px;
-    }    
+    }
 }
 
+.insert-image {
+    width: 900px;
+    max-width: 95%;
+    margin: 3em 1em 4em 3em;
+
+    img {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+    }
+
+    .caption {
+        display: block;
+        text-align: right;
+        font-size: 0.85rem;
+        line-height: 15px;
+        color: #555;
+        margin: 4px 10px 0px 10px;
+    }
+}
+
+.info-table {
+    border-collapse: collapse;
+    display: block;
+    margin: 0rem;    
+    padding: 0rem;
+    font-size: 0.85rem;
+    text-align: right;
+
+    table{
+        width: 97% !important;
+        margin-left: auto;
+        margin-right: 0;
+        caption-side: bottom;
+        text-align: right;
+        background-color: #ddd;
+    }
+
+    td, th {
+        padding: .5em .75em;
+        border: 0px solid;
+        text-align: center;
+    }
+
+    th {
+        background-color: #b4bbe4;
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: #000;
+    }
+
+    td {
+        background-color: #fff;
+    }
+
+    .td-rowheader {
+        background-color: #fed;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .td-left {
+        text-align: left;
+    }
+
+    .td-right {
+        text-align: right;
+    }
+
+    /* 짝수 행의 td, th */
+	tbody tr:nth-child(even) td, tbody tr:nth-child(even) th {
+		background-color: #ffffff;
+	}
+
+    /* 홀수 행의 td, th */
+	tbody tr:nth-child(odd) td, tbody tr:nth-child(odd) th {
+		background-color: #f5f5f5;
+	}
+
+    /* 짝수 행의 .td-rowheader */
+    tbody tr:nth-child(even) .td-rowheader {
+        background-color: #ffeedd;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    /* 홀수 행의 .td-rowheader */
+    tbody tr:nth-child(odd) .td-rowheader {
+        background-color: #fbe8d6;
+        font-weight: bold;
+        text-align: center;
+    }    
+
+    .caption {
+        display: block;
+        text-align: right;
+        font-size: 0.85rem;
+        line-height: 15px;
+        color: #555;
+        margin: 4px 10px 0px 10px;
+    }
+}
+
+.colab-link {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: right;
+
+    a:link, a:visited{
+        color: green;    
+    }
+}
 
 @media (max-width: 768px) {
     .content {

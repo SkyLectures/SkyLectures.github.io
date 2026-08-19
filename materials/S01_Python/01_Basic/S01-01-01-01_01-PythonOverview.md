@@ -1,9 +1,12 @@
 ---
 layout: page
-title: 파이썬 개요
+title: "파이썬 개요"
 permalink: /materials/S01-01-01-01_01-PythonOverview
-description: >
-    파이썬은 어떤 언어인지, 어떻게 시작되었고, 어떤 특징을 가지고 있는지 등을 다룹니다.
+description: "파이썬은 어떤 언어인지, 어떻게 시작되었고, 어떤 특징을 가지고 있는지 등을 살펴봅니다."
+categories:
+    - materials
+tags:
+    - python
 ---
 * toc
 {:toc}

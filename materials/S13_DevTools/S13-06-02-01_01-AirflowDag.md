@@ -297,7 +297,7 @@ categories: materials
 
 
 <div class="insert-image" style="text-align: center;">
-    <img src="/materials/devtools/images/S13-06-02-01_01-003_AirflowDagUsecase.png" style="width: 100%;">
+    <img src="/materials/S13_DevTools/images/S13-06-02-01_01-003_AirflowDagUsecase.png" style="width: 100%;">
 </div>
 
 
@@ -713,5 +713,5 @@ with DAG(
     <br>
 
     <div class="insert-image" style="text-align: center; border: solid 1px lightgray;">
-        <img src="/materials/devtools/images/S13-06-02-01_01-004.png" style="width: 100%;">
+        <img src="/materials/S13_DevTools/images/S13-06-02-01_01-004.png" style="width: 100%;">
     </div>

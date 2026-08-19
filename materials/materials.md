@@ -21,22 +21,22 @@ qna: false
     - [Numpy](/materials/S01-01-04-02_01-Numpy)
     - [Pandas](/materials/S01-01-04-03_01-Pandas)
     - [Matplotlib](/materials/S01-01-04-04_01-Matplotlib)
-    - [Seaborn](/materials/S01-01-04-05_01-Seaborn)
+    - [Seaborn (작업중)](/materials/S01-01-04-05_01-Seaborn)
 </div>
 <div class="split-content-element" markdown="1">
 <span class="split-content-title-purple">파이썬 중급</span>
 - [값의 처리와 변수](/materials/S01-02-01-01_01-Variables)
 - [연산자](/materials/S01-02-02-01_01-Operatros)
-- [자료형](/materials/S01-02-03-01_01-DataTypes)
-- [제어문](/materials/S01-02-06-01_01-ControlStatements)
-- [예외처리](/materials/S01-02-07-01_01-Exceptions)
+- [자료형 (작업중)](/materials/S01-02-03-01_01-DataTypes)
+- [제어문 (작업중)](/materials/S01-02-06-01_01-ControlStatements)
+- [예외처리 (작업중)](/materials/S01-02-07-01_01-Exceptions)
 - [일반 함수](/materials/S01-02-08-01_01-Functions)
-- [내장함수](/materials/S01-02-09-01_01-BuiltInFunctions)
+- [내장함수 (작업중)](/materials/S01-02-09-01_01-BuiltInFunctions)
 - [클래스](/materials/S01-02-10-01_01-Classes)
-- [모듈, 패키지](/materials/S01-02-11-01_01-Modules)
-- [표준 입출력](/materials/S01-02-12-01_01-InputOutput)
-- [파일처리](/materials/S01-02-13-01_01-FileHandling)
-- [정규표현식](/materials/S01-02-14-01_01-RegularExpressions)
+- [모듈, 패키지 (작업중)](/materials/S01-02-11-01_01-Modules)
+- [표준 입출력 (작업중)](/materials/S01-02-12-01_01-InputOutput)
+- [파일처리 (작업중)](/materials/S01-02-13-01_01-FileHandling)
+- [정규표현식 (작업중)](/materials/S01-02-14-01_01-RegularExpressions)
 </div>
 <div class="split-content-element" markdown="1">
 <span class="split-content-title">파이썬 고급</span>

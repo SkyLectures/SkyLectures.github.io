@@ -36,7 +36,7 @@ categories: materials
 
 <div class="insert-image">
     <h3>Trino Architecture</h3>
-    <img src="/materials/devtools/images/S13-04-01-01_01-001_Trino_Architecture.png" style="width: 90%;">
+    <img src="/materials/S13_DevTools/images/S13-04-01-01_01-001_Trino_Architecture.png" style="width: 90%;">
 </div>
 
 

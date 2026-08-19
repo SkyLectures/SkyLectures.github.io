@@ -456,7 +456,7 @@ services:
         ```
 
         <div class="insert-image" style="text-align: left; border: 1px solid darkgray;">
-            <img src="/materials/devtools/images/S13-05-01-02_01-001.png" style="width: 100%;">
+            <img src="/materials/S13_DevTools/images/S13-05-01-02_01-001.png" style="width: 100%;">
         </div>
 
     - **3단계 : Worker가 실제로 분산 처리하는지 확인**
@@ -494,8 +494,8 @@ services:
         ```
 
         <div class="insert-image" style="text-align: left; border: 1px solid darkgray;">
-            <img src="/materials/devtools/images/S13-05-01-02_01-002.png" style="width: 100%;"><br><br>
-            <img src="/materials/devtools/images/S13-05-01-02_01-003.png" style="width: 100%;">
+            <img src="/materials/S13_DevTools/images/S13-05-01-02_01-002.png" style="width: 100%;"><br><br>
+            <img src="/materials/S13_DevTools/images/S13-05-01-02_01-003.png" style="width: 100%;">
         </div>
 
         - Spark Cluster는 정상작동 중
@@ -626,7 +626,7 @@ services:
                 - 예상 출력: Host의 파일이 그대로 보여야 함
 
                 <div class="insert-image" style="text-align: left; border: 1px solid darkgray;">
-                    <img src="/materials/devtools/images/S13-05-01-02_01-004.png" style="width: 100%;">
+                    <img src="/materials/S13_DevTools/images/S13-05-01-02_01-004.png" style="width: 100%;">
                 </div>
 
                 ```text
@@ -786,7 +786,7 @@ services:
                             - 결과
 
                             <div class="insert-image" style="text-align: left; border: 1px solid darkgray;">
-                                <img src="/materials/devtools/images/S13-05-01-02_01-005.png" style="width: 100%;">
+                                <img src="/materials/S13_DevTools/images/S13-05-01-02_01-005.png" style="width: 100%;">
                             </div>
 
         - **실제 분산 여부 확인**
@@ -821,8 +821,8 @@ services:
             ```
 
             <div class="insert-image" style="text-align: left; border: 1px solid darkgray;">
-                <img src="/materials/devtools/images/S13-05-01-02_01-006.png" style="width: 100%;"><br><br>
-                <img src="/materials/devtools/images/S13-05-01-02_01-007.png" style="width: 100%;">
+                <img src="/materials/S13_DevTools/images/S13-05-01-02_01-006.png" style="width: 100%;"><br><br>
+                <img src="/materials/S13_DevTools/images/S13-05-01-02_01-007.png" style="width: 100%;">
             </div>
 
 
@@ -936,7 +936,7 @@ services:
             ```
 
             <div class="insert-image" style="text-align: left; border: 1px solid darkgray;">
-                <img src="/materials/devtools/images/S13-05-01-02_01-008.png" style="width: 100%;">
+                <img src="/materials/S13_DevTools/images/S13-05-01-02_01-008.png" style="width: 100%;">
             </div>
 
 
@@ -1118,8 +1118,8 @@ services:
             ```
 
             <div class="insert-image" style="text-align: left; border: 1px solid darkgray;">
-                <img src="/materials/devtools/images/S13-05-01-02_01-010.png" style="width: 100%;"><br>
-                <img src="/materials/devtools/images/S13-05-01-02_01-011.png" style="width: 100%;">
+                <img src="/materials/S13_DevTools/images/S13-05-01-02_01-010.png" style="width: 100%;"><br>
+                <img src="/materials/S13_DevTools/images/S13-05-01-02_01-011.png" style="width: 100%;">
             </div>
 
 
@@ -1194,7 +1194,7 @@ services:
         - 그런데 추가해 주어도 오류가 발생할 것임 🡲 client와 worker의 계정이 다름
 
             <div class="insert-image" style="text-align: left; border: 1px solid darkgray;">
-                <img src="/materials/devtools/images/S13-05-01-02_01-012.png" style="width: 100%;">
+                <img src="/materials/S13_DevTools/images/S13-05-01-02_01-012.png" style="width: 100%;">
             </div>
 
             - 애초에 Local 시스템을 대상으로 만들어진 것이 아니어서 이런 권한문제가 발생함
@@ -1214,7 +1214,7 @@ services:
                     ```                    
 
                 <div class="insert-image" style="text-align: left; border: 1px solid darkgray;">
-                    <img src="/materials/devtools/images/S13-05-01-02_01-013.png" style="width: 100%;">
+                    <img src="/materials/S13_DevTools/images/S13-05-01-02_01-013.png" style="width: 100%;">
                 </div>
 
                 - 참고: 컨테이너의 이미지에 따라 사용자 설정방식이 모두 다름
@@ -1267,8 +1267,8 @@ services:
                 ```
 
             <div class="insert-image" style="text-align: left; border: 1px solid darkgray;">
-                <img src="/materials/devtools/images/S13-05-01-02_01-014.png" style="width: 100%;"><br>
-                <img src="/materials/devtools/images/S13-05-01-02_01-015.png" style="width: 100%;">
+                <img src="/materials/S13_DevTools/images/S13-05-01-02_01-014.png" style="width: 100%;"><br>
+                <img src="/materials/S13_DevTools/images/S13-05-01-02_01-015.png" style="width: 100%;">
             </div>
 
 
@@ -1441,7 +1441,7 @@ services:
     ```
 
     <div class="insert-image" style="text-align: left; border: 1px solid darkgray;">
-        <img src="/materials/devtools/images/S13-05-01-02_01-016.png" style="width: 100%;">
+        <img src="/materials/S13_DevTools/images/S13-05-01-02_01-016.png" style="width: 100%;">
     </div>
 
 - **예제 코드 상세 설명**

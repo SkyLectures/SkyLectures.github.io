@@ -316,7 +316,7 @@ categories: materials
 <br>
 
 <div class="insert-image">
-    <img src="/materials/smartfactory/images/S06-04-01-02_01-001.png" style="width: 90%;"><br><br>
+    <img src="/materials/S06_SmartFactory/images/S06-04-01-02_01-001.png" style="width: 90%;"><br><br>
     <caption>시계열 센서 데이터(Continuous)와 4M 컨텍스트 데이터(Discrete)를<br>특정 <b>'Time Window(시간 창)'</b>이나 <b>'Lot ID'</b>를 기준으로 어떻게 조인(Join)하고 융합 구조를 만드는지 시각적으로 보여주는 그림</caption>
 </div>
 

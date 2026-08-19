@@ -23,7 +23,7 @@ categories: materials
     - 예방 조치 수행
 
     <div class="insert-image">
-        <img style="width: 800px;" src="/materials/smartfactory/images/S06-03-03-01_01-001.png"><br>
+        <img style="width: 800px;" src="/materials/S06_SmartFactory/images/S06-03-03-01_01-001.png"><br>
         <div style="text-align:right;">(그림출처: 아이다랩(AiDALab))</div>
     </div>
 
@@ -58,7 +58,7 @@ categories: materials
         - 문제 발생 구간을 최소화하고 신속하게 대응
 
         <div class="insert-image">
-            <img style="width: 800px;" src="/materials/smartfactory/images/S06-03-03-01_01-002.png"><br>
+            <img style="width: 800px;" src="/materials/S06_SmartFactory/images/S06-03-03-01_01-002.png"><br>
             <div style="text-align:right;">(그림출처: 아이다랩(AiDALab))</div>
         </div>
 
@@ -108,7 +108,7 @@ categories: materials
 - 이 둘을 연계함으로써 얻을 수 있는 <span style="color: darkred;">**강력한 시너지**</span>가 바로 연계의 핵심 이유
 
     <div class="insert-image">
-        <img style="width: 600px;" src="/materials/smartfactory/images/S06-03-03-01_01-003.png"><br>
+        <img style="width: 600px;" src="/materials/S06_SmartFactory/images/S06-03-03-01_01-003.png"><br>
         <div style="text-align:right;">(그림출처: 아이다랩(AiDALab))</div>
     </div>
 

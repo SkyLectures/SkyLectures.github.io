@@ -67,7 +67,7 @@ categories: materials
 - 현대적인 오케스트레이션 엔진은 내부적으로 고도의 분산 시스템 구조를 채택하고 있음
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/devtools/images/S13-06-03-01_01-001_AirflowAutomation.png" style="width: 60%;">
+        <img src="/materials/S13_DevTools/images/S13-06-03-01_01-001_AirflowAutomation.png" style="width: 60%;">
     </div>
 
     1. **컨트롤 플레인 & 스케줄러 (Control Plane & Scheduler):**
@@ -988,7 +988,7 @@ docker compose ps
 - **데이터 제어 흐름 구조 (Data Control Flow)**
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/devtools/images/S13-06-03-01_01-008.png" style="width: 90%;">
+        <img src="/materials/S13_DevTools/images/S13-06-03-01_01-008.png" style="width: 90%;">
     </div>
 
 
@@ -1205,7 +1205,7 @@ docker compose ps
         - 초반의 성공 이후, 설정이 안정화된 뒤에는 처리 시간도 크게 감소하였음
         
         <div class="insert-image" style="border: 1px solid lightgray;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-002.png" style="width: 100%;">
+            <img src="/materials/S13_DevTools/images/S13-06-03-01_01-002.png" style="width: 100%;">
         </div>
 
     2. **Trigger 실행 결과**
@@ -1214,14 +1214,14 @@ docker compose ps
             - 설정 수정에 따른 안정화 후 소요 시간이 급감했음을 확인
 
         <div class="insert-image" style="border: 1px solid lightgray;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-003.png" style="width: 100%;">
+            <img src="/materials/S13_DevTools/images/S13-06-03-01_01-003.png" style="width: 100%;">
         </div>
 
     3. **task_kafka_kr_ingest의 로그**
         - 3개의 Kafka 볼륨에 제대로 복제, 저장되었음
 
         <div class="insert-image" style="border: 1px solid lightgray;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-004.png" style="width: 100%;">
+            <img src="/materials/S13_DevTools/images/S13-06-03-01_01-004.png" style="width: 100%;">
         </div>
 
     4. **task_spark_transform의 로그**
@@ -1233,19 +1233,19 @@ docker compose ps
             - 진짜 내부 예외(Exception)가 발생했다면 스파크 특유의 거대한 StackTrace 자바 에러 문단이 출력되어야 함
 
         <div class="insert-image" style="border: 1px solid lightgray;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-005.png" style="width: 100%;">
+            <img src="/materials/S13_DevTools/images/S13-06-03-01_01-005.png" style="width: 100%;">
         </div>
 
     5. **task_minio_raw_backup 로그**
         - 데이터의 적재가 정상적으로 완료되었음
 
         <div class="insert-image" style="border: 1px solid lightgray;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-006.png" style="width: 100%;">
+            <img src="/materials/S13_DevTools/images/S13-06-03-01_01-006.png" style="width: 100%;">
         </div>
 
     6. **task_vector_upsert_qdrant의 로그**
         - 데이터의 Upsert가 정상적으로 완료되었음
 
         <div class="insert-image" style="border: 1px solid lightgray;">
-            <img src="/materials/devtools/images/S13-06-03-01_01-007.png" style="width: 100%;">
+            <img src="/materials/S13_DevTools/images/S13-06-03-01_01-007.png" style="width: 100%;">
         </div>

@@ -59,7 +59,7 @@ categories: materials
 - 마스터-워커 구조를 온전히 이해하려면 사용자의 애플리케이션이 실행되는 과정에서의 상호작용을 보아야 함
 
 <div class="insert-image" style="text-align: left;">
-    <img src="/materials/devtools/images/S13-05-01-01_01-002_Spark_Lifecycle.png" style="width: 60%;">
+    <img src="/materials/S13_DevTools/images/S13-05-01-01_01-002_Spark_Lifecycle.png" style="width: 60%;">
 </div>
 
 - **프로세스 순서에 따른 작동 흐름 (Lifecycle)**
@@ -113,7 +113,7 @@ categories: materials
 ### 1.3 각 핵심 모듈별 상세 역할
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-05-01-01_01-001_Spark_Architecture_1.png" style="width: 90%;">
+    <img src="/materials/S13_DevTools/images/S13-05-01-01_01-001_Spark_Architecture_1.png" style="width: 90%;">
 </div>
 
 - **드라이버 프로그램 (Driver Program)**

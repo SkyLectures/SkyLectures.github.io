@@ -1,9 +1,13 @@
 ---
 layout: page
-title:  "파이썬 라이브러리: Matplotlib"
-date:   2025-03-01 10:00:00 +0900
+title: "Matplotlib"
 permalink: /materials/S01-01-04-04_01-Matplotlib
-categories: materials
+description: "파이썬의 외부 라이브러리 중 그래프 처리를 위해 가장 흔희 사용되는 Matplotlib 라이브러리에 대하여 살펴봅니다."
+categories:
+    - materials
+tags:
+    - python
+    - matplotlib
 ---
 * toc
 {:toc}

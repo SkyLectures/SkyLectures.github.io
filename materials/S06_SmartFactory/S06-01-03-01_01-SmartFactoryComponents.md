@@ -86,7 +86,7 @@ categories: materials
 
 <div style="text-align:center;"><h4>스마트팩토리의 5대 요건</h4></div>
 <div class="insert-image">
-    <img src="/materials/smartfactory/images/S06-01-03-01_01-002.png"><br>
+    <img src="/materials/S06_SmartFactory/images/S06-01-03-01_01-002.png"><br>
     (자료출처: 스마트제조혁신추진단 https://www.smart-factory.kr/usr/pr/sf/ma/smrtFctryIntrcn)
 </div>
 
@@ -355,7 +355,7 @@ categories: materials
 
 <div style="text-align:center;"><h4>스마트팩토리의 구성요소 및 기술 연관도</h4></div>
 <div class="insert-image" style="text-align: center;">
-    <img style="width: 700px;" src="/materials/smartfactory/images/S06-01-03-01_01-003.png"><br>
+    <img style="width: 700px;" src="/materials/S06_SmartFactory/images/S06-01-03-01_01-003.png"><br>
     자료출처: 아이다랩(AiDALab)
 </div>
 <br>

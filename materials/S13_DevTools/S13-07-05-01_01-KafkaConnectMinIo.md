@@ -63,7 +63,7 @@ categories: materials
 ## 2. Kafka Connect의 핵심 구조 및 아키텍처
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-07-05-01_01-001_KafkaConnectArchitecture.png" style="width: 80%;">
+    <img src="/materials/S13_DevTools/images/S13-07-05-01_01-001_KafkaConnectArchitecture.png" style="width: 80%;">
 </div>
 
 > - Kafka Connect가 데이터 소스와 목적지 사이에서 어떻게 데이터를 주고받는지 보여주는 핵심 다이어그램
@@ -143,7 +143,7 @@ categories: materials
 - 실습에서 구현할 실시간 스트리밍 데이터 파이프라인의 전체 아키텍처
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-07-05-01_01-002_KafkaConnectMinIo.png" style="width: 80%;">
+    <img src="/materials/S13_DevTools/images/S13-07-05-01_01-002_KafkaConnectMinIo.png" style="width: 80%;">
 </div>
 
 - **관련 기술 구성 요소 설명**
@@ -458,7 +458,7 @@ categories: materials
                 - flush.size: 1 규칙에 의해 메시지를 쏠 때마다 실시간으로 파티션 폴더 안에 *.json 정품 물리 파일들이 개수대로 적재되어 있는 모습을 확인
 
                 <div class="insert-image">
-                    <img src="/materials/devtools/images/S13-07-05-01_01-003_Bucket.png" style="width: 90%;">
+                    <img src="/materials/S13_DevTools/images/S13-07-05-01_01-003_Bucket.png" style="width: 90%;">
                 </div>
 
 - **[4단계] 파이썬 실시간 시뮬레이터 구동 (`stream_producer.py`)**

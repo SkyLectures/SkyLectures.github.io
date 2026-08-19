@@ -1,9 +1,12 @@
 ---
 layout: page
-title:  "파이썬 기본 문법"
-date:   2025-03-01 10:00:00 +0900
+title: "파이썬 기본 문법"
 permalink: /materials/S01-01-03-01_01-PythonBasic
-categories: materials
+description: "파이썬의 가장 기본적인 문법을 살펴봅니다. 기본적인 자료형, 제어문 등을 포함합니다."
+categories:
+    - materials
+tags:
+    - python
 ---
 * toc
 {:toc}

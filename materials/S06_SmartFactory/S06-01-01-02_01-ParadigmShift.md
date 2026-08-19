@@ -1,17 +1,22 @@
 ---
 layout: page
-title:  "제조산업의 패러다임 변화"
-date:   2025-08-23 10:00:00 +0900
+title: "제조산업의 패러다임 변화"
 permalink: /materials/S06-01-01-02_01-ParadigmShift
-categories: materials
+description: "산업혁명에 따른 변화와 4차 산업혁명을 거쳐 제조산업이 밟아 온 패러다임의 변화를 살펴봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
 > 스마트팩토리는 산업혁명의 흐름과 궤를 같이하며 발전해 옴<br>
 > &nbsp;&nbsp;&nbsp;&nbsp;<span style="color: darkorange;">참고: 아래의 내용 중, 산업활동의 영역에 대한 설명은 학문적으로 증명된 내용이 아니라, 산업영역의 확장을 설명하기 위한 강사 개인의 의견임</span>
 {: .common-quote}
+
+<br>
 
 ## 1. 변화의 시작: 4차 산업혁명
 
@@ -19,10 +24,10 @@ categories: materials
 
 - 산업형명이 야기한 변화는 크게 산업활동의 기반 에너지의 변화와 산업활동의 대상 공간의 변화로 구분하여 생각할 수 있음
 
-<div style="text-align:center;"><h4>산업혁명 단계별 산업활동 영역의 변화</h4></div>
 <div class="insert-image">
-    <img src="/materials/smartfactory/images/S06-01-01-02_01-001.png"><br>
-    <caption>(그림출처: 아이다랩(AiDALab))</caption>
+    <h3 style="text-align: center">산업혁명 단계별 산업활동 영역의 변화</h3>
+    <img src="/materials/S06_SmartFactory/images/S06-01-01-02_01-001.png">
+    <span class="caption">(Source: Sky Lectures / AiDALab)</span>
 </div>
 
 - **1차 산업혁명 (18세기 후반): 증기기관과 기계화**
@@ -72,8 +77,9 @@ categories: materials
         - 2014년부터 스마트팩토리 시범사업 시작
         - 2022년까지 약 3만 개의 중소기업을 스마트팩토리로 전환하는 사업 진행 등 활발히 확산 중
 
+<br>
 
-## 2. 제조업 혁신의 로드맵: Industry 4.0과 스마트팩토리의 등장
+## 2. 제조업 혁신의 로드맵: 스마트팩토리의 등장
 
 ### 2.1 Industry 4.0
 - 4차 산업혁명이 제조업 분야에 적용되는 구체적인 전략적 비전
@@ -113,16 +119,17 @@ categories: materials
     - 전통적인 자동화를 넘어 AI와 연계
     - 생산의 유연성과 효율성을 극대화
 
-<div style="text-align:center;"><h4>스마트팩토리의 주요 기술 간의 연관성</h4></div>
 <div class="insert-image">
-    <img style="width: 800px;" src="/materials/smartfactory/images/S06-01-01-02_01-002.png"><br>    
-    <caption>(그림출처: 아이다랩(AiDALab))</caption>
+    <h3 style="text-align: center">스마트팩토리의 주요 기술 간의 연관성</h3>
+    <img style="width: 800px;" src="/materials/S06_SmartFactory/images/S06-01-01-02_01-002.png">
+    <span class="caption">(Source: Sky Lectures / AiDALab)</span>
 </div>
 
+<br>
 
 ## 3. 경영의 총체적 혁신: DX (디지털 전환)
 
-### 3.1 DX(Digital Transformation, 디지털 전환)
+### 3.1 DX (Digital Transformation)
 
 - Industry 4.0이 제조업의 '생산 시스템'에 대한 기술적 로드맵이라면
 - DX는 이를 통해 달성하고자 하는 기업의 <span style="color:darkred;">**'전사적인 비즈니스 모델 및 운영 방식 혁신'**</span>을 의미
@@ -138,7 +145,7 @@ categories: materials
 
 ### 3.3 AI 및 관련 기술의 역할
 
-- **인공지능(AI)**
+- **인공지능 (AI)**
     - 고객 데이터 분석을 통한
     - 맞춤형 마케팅, 공급망 예측 최적화, 신제품 개발 가속화 등
     - DX의 전 영역에서 의사결정과 자동화를 지원
@@ -149,6 +156,7 @@ categories: materials
 - **메타버스, AR/VR/XR** 
     - 고객과의 새로운 상호작용 방식이나 몰입형 협업/교육 환경을 제공함으로써 DX를 확장
 
+<br>
 
 ## 4. 미래 제조업의 지향점: Industry 5.0
 
@@ -186,23 +194,16 @@ categories: materials
     - 생산성뿐만 아니라 작업자의 삶의 질 향상, 친환경 생산, 예측 불가능한 외부 충격에 강한 유연한 생산 시스템 구축
     - 이를 통해 더 나은 사회를 만들고 기업의 지속 가능한 성장을 도모함
 
-<div style="text-align:center;"><h4>제조산업의 패러다임 변화</h4></div>
 <div class="insert-image">
-    <img style="width: 800px;" src="/materials/smartfactory/images/S06-01-01-02_01-003.png"><br>
-    (그림출처: 아이다랩(AiDALab))
+    <h3 style="text-align: center">제조산업의 패러다임 변화</h3>
+    <img style="width: 800px;" src="/materials/S06_SmartFactory/images/S06-01-01-02_01-003.png">
+    <span class="caption">(Source: Sky Lectures / AiDALab)</span>
 </div>
 
 > - 4차 산업혁명이 도래하면서 제조업은 **DX**라는 총체적인 혁신 전략을 통해 **Industry 4.0**을 구현하고 스마트팩토리를 건설하고 있음<br>
 > - 이 과정에서 **AI와 빅데이터, IoT, 클라우드, CPS, 디지털 트윈** 등 수많은 첨단 기술들이 유기적으로 결합되어 지능형 생산 환경을 만들고 있음<br>
 > - 이러한 기술적, 효율적 발전을 기반으로 인간의 가치를 최우선에 두는 **Industry 5.0** 시대로 진화하며 지속 가능한 미래 제조업을 향해 나아가고 있음
 {: .expert-quote}
-
-<br><br>
-
-<div class="insert-image">
-    <img src="/materials/smartfactory/images/S06-01-01-02_01-004.png"><br>
-    (자료출처: nickel vol.35 no.2 summer 2020 https://nickelinstitute.org/media/8d876bb19cf7012/nickelvol35no2summer2020_eng_fb-4.pdf)
-</div>
 
 ### 4.2 스마트팩토리의 현재
 

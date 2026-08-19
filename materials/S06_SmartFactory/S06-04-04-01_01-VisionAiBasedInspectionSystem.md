@@ -92,7 +92,7 @@ categories: materials
 - 실제 공장에 설치되는 비전 AI 검사기 장비 내부의 데이터 흐름 순서에 맞추어 4개 계층으로 나눔
 
     <div class="insert-image" style="text-align: left;">
-        <img src="/materials/smartfactory/images/S06-04-04-01_01-001.png" style="width: 90%;">
+        <img src="/materials/S06_SmartFactory/images/S06-04-04-01_01-001.png" style="width: 90%;">
     </div>
 
 

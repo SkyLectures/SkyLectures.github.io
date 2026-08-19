@@ -16,7 +16,7 @@ categories: materials
 {: .summary-quote}
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-01-01-01_02-004_Docker_Workflow.png" style="width: 90%;"><br>
+    <img src="/materials/S13_DevTools/images/S13-01-01-01_02-004_Docker_Workflow.png" style="width: 90%;"><br>
 </div>
 
 

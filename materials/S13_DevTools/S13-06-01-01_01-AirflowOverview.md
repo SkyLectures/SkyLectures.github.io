@@ -109,7 +109,7 @@ categories: materials
 - Airflow는 확장성과 모니터링을 위해 여러 분산 컴포넌트로 구성됨
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/devtools/images/S13-06-01-01_01-001_AirflowArchitecture.jpg" style="width: 90%;"><br>
+        <img src="/materials/S13_DevTools/images/S13-06-01-01_01-001_AirflowArchitecture.jpg" style="width: 90%;"><br>
         출처: Shutterstock
     </div>
 
@@ -380,7 +380,7 @@ categories: materials
     - 실행 후 `http://localhost:8080`으로 접속 (기본 계정: `airflow` / `airflow`)
 
         <div class="insert-image" style="text-align: center; border: solid 1px lightgray;">
-            <img src="/materials/devtools/images/S13-06-01-01_01-002_AirflowWebUi.png" style="width: 100%;">
+            <img src="/materials/S13_DevTools/images/S13-06-01-01_01-002_AirflowWebUi.png" style="width: 100%;">
         </div>
 
 
@@ -532,7 +532,7 @@ categories: materials
         ```
 
     <div class="insert-image" style="text-align: center; border: solid 1px lightgray;">
-        <img src="/materials/devtools/images/S13-06-01-01_01-003.png" style="width: 100%;">
+        <img src="/materials/S13_DevTools/images/S13-06-01-01_01-003.png" style="width: 100%;">
     </div>
 
 <br>

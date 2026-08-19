@@ -47,7 +47,7 @@ categories: materials
 ## 2. 아키텍처 및 핵심 기술
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-99-01-01_01-001_MinIo_Iceberg_Data_Pipeline.png" style="width: 60%;">
+    <img src="/materials/S13_DevTools/images/S13-99-01-01_01-001_MinIo_Iceberg_Data_Pipeline.png" style="width: 60%;">
 </div>
 
 

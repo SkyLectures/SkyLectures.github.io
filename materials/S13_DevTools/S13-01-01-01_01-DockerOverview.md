@@ -50,7 +50,7 @@ categories: materials
 {: .common-quote}
 
 <div class="insert-image" style="text-align: right;">
-    <img src="/materials/devtools/images/S13-01-01-01_01-001_Docker_Architecture.png" style="width: 90%;">
+    <img src="/materials/S13_DevTools/images/S13-01-01-01_01-001_Docker_Architecture.png" style="width: 90%;">
 </div>
 
 ### 2.1 도커의 전체 구성요소
@@ -418,7 +418,7 @@ categories: materials
 </div>
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-01-01-01_01-002_Docker_vs_VM.png" style="width: 70%;">
+    <img src="/materials/S13_DevTools/images/S13-01-01-01_01-002_Docker_vs_VM.png" style="width: 70%;">
 </div>
 
 

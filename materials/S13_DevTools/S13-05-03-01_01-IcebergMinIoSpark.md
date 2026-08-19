@@ -112,7 +112,7 @@ categories: materials
 ### 3.1 전체 구조의 이해
 
 <div class="insert-image" style="text-align: left;">
-    <img src="/materials/devtools/images/S13-05-03-01_01-001.png" style="width: 60%;">
+    <img src="/materials/S13_DevTools/images/S13-05-03-01_01-001.png" style="width: 60%;">
 </div>
 
 - **Iceberg는 DB가 아님**
@@ -143,7 +143,7 @@ categories: materials
     - 실제 저장은 MinIO가 담당
 
     <div class="insert-image">
-        <img src="/materials/devtools/images/S13-05-03-01_01-002.png" style="width: 100%;">
+        <img src="/materials/S13_DevTools/images/S13-05-03-01_01-002.png" style="width: 100%;">
     </div>
 
 - **구성요소별 역할**

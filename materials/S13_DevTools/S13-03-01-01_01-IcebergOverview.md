@@ -109,7 +109,7 @@ categories: materials
 - 이 구조 덕분에 O(1)에 가까운 속도로 쿼리 플래닝이 가능함
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-03-01-01_01-001_Iceberg_Architecture.png" style="width: 60%;">
+    <img src="/materials/S13_DevTools/images/S13-03-01-01_01-001_Iceberg_Architecture.png" style="width: 60%;">
 </div>
 
 - **Catalog Layer:**

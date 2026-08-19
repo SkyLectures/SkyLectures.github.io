@@ -34,7 +34,7 @@ categories: materials
 ### 1.2 분산 데이터 처리의 개념
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-05-01-01_01-001_DistributedDataProcessing.png" style="width: 90%;">
+    <img src="/materials/S13_DevTools/images/S13-05-01-01_01-001_DistributedDataProcessing.png" style="width: 90%;">
 </div>
 
 - **1단계: 데이터 분할 및 분산 저장 (Data Partitioning & Distributed Storage)**

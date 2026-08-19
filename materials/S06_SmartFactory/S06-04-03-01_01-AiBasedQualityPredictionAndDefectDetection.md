@@ -89,6 +89,6 @@ categories: materials
         - 기업의 지속 가능한 품질 경쟁력 확보에 결정적인 역할을 담당
 
     <div class="insert-image" style="text-align: center;">
-        <img src="/materials/smartfactory/images/S06-04-03-01_01-001.png" style="width: 90%;"><br><br>
+        <img src="/materials/S06_SmartFactory/images/S06-04-03-01_01-001.png" style="width: 90%;"><br><br>
         품질 관리의 발전 단계
     </div>

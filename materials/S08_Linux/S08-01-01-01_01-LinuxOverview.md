@@ -97,8 +97,8 @@ categories: materials
         - 리눅스는 '장난감' 수준을 넘어 '유닉스를 대체할 강력한 서버 운영체제'로 인정받음
 
     <div class="insert-image">
-        <img src="/materials/linux/images/S08-01-01-01_01-001.png" style="width: 60%;"><br>
-        수많은 리눅스 배포판들 (그림출처: <a href="https://www.reddit.com/r/linux/comments/nt1tm9/i_made_a_uniform_icon_set_of_linux_distribution/?tl=ko#lightbox" target="_blank">walrusz (reddit.com)</a>)
+        <img src="/materials/S08_Linux/images/S08-01-01-01_01-001.png" style="width: 60%;"><br>
+        수많은 리눅스 배포판들 (그림출처: <a href="https://www.reddit.com/r/S08_Linux/comments/nt1tm9/i_made_a_uniform_icon_set_of_linux_distribution/?tl=ko#lightbox" target="_blank">walrusz (reddit.com)</a>)
     </div>
 
 5. **확장 및 지배기 (2010년대 ~ 현재)** 🡲 모바일, 클라우드, 그리고 AI의 표준

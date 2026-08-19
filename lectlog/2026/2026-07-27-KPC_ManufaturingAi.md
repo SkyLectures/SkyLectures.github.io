@@ -1,8 +1,14 @@
 ---
 layout: page
-title:  "제조 산업과 AI 활용 과정 2차(21H)"
+title: "제조 산업과 AI 활용 과정 2차(21H)"
 permalink: /lectlog/2026-07-27-KPC_ManufaturingAi
-categories: lectlog
+description: "제조 현장의 실무자 및 구직자를 대상으로 현장의 노하우를 데이터화하고, 비전 AI와 예지 정비 등을 활용해 스마트팩토리 공정을 최적화하는 실무 역량 강화 교육 과정"
+categories:
+    - lectlog
+tags:
+    - smartfactory
+    - manufacturing
+    - ai
 ---
 * toc
 {:toc}

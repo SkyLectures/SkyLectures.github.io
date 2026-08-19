@@ -1,12 +1,16 @@
 ---
 layout: page
-title:  "파이썬 가상환경 설정"
-date:   2025-03-01 10:00:00 +0900
+title: "파이썬 가상환경 설정"
 permalink: /materials/S01-01-02-01_01-VirtualEnvironment
-categories: materials
+description: "파이썬 가상환경의 필요성과 설정 과정을 살펴봅니다."
+categories:
+    - materials
+tags:
+    - python
 ---
 * toc
 {:toc}
+
 
 ## 1. 실행환경 설정
 

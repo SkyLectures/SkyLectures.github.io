@@ -1,9 +1,12 @@
 ---
 layout: page
-title:  "파이썬 표준 라이브러리"
-date:   2025-03-01 10:00:00 +0900
+title: "파이썬 표준 라이브러리"
 permalink: /materials/S01-01-04-01_01-PythonLibrary
-categories: materials
+description: "파이썬이 자체적으로 내장하고 있는 표준 라이브러리를 살펴봅니다."
+categories:
+    - materials
+tags:
+    - python
 ---
 * toc
 {:toc}

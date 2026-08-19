@@ -216,7 +216,7 @@ categories: materials
 - 소비자 그룹(Consumer Groups)이 데이터를 처리하는 흐름
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-07-01-01_01-001_Kafka_Architecture.png" style="width: 90%;">
+    <img src="/materials/S13_DevTools/images/S13-07-01-01_01-001_Kafka_Architecture.png" style="width: 90%;">
 </div>
 
 ### 5.1 아키텍처의 핵심 구성요소 상세 설명
@@ -286,7 +286,7 @@ categories: materials
 - 데이터가 생성되어 최종 소비되는 전체 라이프사이클
 
 <div class="insert-image">
-    <img src="/materials/devtools/images/S13-07-01-01_01-002_Kafka_Lifecycle.png" style="width: 80%;">
+    <img src="/materials/S13_DevTools/images/S13-07-01-01_01-002_Kafka_Lifecycle.png" style="width: 80%;">
 </div>
 
 1. **발행 (Publish):**

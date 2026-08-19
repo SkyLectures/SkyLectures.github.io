@@ -1,12 +1,15 @@
 ---
 layout: page
-title:  "스마트팩토리 개요"
-date:   2025-08-23 10:00:00 +0900
+title: "스마트팩토리 개요"
 permalink: /materials/S06-01-01-01_01-SmartFactoryOverview
-categories: materials
+description: "스마트팩토리의 정의와 특징 등을 살펴봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
 ## 1. 스마트팩토리란 무엇인가?
@@ -21,34 +24,32 @@ categories: materials
 - 스마트팩토리
     - 제품의 기획부터 판매까지 모든 생산과정을 ICT(정보통신기술)로 통합해 
     - 최소 비용과 시간으로 고객 맞춤형 제품을 생산하는
-    - 사람 중심의 첨단 지능형 공장<br><br>
-    - <span style="color: darkred;">스마트제조혁신추진단에서 지정한 스마트팩토리의 공식 표현은 **스마트공장**</span><br><br>
+    - 사람 중심의 첨단 지능형 공장
+    - <span style="color: darkred;">참고: 스마트제조혁신추진단에서 지정한 스마트팩토리의 공식 표현은 **스마트공장**</span>
 
     <div class="insert-image">
-        <img src="/materials/smartfactory/images/S06-01-01-01_01-001.png"><br>
-        (자료출처: 스마트제조혁신추진단 https://www.smart-factory.kr/usr/pr/sf/ma/smrtFctryIntrcn)
+        <h3 style="text-align: center">스마트공장의 정의</h3>
+        <img src="/materials/S06_SmartFactory/images/S06-01-01-01_01-001.png">
+        <span class="caption">(Source: 스마트제조혁신추진단 https://www.smart-factory.kr/usr/pr/sf/ma/smrtFctryIntrcn)</span>
     </div>
-    <br>
 
 ### 1.2 스마트팩토리의 적용 범위
 
 - 스마트팩토리는 제품 기획·개발부터 양산까지, 주문에서부터 완제품 출하까지 제조 관련 모든 과정을 말함
 - 응용 시스템뿐 아니라 현장자동화와 제어자동화 영역까지 공장 운영의 모든 부분을 포함하는 것을 지칭함
-- 제품을 생산하는 공정만 바뀐다고 해서 스마트팩토리가 되지 않음<br><br>
+- 제품을 생산하는 공정만 바뀐다고 해서 스마트팩토리가 되지 않음
 
     <div class="insert-image">
-        <img src="/materials/smartfactory/images/S06-01-01-01_01-002.png"><br>
-        (자료출처: 스마트제조혁신추진단 https://www.smart-factory.kr/usr/pr/sf/ma/smrtFctryIntrcn)
+        <h3 style="text-align: center">스마트공장의 적용 범위</h3>
+        <img src="/materials/S06_SmartFactory/images/S06-01-01-01_01-002.png">
+        <span class="caption">(Source: 스마트제조혁신추진단 https://www.smart-factory.kr/usr/pr/sf/ma/smrtFctryIntrcn)</span>
     </div>
-    <br>
-    
+
 
 ### 1.3 스마트팩토리의 특징
 
 > 스마트팩토리는 단순한 자동화를 넘어선 **'지능화'**와 **'연결성'**이 핵심
 {: .common-quote}
-
-<br>
 
 - **초연결성 (Hyper-connectivity)**
     - 공장 내 모든 기기와 설비, 시스템이 네트워크로 연결되어 실시간으로 정보 교환
@@ -69,6 +70,7 @@ categories: materials
     - 생산 계획이나 시장 변화에 유연하게 대응
     - 다품종 소량 생산 등 다양한 고객 요구에 빠르게 맞춰 생산할 수 있음
 
+<br>
 
 ## 2. 스마트팩토리의 도입 필요성과 목표
 
@@ -115,13 +117,12 @@ categories: materials
         - 기업의 사회적 책임(ESG) 경영 실현
         - 장기적인 성장의 기반 구축
 
-
+<br>
 
 ## 3. 기존 공장과 스마트팩토리의 차이점
 
 <div class="info-table">
     <table>
-        <caption>(자료출처: 스마트제조혁신추진단 https://www.smart-factory.kr/usr/pr/sf/ma/smrtFctryIntrcn)</caption>
         <thead>
             <th style="width: 150px;">구분</th>
             <th style="width: 400px;">기존 공장 (전통적 제조)</th>
@@ -165,8 +166,10 @@ categories: materials
             </tr>
         </tbody>
     </table>
+    <span class="caption">(Source: 스마트제조혁신추진단 https://www.smart-factory.kr/usr/pr/sf/ma/smrtFctryIntrcn)</span>
 </div>
 
+<br>
 
 ## 4. 스마트팩토리의 주요 기능과 기대 효과
 
@@ -212,6 +215,7 @@ categories: materials
     - 작업자의 안전 확보 및 근로 환경 개선
     - 지속 가능한 생산 시스템 구축
 
+<br>
 
 ## 5. 스마트팩토리의 미래와 전망
 
