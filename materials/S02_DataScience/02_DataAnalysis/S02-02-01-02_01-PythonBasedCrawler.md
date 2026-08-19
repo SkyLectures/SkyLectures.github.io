@@ -96,7 +96,7 @@ categories: materials
 - **🌐 크롤러 아키텍처 흐름도 (숫자 순서 기준)**
 
 <div class="insert-image">
-    <img src="/materials/datascience/images/S02-02-01-02_01-001.jpg" style="width: 90%;">
+    <img src="/materials/S02_DataScience/images/S02-02-01-02_01-001.jpg" style="width: 90%;">
 </div>
 
 0. **SEED URLs와 Frontier Queue**
@@ -278,8 +278,8 @@ categories: materials
     ```
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-02-01-02_01-002.png" style="width: 90%;"><br><br>
-        <img src="/materials/datascience/images/S02-02-01-02_01-003.jpg" style="width: 90%;">
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-002.png" style="width: 90%;"><br><br>
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-003.jpg" style="width: 90%;">
     </div>
 
 
@@ -389,8 +389,8 @@ categories: materials
     ```
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-02-01-02_01-004.png" style="width: 90%;"><br><br>
-        <img src="/materials/datascience/images/S02-02-01-02_01-005.jpg" style="width: 90%;">
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-004.png" style="width: 90%;"><br><br>
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-005.jpg" style="width: 90%;">
     </div>
 
 
@@ -540,6 +540,6 @@ categories: materials
 
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-02-01-02_01-006.png" style="width: 90%;"><br><br>
-        <img src="/materials/datascience/images/S02-02-01-02_01-007.jpg" style="width: 90%;">
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-006.png" style="width: 90%;"><br><br>
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-007.jpg" style="width: 90%;">
     </div>

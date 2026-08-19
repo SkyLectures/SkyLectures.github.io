@@ -108,7 +108,7 @@ categories: materials
                 - 예시: 설문조사의 5점 만점 점수, 웹사이트 이탈률, 월별 매출액<br>
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-03-01-01_01-001.png" style="width: 90%;">
+            <img src="/materials/S02_DataScience/images/S02-03-01-01_01-001.png" style="width: 90%;">
         </div>
 
 
@@ -125,7 +125,7 @@ categories: materials
             - 예시: 엑셀 시트, 대학교 학생 명부, 가입자 정보 테이블
 
             <div class="insert-image">
-                <img src="/materials/datascience/images/S02-03-01-01_01-002.png" style="width: 90%;">
+                <img src="/materials/S02_DataScience/images/S02-03-01-01_01-002.png" style="width: 90%;">
             </div>
 
         - **그래프 기반 데이터 (Graph-based Data)**
@@ -138,7 +138,7 @@ categories: materials
             - 예시: 페이스북의 친구 관계도, 내비게이션의 도로망(지도) 데이터, 웹 페이지의 링크 구조
 
             <div class="insert-image">
-                <img src="/materials/datascience/images/S02-03-01-01_01-003.png" style="width: 80%;">
+                <img src="/materials/S02_DataScience/images/S02-03-01-01_01-003.png" style="width: 80%;">
             </div>
 
     - **순서 및 시간에 따른 분류 (순서형, 시계열)**
@@ -154,7 +154,7 @@ categories: materials
             - 예시: 문장 속 단어들의 배열(자연어), DNA 염기서열, 웹사이트 방문자의 클릭 경로(Clickstream)
 
             <div class="insert-image">
-                <img src="/materials/datascience/images/S02-03-01-01_01-004.png" style="width: 70%;">
+                <img src="/materials/S02_DataScience/images/S02-03-01-01_01-004.png" style="width: 70%;">
             </div>
 
         - **시계열 데이터 (Time-Series Data)**
@@ -168,7 +168,7 @@ categories: materials
             - 예시: 주식 가격 변동 그래프, 1시간 간격의 기온 데이터, 서버의 CPU 사용량 모니터링 로그
 
             <div class="insert-image">
-                <img src="/materials/datascience/images/S02-03-01-01_01-005.png" style="width: 90%;">
+                <img src="/materials/S02_DataScience/images/S02-03-01-01_01-005.png" style="width: 90%;">
             </div>
 
     - **데이터의 근원에 따른 분류**
@@ -224,13 +224,13 @@ categories: materials
 - 과거에는 종이에 연필로 기록해 장부로 관리(오프라인 관리)
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-03-01-01_01-008.png" style="width: 60%;">
+        <img src="/materials/S02_DataScience/images/S02-03-01-01_01-008.png" style="width: 60%;">
     </div>
 
 - 컴퓨터가 확산되면서 엑셀이나 텍스트 파일(파일 시스템)로 데이터를 관리
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-03-01-01_01-009.png" style="width: 70%;">
+        <img src="/materials/S02_DataScience/images/S02-03-01-01_01-009.png" style="width: 70%;">
     </div>
 
 - 데이터의 양이 많아지고 사용자가 늘어나면서 다음과 같은 한계에 부딪힘
@@ -318,7 +318,7 @@ categories: materials
 - 데이터베이스 시스템이 구동되는 전체적인 계층을 위에서 아래로 요약하면 
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-03-01-01_01-006.png" style="width: 80%;">
+        <img src="/materials/S02_DataScience/images/S02-03-01-01_01-006.png" style="width: 80%;">
     </div>
 
     - 사용자/응용 프로그램: 필요한 데이터를 요청함
@@ -345,7 +345,7 @@ categories: materials
 
 <div class="insert-image">
     <h2>DBMS 개념도</h2>
-    <img src="/materials/datascience/images/S02-03-01-01_01-007.png" style="width: 70%;">
+    <img src="/materials/S02_DataScience/images/S02-03-01-01_01-007.png" style="width: 70%;">
 </div>
 
 - **DBMS의 3대 필수 기능**
@@ -368,7 +368,7 @@ categories: materials
             - 접근 유연성 부족해서 임의의 검색에는 어려움
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-03-01-01_01-010.png" style="width: 70%;">
+            <img src="/materials/S02_DataScience/images/S02-03-01-01_01-010.png" style="width: 70%;">
         </div>
 
     - 망형 DBMS
@@ -377,7 +377,7 @@ categories: materials
         - 복잡한 내부 포인터 사용 🡲 프로그래머가 이 모든 구조를 이해해야만 프로그램의 작성 가능
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-03-01-01_01-011.png" style="width: 70%;">
+            <img src="/materials/S02_DataScience/images/S02-03-01-01_01-011.png" style="width: 70%;">
         </div>
 
     - 관계형 DBMS (Relational DBMS, RDBMS)
@@ -394,7 +394,7 @@ categories: materials
         - 종류: MySQL, Oracle, PostgreSQL, MS SQL Server
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-03-01-01_01-012.png" style="width: 70%;">
+            <img src="/materials/S02_DataScience/images/S02-03-01-01_01-012.png" style="width: 70%;">
         </div>
 
     - 비관계형 DBMS (NoSQL)

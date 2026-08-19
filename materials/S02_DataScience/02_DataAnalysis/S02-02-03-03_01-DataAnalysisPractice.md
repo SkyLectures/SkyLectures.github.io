@@ -219,7 +219,7 @@ print('✅ 올바른 컬럼명이 반영된 2개의 실습 데이터 파일이 �
     - **Orange3**
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-02-03-03_01-001.jpg" style="width: 70%;">
+            <img src="/materials/S02_DataScience/images/S02-02-03-03_01-001.jpg" style="width: 70%;">
         </div>
 
 - **[2단계] 탐색적 데이터 분석 (EDA) 및 변수 간 상관관계 파악**

@@ -114,7 +114,7 @@ categories: materials
     ```
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-03-06-01_01-001.png" style="width: 90%;">
+        <img src="/materials/S02_DataScience/images/S02-03-06-01_01-001.png" style="width: 90%;">
     </div>
 
 ## 3. 환경 설정 및 보안 최적화
@@ -145,7 +145,7 @@ categories: materials
         - **운영/배포 환경:** `1 (Medium)` 이상 권장 (숫자, 대소문자, 특수문자 포함 필수)
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-03-06-01_01-002.png" style="width: 90%;">
+            <img src="/materials/S02_DataScience/images/S02-03-06-01_01-002.png" style="width: 90%;">
         </div>
 
     - **[2단계] Root 비밀번호 설정**
@@ -154,7 +154,7 @@ categories: materials
         - **주의:** 1단계에서 설정한 복잡도 기준에 맞지 않으면 통과되지 않고 다시 입력해야 함
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-03-06-01_01-003.png" style="width: 90%;">
+            <img src="/materials/S02_DataScience/images/S02-03-06-01_01-003.png" style="width: 90%;">
         </div>
 
     - **[3단계] 익명 사용자 제거 (Anonymous Users)**
@@ -165,7 +165,7 @@ categories: materials
             - 보안상 매우 위험하므로 무조건 제거해야 함
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-03-06-01_01-004.png" style="width: 90%;">
+            <img src="/materials/S02_DataScience/images/S02-03-06-01_01-004.png" style="width: 90%;">
         </div>
 
     - **[4단계] Root 계정의 원격 접속 차단 (Disallow root login remotely)**
@@ -178,7 +178,7 @@ categories: materials
             - `root`는 오직 서버 내부(`localhost`)에서만 접근하도록 차단하는 것이 표준
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-03-06-01_01-005.png" style="width: 90%;">
+            <img src="/materials/S02_DataScience/images/S02-03-06-01_01-005.png" style="width: 90%;">
         </div>
 
     - **[5단계] 테스트 데이터베이스 제거 (Test Database)**
@@ -188,7 +188,7 @@ categories: materials
             - 누구나 접근 가능한 기본 `test` 데이터베이스와 관련 권한을 제거 🡲 잠재적인 보안 취약점을 없앰
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-03-06-01_01-006.png" style="width: 90%;">
+            <img src="/materials/S02_DataScience/images/S02-03-06-01_01-006.png" style="width: 90%;">
         </div>
 
     - **[6단계] 권한 테이블 테이블 반영 (Reload Privilege Tables)**
@@ -198,7 +198,7 @@ categories: materials
             - 지금까지 설정한 모든 보안 규칙(비밀번호 변경, 계정 및 DB 삭제 등)을 MySQL 서버에 즉시 적용(Flush)
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-03-06-01_01-007.png" style="width: 90%;">
+            <img src="/materials/S02_DataScience/images/S02-03-06-01_01-007.png" style="width: 90%;">
         </div>
 
 - **한눈에 보는 요약 테이블**
@@ -425,7 +425,7 @@ categories: materials
         {: .common-quote}
 
         <div class="insert-image">
-            <img src="/materials/datascience/images/S02-03-06-01_01-008.png" style="width: 90%;">
+            <img src="/materials/S02_DataScience/images/S02-03-06-01_01-008.png" style="width: 90%;">
         </div>
 
 
