@@ -1,21 +1,26 @@
 ---
 layout: page
 title:  "불량 검출 모델 개념 및 적용 방식"
-date:   2026-07-22 15:00:00 +0900
 permalink: /materials/S06-04-04-03_01-DefectDetectionModels
-categories: materials
+description: "비전 AI 시스템을 이용한 불량 검출 모델의 개념을 설명하고, 어떻게 적용하는지에 대하여 살펴봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
+    - Vision AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
 
 > - 모든 공정에 무거운 딥러닝 모델을 쓸 필요는 없음
 > - 불량 데이터의 유무에 따라 **Supervised(지도학습)**냐 **Unsupervised(비지도학습/이상탐지)**냐를 선택
 > - **경량화(Optimization)**를 통해 현장 속도를 맞춰야 함
-{: .common-quote}
+{: .yellow-quote}
 
-
+<br>
 
 ## 1. 대표적인 비전 AI 알고리즘 패러다임
 
@@ -75,27 +80,30 @@ categories: materials
     - "이상하다(NG)"는 것은 감지하지만,
     - 이것이 찍힘인지, 오염인지, 금형 마모인지 **불량의 세부 종류까지 분류해 주지는 못함**
 
-
+<br>
 
 ## 2. 현장 맞춤형 알고리즘 선택 가이드라인
 
+<br>
+
 ```text
 [Q1. 공정 속도(Tact Time)가 초고속인가? (예: 초당 10개 이상 / 0.1초 이내 판정)]
-  ├─ YES ➔ [경량화 Detection / Feature-based] YOLO-Nano, MobileNet, 또는 Rule-based 혼용
-  └─ NO  ➔ [Q2]로 이동
+  ├─ YES 🡪 [경량화 Detection / Feature-based] YOLO-Nano, MobileNet, 또는 Rule-based 혼용
+  └─ NO  🡪 [Q2]로 이동
 
 [Q2. 불량 데이터(NG)를 유형별로 충분히(최소 30~50장 이상) 확보할 수 있는가?]
-  ├─ YES ➔ [Q3]으로 이동
-  └─ NO  ➔ [비지도학습 (Anomaly Detection)] PatchCore, FastFlow (오직 양품만으로 학습)
+  ├─ YES 🡪 [Q3]으로 이동
+  └─ NO  🡪 [비지도학습 (Anomaly Detection)] PatchCore, FastFlow (오직 양품만으로 학습)
 
 [Q3. 불량의 위치와 정밀한 '면적/길이/치수'까지 픽셀 단위로 측정해야 하는가?]
-  ├─ YES ➔ [Segmentation] Mask R-CNN, Segment Anything(SAM), DeepLabV3
-  └─ NO  ➔ [Q4]로 이동
+  ├─ YES 🡪 [Segmentation] Mask R-CNN, Segment Anything(SAM), DeepLabV3
+  └─ NO  🡪 [Q4]로 이동
 
 [Q4. 불량이 발생한 위치(Where)를 특정하고 네모 박스를 쳐야 하는가?]
-  ├─ YES ➔ [Object Detection] YOLOv8/v10, EfficientDet
-  └─ NO  ➔ [Classification] ResNet, EfficientNet (이미지 전체 OK/NG 단순 분류)
+  ├─ YES 🡪 [Object Detection] YOLOv8/v10, EfficientDet
+  └─ NO  🡪 [Classification] ResNet, EfficientNet (이미지 전체 OK/NG 단순 분류)
 ```
+<br>
 
 - **추가된 핵심 판단 기준 3가지**
 
@@ -106,16 +114,16 @@ categories: materials
 
         - **핵심:**
             - 알고리즘의 화려함보다 공정 라인 속도(Tact Time)를 맞추는 것이 우선
-            - 속도가 너무 빠르면 정밀도를 조금 포기하더라도 초고속 Detection(YOLO)이나 픽셀 크기를 줄인 경량화 모델을 선택해야 함
+            - 속도가 너무 빠르면 정밀도를 조금 포기하더라도 초고속 Detection(YOLO)이나 픽셀 크기를 줄인 경량화 모델을 선택해야 함<br><br>
 
     - **불량 분석의 목적 (단순 위치 추적 vs 픽셀 단위 정밀 측정)**
         - **현실:**
-            - 단순히 "찍힘이 있다/없다"를 보는 것과, "그 찍힘의 면적이 $$0.05\text{mm}^2$$ 이상인지 측정하라"는 요구사항은 완전히 다른 알고리즘을 필요로 함
+            - 단순히 "찍힘이 있다/없다"를 보는 것과, "그 찍힘의 면적이 $0.05\text{mm}^2$ 이상인지 측정하라"는 요구사항은 완전히 다른 알고리즘을 필요로 함
 
         - **핵심:**
             - 불량의 '위치'만 상자로 둘러싸도 되는지(Object Detection),
             - 아니면 불량의 '정확한 찌그러진 형상과 면적'을 계산해야 하는지(Segmentation)
-            - 에 따라 라벨링 공수와 모델의 무겁기가 차원이 다르게 달라짐
+            - 에 따라 라벨링 공수와 모델의 무겁기가 차원이 다르게 달라짐<br><br>
 
     - **데이터 라벨링 예산 및 인력 (Data Annotation Cost)**
         - **현실:**
@@ -133,27 +141,28 @@ categories: materials
 >   - 공정 처리 속도(Tact Time)
 >   - 정밀도 수준(Detection vs Segmentation)
 > - 이라는 3대 제약 조건의 삼각 축을 고려하여 결정해야 함
-{: .summary-quote}
+{: .green-quote}
 
+<br>
 
 ## 3. 모델 경량화 및 Edge 배포
 
 > - 아무리 정확도가 99.9%인 딥러닝 모델이라도, 추론 시간이 2초가 걸린다면 초당 5개씩 제품이 지나가는 컨베이어 벨트 라인에서는 쓸 수 없음
 > - **Tact Time(공정 주기: 예 0.1 ~ 0.2초) 내에 판정을 내리기 위한 경량화 기술**이 필수
-{: .common-quote}
+{: .yellow-quote}
 
 
 - **Quantization (양자화)**
     - **원리:**
         - AI 모델 내부의 복잡한 수치 연산 변수를 **32비트 실수(FP32)에서 8비트 정수(INT8)로 정밀도를 다이어트**시키는 기술
     - **효과:**
-        - 메모리 사용량이 $$1/4$$로 감소
+        - 메모리 사용량이 $1/4$로 감소
         - 연산 속도가 **3 ~ 5배 향상**
-        - 정확도 손실은 0.5% 미만으로 극히 미미함
+        - 정확도 손실은 0.5% 미만으로 극히 미미함<br><br>
 
 - **Pruning (지능적 가지치기)**
     - **원리:**
-        - 신경망 내부에서 불량 판정에 기여도가 거의 없는 **'쓸모없는 노드(가중치)' 연결 고리를 자르고 다듬는 작업**
+        - 신경망 내부에서 불량 판정에 기여도가 거의 없는 **'쓸모없는 노드(가중치)' 연결 고리를 자르고 다듬는 작업**<br><br>
 
 - **TensorRT / ONNX 추론 엔진 변환**
     - **원리:**
@@ -167,4 +176,4 @@ categories: materials
 > - 비전 AI 검사에서 **'가장 뛰어난 모델'은 가장 최신 모델이 아니라 '우리 공장의 상황에 맞는 모델'**
 > - 불량 데이터가 없는데 무작정 YOLO를 쓰겠다고 시간을 허비하지 말고, 초기에는 **양품 데이터만으로 이상 탐지** 시스템을 구축하여 가동할 것
 > - 수집되는 불량 데이터가 쌓이면 그때 **지도학습**으로 전환하거나 두 모델을 병용하는 것이 현장 AI 도입의 가장 똑똑한 전략
-{: .expert-quote}
+{: .pink-quote}

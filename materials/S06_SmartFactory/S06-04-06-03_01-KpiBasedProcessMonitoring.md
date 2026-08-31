@@ -1,23 +1,31 @@
 ---
 layout: page
 title:  "KPI 기반 공정 모니터링 및 대시보드 설계"
-date:   2026-07-22 22:50:00 +0900
 permalink: /materials/S06-04-06-03_01-KpiBasedProcessMonitoring
-categories: materials
+description: "제조설비 관리의 핵심인 KPI를 기반으로 공정 모니터링과 대시보드를 어떻게 구성하고 설계해야 할 것인지 생각해 봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
+
 
 
 > - 그래프와 차트가 알록달록 많다고 좋은 대시보드가 아님
 > - **현장 작업자와 관리자가 '지금 당장 무슨 조치를 취해야 하는가?'를 3초 만에 직관적으로 판단할 수 있는 OEE 중심의 액션형 관제 시스템**이 필요함
-{: .common-quote}
+{: .yellow-quote}
 
 
-## 1. 제조 설비 관리의 핵심 KPI: OEE (종합설비효율)
+## 1. 제조 설비 관리의 핵심 KPI: OEE
 
-- **세계 표준 설비 효율 지표인 OEE(Overall Equipment Effectiveness)**<br>
+- **세계 표준 설비 효율 지표인 OEE(Overall Equipment Effectiveness, 종합설비효율)**
+
 $$\mathbf{OEE = 시간 가동률(Availability) \times 성능 가동률(Performance) \times 양품률(Quality)}$$
+
+<br>
 
 - **시간 가동률 (Availability Rate) - "설비가 멈추지 않고 돌아갔는가?"**
     - **개념:**
@@ -29,7 +37,10 @@ $$\mathbf{OEE = 시간 가동률(Availability) \times 성능 가동률(Performan
     - **계산 공식 & 예시:**
         - 계획 가동 시간: 480분 (8시간)
         - 비가동 시간: 고장 30분 + 금형 교체 30분 = 60분<br>
+        
         $$\text{시간 가동률} = \frac{480 - 60}{480} = \mathbf{87.5\%}$$
+
+<br>
 
 - **성능 가동률 (Performance Rate) - "설비가 제 속도로 돌아갔는가?"**
     - **개념:**
@@ -41,7 +52,10 @@ $$\mathbf{OEE = 시간 가동률(Availability) \times 성능 가동률(Performan
     - **계산 공식 & 예시:**
         - 실제 가동 시간: 420분 (25,200초) / 기준 Tact Time: 개당 10초 (목표 2,520개)
         - 실제 생산량: 2,016개 (순간 정지로 인해 생산량 감소)<br>
+
         $$\text{성능 가동률} = \frac{2,016\text{개} \times 10\text{초}}{25,200\text{초}} = \mathbf{80.0\%}$$
+
+<br>
 
 - **양품률 (Quality Rate) - "만든 제품 중 양품은 얼마인가?"**
     - **개념:**
@@ -52,15 +66,18 @@ $$\mathbf{OEE = 시간 가동률(Availability) \times 성능 가동률(Performan
 
     - **계산 공식 & 예시:**
         - 총 생산량: 2,016개 / 양품 수량: 1,915개 (불량 101개)<br>
-        $$\text{양품률} = \frac{1,915}{2,016} = \mathbf{95.0\%}$$<br>
+
+        $$\text{양품률} = \frac{1,915}{2,016} = \mathbf{95.0\%}$$
+
         $$\mathbf{\text{최종 OEE}} = 87.5\% \times 80.0\% \times 95.0\% = \mathbf{66.5\%}$$
 
 <br>
 
 > - 각 지표는 85 ~ 95%로 높아 보이지만, 3가지를 곱한 **최종 OEE는 66.5%**로 뚝 떨어짐
 > - 이것이 바로 현장에서 숨어있는 설비 손실(Loss)을 발굴해 내는 OEE의 힘
-{: .common-quote}
+{: .yellow-quote}
 
+<br>
 
 ## 2. 직관적인 관제 대시보드 UI/UX 설계 3원칙
 
@@ -74,8 +91,7 @@ $$\mathbf{OEE = 시간 가동률(Availability) \times 성능 가동률(Performan
     - **Middle Level (라인 관리자):**
         - 특정 라인 클릭 시, 해당 라인 내 설비별 가동/비가동 상태 및 OEE 3대 요소 분해 차트 제시
     - **Bottom Level (현장 엔지니어):**
-        - 특정 설비 클릭 시, **1초 단위 센서 파형(진동, 온도), PLC I/O 상태, 알람 이력(Drill-down)** 정밀 관제
-        <br><br>
+        - 특정 설비 클릭 시, **1초 단위 센서 파형(진동, 온도), PLC I/O 상태, 알람 이력(Drill-down)** 정밀 관제<br><br>
 
 - **Color Coding (직관성: 3초 인지 법칙)**
     - **원칙:** 글자나 수치를 정독하지 않아도 **색상만 보고 3초 만에 현재 상태를 파악**할 수 있어야 함
@@ -86,13 +102,12 @@ $$\mathbf{OEE = 시간 가동률(Availability) \times 성능 가동률(Performan
 
     - **주의점:**
         - 한 화면에 5가지 이상의 과도한 색상을 쓰면 visual noise(시각적 피로)가 발생
-        - 무채색 바탕에 상태 컬러만 포인트로 사용
-        <br><br>
+        - 무채색 바탕에 상태 컬러만 포인트로 사용<br><br>
 
 - **Actionable (조치 연계성: Action-oriented UI)**
     
     > **"So What? (그래서 무엇을 해야 하는가?)"에 답을 주는 대시보드**
-    {: .common-quote}
+    {: .yellow-quote}
 
     - **나쁜 예:**
         - `[알람] 2번 라인 베어링 진동 수치 5.8mm/s (경고)` 🡪 작업자가 수치를 보고도 무엇을 해야 할지 몰라 방치함
@@ -108,4 +123,4 @@ $$\mathbf{OEE = 시간 가동률(Availability) \times 성능 가동률(Performan
 > - **성공한 대시보드는 현장 작업자가 모니터를 보고 '내가 지금 무엇을 눌러야 하는지' 즉시 알 수 있는 대시보드**
 > - 단순히 가동률 숫자만 띄워놓지 말고, **OEE(시간가동률 x 성능가동률 x 양품률)로 설비 손실의 진짜 원인**을 쪼개어 보여줄 것
 > - 화면 구성 시 **3초 만에 상태를 파악하는 Color Coding**, **클릭 한 번으로 정비팀을 부르고 제어하는 Actionable 버튼**을 설계할 때, 비로소 현장에서 살아 움직이는 관제 대시보드가 완성됨
-{: .expert-quote}
+{: .pink-quote}

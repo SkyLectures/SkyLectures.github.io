@@ -1,12 +1,15 @@
 ---
 layout: page
-title:  "[실습] 공정 데이터 기반 품질 영향 요인 분석 및 인사이트 도출"
-date:   2025-03-01 10:00:00 +0900
+title:  "공정 데이터 기반 품질 영향 요인 분석 및 인사이트 도출"
 permalink: /materials/S02-02-03-03_01-DataAnalysisPractice
-categories: materials
+description: "제조 현장에서의 공정 데이터를 기반으로 품질에 대한 주요 영향 요인을 분석하고, 그에 대한 인사이트를 도출하는 방법을 살펴봅니다."
+categories:
+    - materials
+tags:
+    - DataScience
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
 
@@ -18,7 +21,7 @@ categories: materials
     2. 단순 통계 및 탐색적 데이터 분석(EDA)을 통해 불량과 상관관계가 높은 공정 파라미터를 발굴한다.
     3. 현장에 적용 가능한 '데이터 기반 공정 최적화 조건(Recipe)'을 도출하고 의사결정 보고서를 작성한다.
 
-
+<br>
 
 ## 2. 실습 준비물 및 환경
 
@@ -28,7 +31,7 @@ categories: materials
     1. `sensor_timeseries.csv` (1초 단위 설비 센서 수집 데이터)
     2. `production_logs.csv` (Lot 단위 생산/품질 및 4M 데이터)
 
-
+<br>
 
 ## 3. 실습 데이터 세트 구조
 
@@ -52,6 +55,8 @@ categories: materials
 </table>
 </div>
 
+<br>
+
 - **`production_logs.csv` (Level 3 공정/품질 맥락 데이터)**
 
 <div class="info-table">
@@ -73,110 +78,112 @@ categories: materials
 </table>
 </div>
 
+<br>
+
 - **Dataset 생성하기**
+    - ['sensor_timeseries.csv' 다운로드](/materials/datasets/sensor_timeseries.csv)
+    - ['production_logs.csv' 다운로드](/materials/datasets/production_logs.csv)
 
-```python
-#//file: "data_gen.py"
-from datetime import datetime, timedelta
-import numpy as np
-import pandas as pd
+    ```python
+    #//file: "data_gen.py"
+    from datetime import datetime, timedelta
+    import numpy as np
+    import pandas as pd
 
-# 랜덤 시드 고정 (재현성 확보)
-np.random.seed(42)
+    # 랜덤 시드 고정 (재현성 확보)
+    np.random.seed(42)
 
-# ==========================================
-# 1. production_logs.csv 생성 (100개 Lot)
-# ==========================================
-num_lots = 100
-start_base_time = datetime(2026, 3, 1, 8, 0, 0)  # 2026년 3월 1일 오전 8시 시작
+    # ==========================================
+    # 1. production_logs.csv 생성 (100개 Lot)
+    # ==========================================
+    num_lots = 100
+    start_base_time = datetime(2026, 3, 1, 8, 0, 0)  # 2026년 3월 1일 오전 8시 시작
 
-lots_data = []
-current_time = start_base_time
+    lots_data = []
+    current_time = start_base_time
 
-workers = ['Worker_A', 'Worker_B', 'Worker_C']
-materials = ['Raw_MAT_X', 'Raw_MAT_Y']
+    workers = ['Worker_A', 'Worker_B', 'Worker_C']
+    materials = ['Raw_MAT_X', 'Raw_MAT_Y']
 
-for i in range(1, num_lots + 1):
-  lot_id = f'LOT_2026_{i:03d}'
-  duration_minutes = np.random.randint(12, 18)  # Lot당 약 12~17분 소요
-  end_time = current_time + timedelta(minutes=duration_minutes)
+    for i in range(1, num_lots + 1):
+    lot_id = f'LOT_2026_{i:03d}'
+    duration_minutes = np.random.randint(12, 18)  # Lot당 약 12~17분 소요
+    end_time = current_time + timedelta(minutes=duration_minutes)
 
-  worker = np.random.choice(workers, p=[0.4, 0.3, 0.3])
-  material = np.random.choice(materials, p=[0.6, 0.4])
+    worker = np.random.choice(workers, p=[0.4, 0.3, 0.3])
+    material = np.random.choice(materials, p=[0.6, 0.4])
 
-  lots_data.append({
-      'lot_id': lot_id,
-      'start_time': current_time.strftime('%Y-%m-%d %H:%M:%S'),
-      'end_time': end_time.strftime('%Y-%m-%d %H:%M:%S'),
-      'worker_id': worker,
-      'material_batch': material,
-      'defect_status': 0,  # 기본값
-  })
-
-  current_time = end_time + timedelta(seconds=10)  # Lot 간 10초 휴지시간
-
-df_lots = pd.DataFrame(lots_data)
-
-# ==========================================
-# 2. sensor_timeseries.csv 생성 (lot_id 매핑 추가)
-# ==========================================
-sensor_rows = []
-defect_lot_ids = []
-
-for idx, row in df_lots.iterrows():
-  lot_start = datetime.strptime(row['start_time'], '%Y-%m-%d %H:%M:%S')
-  lot_end = datetime.strptime(row['end_time'], '%Y-%m-%d %H:%M:%S')
-
-  # 의도적 불량 패턴 주입: Worker_B 이면서 Raw_MAT_Y 사용할 때 40% 확률로 이상 발생
-  is_anomaly = False
-  if row['worker_id'] == 'Worker_B' and row['material_batch'] == 'Raw_MAT_Y':
-    if np.random.rand() < 0.4:  # 40% 확률로 수정
-      is_anomaly = True
-      defect_lot_ids.append(row['lot_id'])
-  elif np.random.rand() < 0.05:  # 그 외 일반 로트 5% 확률 불량
-    is_anomaly = True
-    defect_lot_ids.append(row['lot_id'])
-
-  # 1초 간격 센서 데이터 생성
-  t = lot_start
-  while t <= lot_end:
-    if is_anomaly:
-      temp_nozzle = np.round(np.random.normal(215.0, 1.8), 2)
-      pressure_inj = np.round(np.random.normal(82.0, 3.5), 2)
-    else:
-      temp_nozzle = np.round(np.random.normal(230.0, 1.2), 2)
-      pressure_inj = np.round(np.random.normal(90.0, 2.0), 2)
-
-    cooling_time = 15.0
-
-    sensor_rows.append({
-        'timestamp': t.strftime('%Y-%m-%d %H:%M:%S'),
-        'machine_id': 'PRESS_01',
-        'lot_id': row['lot_id'],  # ★ Orange3에서 쉬운 그룹화를 위해 lot_id 추가
-        'temp_nozzle': temp_nozzle,
-        'pressure_injection': pressure_inj,  # 컬럼명 명확화
-        'cooling_time': cooling_time,  # 컬럼명 명확화
+    lots_data.append({
+        'lot_id': lot_id,
+        'start_time': current_time.strftime('%Y-%m-%d %H:%M:%S'),
+        'end_time': end_time.strftime('%Y-%m-%d %H:%M:%S'),
+        'worker_id': worker,
+        'material_batch': material,
+        'defect_status': 0,  # 기본값
     })
-    t += timedelta(seconds=1)
 
-df_sensor = pd.DataFrame(sensor_rows)
+    current_time = end_time + timedelta(seconds=10)  # Lot 간 10초 휴지시간
 
-# ==========================================
-# 3. 불량 여부 업데이트 및 저장
-# ==========================================
-df_lots['defect_status'] = df_lots['lot_id'].apply(
-    lambda x: 1 if x in defect_lot_ids else 0
-)
+    df_lots = pd.DataFrame(lots_data)
 
-df_sensor.to_csv('sensor_timeseries.csv', index=False, encoding='utf-8-sig')
-df_lots.to_csv('production_logs.csv', index=False, encoding='utf-8-sig')
+    # ==========================================
+    # 2. sensor_timeseries.csv 생성 (lot_id 매핑 추가)
+    # ==========================================
+    sensor_rows = []
+    defect_lot_ids = []
 
-print('✅ 올바른 컬럼명이 반영된 2개의 실습 데이터 파일이 재생성되었습니다!')
-```
+    for idx, row in df_lots.iterrows():
+    lot_start = datetime.strptime(row['start_time'], '%Y-%m-%d %H:%M:%S')
+    lot_end = datetime.strptime(row['end_time'], '%Y-%m-%d %H:%M:%S')
 
-- ['sensor_timeseries.csv' 다운로드](/materials/datasets/sensor_timeseries.csv)
-- ['production_logs.csv' 다운로드](/materials/datasets/production_logs.csv)
+    # 의도적 불량 패턴 주입: Worker_B 이면서 Raw_MAT_Y 사용할 때 40% 확률로 이상 발생
+    is_anomaly = False
+    if row['worker_id'] == 'Worker_B' and row['material_batch'] == 'Raw_MAT_Y':
+        if np.random.rand() < 0.4:  # 40% 확률로 수정
+        is_anomaly = True
+        defect_lot_ids.append(row['lot_id'])
+    elif np.random.rand() < 0.05:  # 그 외 일반 로트 5% 확률 불량
+        is_anomaly = True
+        defect_lot_ids.append(row['lot_id'])
 
+    # 1초 간격 센서 데이터 생성
+    t = lot_start
+    while t <= lot_end:
+        if is_anomaly:
+        temp_nozzle = np.round(np.random.normal(215.0, 1.8), 2)
+        pressure_inj = np.round(np.random.normal(82.0, 3.5), 2)
+        else:
+        temp_nozzle = np.round(np.random.normal(230.0, 1.2), 2)
+        pressure_inj = np.round(np.random.normal(90.0, 2.0), 2)
+
+        cooling_time = 15.0
+
+        sensor_rows.append({
+            'timestamp': t.strftime('%Y-%m-%d %H:%M:%S'),
+            'machine_id': 'PRESS_01',
+            'lot_id': row['lot_id'],  # ★ Orange3에서 쉬운 그룹화를 위해 lot_id 추가
+            'temp_nozzle': temp_nozzle,
+            'pressure_injection': pressure_inj,  # 컬럼명 명확화
+            'cooling_time': cooling_time,  # 컬럼명 명확화
+        })
+        t += timedelta(seconds=1)
+
+    df_sensor = pd.DataFrame(sensor_rows)
+
+    # ==========================================
+    # 3. 불량 여부 업데이트 및 저장
+    # ==========================================
+    df_lots['defect_status'] = df_lots['lot_id'].apply(
+        lambda x: 1 if x in defect_lot_ids else 0
+    )
+
+    df_sensor.to_csv('sensor_timeseries.csv', index=False, encoding='utf-8-sig')
+    df_lots.to_csv('production_logs.csv', index=False, encoding='utf-8-sig')
+
+    print('올바른 컬럼명이 반영된 2개의 실습 데이터 파일이 재생성되었습니다!')
+    ```
+
+<br>
 
 ## 4. 단계별 실습 진행 과정
 
@@ -220,7 +227,10 @@ print('✅ 올바른 컬럼명이 반영된 2개의 실습 데이터 파일이 �
 
         <div class="insert-image">
             <img src="/materials/S02_DataScience/images/S02-02-03-03_01-001.jpg" style="width: 70%;">
+            <span class="caption">Orange3를 이용한 분석 과정의 예시 (Source: SkyLectures / AiDALab)</span>
         </div>
+
+<br>
 
 - **[2단계] 탐색적 데이터 분석 (EDA) 및 변수 간 상관관계 파악**
     - **목표:**
@@ -231,8 +241,7 @@ print('✅ 올바른 컬럼명이 반영된 2개의 실습 데이터 파일이 �
         2. **상관관계 분석:** 주요 변수 간 Correlation Matrix(상관계수 히트맵) 작성
         3. **시각화 (Boxplot / Distribution plot):** * `temp_avg` 분포와 `defect_status` 관계 시각화
 
-    - `worker_id`(작업자) 및 `material_batch`(원자재)별 불량 발생 비율(Cross-tabulation) 비교
-
+    - `worker_id`(작업자) 및 `material_batch`(원자재)별 불량 발생 비율(Cross-tabulation) 비교<br><br>
 
 - **[3단계] 현장 문제 원인(Root-Cause) 규명 및 패턴 발견**
     - **목표:**
@@ -242,42 +251,36 @@ print('✅ 올바른 컬럼명이 반영된 2개의 실습 데이터 파일이 �
         - **패턴 A (물리 변수):**
             - 불량이 발생한 Lot들은 공통적으로 `temp_avg`가 215℃ 이하로 떨어진 구간에서 집중 발생함 (노즐 온도 저하 ➔ 수지 용융 불량 ➔ 치수 불량)
         - **패턴 B (4M 변수):**
-            - 특정 원자재 롯데(`Raw_MAT_Y`)가 투입될 때 노즐 온도가 쉽게 하락하는 경향이 관찰됨 (원자재별 점성 차이 존재)
-
+            - 특정 원자재 롯데(`Raw_MAT_Y`)가 투입될 때 노즐 온도가 쉽게 하락하는 경향이 관찰됨 (원자재별 점성 차이 존재)<br><br>
 
 - **[4단계] 최적 공정 레시피 및 도출 인사이트 정리**
     - **목표:**
         - 단순 현상 파악에 그치지 않고,
         - 현장에 적용 가능한 개선 가이드라인(Prescriptive Insight)을 작성
 
-
-## 5. 실습 제출 결과물
-
-- 제출 결과물: 공정 데이터 기반 인사이트 도출 보고서
-
 <br>
+
+## 5. 결과물
 
 - **[결과물 양식] 공정 개선 분석 및 인사이트 보고서**
 
-1. **문제 데이터 요약**
-    - 총 분석 대상 Lot 수: `N`건 (양품: `N`건, 불량: `N`건 / 불량률: `X%`)
-    - 주요 불량 유형: 사출 수축 및 치수 불량
-
-2. **주요 데이터 분석 결과**
-    - **결과 1 (핵심 인자 발굴):**
-        - 사출 노즐 온도가 불량에 가장 결정적인 영향을 미침 (상관계수 r = -0.72)
-    - **결과 2 (임계값 발견):**
-        - 노즐 온도가 218℃ 미만으로 떨어지는 순간, 불량 발생률이 1.2%에서 18.5%로 급증함
-    - **결과 3 (4M 연계 분석):**
-        - `Worker_B` 작업조 가동 시 및 `Raw_MAT_Y` 자재 투입 시 노즐 온도가 설정값 대비 크게 흔들림(Variability 상승)을 확인
-
-3. **현장 적용 개선 인사이트 및 액션 플랜**
-    - **[설비 제어 및 Interlock 설정]:**
-        - 사출 노즐 온도 하한 관리 기준(LSL)을 기존 210℃에서 **220℃로 상향 조정**
-        - 온도가 218℃ 이하로 내려갈 경우, 설비가 자동 정지(Interlock)되고 알람이 발생하도록 PLC 조건 수정
-
-    - **[표준 작업 가이드(SOP) 개정]:**
-        - `Raw_MAT_Y` 자재 투입 시 예열 시간을 기존 15분에서 25분으로 연장하는 표준 작업 지침 업데이트
-
-    - **[기대 효과 (ROI Estimate)]:**
-        - 노즐 온도 이탈 방지를 통해 전체 불량률 2.5% 🡪 0.6% 수준으로 감소 예상 (연간 약 N,000만 원 손실 절감)
+    > <h2>공정 개선 분석 및 인사이트 보고서</h2><br>
+    > 1. **문제 데이터 요약**
+    >   - 총 분석 대상 Lot 수: `N`건 (양품: `N`건, 불량: `N`건 / 불량률: `X%`)
+    >   - 주요 불량 유형: 사출 수축 및 치수 불량<br><br>
+    > 2. **주요 데이터 분석 결과**
+    >   - **결과 1 (핵심 인자 발굴):**
+    >       - 사출 노즐 온도가 불량에 가장 결정적인 영향을 미침 (상관계수 r = -0.72)
+    >   - **결과 2 (임계값 발견):**
+    >       - 노즐 온도가 218℃ 미만으로 떨어지는 순간, 불량 발생률이 1.2%에서 18.5%로 급증함
+    >   - **결과 3 (4M 연계 분석):**
+    >       - `Worker_B` 작업조 가동 시 및 `Raw_MAT_Y` 자재 투입 시 노즐 온도가 설정값 대비 크게 흔들림(Variability 상승)을 확인<br><br>
+    > 3. **현장 적용 개선 인사이트 및 액션 플랜**
+    >   - **[설비 제어 및 Interlock 설정]:**
+    >       - 사출 노즐 온도 하한 관리 기준(LSL)을 기존 210℃에서 **220℃로 상향 조정**
+    >       - 온도가 218℃ 이하로 내려갈 경우, 설비가 자동 정지(Interlock)되고 알람이 발생하도록 PLC 조건 수정
+    >   - **[표준 작업 가이드(SOP) 개정]:**
+    >       - `Raw_MAT_Y` 자재 투입 시 예열 시간을 기존 15분에서 25분으로 연장하는 표준 작업 지침 업데이트
+    >   - **[기대 효과 (ROI Estimate)]:**
+    >       - 노즐 온도 이탈 방지를 통해 전체 불량률 2.5% 🡪 0.6% 수준으로 감소 예상 (연간 약 N,000만 원 손실 절감)
+    {: .gray-quote}

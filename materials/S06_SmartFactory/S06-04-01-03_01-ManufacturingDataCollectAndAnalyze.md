@@ -1,12 +1,16 @@
 ---
 layout: page
 title:  "제조 데이터 수집 및 분석"
-date:   2025-08-23 10:00:00 +0900
 permalink: /materials/S06-04-01-03_01-ManufacturingDataCollectAndAnalyze
-categories: materials
+description: "제조 데이터에 대한 수집 및 분석 방법을 현장에서의 특징에 맞추어 살펴봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - Data
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
 
@@ -91,7 +95,7 @@ categories: materials
    - 제조 데이터는 기업의 핵심 자산
    - 수집 과정에서의 보안을 철저히 고려해야 함
 
----
+<br>
 
 ## 2. 제조 데이터 분석
 
@@ -192,6 +196,7 @@ categories: materials
    - 데이터 형식, 통신 프로토콜, 데이터 모델 등을 표준화
    - 데이터의 통합 및 상호 운용성 향상
 
+<br>
 
 ## 3. 데이터 수집 시스템 구축 통합 개요
 
@@ -200,10 +205,10 @@ categories: materials
 - 제조 데이터 수집은 단순히 센서를 달고 선을 뽑는 것이 아님
 - 현장의 물리 신호가 클라우드/서버의 가치 있는 정보로 변환되는 **4단계 계층 파이프라인**으로 이해해야 함
 
-```text
-[ Physical Layer ] 🡪 [ Control/Edge Layer ] 🡪 [ Pipeline/Gateway Layer ] 🡪 [ Data Platform Layer ]
-   (현장/센서)           (PLC / Protocol)            (변환 & 무결성)              (TSDB / Mart)
-```
+<div class="insert-image">
+   <img style="width: 100%;" src="/materials/S06_SmartFactory/images/S06-04-01-03_01-001.png">
+   <span class="caption">(Source: Sky Lectures / AiDALab)</span>
+</div>
 
 - **Level 0-1: 현장 데이터 발생 계층**
    - **수집 대상:** 물리적 현장 신호 (온도, 진동, 압력) 및 설비 제어 메모리
@@ -227,15 +232,10 @@ categories: materials
 
 - 수집 시스템을 구축할 때 마구잡이식 도입을 막기 위해 반드시 검토해야 하는 4가지 수직적 체크리스트
 
-   ```
-         ┌─────────────────────────────────────────────────────────┐
-         │     스마트 제조 데이터 수집 4대 표준화 프레임워크       │
-         └─────────────────────────────────────────────────────────┘
-            │               │               │               │
-            ▼               ▼               ▼               ▼
-      [시간 동기화]   [Tag Naming]    [도메인 범위]   [네트워크/보안]
-      (NTP / ms)      (표준 스키마)   (누락 항목/4M)  (OT/IT DMZ)
-   ```
+   <div class="insert-image">
+      <img style="width: 80%;" src="/materials/S06_SmartFactory/images/S06-04-01-03_01-002.png">
+      <span style="width: 85%;" class="caption">(Source: Sky Lectures / AiDALab)</span>
+   </div>
 
    - **시간 동기화 (Time Synchronization) 체계:**
       - **원칙:** 전사 설비/PLC/서버의 시각을 **NTP(Network Time Protocol) 서버** 기준으로 밀리초($ms$) 단위 일치
@@ -260,10 +260,10 @@ categories: materials
 <div class="info-table">
 <table>
    <thead>
-         <th style="width: 150px;">분석 단계</th>
-         <th style="width: 230px;">분석 질문</th>
-         <th style="width: 300px;">핵심 기술 및 접근법</th>
-         <th style="width: 300px;">현장 적용 예시 (Outcome)</th>
+         <th style="width: 130px;">분석 단계</th>
+         <th style="width: 200px;">분석 질문</th>
+         <th style="width: 240px;">핵심 기술 및 접근법</th>
+         <th style="width: 260px;">현장 적용 예시 (Outcome)</th>
    </thead>
    <tbody>
          <tr>
@@ -318,6 +318,7 @@ categories: materials
    - **[6단계] MLOps 기반 현장 배포 및 지속적 재학습:**
       - Edge/Cloud 배포 후, 계절성(Seasonality) 및 설비 마모에 대응하는 **Model Drift 감지 체계 운용**
 
+<br>
 
 ## 4. 제조 데이터 분석 활용 사례
 
@@ -337,9 +338,7 @@ categories: materials
    - 효율적인 에너지 관리 방안 수립
 
 - **공급망 최적화**
-   - 재고 관리, 물류 최적화 등 공급망 전반의 효율성 향상
-
-<br>
+   - 재고 관리, 물류 최적화 등 공급망 전반의 효율성 향상<br><br>
 
 > - **[참고] 산업용 통신 프로토콜**
 >  - **OPC UA(OPC Unified Architecture)**
@@ -356,3 +355,4 @@ categories: materials
 >  - **MQTT(Message Queuing Telemetry Transport)**
 >     - 경량화된 메시징 프로토콜
 >     - IoT 환경에 적합
+{: .yellow-quote}

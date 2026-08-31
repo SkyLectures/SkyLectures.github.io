@@ -1,17 +1,23 @@
 ---
 layout: page
 title:  "이미지 데이터 수집 및 라벨링 프로세스"
-date:   2026-07-22 15:00:00 +0900
 permalink: /materials/S06-04-04-02_01-ImageDataCollectionLabeling
-categories: materials
+description: "비전 AI 시스템 구축을 위한 기초작업인 이미지 데이터의 수집과 라벨링 프로세스에 대하여 살펴봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
+    - Vision AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
-> - 공장에서는 양품 데이터가 99.9%이고 불량 데이터는 0.1%도 안됨
-> - 무작정 사진만 찍는 것이 아닌 **'데이터 불균형'을 극복하는 전략적 수집과 라벨링**이 필요함
-{: .common-quote}
+
+> 공장에서는 양품 데이터가 99.9%이고 불량 데이터는 0.1%도 안됨<br>
+> 무작정 사진만 찍는 것이 아닌 **'데이터 불균형'을 극복하는 전략적 수집과 라벨링**이 필요함
+{: .yellow-quote}
 
 
 ## 1. 제조 이미지 데이터 수집의 3대 난제
@@ -25,7 +31,7 @@ categories: materials
     - **문제점:**
         - AI 모델에게 양품 10만 장과 불량품 10장을 주고 학습시키면,
             - AI는 "무조건 양품이라고 답하는 것이 정답률 99.99%를 얻는 가장 쉬운 방법"이라고 잘못 학습함
-            - 모든 제품을 OK로 판단하는 치명적 오류 발생
+            - 모든 제품을 OK로 판단하는 치명적 오류 발생<br><br>
 
 - **Environmental Shift (환경 변화 및 노이즈)**
     - **현상:** 
@@ -37,7 +43,7 @@ categories: materials
             - 절삭유, 먼지, 분진이 카메라 보호 글래스에 누적됨
 
     - **문제점:**
-        - 학습할 때 보지 못했던 환경 조건이 들어오면 AI 판단 성능이 급격히 저하됨
+        - 학습할 때 보지 못했던 환경 조건이 들어오면 AI 판단 성능이 급격히 저하됨<br><br>
 
 - **Class Drift / Edge Cases (경계선 불량의 애매함)**
     - **현상:**
@@ -54,6 +60,7 @@ categories: materials
             - 현장 검사원들조차 애매한 경계선 제품을 두고 상충된 라벨링(OK/NG 엇갈림)을 하여 정답지(Ground Truth)가 오염됨
             - AI 모델을 재학습시킬수록 성능이 오히려 떨어지는 데이터 거버넌스 붕괴가 일어남
 
+<br>
 
 ## 2. 불량 라벨링의 3가지 유형 및 선택 기준
 
@@ -69,7 +76,7 @@ categories: materials
     - **한계:**
         - 불량이 "제품의 정확히 어디에, 어느 크기로 존재하는지"는 알 수 없음
     - **적용 현장:**
-        - 제품의 개별 부위가 아닌 전체 외관의 통과/불합격 여부만 빠르게 가리는 1차 선별 공정
+        - 제품의 개별 부위가 아닌 전체 외관의 통과/불합격 여부만 빠르게 가리는 1차 선별 공정<br><br>
 
 - **Bounding Box (Object Detection / 객체 탐지)**
     - **방식:**
@@ -80,7 +87,7 @@ categories: materials
     - **한계:**
         - 불량의 정밀한 형태(곡선, 불규칙한 얼룩 등)를 반영하지 못하고 상자 안의 정상 표면까지 함께 포함됨
     - **적용 현장:**
-        - 부품 누락 검사, 커넥터 핀 휨 검사, 크기가 명확한 찍힘 검사
+        - 부품 누락 검사, 커넥터 핀 휨 검사, 크기가 명확한 찍힘 검사<br><br>
 
 - **Segmentation (Semantic/Instance Segmentation / 영역 분할)**
     - **방식:**
@@ -94,11 +101,12 @@ categories: materials
     - **적용 현장:**
         - 미세 크랙, 용접 용융부 불량, 페인트 도장면의 미세 흐름/얼룩 검사
 
+<br>
 
 ## 3. 현장 라벨링 가이드라인 수립 및 데이터 증대
 
 - **베테랑 검사원 간 불량 기준 불일치 해결 (Ground Truth 수립)**
-    - 제조 현장에서 라벨링을 진행할 때 발생하는 가장 큰 장애물: **검사자마다 불량을 보는 눈이 다름**<br><br>
+    - 제조 현장에서 라벨링을 진행할 때 발생하는 가장 큰 장애물: **검사자마다 불량을 보는 눈이 다름**
 
     - **문제 상황:**
         - 작업자 A는 "이 정도 0.2mm 스크래치는 양품"이라 하고,
@@ -109,18 +117,18 @@ categories: materials
         - **라벨링 가이드북(SOP) 제정:**
             - 불량의 크기(mm), 깊이, 명암 차이에 대한 정량적 기준 문서화
         - **Cross-Validation (교차 검증):**
-            - 동일한 이미지 세트를 2명 이상의 검사원이 독립적으로 라벨링한 후, 불일치하는 이미지만 모아 **품질 관리자(Q.C Master)가 최종 판정**
+            - 동일한 이미지 세트를 2명 이상의 검사원이 독립적으로 라벨링한 후, 불일치하는 이미지만 모아 **품질 관리자(Q.C Master)가 최종 판정**<br><br>
 
 - **Data Augmentation (데이터 증대 기술)**
-    - 부족한 불량 데이터를 인위적으로 늘려 AI 모델의 환각(Overfitting)을 막고 학습 효과를 극대화하는 기법<br><br>
+    - 부족한 불량 데이터를 인위적으로 늘려 AI 모델의 환각(Overfitting)을 막고 학습 효과를 극대화하는 기법
 
     - **고전적 Augmentation (Rule-based):**
         - **Transform:**
-            - 이미지 좌우/상하 반전(Flip), $$90^\circ/180^\circ$$ 회전(Rotation)
+            - 이미지 좌우/상하 반전(Flip), $90^\circ/180^\circ$ 회전(Rotation)
         - **Color/Brightness:**
             - 공장 내 조명 변화를 모사하기 위해 밝기(Brightness) pm 20%, 대비(Contrast) 조절
         - **Noise/Blur:**
-            - 설비 진동을 모사하기 위해 가우시안 블러(Gaussian Blur) 추가
+            - 설비 진동을 모사하기 위해 가우시안 블러(Gaussian Blur) 추가<br><br>
 
     - **최신 AI 기반 가상 불량 생성 (Generative AI):**
         - **GAN (Generative Adversarial Network) / Diffusion Model:**
@@ -133,4 +141,4 @@ categories: materials
 > - 데이터가 부족하다고 포기하지 말것
 >   - 데이터 증대(Augmentation) 기술과 비지도학습 이상탐지(Anomaly Detection)를 결합하면 단 20~30장의 불량 이미지로도 훌륭한 초기 모델을 만들 수 있음
 > - 중요한 것은 데이터의 절대적인 '양'이 아니라, 검사원 간의 일관성이 확보된 **'고품질 라벨링 데이터(Ground Truth)'**
-{: .summary-quote}
+{: .green-quote}

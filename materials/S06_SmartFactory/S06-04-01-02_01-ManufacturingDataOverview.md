@@ -1,12 +1,16 @@
 ---
 layout: page
 title:  "제조 데이터의 구조 이해"
-date:   2026-07-21 03:00:00 +0900
 permalink: /materials/S06-04-01-02_01-ManufacturingDataOverview
-categories: materials
+description: "제조 현장에서의 데이터은 어떤 구조를 가지고 어떻게 작동하는지에 대하여 설명합니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - Data
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
 
@@ -14,8 +18,9 @@ categories: materials
 > - **제조 데이터의 구조 이해**에서는
 >   - 단순히 테이블의 스키마를 보는 것을 넘어
 >   - **현장의 물리적 설비와 신호가 어떻게 디지털 데이터의 형태로 구조화되고 정렬되는가?**에 초점을 맞출 것
-{: .expert-quote}
+{: .pink-quote}
 
+<br>
 
 ## 1. 수집 계층에 따른 데이터 구조
 
@@ -26,7 +31,8 @@ categories: materials
         - 계층 구조(피라미드)뿐만 아니라,
         - 공정 정보 모델, 자재/장비/인력 데이터 구조, 시스템 간 데이터 교환 포맷, 용어 정의 전체를 다룸
     - 존재 이유:
-        - Siemens 설비, SAP ERP, 자체 개발 MES가 서로 대화(데이터 통합)할 수 있도록 만드는 표준 규격서
+        - Siemens 설비, SAP ERP, 자체 개발 MES가 서로 대화(데이터 통합)할 수 있도록 만드는 표준 규격서<br><br>
+
 
 - **ISA-95 피라미드 모델 (Functional Hierarchy Model = 계층 구조)**
     - ISA-95 프레임워크 안에 포함된 여러 표준 모델 중
@@ -69,6 +75,8 @@ categories: materials
     </table>
     </div>
 
+    <br>
+
     - **도표 해설**
         - 데이터는 아래(Level 0)에서 위(Level 4)로 올라갈수록 '단순 신호'에서 '의미 있는 정보(맥락)'로 변환됨
         - 하부 계층 (Level 0~2 - Raw Data / OT 영역):
@@ -76,14 +84,12 @@ categories: materials
             - 상태: 숫자만 늘어서 있어 이 값이 무언가를 뜻하는지 단독으로는 알기 어려움 (예: 45.2)
         - 상부 계층 (Level 3~4 - Contextualized Data / IT 영역):
             - 특징: 이벤트 중심(Event-driven), 관계형(Relational), 요약/집계(Summary) 중심
-            - 상태: 맥락이 입혀짐 (예: 45.2라는 숫자가 사출기 1호기의 노즐 온도라는 의미를 가짐)
-
-<br>
+            - 상태: 맥락이 입혀짐 (예: 45.2라는 숫자가 사출기 1호기의 노즐 온도라는 의미를 가짐)<br><br>
 
 > - 공장 자동화 표준인 **ISA-95 피라미드 모델**을 기반으로 하는 데이터의 흐름과 계층 확인하기
 >   - 제조 데이터의 구조를 이해하는 가장 클래식하면서도 강력한 방법
 >   - <span style="color: darkred;">**데이터가 상위 계층으로 올라갈수록 집계(Aggregation)되고 컨텍스트가 풍부해짐**</span>
-{: .common-quote}
+{: .yellow-quote}
 
 <br>
 
@@ -97,21 +103,18 @@ categories: materials
         - "공정 진행 중 설비의 전압이나 압력이 정확히 어떤 순간에 어떻게 변했는지" 미시적 원인을 알 수 없음
     - 💡 결론:
         - 제조 데이터 분석의 핵심은 Level 1의 시계열 센서 데이터와 Level 3의 MES 공정 이벤트(작업지시서, Lot 번호, 작업자 등)를
-        - Timestamp나 Lot ID 기준으로 조인(Join)하여 데이터 마트를 구축하는 것
+        - Timestamp나 Lot ID 기준으로 조인(Join)하여 데이터 마트를 구축하는 것        
+
+    > - ISA-95 피라미드는 단순한 장비 배치도가 아니라 바로 '데이터가 익어가는 과정'
+    > - **데이터 파이프라인 설계를 위해서는**
+    >   - 센서가 뿜어내는 '의미 없는 숫자(Level 1)'에 MES의 '작업 맥락(Level 3)'을 입히고, ERP의 '비즈니스 가치(Level 4)'로 환산하는 
+    >   - 전체 흐름을 이해해야 제대로 된 제조 데이터 파이프라인을 설계할 수 있음
+    > - **분석을 위해서는** 
+    >   - Level 1~2의 센서 데이터와 Level 3의 MES 이벤트 데이터(예: 이 센서 값이 튄 시점에 어떤 작업지시서와 제품이 흘러가고 있었는가?)를 결합하는
+    >   - **'계층 간 데이터 매핑 구조'**를 이해하는 것이 핵심
+    {: .pink-quote}
 
 <br>
-
-> - ISA-95 피라미드는 단순한 장비 배치도가 아니라 바로 '데이터가 익어가는 과정'
-> - **데이터 파이프라인 설계를 위해서는**
->   - 센서가 뿜어내는 '의미 없는 숫자(Level 1)'에,
->   - MES의 '작업 맥락(Level 3)'을 입히고, ERP의 '비즈니스 가치(Level 4)'로 환산하는
->   - 전체 흐름을 이해해야 제대로 된 제조 데이터 파이프라인을 설계할 수 있음
-> - **분석을 위해서는** 
->   - Level 1~2의 센서 데이터와 Level 3의 MES 이벤트 데이터(예: 이 센서 값이 튄 시점에 어떤 작업지시서와 제품이 흘러가고 있었는가?)를 결합하는
->   - **'계층 간 데이터 매핑 구조'**를 이해하는 것이 핵심
-{: .expert-quote}
-
----
 
 ## 2. 시계열 Tag 데이터 구조
 
@@ -143,6 +146,8 @@ categories: materials
         </table>
         </div>
 
+        <br>
+
     - **시계열 Tag 데이터 방식 (Narrow Table):**
         - 시간과 Tag ID를 키(Key)로 하여 수직으로 저장
         - **장점:** 센서가 1개든 1,000개든 스키마 변경 없이 데이터 적재 가능.
@@ -163,6 +168,7 @@ categories: materials
         </table>
         </div>
 
+        <br>
 
 - **기본 3요소 + 1요소 구조:**
     - **Timestamp (언제?):**
@@ -187,6 +193,7 @@ categories: materials
         - 실제 현장 데이터에는 센서 고장, 통신 단절 등으로 인한 노이즈가 많음
         - 데이터가 '정상'적으로 수집되었는지 표시하는 Quality 값(Good/Bad/Uncertain)이나 **Flag** 데이터가 이 구조에 함께 저장되어야 함
 
+<br>
 
 - **설비 메타데이터 구조 (Asset Framework):**
     - Tag ID 하나만 보면 이것이 어느 공장, 어느 라인, 어떤 설비의 부품인지 알 수 없음
@@ -206,8 +213,8 @@ categories: materials
                 ```yaml
                 # Asset Framework 예시 (YAML 형식 트리)
                 Factory: 안산공장
-                Line: 가공1라인
-                    Asset: 사출성형기 #01
+                Line: 가공1라인   #
+                    Asset: 사출성형기
                     Attributes:
                         Manufacturer: Sumitomo
                         Install_Date: 2020-01-01
@@ -216,19 +223,21 @@ categories: materials
                         - Name: 사출 압력 ➔ Mapping to Tag ID: LINE1_MOLD_PRES_01
                 ```
 
+<br>
 
 - **Time-Series DB (TSDB)의 필요성**
     - **그렇다면 이 방대한 시계열 데이터는 어디에 저장하는가?**
         - 거대한 시계열 데이터를 처리하기 위해 RDBMS가 아닌 'TSDB(시계열 데이터베이스)'라는 전용 저장소가 필요함
-            - "어? 그냥 3개 컬럼짜리 테이블이면 우리가 흔히 쓰는 MySQL/Oracle 같은 RDBMS나 엑셀에 저장해도 되는 것 아닌가요?"
+            - "어? 그냥 3개 컬럼짜리 테이블이면 우리가 흔히 쓰는 MySQL/Oracle 같은 RDBMS나 엑셀에 저장해도 되는 것 아닌가요?"<br><br>
     
-    - **TSDB vs RDBMS**    
+    - **TSDB vs RDBMS**
+
         <div class="info-table">
         <table>
             <thead>
                 <th style="width: 150px;">비교 항목</th>
-                <th style="width: 380px;">시계열 전용 DB (TSDB)</th>
-                <th style="width: 380px;">전통적 관계형 DB (RDBMS)</th>
+                <th style="width: 400px;">시계열 전용 DB (TSDB)</th>
+                <th style="width: 400px;">전통적 관계형 DB (RDBMS)</th>
             </thead>
             <tbody>
                 <tr>
@@ -263,6 +272,8 @@ categories: materials
         </table>
         </div>
 
+        <br>
+
         - **대조 항목별 세부 설명**
             - 쓰기 성능 (Insert Speed): '누적' vs '무결성'
                 - RDBMS의 한계:
@@ -286,18 +297,16 @@ categories: materials
                 - TSDB의 강점:
                     - time_bucket(), moving_average() 같은 시계열 전용 함수를 기본 제공
                     - 미리 집계된 데이터(Downsampling) 구조가 적용되어 있음
-                    - 수억 건의 데이터도 0.1초 만에 그래프로 출력 가능
+                    - 수억 건의 데이터도 0.1초 만에 그래프로 출력 가능<br><br>
+
+    > - 시계열 Tag 데이터 구조를 이해한다는 것은 단순히 Timestamp, Tag, Value라는 세 단어를 아는 것이 아님<br><br>
+    > - 쏟아지는 센서 신호를 **유실 없이 저장하고(TSDB)**,
+    > - 그 숫자가 어느 공장, 어느 설비의 것인지 **맥락(Asset Framework)**을 입히고,
+    > - 그 데이터가 **믿을 수 있는지(Quality Flag)**까지 함께 관리하는
+    > - 전체 체계를 이해하는 것이 제대로 된 제조 데이터 분석의 출발점
+    {: .pink-quote}
 
 <br>
-
-> - 시계열 Tag 데이터 구조를 이해한다는 것은 단순히 Timestamp, Tag, Value라는 세 단어를 아는 것이 아님<br><br>
-> - 쏟아지는 센서 신호를 **유실 없이 저장하고(TSDB)**,
-> - 그 숫자가 어느 공장, 어느 설비의 것인지 **맥락(Asset Framework)**을 입히고,
-> - 그 데이터가 **믿을 수 있는지(Quality Flag)**까지 함께 관리하는
-> - 전체 체계를 이해하는 것이 제대로 된 제조 데이터 분석의 출발점
-{: .expert-quote}
-
----
 
 ## 3. 공정 컨텍스트 데이터 구조
 
@@ -313,14 +322,12 @@ categories: materials
     - **Material:** 투입된 원자재의 Lot 번호 (추적성, Traceability)
     - **Method:** 당시 설비에 세팅된 레시피(Recipe) 및 파라미터 조건
 
-<br>
-
 <div class="insert-image">
-    <img src="/materials/S06_SmartFactory/images/S06-04-01-02_01-001.png" style="width: 90%;"><br><br>
-    <caption>시계열 센서 데이터(Continuous)와 4M 컨텍스트 데이터(Discrete)를<br>특정 <b>'Time Window(시간 창)'</b>이나 <b>'Lot ID'</b>를 기준으로 어떻게 조인(Join)하고 융합 구조를 만드는지 시각적으로 보여주는 그림</caption>
+    <img src="/materials/S06_SmartFactory/images/S06-04-01-02_01-001.jpg">
+    <span class="caption">시계열 센서 데이터(Continuous)와 4M 컨텍스트 데이터(Discrete)를 특정 <b>'Time Window(시간 창)'</b>이나 <b>'Lot ID'</b>를 기준으로<br>어떻게 조인(Join)하고 융합 구조를 만드는지 시각적으로 보여주는 그림 (Source: SkyLectures / AiDALab)</span>
 </div>
 
----
+<br>
 
 ## 4. 제조 특화 데이터 포맷과 표준 프로토콜 구조
 
@@ -346,9 +353,9 @@ categories: materials
             > - OPC-UA는 단순히 숫자를 주고받는 것이 아니라
             > - `1라인 CNC 설비`라는 상자(오브젝트) 안에 `온도`라는 변수(Node)와 `냉각 가동`이라는 명령(Method)을
             > - **트리 형태로 묶어서 주고받는 데이터 구조**를 의미함
-            {: .common-quote}
+            {: .yellow-quote}
 
-<br>
+            <br>
 
 - **반도체/디스플레이 특화 구조: SECS/GEM 프로토콜**
     - **개념:**
@@ -364,7 +371,7 @@ categories: materials
         - **데이터 수집 예시 구조:**
 
             ```text
-            [Event Trigger] ➔ "웨이퍼 가공 완료 (Event ID: 501)" 발생 시!
+            [Event Trigger] 🡪 "웨이퍼 가공 완료 (Event ID: 501)" 발생 시!
             └── [Event Report Data Package]
                 ├── Time: 2026-03-27 10:00:00.123
                 ├── SVID 1001 (Chamber Temp): 250.0 °C
@@ -375,7 +382,7 @@ categories: materials
             > - SECS/GEM은 무작정 데이터를 쌓는 게 아니라,
             > - `웨이퍼 투입`, `가공 완료` 같은 **특정 이벤트가 발생한 순간에**
             > - **해당 이벤트와 연관된 SVID(변수 값들)를 한 묶음의 리포트로 패키징해서 전송하는 데이터 구조**를 가짐
-            {: .common-quote}
+            {: .yellow-quote}
 
 <br>
 
@@ -385,7 +392,10 @@ categories: materials
         - **세로(Column) 방향으로 데이터를 모아서 저장**하는 빅데이터 전용 파일 포맷(Parquet, Avro 등)
         - 대규모 시계열 데이터를 분석할 때, **디스크 읽기(Disk I/O) 병목을 줄이고** 분석 조회 속도를 극대화하기 위해 사용함
 
+        <br>
+
     - **구조적 차이점 비교:**
+
         <div class="info-table">
         <table>
             <thead>

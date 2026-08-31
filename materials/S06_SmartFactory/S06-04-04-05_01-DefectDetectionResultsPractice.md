@@ -1,30 +1,37 @@
 ---
 layout: page
-title:  "[실습] 불량 검출 결과 해석 및 개선 포인트 도출"
-date:   2026-07-22 15:00:00 +0900
+title:  "불량 검출 결과 해석 및 개선 포인트 도출"
 permalink: /materials/S06-04-04-05_01-DefectDetectionResultsPractice
-categories: materials
+description: "비전 AI 시스템을 이용한 불량 검출 결과를 해석하고 개선 포인트를 도출하는 과정을 학습합니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
+    - Vision AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
-> - AI가 도출한 평가 지표(Confusion Matrix)와 시각화 자료(Heatmap)를 보고
-> - 현장 관리자가 어떤 의사결정(Threshold 조율, 조명 변경, 데이터 재학습)을 내릴 것인가?
-{: .common-quote}
 
+> AI가 도출한 평가 지표(Confusion Matrix)와 시각화 자료(Heatmap)를 보고<br>현장 관리자가 어떤 의사결정(Threshold 조율, 조명 변경, 데이터 재학습)을 내릴 것인가?
+{: .yellow-quote}
+
+<br>
 
 ## 1. 실습 목표
 
 - AI 비전 검사 소프트웨어가 출력한 평가 지표와 Heatmap(Grad-CAM)을 읽어내고
 - **과검(Over-kill)과 미검(Under-kill)을 줄이기 위한 현장 조치점 및 AI 재학습 전략** 도출
 
+<br>
 
 ## 2. 실습 환경 및 제공 Dataset 시나리오
 
 - **실제 비전 AI 솔루션 화면을 모사한 2가지 분석 리포트(Dashboard) 데이터**
 
-    - 데이터 1: 혼동 행렬(Confusion Matrix) 및 임계값(Threshold) 변동 데이터
+    - 혼동 행렬(Confusion Matrix) 및 임계값(Threshold) 변동 데이터
         - AI 모델이 $1,000$장의 테스트 이미지(양품 $900$장, 불량 $100$장)를 검사한 결과 데이터표
         - **용어의 현장 매핑:**
             - **미검 (False Negative, FN):**
@@ -32,11 +39,11 @@ categories: materials
             - **과검 (False Positive, FP):**
                 - 실제 양품(OK)을 AI가 불량(NG)으로 오판함 🡪 **[비용 발생]** 🡪 버리지 않고 작업자가 수동 재검사(Re-inspection)해야 하므로 공수 증가
 
+<br>
 
 ## 3. 실습 1: 지표 해석 및 최적 임계값 조율
 
-> - 임계값(Threshold): AI가 '이 제품은 불량일 확률이 몇 % 이상일 때 NG로 팝업을 띄울 것인가?'를 결정하는 값
-{: .common-quote}
+- 임계값(Threshold): AI가 '이 제품은 불량일 확률이 몇 % 이상일 때 NG로 팝업을 띄울 것인가?'를 결정하는 값<br><br>
 
 - **실습용 데이터표**
 
@@ -77,6 +84,8 @@ categories: materials
 </table>
 </div>
 
+<br>
+
 - **실습 과제 및 도출 답안**
     - **질문:**
         - 우리 공장이 [자동차 안전 부품]을 만드는 공장이라면 Threshold를 몇으로 설정해야 하는가?
@@ -94,12 +103,13 @@ categories: materials
             - 약간의 미검 위험을 감수하더라도
             - 과검 발생으로 인한 수동 재검사 병목을 막는 것이 경제적
 
+<br>
 
 ## 4. 실습 2: XAI의 Grad-CAM Heatmap 해석
 
 > - AI가 단순히 'NG'라고 판정했을 때, 현장 작업자는 '왜 NG냐?'라고 반문함
 > - **Grad-CAM(Heatmap): AI가 이미지의 어느 영역(픽셀)을 집중해서 보고 NG 판단을 내렸는지 붉은색 열지도**로 시각화해 주는 XAI 기술
-{: .common-quote}
+{: .yellow-quote}
 
 <br>
 
@@ -113,7 +123,7 @@ categories: materials
             - 단지 제품 테두리에 '설비 내부 구조물의 그림자'가 짙게 드리워져 있음
         - **도출해야 할 개선 조치점:**
             - **[광학계 개선]**
-                - 조명의 각도를 변경하거나, 측면 백라이트(Backlight)를 추가하여 **테두리 그림자 제거**
+                - 조명의 각도를 변경하거나, 측면 백라이트(Backlight)를 추가하여 **테두리 그림자 제거**<br><br>
 
     - **케이스 B: 비해해성 오염(기름때) 과검**
         - **AI 출력 이미지:**
@@ -124,7 +134,7 @@ categories: materials
         - **도출해야 할 개선 조치점:**
             - **[데이터 라벨링 개선]**
                 - 해당 기름방울 이미지를 수집하여 `양품(OK) - 방청유 허용` 클래스로 재라벨링 후
-                - **AI 모델 재학습(Re-training)** 진행
+                - **AI 모델 재학습(Re-training)** 진행<br><br>
 
     - **케이스 C: 정상적인 미세 스크래치 감지 (성공)**
         - **AI 출력 이미지:**
@@ -134,48 +144,50 @@ categories: materials
         - **도출해야 할 개선 조치점:**
             - **[설비 제어 Interlock]**
             - 정상 작동 확인
-            - 해당 Lot 배출 에어 블로워 작동 및 금형 정비 알람 발송
+            - 해당 Lot 배출 에어 블로워 작동 및 금형 정비 알람 발송<br><br>
 
 
-> - **[보고서 양식] 비전 AI 검사 결과 분석 및 개선 대책**
-{: .common-quote}
+## 5. 결과 보고
 
-1. **설정 임계값(Threshold) 및 선정 사유:**
-    - 선택한 Threshold: `[ 0.3 ]`
-    - 사유: 
-        -미검률을 0%로 낮추어 고객사 클레임을 방지하기 위함
-        - 이로 인해 증가한 과검(85건)은 하단 조치를 통해 절반 이하로 감축 목표
-
-2. **Heatmap 분석을 통한 현장 원인 및 개선점 (Action Plan):**
-
-<div class="info-table">
-<table>
-    <thead>
-        <th style="width: 150px;">분석 케이스</th>
-        <th style="width: 360px;">AI 오판 원인 (Heatmap 분석)</th>
-        <th style="width: 360px;">현장 개선 조치 (Action Plan)</th>
-        <th style="width: 150px;">담당 부서</th>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="td-rowheader">사례 1</td>
-            <td>테두리 그림자를 불량으로 오인</td>
-            <td>암실 내부 링 조명 각도 45˚ 🡪 60˚ 재조정</td>
-            <td>설비보전팀</td>
-        </tr>
-        <tr>
-            <td class="td-rowheader">사례 2</td>
-            <td>방청유 기름방울을 스크래치로 오인</td>
-            <td>방청유 적용 이미지 50장 추가 수집 후 AI 모델 재학습</td>
-            <td>품질보증팀/AI팀</td>
-        </tr>
-        <tr>
-            <td class="td-rowheader">사례 3</td>
-            <td>정상적인 미세 스크래치 선명히 감지</td>
-            <td>현행 유지 및 해당 불량 패턴 MLOps 데이터베이스 등록</td>
-            <td>생산팀</td>
-        </tr>
-    </tbody>
-</table>
-</div>
-
+> <h2>비전 AI 검사 결과 분석 및 개선 대책 보고서</h2>
+> <br>
+> 1. **설정 임계값(Threshold) 및 선정 사유:**
+>     - 선택한 Threshold: `[ 0.3 ]`
+>     - 사유: 
+>         -미검률을 0%로 낮추어 고객사 클레임을 방지하기 위함
+>         - 이로 인해 증가한 과검(85건)은 하단 조치를 통해 절반 이하로 감축 목표<br><br>
+> 
+> 2. **Heatmap 분석을 통한 현장 원인 및 개선점 (Action Plan):**
+> 
+> <div class="info-table">
+> <table>
+>     <thead>
+>         <th style="width: 150px;">분석 케이스</th>
+>         <th style="width: 360px;">AI 오판 원인 (Heatmap 분석)</th>
+>         <th style="width: 360px;">현장 개선 조치 (Action Plan)</th>
+>         <th style="width: 150px;">담당 부서</th>
+>     </thead>
+>     <tbody>
+>         <tr>
+>             <td class="td-rowheader">사례 1</td>
+>             <td>테두리 그림자를 불량으로 오인</td>
+>             <td>암실 내부 링 조명 각도 45˚ 🡪 60˚ 재조정</td>
+>             <td>설비보전팀</td>
+>         </tr>
+>         <tr>
+>             <td class="td-rowheader">사례 2</td>
+>             <td>방청유 기름방울을 스크래치로 오인</td>
+>             <td>방청유 적용 이미지 50장 추가 수집 후 AI 모델 재학습</td>
+>             <td>품질보증팀/AI팀</td>
+>         </tr>
+>         <tr>
+>             <td class="td-rowheader">사례 3</td>
+>             <td>정상적인 미세 스크래치 선명히 감지</td>
+>             <td>현행 유지 및 해당 불량 패턴 MLOps 데이터베이스 등록</td>
+>             <td>생산팀</td>
+>         </tr>
+>     </tbody>
+> </table>
+> <br>
+> </div>
+{: .gray-quote}

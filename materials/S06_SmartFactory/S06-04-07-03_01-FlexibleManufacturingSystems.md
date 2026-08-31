@@ -1,22 +1,27 @@
 ---
 layout: page
 title:  "유연 생산 시스템(FMS) 및 스마트 생산 전략"
-date:   2026-07-22 22:50:00 +0900
 permalink: /materials/S06-04-07-03_01-FlexibleManufacturingSystems
-categories: materials
+description: "시장의 요구에 따라 다양한 제품을 설비의 개조없이 즉시 바꿔 생산하는 유연생산 시스템에 대하여 알아보고, 스마트 생산을 위한 전략을 생각해 봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
+
 
 
 > - 하나의 전용 라인에서 단일 제품만 대량으로 찍어내던 전용 라인의 시대는 끝
 > - 시장 수요 변화와 고객의 다변화된 요구에 맞춰 아침에는 A 제품, 오후에는 B 제품을
 > - **설비 개조 없이 즉시 바꿔 생산하는 유연 생산 체계(FMS)**로 전환해야 함
-{: .common-quote}
+{: .yellow-quote}
 
+<br>
 
-
-## 1. 컨베이어 벨트 🡪 매트릭스 셀 생산 구조로의 전환
+## 1. 컨베이어 벨트 🡪 매트릭스 셀 생산 구조
 
 - **기존 직선형 컨베이어 라인의 한계 (Linear Assembly)**
     - **구조:**
@@ -27,7 +32,7 @@ categories: materials
             - 2번 설비가 고장 나거나 작업 시간이 지연되면 3, 4번 설비 전체가 멈춤
 
         - **혼류 생산의 한계:**
-            - 공정 순서가 다른 신제품(예: 1 🡪 3 🡪 2 🡪 4$ 순서 필요)이 들어오면 기존 라인을 활용할 수 없음
+            - 공정 순서가 다른 신제품(예: 1 🡪 3 🡪 2 🡪 4$ 순서 필요)이 들어오면 기존 라인을 활용할 수 없음<br><br>
 
 - **매트릭스 셀(Matrix Cell) 생산 방식**
     - **구조:**
@@ -42,6 +47,7 @@ categories: materials
             - Cell B1이 가동 중이거나 고장 나면
             - AMR이 동등한 기능을 수행하는 Cell B2로 자재를 우회 이송하여 라인 멈춤 제로화
 
+<br>
 
 ## 2. FMS 구현의 3대 핵심 요소
 
@@ -56,7 +62,7 @@ categories: materials
         - 로봇 체인저(Tool Changer) 기술:
             - 로봇 그리퍼(Gripper)가 부품 형상에 따라 10초 만에 자동으로 손가락 툴을 교체
         - 모듈형 금형/지그(Jig):
-            - 하나의 설비 베이스 위에서 상부 지그 플레이트만 원터치로 교체하여 타 품종 가공
+            - 하나의 설비 베이스 위에서 상부 지그 플레이트만 원터치로 교체하여 타 품종 가공<br><br>
 
 - **가상 레시피 관리 (Dynamic Recipe Management)**
     - **개념:**
@@ -66,7 +72,7 @@ categories: materials
         - 자재가 셀에 진입할 때 바코드/RFID 태그를 읽는 순간,
             - MES/ERP 서버에서 해당 품목 전용 '공정 조건 레시피(Recipe XML/JSON)'가
             - PLC 메모리로 자동 다운로드(Download)
-        - 사출/가공 조건(온도, 압력, 속도, 좌표값)이 0.1초 만에 자동 변경되어 즉시 가동
+        - 사출/가공 조건(온도, 압력, 속도, 좌표값)이 0.1초 만에 자동 변경되어 즉시 가동<br><br>
 
 - **소프트웨어 정의 제조 (Software-Defined Manufacturing, SDM)**
     - **개념:**
@@ -77,6 +83,7 @@ categories: materials
         - 똑같은 6축 관제 로봇이 오전에는 '자재 투입 및 나사 체결' 역할을 하다가,
         - 상위 OS의 제어 스크립트 전환을 통해 오후에는 '품질 검사 비전 촬상' 역할로 변신
 
+<br>
 
 ## 3. Mass Customization (대량 맞춤 양산) 전략
 
@@ -101,4 +108,4 @@ categories: materials
 >   - **독립된 셀(Cell) 구조와 AMR 물류, 자동 레시피 다운로드, 그리고 모듈화된 설비**를 갖출 때,
 >       - 아침에는 A 제품, 오후에는 B 제품을 생산해도 생산성과 단가가 유지되는
 >       - **Mass Customization 시대의 승자**가 될 수 있음
-{: .expert-quote}
+{: .pink-quote}

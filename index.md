@@ -11,21 +11,25 @@ qna: false
 >   - 당분간 세세한 링크 수정 등의 작업이 이어지겠지만, 사이트 전체를 직접 통제할 수 있게 되어, 보다 정확한 운영이 가능해 졌습니다.
 {: .notice-quote}
 
+<br>
 
 # 👩🏻‍🏫 Lectures
 
-> 📊 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,499H</span> + <span style="color: #1c5f1c;">(대기 중: 42H)</span> / <span style="color: #CC0000;">멘토링: 총 66H</span> / <span style="color: #CC0000;">동영상 강의 녹화: 총 42H</span>
+> 📊 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,499H</span> + <span style="color: #1c5f1c;">(대기 중: 42H)</span> / <span style="color: #CC0000;">멘토링: 총 66H</span> + <span style="color: #1c5f1c;">(대기 중: 14H)</span> / <span style="color: #CC0000;">동영상 강의 녹화: 총 42H</span>
 {: .common-quote}
+
 
 ## 2026년 강의/멘토링 일정
 
 <div class="split-content" style="margin: -15px 0px 0px 0px;">
 <div class="split-content-left" markdown="1">
 - <img src="/assets/icons/icon-ready-green.svg"> [(09.07~09.09) 제조 산업과 AI 활용: 일반과정4차: 서울(21H)](/lectlog/2026-09-07-KPC_ManufaturingAi)
+- <img src="/assets/icons/icon-ready-green.svg"> (09.14) SSAFY 15기 전문가 멘토링 2차
 - <img src="/assets/icons/icon-ready-green.svg"> [(11.09~11.11) 제조 산업과 AI 활용: 일반과정6차: 서울(21H)](/lectlog/2026-11-09-KPC_ManufaturingAi)
 </div>
 
 <div class="split-content-right" markdown="1">
+- <img src="/assets/icons/icon-complete-red.svg"> (08.27~28) SSAFY 15기 전문가 멘토링 1차
 - <img src="/assets/icons/icon-complete-red.svg"> [(07.27~07.29) 제조 산업과 AI 활용: 일반과정2차: 서울(21H)](/lectlog/2026-07-27-KPC_ManufaturingAi)
 - <img src="/assets/icons/icon-complete-red.svg"> [(05.20~07.16) 데이터 엔지니어링 과정(160H)](/lectlog/2026-05-18-ITC_DataEngineering)
 - <img src="/assets/icons/icon-complete-red.svg"> [(04.14~05.15) 생성형 AI 활용 개발자 양성 및 취업 과정(164H)](/lectlog/2026-04-14-IPA_GenAI)

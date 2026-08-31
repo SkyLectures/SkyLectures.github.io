@@ -1,33 +1,39 @@
 ---
 layout: page
 title:  "AI 모델 운영 흐름(MLOps) 기초 이해"
-date:   2026-07-22 15:00:00 +0900
 permalink: /materials/S06-04-05-04_01-AiModelOperationalFlow
-categories: materials
+description: "MLOps를 이용하여 AI 모델을 운영하는 과정과 그 기초 지식에 대하여 학습합니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
+    - MLOps
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
+
 
 
 > - "왜 AI 프로젝트는 도입 후 6개월만 지나면 아무도 안 쓰는 쓰레기가 되는가?"
 > - SW 개발의 DevOps처럼, 제조 현장의 변화에 맞추어 AI 모델을 지속적으로 가꾸고 유지보수하는 MLOps(Machine Learning Operations)의 실체와 운영<br><br>
 > - AI 모델을 개발하여 현장에 배포(Deploy)한 날은 프로젝트의 완성이 아니라 **지속적 유지보수의 시작**
 > - 공장 환경이 변함에 따라 AI 성능이 떨어지는 **Model Drift**를 막기 위한 MLOps 체계가 필수
-{: .common-quote}
+{: .yellow-quote}
 
-
+<br>
 
 ## 1. 왜 제조 현장의 AI 모델은 시간이 지나면 상하는가?
 
 - 일반적인 IT 서비스와 달리, 제조 현장의 물리적 세계는 매일 조금씩 변함 🡪 Drift(표류/변화)
 - 제조 AI는 '물리적 법칙'에 지배받음
-- 공장 환경이 변하면 고정된 AI 모델의 예측 메커니즘이 무너지며 성능이 하락하는 **Model Drift** 현상이 발생함<br><br>
+- 공장 환경이 변하면 고정된 AI 모델의 예측 메커니즘이 무너지며 성능이 하락하는 **Model Drift** 현상이 발생함
 
-```text
-[ 현장 물리 환경의 변화 ]  ────►  [ AI 모델 내부의 균열 ]  ───────►  [ 현장 타격 ]
-• 계절/습도 변화                  • AI의 학습 범위 이탈 (OOD)        • 과검/미검 폭발
-• 원자재/SOP 변경                 • AI의 가중치(Weight) 무력화       • AI 시스템 폐기
-```
+    ```text
+    [ 현장 물리 환경의 변화 ]  ────►  [ AI 모델 내부의 균열 ]  ───────►  [ 현장 타격 ]
+    • 계절/습도 변화                  • AI의 학습 범위 이탈 (OOD)        • 과검/미검 폭발
+    • 원자재/SOP 변경                 • AI의 가중치(Weight) 무력화       • AI 시스템 폐기
+    ```
 
 <br>
 
@@ -44,7 +50,7 @@ categories: materials
             - AI는 봄철(40% 습도) 데이터만 학습했으므로 예측 정확도 급락<br>
                 🡪 **추론 불확실성(Uncertainty)이 급증하며 엉뚱한 불량 예측값을 출력**하게 됨<br><br>
             - **AI 연관성 메커니즘:**<br><br>
-                $$\text{학습 범위: } X_{\text{train}} \sim \mathcal{N}(20^\circ\text{C}, 40\% \text{습도}) \quad \xrightarrow{\text{여름철 Data Drift}} \quad \text{추론 입력: } X_{\text{test}} \sim \mathcal{N}(32^\circ\text{C}, 80\% \text{습도})$$<br><br>
+                $\text{학습 범위: } X_{\text{train}} \sim \mathcal{N}(20^\circ\text{C}, 40\% \text{습도}) \quad \xrightarrow{\text{여름철 Data Drift}} \quad \text{추론 입력: } X_{\text{test}} \sim \mathcal{N}(32^\circ\text{C}, 80\% \text{습도})$<br><br>
 
         - **설비 물리적 마모:**
             - 사출기 노즐이나 베어링이 6개월간 가동되며 미세하게 마모(Wear & Tear)됨<br>
@@ -52,11 +58,12 @@ categories: materials
             - 동일한 제어값을 입력해도 실제 출력 압력에 유격(Gap) 발생<br>
                 🡪 AI는 "입력값이 정상이니 불량이 없다"고 판단하지만, 실제로는 설비 유격 때문에 불량 발생<br><br>
 
-- **Concept Drift: $$X 🡪 Y$$ 관계식 변화 🡪 AI의 '수학적 가중치(Weight) 마비'**
+- **Concept Drift: $X 🡪 Y$ 관계식 변화 🡪 AI의 '수학적 가중치(Weight) 마비'**
+
     - **개념:**
         - 입력 데이터(X)와 결과 데이터(Y) 사이의 **물리적/비즈니스적 관계식(Y = f(X)) 자체가 바뀌어 버리는 현상**
-        - AI 모델은 과거 데이터로부터 찾아낸 수학적 함수 $$Y = f(X)$$
-        - 공정 메커니즘이 바뀌면 **기존 AI가 최적화해 둔 가중치(W) 파라미터 자체가 무용지물**이 됨
+        - AI 모델은 과거 데이터로부터 찾아낸 수학적 함수 $Y = f(X)$
+        - 공정 메커니즘이 바뀌면 **기존 AI가 최적화해 둔 가중치(W) 파라미터 자체가 무용지물**이 됨<br><br>
 
     - **현장 예시:**
         - **원자재 공급사 변경:**
@@ -67,35 +74,32 @@ categories: materials
                 🡪 B사 수지는 해당 온도에서 성형 불량(Y=1)을 일으킴
             - AI 모델 내부의 계수(Weight)는 고정되어 있는데, 물리적 관계식 자체가 바뀌어 버리므로 **AI의 예측 오차가 기하급수적으로 폭증**<br><br>
             - **AI 연관성 메커니즘:**<br><br>
-                $$\text{기존 AI 함수: } Y = 2.5 \cdot X_1 (\text{온도}) - 1.2 \cdot X_2 (\text{압력}) + W_0$$<br>
-                $$\quad \quad \downarrow \quad \text{원자재 변경 / SOP 개정 (Concept Drift)}$$<br>
-                $$\text{실제 물리 현상: } Y = 4.8 \cdot X_1 (\text{온도}) + 0.3 \cdot X_2 (\text{압력}) + W_new$$<br><br>
+                $\text{기존 AI 함수: } Y = 2.5 \cdot X_1 (\text{온도}) - 1.2 \cdot X_2 (\text{압력}) + W_0$<br><br>
+                $\quad \quad \downarrow \quad \text{원자재 변경 / SOP 개정 (Concept Drift)}$<br><br>
+                $\text{실제 물리 현상: } Y = 4.8 \cdot X_1 (\text{온도}) + 0.3 \cdot X_2 (\text{압력}) + W_new$<br><br>
 
         - **공정 레시피(SOP) 개정:**
-            - 생산성 향상을 위해 쿨링 타임을 15초 🡪 12초로 줄임 🡪 기존 AI 모델의 예측 공식이 무용지물이 됨
-
+            - 생산성 향상을 위해 쿨링 타임을 15초 🡪 12초로 줄임 🡪 기존 AI 모델의 예측 공식이 무용지물이 됨<br><br>
 
 > - 공장의 원자재나 습도가 바뀌는 것은 일반적인 현상
 > - 문제는 **AI 모델이란 과거의 특정 조건하에서 학습된 '고정된 수학 공식(Static Model)'**이라는 점
 >   - 공장 환경이 조금만 바뀌어도 AI는 자기가 배운 적 없는 수치(Data Drift)를 받아 들고 헤매거나,
 >   - 자기가 외운 수식(Concept Drift)이 틀려버려서 오판을 내리게 됨
 > - **이것이 바로 제조 AI를 주기적으로 재학습(MLOps)시켜줘야 하는 진정한 이유**
+{: .green-quote}
 
+<br>
 
 ## 2. 제조 MLOps의 Lifecycle
 
 - MLOps는 단발성 개발이 아니라,
 - **데이터 수집 ➔ 재학습 ➔ 무중단 배포 ➔ 모니터링**이 톱니바퀴처럼 무한 순환하는 파이프라인 체계
 
-```text
- ┌─────────────────────────────────────────────────────────────┐
- │                     제조 MLOps 순환 체계                      │
- └─────────────────────────────────────────────────────────────┘
-    [1. Data Pipeline] ──────► [2. Continuous Training (CT)]
-            ▲                                 │
-            │                                 ▼
-   [4. Monitoring] ◄────────── [3. Deployment (CD)]
-```
+    <div class="insert-image" style="text-align: left;">
+        <img src="/materials/S06_SmartFactory/images/S06-04-05-04_01-001_ManufacturingMLOpsLifecycle.png" style="width: 70%;">
+        <span class="caption" style="width: 80%;">(Source: Sky Lectures / AiDALab)</span>
+    </div>
+
 
 - **[1단계] Data Pipeline (지속적 데이터 수집 및 자동 정제)**
     - **역할:**
@@ -103,7 +107,7 @@ categories: materials
         - **실시간으로 조인(Join)하여 재학습용 데이터셋으로 자동 적재**
 
     - **자동 정제:**
-        - 센서 오작동으로 인한 이상값(Outlier)이나 설비 비가동(OFF) 구간 데이터를 자동으로 필터링
+        - 센서 오작동으로 인한 이상값(Outlier)이나 설비 비가동(OFF) 구간 데이터를 자동으로 필터링<br><br>
 
 - **[2단계] Model Continuous Training (CT - 지속적 재학습)**
     - **역할:**
@@ -111,7 +115,7 @@ categories: materials
         - MLOps 파이프라인이 **최신 데이터를 바탕으로 AI 모델을 주기적으로 자동 재학습**
 
     - **검증:**
-        - 신규 학습된 모델이 기존 운영 중인 모델보다 성능(정확도)이 높을 때만 다음 단계로 승인
+        - 신규 학습된 모델이 기존 운영 중인 모델보다 성능(정확도)이 높을 때만 다음 단계로 승인<br><br>
 
 - **[3단계] Model Deployment (CD - 무중단 지속적 배포)**
     - **역할:**
@@ -120,7 +124,7 @@ categories: materials
 
     - **안전 배포 (Canary Deployment):**
         - 신규 모델을 전체 라인에 한 번에 적용하지 않고,
-        - 1번 라인에 먼저 적용하여 3일간 추이를 본 후 전사 확대
+        - 1번 라인에 먼저 적용하여 3일간 추이를 본 후 전사 확대<br><br>
 
 - **[4단계] Performance Monitoring (실시간 성능 모니터링)**
     - **역할:**
@@ -131,6 +135,7 @@ categories: materials
         - 모델 오차율이 임계치(예: 5% 이상)를 초과하면
         - 담당 엔지니어에게 즉시 알람 발송 및 자동 재학습 트리거(Trigger) 동작
 
+<br>
 
 ## 3. 현장 엔지니어가 알아야 할 MLOps 재학습 전략
 
@@ -142,7 +147,7 @@ categories: materials
         - **'매월 1일' 또는 '매 분기'마다 정기적으로 자동 재학습**
 
     - **적용 현장:**
-        - 환경 변동이 완만하고 안정적인 연속 공정
+        - 환경 변동이 완만하고 안정적인 연속 공정<br><br>
 
 - **이벤트 기준 트리거 (Event-based Trigger):**
     - **방식:**
@@ -151,7 +156,7 @@ categories: materials
     - **트리거 조건:**
         - 원자재 공급사/배치 변경 시
         - 금형 교체 또는 설비 오버홀(정기 대수리) 직후
-        - 공정 표준 레시피(SOP) 변경 시
+        - 공정 표준 레시피(SOP) 변경 시<br><br>
 
 - **성능 하락 기준 트리거 (Performance-based Trigger):**
     - **방식:**
@@ -165,7 +170,7 @@ categories: materials
 >   - AI 프로젝트를 기획할 때 모델 개발 예산만 잡지 말고,
 >   - **변화하는 현장에서 AI가 지속적으로 학습하고 배포될 수 있는 MLOps 자동 순환 체계**를 함께 구축할 것
 >   - 그것이 AI 프로젝트를 일회성 이벤트가 아닌 10년 가는 지속 가능한 시스템으로 만드는 유일한 길
-{: .expert-quote}
+{: .pink-quote}
 
 
 

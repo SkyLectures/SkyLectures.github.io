@@ -1,18 +1,24 @@
 ---
 layout: page
 title:  "설비 센서 데이터 기반 이상 탐지"
-date:   2026-07-22 22:50:00 +0900
 permalink: /materials/S06-04-06-01_01-AnomalyDetectionEquipmentSensorData
-categories: materials
+description: "제조 현장의 여러 설비 센서로부터 수집되는 실시간 데이터를 기반으로 어떻게 이상현상을 탐지하는지 학습합니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
+
 
 
 > - 설비가 완전히 멈추거나 굉음을 내기 직전에 알람이 울리면 이미 늦음
 > - 진동, 전류, 온도 센서의 고주파 데이터를 분석하여 설비가 내는 **미세한 '숨소리의 변화(Anomaly)'를 사전에 탐지**해야 함
-{: .common-quote}
+{: .yellow-quote}
 
+<br>
 
 ## 1. 설비 상태 모니터링(CBM)의 핵심 센서
 
@@ -33,7 +39,7 @@ categories: materials
             - 모터 축과 가공 축의 중심이 어긋났을 때 **2x 회전주파수 진동** 발생
         - **베어링 결함:**
             - 베어링 내/외륜에 미세 흠집이 생기면
-            - 주파수 스펙트럼(FFT 변환) 상에서 특정 고유 결함 주파수(BPFO, BPFI)에 뾰족한 피크(Peak) 노이즈 발생
+            - 주파수 스펙트럼(FFT 변환) 상에서 특정 고유 결함 주파수(BPFO, BPFI)에 뾰족한 피크(Peak) 노이즈 발생<br><br>
 
 
 - **전류 센서 (MCSA: Motor Current Signature Analysis): "비침습적 심전도 검사"**
@@ -47,7 +53,7 @@ categories: materials
         - 설비 외부에 진동 센서를 붙이기 어려운 밀폐형 설비나 고온/위험 환경 설비에<br>
             🡪 **비침습식(클램프 온 타입)으로 전선에 찝어서 설치**
         - 부하가 걸리거나 내부 회전체에 미세 걸림이 발생하면<br>
-            🡪 **전류 파형의 고주파 고조파(Harmonics) 왜곡**을 감지하여 전기적/기계적 이상을 동시에 진단
+            🡪 **전류 파형의 고주파 고조파(Harmonics) 왜곡**을 감지하여 전기적/기계적 이상을 동시에 진단<br><br>
 
 
 - **온도(Temperature) 및 음향 방출(Acoustic Emission, AE) 센서: "초기 마찰 탐지기"**
@@ -64,7 +70,7 @@ categories: materials
             - 마찰이 심해져 열이 발생하는 **고장 직전 단계**의 최종 확인 신호
             - 주의: 온도가 올라갔을 땐 이미 베어링 마모가 80% 이상 진행된 상태임
 
-
+<br>
 
 ## 2. 시계열 이상 탐지 알고리즘의 원리
 
@@ -72,15 +78,15 @@ categories: materials
 
 - **전통적 통계 기법 (3-Sigma, SPC - Statistical Process Control)**
     - **원리:**
-        - 정상 상태 데이터의 평균($$\mu$$)과 표준편차($$\sigma$$)를 구한 뒤,
-        - Upper/Lower Control Limit(**$$\mu \pm 3\sigma$$**) 범위를 벗어나면 이상(Anomaly)으로 판정
+        - 정상 상태 데이터의 평균($\mu$)과 표준편차($\sigma$)를 구한 뒤,
+        - Upper/Lower Control Limit(**$\mu \pm 3\sigma$**) 범위를 벗어나면 이상(Anomaly)으로 판정
 
     - **장점:**
         - 계산이 매우 빠르고 알고리즘이 직관적임
 
     - **한계:**
         - 설비의 가동 상태가 계속 변하거나,
-        - 여러 센서 수치가 **복합적으로 작용하여 발생하는 은밀한 이상**은 감지하지 못함
+        - 여러 센서 수치가 **복합적으로 작용하여 발생하는 은밀한 이상**은 감지하지 못함<br><br>
 
 - **비지도학습 AI 기법 (Unsupervised Anomaly Detection)**
     - 현장에서는 불량/고장 데이터(NG)가 거의 없으므로,
@@ -102,7 +108,7 @@ categories: materials
             - 정상 데이터들은 한데 뭉쳐 있어 고립시키려면 선을 많이 그어야 하지만,
             - **이상 데이터(Outlier)는 몇 번만 무작위로 선을 그어도 금방 고립(Isolation)된다는 수학적 특성**을 이용
 
-
+<br>
 
 ## 3. 현장 적용 시 주의점
 
@@ -116,12 +122,12 @@ categories: materials
 
     - **오작동:**
         - AI에 단 하나의 기준선(Single Baseline)만 학습시켜 놓으면,
-        - **설비가 켜지고 꺼질 때마다 "비상 고장 감지!" 알람이 울려 작업자가 알람을 꺼버림**
+        - **설비가 켜지고 꺼질 때마다 "비상 고장 감지!" 알람이 울려 작업자가 알람을 꺼버림**<br><br>
 
 - **현장 해결책: State-based Anomaly Detection (상태 기반 이상 탐지)**
     1. **Operating State (가동 상태) 분기:**
         - 설비의 PLC 신호(가동 모드)나 RPM 수치를 바탕으로
-        - 구간을 **`① 대기/비가동` 🡪 `② 가속` 🡪 `③ 정속(가공)` 🡪 `④ 감속**` 4가지 상태로 자동 분할
+        - 구간을 **`① 대기/비가동` 🡪 `② 가속` 🡪 `③ 정속(가공)` 🡪 `④ 감속`** 4가지 상태로 자동 분할
 
     2. **상태별 독립 모델/Baseline 구축:**
         - **정속 가공 구간의 이상 탐지 기준**과 **가속 구간의 이상 탐지 기준**을 별도로 관리 및 추적
@@ -134,4 +140,4 @@ categories: materials
 > - 온도가 오르는 것은 고장의 마지막 단계
 > - 진동이나 음향 센서처럼 **초고주파 신호를 통해 고장의 극초기 징후를 감지**해야 함
 > - AI 이상 탐지 모델을 적용할 때는 반드시 **설비의 가속/정속/부하 상태를 구분하여 가동 상태별 맞춤형 Baseline**을 잡아주어야만,<br>가짜 알람(False Alarm) 없는 완벽한 스마트 이상 탐지 시스템을 만들 수 있음
-{: .summary-quote}
+{: .green-quote}

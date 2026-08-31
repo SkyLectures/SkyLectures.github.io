@@ -1,19 +1,25 @@
 ---
 layout: page
 title:  "제조 AI 도입 로드맵 및 조직 변화"
-date:   2026-07-22 22:50:00 +0900
 permalink: /materials/S06-04-07-04_01-ManufacturingAiAdoptionRoadmap
-categories: materials
+description: "제조 AI를 도입하기 위한 로드맵은 어떻게 작성할 것이고 무엇을 주의해야 하는지, 그리고 조직의 구조는 어떻게 바뀌어야 할 것인지를 생각해 봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
+
 
 
 > - 대부분의 제조 AI 프로젝트가 단발성 테스트만 해보고 사라지는 **'PoC의 늪(PoC Purgatory)'**에 빠짐
 > - AI 도입은 단순한 IT 소프트웨어 도입이 아니라,
 >   - **확실한 ROI 중심의 4단계 로드맵과 현장 조직 문화(일하는 방식)의 대전환**이 수반되어야 성공할 수 있음
-{: .common-quote}
+{: .yellow-quote}
 
+<br>
 
 ## 1. 'PoC의 늪'이란 무엇인가?
 
@@ -32,6 +38,7 @@ categories: materials
     - **현장 엔지니어(OT) 배제:**
         - IT/DT 부서나 외부 외주업체 주도로만 개발하여 현장 작업자의 외면을 받음
 
+<br>
 
 ## 2. 제조 AI 구축 4단계 로드맵
 
@@ -43,7 +50,7 @@ categories: materials
 
     - **핵심 액션:**
         - "품질 향상" 같은 막연한 목표 대신 "3번 사출기 수축 불량률 3% 🡪 0.5% 감축"이라는 정량적 KPI 설정
-        - 데이터 수집 가능 여부 및 알고리즘 타당성 검증
+        - 데이터 수집 가능 여부 및 알고리즘 타당성 검증<br><br>
 
 
 - **[2단계] Scale-up (수평 전개 및 표준화)**
@@ -52,7 +59,7 @@ categories: materials
 
     - **핵심 액션:**
         - 설비마다 모델을 새로 만드는 것이 아니라,
-        - **표준 데이터 파이프라인과 범용 AI 알고리즘 템플릿**을 구축하여 추가 배포 비용을 최소화
+        - **표준 데이터 파이프라인과 범용 AI 알고리즘 템플릿**을 구축하여 추가 배포 비용을 최소화<br><br>
 
 
 - **[3단계] Integration (IT/OT 시스템 통합)**
@@ -62,7 +69,7 @@ categories: materials
     - **핵심 액션:**
         - AI의 불량 예측 수치를 MES 대시보드로 송출
         - 최적 레시피 제안 수치를 PLC 메모리로 자동 전송(Closed-loop)하거나,
-        - ERP MRO 모듈과 연동하여 예비 부품 자동 발주
+        - ERP MRO 모듈과 연동하여 예비 부품 자동 발주<br><br>
 
 
 - **[4단계] MLOps & Self-driving (자율 운영 및 지속적 재학습)**
@@ -73,7 +80,7 @@ categories: materials
         - Data Drift / Concept Drift 모니터링 및 자동 재학습(Continuous Training) 파이프라인 가동
         - 현장 엔지니어가 직접 AI 모델 상태를 관리하는 MLOps 거버넌스 정착
 
-
+<br>
 
 ## 3. 조직 변화 관리 노하우
 
@@ -88,27 +95,18 @@ categories: materials
     - **해소 전략 (Re-framing):**
         - **"대체(Replacement)"가 아닌 "보조(Augmentation)"의 메시지 전달**
         - "AI는 당신을 해고하기 위한 것이 아니라, 야간 조 가동 시 애매한 불량 때문에 밤새워 고민하던 당신의 피로를 줄여주는 '디지털 비서'"라고 설득
-        - AI 도입으로 절감된 시간만큼 작업자에게 더 가치 있는 설비 개선 업무나 교육 기회 제공
+        - AI 도입으로 절감된 시간만큼 작업자에게 더 가치 있는 설비 개선 업무나 교육 기회 제공<br><br>
 
 
 - **Cross-functional Team (TF팀) 구성: OT + IT + DT 삼각 편대**
     - AI 프로젝트를 IT 부서나 외주업체에만 맡기면 100% 실패함
     - **3대 핵심 주체로 구성된 TF팀**을 꾸려야 함
 
-    ```text
-                ┌─────────────────────────────────────────┐
-                │    제조 AI 성공을 위한 삼각 편대 (TF)     │
-                └─────────────────────────────────────────┘
-                                        ▲
-                                    / \
-                                    /   \
-    [ OT: 현장 설비/공정 엔지니어 ] ◄─────► [ IT/DT: 데이터/소프트웨어 엔지니어 ]
-    - 공정 맥락 및 물리적 의미 제공            - 데이터 파이프라인 및 AI 모델 구축
-                                    ▲
-                                    │
-                        [ Biz: 경영/생산기획 리더 ]
-                        - 정량적 ROI 설정 및 예산/조직 지원
-    ```
+    <div class="insert-image" style="text-align: left;">
+        <img src="/materials/S06_SmartFactory/images/S06-04-07-04_01-001_AiRoadmap.png" style="width: 80%;">
+        <span class="caption" style="width: 85%;">(Source: Sky Lectures / AiDALab)</span>
+    </div>
+
 
     - **OT (Operational Technology):**
         - 현장 공정 엔지니어 🡪 데이터의 물리적 의미 해석 및 현장 제어 연동 검증
@@ -126,4 +124,4 @@ categories: materials
 > - 전사로 확산시킬 수 있는 표준화 템플릿(Scale-up)을 준비해야 함
 > - 무엇보다 **현장의 작업자를 AI의 적이 아닌 주체(사용자)로 만들고, OT와 IT가 소통하는 삼각 편대 조직**을 갖출 때,
 > - 비로소 AI는 파일럿 테스트를 넘어 공장의 실질적인 수율과 생산성을 끌어올리는 최고의 무기가 될 것
-{: .expert-quote}
+{: .pink-quote}

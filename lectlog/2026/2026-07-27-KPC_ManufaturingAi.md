@@ -9,6 +9,7 @@ tags:
     - smartfactory
     - manufacturing
     - ai
+qna: false
 ---
 * toc
 {:toc}

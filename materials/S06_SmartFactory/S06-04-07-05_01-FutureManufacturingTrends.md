@@ -1,21 +1,28 @@
 ---
 layout: page
 title:  "미래 제조 트렌드 및 산업 전망"
-date:   2026-07-22 22:50:00 +0900
 permalink: /materials/S06-04-07-05_01-FutureManufacturingTrends
-categories: materials
+description: "미래의 제조산업에서는 어떤 트렌드를 따를 것이며 앞으로의 산업 전망은 어떨 것인지 생각해 봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
+
 
 
 > - 스마트 팩토리는 단순한 '사람 없는 무인화/자동화'가 최종 목적지가 아님
 > - **인간중심의 협업(Industry 5.0)과 친환경 탄소중립(ESG/Net-Zero)이 결합된 지속가능한 제조생태계**를 구축하는 기업만이 미래 시장에서 생존할 것
-{: .common-quote}
+{: .yellow-quote}
 
+<br>
 
 ## 1. Industry 4.0에서 Industry 5.0으로의 패러다임 Shift
 
+<br>
 <div class="info-table">
 <table>
     <thead>
@@ -43,6 +50,8 @@ categories: materials
 </table>
 </div>
 
+<br>
+
 - **Industry 5.0의 3대 핵심 가치 세부 해석**
     - **Human-Centric (인간 중심):**
         - 로봇과 AI는 사람을 해고하기 위한 도구가 아니라,
@@ -56,6 +65,7 @@ categories: materials
         - 단순 자원 소비형 제조에서 벗어나,
         - 공정 내 에너지 소비 최소화 및 자원 재활용을 고려한 **순환 경제(Circular Economy) 제조**
 
+<br>
 
 ## 2. 제조 ESG 및 탄소중립 대응 전략
 
@@ -70,7 +80,7 @@ categories: materials
         - 공장에서 사용하는 전기 및 스팀 구매 🡪 AI 기반 에너지 관리 시스템(FEMS)을 통한 설비별 전력 사용량 최소화
 
     - **Scope 3 (밸류체인 배출):**
-        - 원자재 수급, 자재 운송, 협력사 공정 배출 🡪 협력사 MES 데이터 연동을 통한 **제품 1개당 투입 탄소량 tracking**
+        - 원자재 수급, 자재 운송, 협력사 공정 배출 🡪 협력사 MES 데이터 연동을 통한 **제품 1개당 투입 탄소량 tracking**<br><br>
 
 - **Energy-aware Manufacturing (에너지 인식형 제조)**
     - **AI 기반 전력 피크 타임 회피 (Peak Shaving):**
@@ -81,6 +91,7 @@ categories: materials
         - 설비가 가동 대기 상태일 때 보조 펌프나 히터를 즉시 절전 모드로 전환
         - 불필요한 스탠바이 전력 30% 이상 감축
 
+<br>
 
 ## 3. 글로벌 선도 공장 사례 분석
 
@@ -104,4 +115,4 @@ categories: materials
 > 미래 스마트 팩토리의 경쟁력은 **'얼마나 차가운 무인 공장을 만드느냐'에 있지 않음**
 > - **인간의 숙련된 직관과 로봇의 정밀함이 손을 잡는 Industry 5.0**,
 > - 그리고 **공장의 전력 소비와 탄소 발자국을 실시간 제어하는 친환경 데이터 체계**를 갖춘 기업만이 글로벌 등대공장으로 도약할 수 있음
-{: .summary-quote}
+{: .green-quote}

@@ -16,6 +16,10 @@ categories: materials
 - 딥러닝 기술, 특히 트랜스포머 아키텍처의 발전과 함께 등장한 자연어 처리(Natural Language Processing, NLP) 분야의 핵심 기술
 - 자연어 처리 분야에서 혁신적인 성과를 보여주며 다양한 애플리케이션에 활용되고 있음
 
+    <div class="insert-image">
+        <img style="width: 70%;" src="/materials/S03_AI/images/S03-05-01-01_01-002.png">
+    </div>
+
 ## 2. LLM의 핵심 개념 및 특징
 
 - **방대한 데이터 학습**

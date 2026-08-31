@@ -1,19 +1,25 @@
 ---
 layout: page
 title:  "예지보전(Predicted Maintenance) 개념"
-date:   2026-07-22 22:50:00 +0900
 permalink: /materials/S06-04-06-02_01-PredictedMaintenance
-categories: materials
+description: "예지 보전의 개념에 대해서 학습합니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
+
 
 
 > - 정해진 주기마다 멀쩡한 부품을 바꾸는 정기보전(TBM)은 예산이 낭비됨
 > - 고장 난 뒤 고치는 사후보전(BM)은 라인을 멈춰 세움
 > - **부품의 잔여 유효 수명(RUL)을 데이터로 예측하여 가장 필요한 시점에 딱 맞추어 정비하는 것이 예지보전(PdM)**
-{: .common-quote}
+{: .yellow-quote}
 
+<br>
 
 ## 1. 설비 보전 패러다임의 4단계 진화
 
@@ -27,7 +33,7 @@ categories: materials
 
     - **치명적 한계:**
         - 예고 없이 라인이 멈추는 **비계획적 비가동(Unplanned Downtime)** 발생
-        - 교체 부품 재고가 없거나 정비 기사가 없으면 수일간 생산 중단 및 막대한 매출 손실 발생
+        - 교체 부품 재고가 없거나 정비 기사가 없으면 수일간 생산 중단 및 막대한 매출 손실 발생<br><br>
 
 2. **TBM (Time-based Maintenance / PM, 정기/주기 보전)**
     - **방식:**
@@ -39,7 +45,7 @@ categories: materials
 
     - **치명적 한계:**
         - **Over-maintenance (과잉 보전)** 발생
-        - 사용 환경이나 조건이 좋아 아직 50% 이상 수명이 남은 멀쩡한 부품도 무조건 버리게 되어 부품 교체 비용 낭비
+        - 사용 환경이나 조건이 좋아 아직 50% 이상 수명이 남은 멀쩡한 부품도 무조건 버리게 되어 부품 교체 비용 낭비<br><br>
 
 3. **CBM (Condition-based Maintenance, 상태 기반 보전)**
     - **방식:**
@@ -51,7 +57,7 @@ categories: materials
 
     - **한계:**
         - 단순 임계치 조작이므로 **"언제 정비해야 하는가?"에 대한 선제적 대응 시간(Lead Time)이 부족**함
-        - 알람이 울렸을 땐 이미 부품 손상이 꽤 진행되어 몇 시간 내로 교체해야 함
+        - 알람이 울렸을 땐 이미 부품 손상이 꽤 진행되어 몇 시간 내로 교체해야 함<br><br>
 
 4. **PdM (Predictive Maintenance, 예지 보전)**
     - **방식:**
@@ -62,38 +68,28 @@ categories: materials
         - "2번 베어링의 남은 수명은 72시간입니다"라고 알려주므로,
         - **다음 주말 정기 휴무나 설비 비가동 타임슬롯에 맞춰 최적의 정비 일정을 자율 스케줄링**
 
+<br>
 
 ## 2. P-F Curve (고장 진행 곡선) 이해 및 골든타임 확보
 
-```text
-설비 상태 (Health)
-  ▲
-100% ├─ (정상 가동 구간)
-     │       ╲
-     │        • P Point (Potential Failure: 잠재적 고장 발생 - 초음파/AE 센서 감지)
-     │         ╲
-     │          • 진동 이상 발생 (Vibration Sensor 감지)
-     │           ╲
-     │            • 열 발생 (Infrared / Temp Sensor 감지)
-     │             ╲
-     │              • 소음/가시적 변형 발생 (Human Senses)
-  0% └───────────────• F Point (Functional Failure: 기능적 고장 - 설비 완전 정지)
-     └─────────────────────────────────────────────────────────────► 시간 (Time)
-     │<──────── P-F Interval (선제적 대응 골든타임) ─────────>│
-```
+<div class="insert-image" style="text-align: left;">
+    <img src="/materials/S06_SmartFactory/images/S06-04-06-02_01-001_PFCurve.png">
+    <span class="caption">(Source: Sky Lectures / AiDALab)</span>
+</div>
+
 
 - **P Point (Potential Failure, 잠재적 고장 시점):**
     - 설비가 외견상으로는 멀쩡히 잘 돌아가지만, 내부 베어링이나 회전체 궤도면에 **눈에 보이지 않는 미세 마모가 시작된 시점**
-    - 이 시점은 오직 **음향 방출(AE)이나 고주파 진동 센서**로만 감지 가능
+    - 이 시점은 오직 **음향 방출(AE)이나 고주파 진동 센서**로만 감지 가능<br><br>
 
 - **F Point (Functional Failure, 기능적 고장 시점):**
-    - 설비가 과열되거나 연기가 나며 완벽히 멈추는 시점
+    - 설비가 과열되거나 연기가 나며 완벽히 멈추는 시점<br><br>
 
 - **P-F Interval (대응 골든타임):**
     - P점에서 F점까지 걸리는 시간적 여유
     - **예지보전(PdM)의 목적은 센서 기술을 활용해 P점을 최대한 앞으로 당겨 잡아냄으로써, P-F Interval(대응 골든타임)을 극대화**하는 것
 
-
+<br>
 
 ## 3. RUL(잔여 유효 수명) 예측 모델 구축 파이프라인
 
@@ -101,16 +97,16 @@ categories: materials
 
 - **[1단계] 열화(Degradation) 데이터 수집 및 특징 추출**
     - 설비의 가동 시작 시점(New)부터 고장 시점(Failure)까지 전 주기에 걸쳐 수집된 진동/전류 센서 데이터를 수집
-    - 시간 영역(RMS, Peak-to-Peak) 및 주파수 영역(FFT 변환, 밴드 파워) 특징값(Feature) 추출
+    - 시간 영역(RMS, Peak-to-Peak) 및 주파수 영역(FFT 변환, 밴드 파워) 특징값(Feature) 추출<br><br>
 
 - **[2단계] 건강 지수 (HI, Health Index) 산출**
     - 무수한 센서 변수들을 단 하나의 지표인 건강 지수(Health Index: 0% ~ 100% 또는 0 ~ 1)로 정규화(Normalization)
-    - 예: 신품 상태는 HI = 1.0, 열화가 진행됨에 따라 수치가 비선형적으로 떨어지며 HI = 0.2 도달 시 교체 임계점으로 정의
+    - 예: 신품 상태는 HI = 1.0, 열화가 진행됨에 따라 수치가 비선형적으로 떨어지며 HI = 0.2 도달 시 교체 임계점으로 정의<br><br>
 
 - **[3단계] RUL 예측 알고리즘 모델링**
     - **시계열 딥러닝 (LSTM / GRU):**
         - 시간에 따른 건강 지수(HI)의 하락 곡선 트렌드를 학습하여,
-        - 차단 임계값(0.2)에 도달하는 미래 시점($$T_{fail}$$)을 수학적으로 계산
+        - 차단 임계값(0.2)에 도달하는 미래 시점($T_{fail}$)을 수학적으로 계산
     - **Tabular ML (XGBoost Regressor):**
         - 현재의 센서 스펙트럼 수치들을 바탕으로 "남은 시간(시간 단위)"을 직접 회귀(Regression) 예측
 
@@ -120,4 +116,4 @@ categories: materials
 > - 정기보전(TBM)은 멀쩡한 부품을 버려서 돈이 새 나가고, 사후보전(BM)은 한창 물량을 뽑아야 할 때 라인을 멈춰 세움
 > - P-F Curve가 말해주듯, 고장의 극초기 징후(P Point)를 진동/음향 센서로 잡아내고 **AI로 잔여 유효 수명(RUL)을 예측**할 것
 > - 남은 수명이 3일이라는 것을 미리 알면, 부품을 주문하고 정비 인력을 준비하여 **가장 한가한 시간대에 딱 맞춰 교체하는 '스마트한 설비 보전'**을 완성할 수 있음
-{: .expert-quote}
+{: .pink-quote}

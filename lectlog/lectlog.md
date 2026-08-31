@@ -8,8 +8,10 @@ qna: false
 * toc
 {:toc}
 
-> 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,499H</span> + <span style="color: #1c5f1c;">(대기 중: 42H)</span> / <span style="color: #CC0000;">멘토링: 총 66H</span> + <span style="color: #1c5f1c;">(대기 중: 8H)</span> / <span style="color: #CC0000;">동영상 강의 녹화: 총 42H</span>
+> 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,499H</span> + <span style="color: #1c5f1c;">(대기 중: 42H)</span> / <span style="color: #CC0000;">멘토링: 총 66H</span> + <span style="color: #1c5f1c;">(대기 중: 14H)</span> / <span style="color: #CC0000;">동영상 강의 녹화: 총 42H</span>
 {: .common-quote}
+
+<br>
 
 # **강의 이력** (3,499H + 42H)
 
@@ -115,10 +117,10 @@ qna: false
 
 ---
 
-# **기술/전문가 멘토링 이력** (66H + 8H)
+# **기술/전문가 멘토링 이력** (66H + 14H)
 
-- **2026 (7H)**
-    - <img src="/assets/icons/icon-ready-green.svg"> **[08.XX/09.XX]** SSAFY 15기 특화프로젝트 전문가 리뷰 1~2차(8H)
+- **2026 (21H)**
+    - <img src="/assets/icons/icon-ready-green.svg"> **[08.27~08.28/09.14]** SSAFY 15기 특화프로젝트 전문가 리뷰 1~2차(14H)
     - <img src="/assets/icons/icon-complete-red.svg"> **[03.10/03.18]** SSAFY 14기 특화프로젝트 전문가 리뷰 1~2차(7H)
 
 - **2025 (17H)**

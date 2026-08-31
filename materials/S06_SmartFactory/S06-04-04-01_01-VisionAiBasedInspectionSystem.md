@@ -1,23 +1,32 @@
 ---
 layout: page
 title:  "비전 AI 기반 검사 시스템 구조"
-date:   2026-07-22 15:00:00 +0900
 permalink: /materials/S06-04-04-01_01-VisionAiBasedInspectionSystem
-categories: materials
+description: "비전 AI 기술을 기반으로 하는 검사 시스템의 구조를 설명합니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
+    - Vision AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
-
-> - 비전 AI 검사는 카메라만 좋은 것을 달아놓는다고 끝나지 않음
-> - 조명, 렌즈, 전처리(Edge PC), AI 모델, 그리고 PLC 제어 신호까지 0.1초 안에 톱니바퀴처럼 돌아가는 **하드웨어-소프트웨어 융합 시스템**
-{: .common-quote}
 
 - **비전 AI 기반 검사시스템(Vision AI Inspection System)**
+
     - 사람의 눈 역할을 하는 광학 장비(카메라, 렌즈, 조명)와 인공지능의 뇌 역할을 하는 딥러닝/머신러닝 알고리즘을 결합하여
     - 제조 현장에서 제품의 외관 불량, 치수 오류, 부품 누락 등을 자동으로 판정하고 분류하는 지능형 품질 검사 시스템<br><br>
     - 과거에는 베테랑 작업자가 눈으로 하나하나 들여다보며 불량을 찾아내던 '숙련자의 시각적 직관'을
     - 컴퓨터와 AI 소프트웨어로 그대로 구현한 시스템
+
+    > 비전 AI 검사는 카메라만 좋은 것을 달아놓는다고 끝나지 않음<br>
+    > 조명, 렌즈, 전처리(Edge PC), AI 모델, PLC 제어 신호까지 0.1초 안에 톱니바퀴처럼 돌아가는 **하드웨어-소프트웨어 융합 시스템**
+    {: .yellow-quote}
+
+<br>
+
 
 ## 1. 기존 Rule 기반 비전 vs AI 비전 검사
 
@@ -36,7 +45,7 @@ categories: materials
                 🡪 **과검(False Positive, 정상인데 불량 처리)** 폭발
 
         - **비정형 불량 대응 불가:**
-            - 스크래치, 눌림, 얼룩, 오염처럼 "형태와 크기가 매번 다르게 발생하는 불량"은 규칙으로 정의할 수 없음
+            - 스크래치, 눌림, 얼룩, 오염처럼 "형태와 크기가 매번 다르게 발생하는 불량"은 규칙으로 정의할 수 없음<br><br>
 
 
 - **AI 비전 기반 검사 (AI-based Vision Inspection)**
@@ -50,7 +59,7 @@ categories: materials
             - **인간 베테랑 검사원의 직관적 판단력**을 재현
         - **노이즈 내성:**
             - 약간의 조명 변동이나 광택 표면의 미세한 반사 차이가 있어도
-            - 불량의 핵심 특징(Feature)을 유지하여 안정적으로 판단
+            - 불량의 핵심 특징(Feature)을 유지하여 안정적으로 판단<br><br>
 
 - **비교 요약 표:**
 
@@ -86,21 +95,23 @@ categories: materials
     </table>
     </div>
 
+<br>
 
 ## 2. 비전 AI 시스템 4대 구성 요소
 
 - 실제 공장에 설치되는 비전 AI 검사기 장비 내부의 데이터 흐름 순서에 맞추어 4개 계층으로 나눔
 
-    <div class="insert-image" style="text-align: left;">
-        <img src="/materials/S06_SmartFactory/images/S06-04-04-01_01-001.png" style="width: 90%;">
+    <div class="insert-image">
+    <img src="/materials/S06_SmartFactory/images/S06-04-04-01_01-001.png">
+    <span class="caption">(Source: Sky Lectures / AiDALab)</span>
     </div>
 
 
 ### 2.1 광학계
 
-> - Garbage In, Garbage Out
-> - 카메라 렌즈와 조명이 엉망이라 불량이 눈에 보이지 않게 촬영되면, 세계 최고의 AI 모델을 가져와도 불량을 못 잡음
-{: .common-quote}
+> **Garbage In, Garbage Out**<br>
+> 카메라 렌즈와 조명이 엉망이라 불량이 눈에 보이지 않게 촬영되면, 세계 최고의 AI 모델을 가져와도 불량을 못 잡음
+{: .yellow-quote}
 
 - **카메라 종류의 선택:**
     - **Area Scan Camera (면적 스캔):**
@@ -120,8 +131,8 @@ categories: materials
 
 ### 2.2 수집 및 전처리 계층
 
-> - 고해상도 카메라로 찍은 4K, 8K 원본 이미지를 그대로 AI 모델에 넣으면 🡪 모델이 너무 무거워져 라인 속도를 못 맞춤
-{: .common-quote}
+> 고해상도 카메라로 찍은 4K, 8K 원본 이미지를 그대로 AI 모델에 넣으면 🡪 모델이 너무 무거워져 라인 속도를 못 맞춤
+{: .yellow-quote}
 
 - **Frame Grabber (프레임 그래버):**
     - 초당 수십~수백 프레임의 고용량 비전 데이터를
@@ -134,14 +145,13 @@ categories: materials
 
     - **Resize & Normalization:**
         - AI 모델 입력을 위해 512x512 또는 224x224 픽셀 크기로 줄이고,
-        - 픽셀 데이터 값의 범위를 $$0 \sim 1$$ 사이로 정규화
+        - 픽셀 데이터 값의 범위를 $0 \sim 1$ 사이로 정규화
 
 
 ### 2.3 AI 추론 엔진
 
-> - 학습(Training)은 클라우드나 거대한 GPU 서버에서 하지만,
-> - **추론(Inference)은 공장 현장의 Edge PC에서 0.05초 만에 완료**되어야 함
-{: .common-quote}
+> 학습(Training)은 클라우드나 거대한 GPU 서버에서 하지만, **추론(Inference)은 공장 현장의 Edge PC에서 0.05초 만에 완료**되어야 함
+{: .yellow-quote}
 
 - **Edge Computing 인프라:**
     - 현장 설비 옆에 붙는 산업용 PC(IPC) 또는 임베디드 AI 모듈(NVIDIA Jetson, Industrial PC with RTX GPU)
@@ -150,21 +160,20 @@ categories: materials
     - Python/PyTorch 환경에서 학습시킨 무게감 있는 AI 모델을 C++ 기반의 고속 추론 포맷(ONNX, NVIDIA TensorRT)으로 변환
     - **양자화(Quantization):**
         - 32비트 부동소수점(FP32) 연산을 8비트 정수(INT8) 연산으로 다이어트시켜,
-        - 정확도 손실은 0.5% 미만으로 유지하면서 추론 속도를 $$3 \sim 5\text{배}$$ 향상시킴
+        - 정확도 손실은 0.5% 미만으로 유지하면서 추론 속도를 $3 \sim 5\text{배}$ 향상시킴
 
 
-### 2.4 OT 인터페이스 (Operational Technology Interface Layer)
+### 2.4 OT(Operational Technology) 인터페이스
 
-> - AI가 'NG입니다'라고 모니터에 표시만 하고 끝나면 자동화가 아님
-> - 물리적 액추에이터를 움직여 불량품을 라인 밖으로 튕겨 내야 검사가 완결됨
-{: .common-quote}
+> AI가 'NG입니다'라고 모니터에 표시하고 끝나면 자동화가 아님 🡪 **물리적 액추에이터를 움직여 불량품을 라인 밖으로 튕겨 내야 검사 완결**
+{: .yellow-quote}
 
 - **PLC 통신 및 신호 전달:**
     - AI 추론 결과(OK: 0, NG: 1)를 **Digital I/O 카드, Ethernet/IP, PROFINET, Modbus** 프로토콜을 통해 설비의 메인 제어기(PLC)로 전송
 
 - **실시간 제어 및 인터락 (Interlock):**
     - **Tact Time(공정 주기) 준수:**
-        - 카메라 찍고 🡪 AI 판단 🡪 PLC 신호 전달까지 **전체 프로세스가 보통 $$0.1 \sim 0.3\text{초}$$ 이내**에 끝나야 라인이 밀리지 않음
+        - 카메라 찍고 🡪 AI 판단 🡪 PLC 신호 전달까지 **전체 프로세스가 보통 $0.1 \sim 0.3\text{초}$ 이내**에 끝나야 라인이 밀리지 않음
 
     - **Physical Actuator 연동:**
         - NG 신호를 받은 PLC가 즉시 **에어 블로워(Air Blower)를 분사하여 불량품을 밖으로 쳐내거나, 로봇 암(Robot Arm)에 피킹 명령**을 내림
@@ -176,4 +185,4 @@ categories: materials
 >   - AI 모델이 아무리 정확해도 추론 속도가 느려 PLC에 제때 판정 신호를 못 보내면 컨베이어 벨트에서 불량품을 놓침
 >   - 성공적인 비전 AI 프로젝트를 위해서는
 >   - **광학(조명/카메라) 🡪 전처리 🡪 AI 경량화 🡪 PLC 제어까지 연결되는 전체 파이프라인의 하드웨어-소프트웨어 융합 구조**를 반드시 이해하고 설계해야 함
-{: .expert-quote}
+{: .pink-quote}

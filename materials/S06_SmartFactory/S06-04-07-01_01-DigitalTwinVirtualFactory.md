@@ -1,31 +1,35 @@
 ---
 layout: page
 title:  "디지털 트윈 및 가상 공장 개념과 활용"
-date:   2026-07-22 22:50:00 +0900
 permalink: /materials/S06-04-07-01_01-DigitalTwinVirtualFactory
-categories: materials
+description: "디지털 트윈의 개념을 이해하고 현실의 공장과 가상의 공장을 어떻게 활용할 수 있는지 살펴봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - Digital Twin
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
+
 
 
 
 > - 라인 하나를 바꾸거나 설비를 새로 들일 때 몇 달씩 걸리던 자재 낭비와 라인 정지 위험을 이제는 멈춰야 함
 > - 현실 공장과 똑같이 구현된 가상 디지털 트윈에서 1,000번 먼저 시뮬레이션해 보고
 > - **가장 최적의 안만 현실에 적용하는 'Zero-Risk Manufacturing'**이 핵심
+{: .yellow-quote}
 
----
+<br>
 
 ## 1. Digital Twin의 정의와 3대 요소
 
 - "3D 그래픽으로 예쁘게 그린 3D CAD 모델링과 Digital Twin의 차이점이 무엇인가?"
 
-```text
-  ┌──────────────────┐    실시간 센서 데이터 (OT Sensor Data)       ┌──────────────────┐
-  │  Physical Twin   │ ─────────────────────────────────────────► │   Virtual Twin   │
-  │   (현실의 공장)   │ ◄───────────────────────────────────────── │   (가상의 공장)   │
-  └──────────────────┘    제어 및 예측 피드백 (Control Feedback)    └──────────────────┘
-```
+    <div class="insert-image" style="text-align: left;">
+        <img src="/materials/S06_SmartFactory/images/S06-04-07-01_01-001_DigitalTwin.png">
+        <span class="caption">(Source: Sky Lectures / AiDALab)</span>
+    </div>
 
 - **디지털 트윈의 3대 구상 요소:**
     - **Physical Twin (현실 객체):**
@@ -35,7 +39,7 @@ categories: materials
         - 현실 설비의 치수, 운동학(Kinematics), 물리적 특성이 반영된 3D 가상 모델
 
     - **Data Sync (실시간 데이터 연동):**
-        - IoT, Edge PC, OPC UA 산업 통신을 매개로 한 **양방향(Bi-directional) 데이터 파이프라인**
+        - IoT, Edge PC, OPC UA 산업 통신을 매개로 한 **양방향(Bi-directional) 데이터 파이프라인**<br><br>
 
 
 - **3D CAD / 시뮬레이션 vs 디지털 트윈 결정적 차이**
@@ -47,6 +51,7 @@ categories: materials
         - 현실 공장 설비의 진동, 온도, PLC 동작 상태 데이터가 실시간으로 3D 모델에 동기화(Real-time Data Coupling)되어,
         - 현실 설비가 움직이면 가상 화면 속 설비도 1.0초의 오차 없이 똑같이 동기화되어 움직이는 **실시간 동적(Dynamic) 모델**
 
+<br>
 
 ## 2. Virtual Factory의 핵심 활용 영역
 
@@ -63,7 +68,7 @@ categories: materials
         - 가상 타임 스케일을 10배속으로 돌려 24시간 가동 시의 **물류 병목 구간(Bottleneck) 및 최대 생산 캡파(Capa)를 사전 파악**
 
     - **효과:**
-        - 라인 재배치 및 물리적 수정 비용 90% 이상 절감
+        - 라인 재배치 및 물리적 수정 비용 90% 이상 절감<br><br>
 
 - **가상 시운전 (Virtual Commissioning)**
     - **현장 문제:**
@@ -76,7 +81,7 @@ categories: materials
         - 센서 신호와 제어 로직 간의 타이밍 오차, 충돌 위험을 가상 공간에서 미리 100% 디버깅 테스트
 
     - **효과:**
-        - 현장 시운전 기간 50 ~ 80% 단축 및 물리적 장비 충돌 사고 Zero화
+        - 현장 시운전 기간 50 ~ 80% 단축 및 물리적 장비 충돌 사고 Zero화<br><br>
 
 - **실시간 관제 및 가상 예지보전 (Remote Drill-down Monitoring)**
     - **현장 문제:**
@@ -87,7 +92,7 @@ categories: materials
         - 본사 종합상황실에서 해외 공장의 디지털 트윈을 켜고 **특정 설비 내부로 3D Zoom/Drill-down 접속**
         - 설비 내부 베어링의 실시간 열화 상태, 진동 스펙트럼 파형을 가상 3D 오버레이(Heatmap)로 확인하여 선제적 정비 지시
 
-
+<br>
 
 ## 3. 글로벌 주요 플랫폼 특징 비교
 
@@ -138,4 +143,4 @@ categories: materials
 >       - 가상 공간에서 먼저 시운전(Virtual Commissioning)을 완료하고
 >       - 검증된 최적의 제어 로직만 현실 공장에 주입하는
 >       - 'Zero-Risk' 스마트 제조 전략**을 수립해 보자.
-{: .expert-quote}
+{: .pink-quote}

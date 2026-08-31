@@ -1,20 +1,25 @@
 ---
 layout: page
 title:  "노코드/로우코드 기반 AI 활용 구조 이해"
-date:   2026-07-22 15:00:00 +0900
 permalink: /materials/S06-04-05-01_01-NoCodeLowCodeBasedAi
-categories: materials
+description: "비 개발자를 위한 노코드/로우코드 기반의 AI 시스템에 대한 활용 방법과 구조를 이해합니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
+    - No Code / Low code
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
 
 > - AI는 코딩을 잘하는 IT 전문가만의 전유물이 아니며, 현장 지식을 가진 내가 직접 주도할 수 있음
 > - AI 적용을 위해 파이썬 코딩을 완벽히 배울 필요는 없음
-> - **Orange3와 같은 노코드(No-Code) AI 도구**를 활용하면, 도메인 지식을 가진 현장 엔지니어가 직접 데이터 드래그 앤 드롭만으로 훌륭한 공정 예측 모델을 만들어낼 수 있음
+> - **Orange3와 같은 No-Code AI 도구**를 활용하면, 도메인 지식을 가진 현장 엔지니어가 직접 데이터 드래그 앤 드롭만으로 훌륭한 공정 예측 모델을 만들어낼 수 있음
 > - 최근에는 LLM 중심의 AI 플랫폼을 이용하면 대화만으로도 시스템을 구축할 수 있음(대신 말을 잘 해야 함)
-{: .common-quote}
+{: .yellow-quote}
 
 
 ## 1. 시민 데이터 사이언티스트의 등장
@@ -22,11 +27,11 @@ categories: materials
 - **시민 데이터 사이언티스트(Citizen Data Scientist)란?**
     - 통계학이나 데이터 공학 전공자는 아니지만,
     - **자신의 주 업무 영역(Domain)에 No-Code/Low-Code AI 도구를 결합하여 데이터 분석과 AI 모델링을 직접 수행하는 현장 전문가**를 의미
-    - 제조 현장에서 AI 도입이 실패하는 가장 큰 이유는 기술의 부족이 아니라 **'도메인 지식과 AI 기술 간의 거대한 장벽(Mismatch)'** 때문
+    - 제조 현장에서 AI 도입이 실패하는 가장 큰 이유는 기술의 부족이 아니라 **'도메인 지식과 AI 기술 간의 거대한 장벽(Mismatch)'** 때문<br><br>
 
 - **왜 이들이 제조 AI의 핵심인가?**
     - AI 알고리즘이 내놓는 숫자가 "물리적으로 말이 되는 소리인지"를 판단
-    - 어떤 변수(X)를 전처리해야 하는지 아는 사람은 오직 **현장 엔지니어뿐**이기 때문<br><br>
+    - 어떤 변수(X)를 전처리해야 하는지 아는 사람은 오직 **현장 엔지니어뿐**이기 때문
 
     - **기존의 한계:**
         - AI 개발자는 최신 딥러닝은 잘 알지만 현장 공정 맥락(노즐 온도, 보압의 물리적 의미)을 모름
@@ -40,6 +45,7 @@ categories: materials
             - 복잡한 수학 연산과 알고리즘 구현은 Orange3 같은 도구에 맡기고,
             - 인간 전문가는 '문제 정의'와 '데이터의 물리적 해석'에 집중함
 
+<br>
 
 ## 2. Orange3 기반 노코드 AI 파이프라인 4단계 개념
 
@@ -48,6 +54,7 @@ categories: materials
 
     <div class="insert-image" style="text-align: left;">
         <img src="/materials/S06_SmartFactory/images/S06-04-05-01_01-001.png" style="width: 90%;">
+        <span class="caption" style="width: 90%;">(Source: Sky Lectures / AiDALab)</span>
     </div>
 
 
@@ -63,7 +70,7 @@ categories: materials
         - **Target (Y, 결과 변수):**
             - 우리가 예측하고자 하는 품질/상태값 (예: 수축 불량 여부, 치수 오차량)
         - **Meta (참고 변수):**
-            - AI 학습 연산에는 제외하되 식별용으로 남겨둘 데이터 (예: `Lot ID`, `작업 일시`)
+            - AI 학습 연산에는 제외하되 식별용으로 남겨둘 데이터 (예: `Lot ID`, `작업 일시`)<br><br>
 
 
 - **[2단계] Auto-EDA (자동 탐색적 데이터 분석)**
@@ -77,7 +84,7 @@ categories: materials
             - 원인 변수(X)와 결과 변수(Y)가 얼마나 밀접하게 움직이는지 -1 ~ +1 사이 수치와 색상으로 즉시 확인
 
         - **결측치(Missing Values):**
-            - 센서 누락값 존재 여부를 그래프로 파악
+            - 센서 누락값 존재 여부를 그래프로 파악<br><br>
 
 
 - **[3단계] Automated Model Training (자동 모델 학습)**
@@ -91,7 +98,7 @@ categories: materials
             - 하나의 데이터 파이프라인에 여러 AI 알고리즘을 병렬로 이어 동시에 비교 가능
 
         - **Hyperparameter Control:**
-            - GUI 상의 슬라이더 조절만으로 트리의 깊이(Depth)나 학습률(Learning Rate)을 설정
+            - GUI 상의 슬라이더 조절만으로 트리의 깊이(Depth)나 학습률(Learning Rate)을 설정<br><br>
 
 
 - **[4단계] Model Evaluation & Leaderboard (성능 평가 및 리더보드)**
@@ -108,6 +115,7 @@ categories: materials
         - **Confusion Matrix (혼동 행렬):**
             - 현장에서 가장 민감한 과검(False Positive)과 **미검(False Negative)** 비율을 직관적인 행렬 표로 시각화
 
+<br>
 
 ## 3. 노코드 Orange3 활용 시 주의점
 
@@ -116,7 +124,7 @@ categories: materials
 - **In-Memory 처리 한계 인식 (성능 관리):**
     - Orange3는 모든 데이터를 컴퓨터 메모리(RAM)에 띄워서 처리함
     - 수백만 건의 고주파 센서 raw 데이터를 그대로 넣으면 튕길 수 있음
-        - **1분/1개 Lot 단위로 집계(Aggregation)된 데이터**나 표본 추출(Data Sampler 위젯)을 활용해야 함
+        - **1분/1개 Lot 단위로 집계(Aggregation)된 데이터**나 표본 추출(Data Sampler 위젯)을 활용해야 함<br><br>
 
 - **도메인 기반 전처리 및 결과 검증 (Human-in-the-Loop):**
     - 상황: 

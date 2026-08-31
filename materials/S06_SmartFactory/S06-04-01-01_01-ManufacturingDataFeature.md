@@ -1,12 +1,16 @@
 ---
 layout: page
 title:  "제조 데이터의 유형과 특징"
-date:   2026-07-21 03:00:00 +0900
 permalink: /materials/S06-04-01-01_01-ManufacturingDataFeature
-categories: materials
+description: "일반적인 데이터의 유형과 특징 + 제조 데이터의 유형과 특징을 설명합니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - Data
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
 
@@ -19,31 +23,32 @@ categories: materials
 - **특징**
     - 단독으로 존재할 때는 단순한 수치나 문자에 불과하여 큰 의미를 갖지 못함
     - 특정 목적에 맞게 가공되고 문맥(Context)이 부여되면 비로소 가치 있는 '정보(Information)'로 전환됨
-        > - 예시<br>
-        >   - 데이터 (Data): 38 (단순한 숫자)<br>
-        >   - 정보 (Information): "오늘 서울의 최고 기온은 38°C이다." (의미가 부여된 데이터)
+        - 예시
+            - 데이터 (Data): 38 (단순한 숫자)
+            - 정보 (Information): "오늘 서울의 최고 기온은 38°C이다." (의미가 부여된 데이터)
 
+<br>
 
 ## 2. 데이터의 분류
 
 ### 2.1 형태 및 구조화 수준에 따른 분류
 
 - 데이터가 얼마나 일정한 규칙과 틀을 가지고 저장되어 있는지에 따라 구분됨
-- 이 분류에 따라 어떤 DBMS(MySQL인지, MongoDB인지)를 사용할지를 결정함
+- 이 분류에 따라 어떤 DBMS(MySQL인지, MongoDB인지)를 사용할지를 결정함<br><br>
 
 - **정형 데이터 (Structured Data)**
     - 고정된 필드(틀)에 정해진 형식으로 저장된 데이터
     - 특징:
         - 연산과 검색이 매우 빠름
         - 주로 관계형 데이터베이스(RDBMS)의 표(Table) 형태로 관리됨
-    - 예시: 이름, 나이, 결제 금액, 날짜, 주소록 등
+    - 예시: 이름, 나이, 결제 금액, 날짜, 주소록 등<br><br>
 
 - **반정형 데이터 (Semi-structured Data)**
     - 고정된 틀은 없지만, 데이터 내에 구조를 설명하는 메타데이터나 태그(Tag)가 포함된 데이터
     - 특징
         - 스키마(틀) 변경이 자유로움
         - 파일 형태로 교환하기 쉬움
-    - 예시: JSON, XML, HTML 파일, 설정 파일 등
+    - 예시: JSON, XML, HTML 파일, 설정 파일 등<br><br>
 
 - **비정형 데이터 (Unstructured Data)**
     - 형태가 전혀 정해져 있지 않고, 규칙성이 없는 데이터
@@ -51,7 +56,7 @@ categories: materials
         - 텍스트나 바이너리 형태로 존재
         - 형태가 다양해 일반적인 테이블 구조에 담을 수 없음
         - NoSQL이나 데이터 레이크(Data Lake)에 저장
-    - 예시: 이미지, 영상, 오디오 파일, SNS 게시글 원문, 이메일 내용 등
+    - 예시: 이미지, 영상, 오디오 파일, SNS 게시글 원문, 이메일 내용 등<br><br>
 
 
 ### 2.2 속성과 측정 기준에 따른 분류
@@ -59,10 +64,8 @@ categories: materials
 - (통계 및 분석 기준에 따른 분류)
 - 데이터가 나타내는 값의 성격에 따라 질적 데이터(정성적 데이터)와 양적 데이터(정량적 데이터)로 나뉨
 - 이는 주로 SQL로 통계 및 분석 쿼리를 작성할 때 집계 방식을 결정하는 기준이 됨
-    > - 질적 데이터 $$\approx$$ 정성적 데이터 (숫자가 아닌 성질이나 상태를 나타냄)
-    > - 양적 데이터 $$\approx$$ 정량적 데이터 (숫자로 크기나 양을 나타냄)
-
-<br>
+    - 질적 데이터 $\approx$ 정성적 데이터 (숫자가 아닌 성질이나 상태를 나타냄)
+    - 양적 데이터 $\approx$ 정량적 데이터 (숫자로 크기나 양을 나타냄)<br><br>
 
 - **질적(Qualitative) 데이터 vs 양적(Quantitative) 데이터**
     - 주로 '통계학'과 '데이터베이스(DB)' 분야에서 데이터를 분류할 때 쓰는 표현
@@ -116,18 +119,18 @@ categories: materials
 
     - **정량적 데이터**
         - 명확하게 자로 재거나 셀 수 있어서, 객관적으로 수치화된 데이터
-        - 예시: 설문조사의 5점 만점 점수, 웹사이트 이탈률, 월별 매출액<br><br>
+        - 예시: 설문조사의 5점 만점 점수, 웹사이트 이탈률, 월별 매출액
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-03-01-01_01-001.png" style="width: 90%;">
+        <img src="/materials/S02_DataScience/images/S02-03-01-01_01-001.png">
+        <span class="caption">(Source: Sky Lectures / AiDALab)</span>
     </div>
 
+<br>
 
 ### 2.3 관계 및 구조에 따른 분류
 
 - 데이터가 서로 어떻게 연결되어 있고, 어떤 형태로 시각화·저장되는지에 따른 분류
-
-<br>
 
 - **테이블형 데이터 (Tabular Data)**
     - 특징
@@ -136,11 +139,18 @@ categories: materials
     - 연결 고리
         - 구조화 수준으로 보면 완벽한 정형 데이터에 속함
         - MySQL 같은 관계형 데이터베이스(RDBMS)에 저장됨
-    - 예시: 엑셀 시트, 대학교 학생 명부, 가입자 정보 테이블<br><br>
+    - 예시: 엑셀 시트, 대학교 학생 명부, 가입자 정보 테이블
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-03-01-01_01-002.png" style="width: 90%;">
+        <img src="/materials/S02_DataScience/images/S02-03-01-01_01-002.png" style="width: 90%;">
+        <span class="caption" style="text-align: left; margin-left: 3rem;">
+            (a) Record Data: 고정된 속성(필드) 집합으로 표현되는 가장 일반적인 레코드 구조<br>
+            (b) Transaction Data: 개별 사건(거래)별로 연관된 항목(Item)들의 집합으로 구성된 비정형/가변 구조<br>
+            (c) Data Matrix: 모든 속성이 수치형(Numeric)인 레코드 데이터를 n×p 행렬로 정형화한 형태<br>
+            (d) Document-Term Matrix (DTM): 텍스트 문서를 수치화하기 위해 문서 × 단어(Term) 빈도로 구성한 행렬<br><br>
+        </span>
     </div>
+
 
 - **그래프 기반 데이터 (Graph-based Data)**
     - 특징
@@ -152,7 +162,7 @@ categories: materials
     - 예시: 페이스북의 친구 관계도, 내비게이션의 도로망(지도) 데이터, 웹 페이지의 링크 구조<br><br>
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-03-01-01_01-003.png" style="width: 80%;">
+        <img src="/materials/S02_DataScience/images/S02-03-01-01_01-003.png" style="width: 80%;"><br>
     </div>
 
 
@@ -170,7 +180,13 @@ categories: materials
     - 예시: 문장 속 단어들의 배열(자연어), DNA 염기서열, 웹사이트 방문자의 클릭 경로(Clickstream)<br><br>
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-03-01-01_01-004.png" style="width: 70%;">
+        <img src="/materials/S02_DataScience/images/S02-03-01-01_01-004.png" style="width: 70%;">
+        <span class="caption" style="text-align: left; margin-left: 4.5rem;">
+            (a) Sequential transaction data: 시간에 따라 연속적으로 수행한 구매나 행동 사건들의 순서 데이터<br>
+            (b) Genomic sequence data: 생명체의 유전 정보를 구성하는 염기서열(A, T, G, C)이 물리적으로 길게 나열된 이산적인 문자열 데이터<br>
+            (c) Temperature time series: 한 고정된 위치에서 시간 흐름에 따라 연속적으로 기록된 기온 변화 데이터<br>
+            (d) Spatial temperature data: 특정 시점에 여러 지리적 위치(위도, 경도)에 걸쳐 공간적으로 분포된 기온 측정 데이터(예: 기온 열지도)<br><br>
+        </span>
     </div>
 
 - **시계열 데이터 (Time-Series Data)**
@@ -184,9 +200,11 @@ categories: materials
     - 예시: 주식 가격 변동 그래프, 1시간 간격의 기온 데이터, 서버의 CPU 사용량 모니터링 로그<br><br>
 
     <div class="insert-image">
-        <img src="/materials/datascience/images/S02-03-01-01_01-005.png" style="width: 90%;">
+        <img src="/materials/S02_DataScience/images/S02-03-01-01_01-005.png" style="width: 90%;">
+        <span class="caption">(Source: Sky Lectures / AiDALab)</span>
     </div>
 
+<br>
 
 ### 2.5 데이터의 근원에 따른 분류
 
@@ -207,7 +225,7 @@ categories: materials
         - 양방향 암호화
             - 데이터베이스에 저장된 사용자의 개인정보(예: 주민등록번호, 계좌번호)를 암호화 알고리즘(AES 등)으로 숨겼다가, 권한이 있는 사용자가 조회할 때 복호화(Decryption)하여 원본을 보여주는 케이스
         - 수학적 변환 데이터
-            - 인코딩(Base64)이나 진법 변환된 데이터
+            - 인코딩(Base64)이나 진법 변환된 데이터<br><br>
 
 - **불가역 데이터 (Irreversible Data)**
     - 데이터가 생성되거나 가공되는 과정에서 원본 정보의 일부 또는 전부가 유실되어, 어떠한 방법을 써도 절대 원래의 원본 데이터로 되돌리거나 유추할 수 없는 데이터
@@ -228,11 +246,13 @@ categories: materials
         - 통계적 요약 및 가명화 데이터
             - 대형 로그 데이터에서 '일별 매출 합계'만 남기고 상세 내역을 지우거나, 개인정보를 알아볼 수 없게 마스킹(예: 홍*동) 처리한 데이터
 
+<br>
+
 ## 3. 제조 데이터
 
 > - 제조 데이터는 IT 서비스나 일반 비즈니스 데이터와 비교했을 때 **물리적 세계(Physical World)와 직결되어 있다는 점**에서 독특한 유형과 특성을 가짐
 > - 일반 데이터 분석의 관점으로 접근하면 현업과의 괴리가 생기기 쉽기 때문에, 이 차이점을 명확히 구분하는 것이 좋음
-{: .common-quote}
+{: .yellow-quote}
 
 
 ### 3.1 정형/비정형을 넘어선 '시계열 및 고주파 데이터'
@@ -261,7 +281,7 @@ categories: materials
 
 - **물리적 한계치(Boundary) 존재:**
     - 데이터의 정상 범위를 설정할 때,
-    - 통계적 이상치(Outlier) 기준(예: $$3\sigma$$)보다 설비 스펙상의 한계치(Upper/Lower Spec Limit)가 더 절대적인 기준이 됨
+    - 통계적 이상치(Outlier) 기준(예: $3\sigma$)보다 설비 스펙상의 한계치(Upper/Lower Spec Limit)가 더 절대적인 기준이 됨
 
 
 ### 3.3 극심한 클래스 불균형
@@ -303,7 +323,7 @@ categories: materials
     - 분석 결과가 설비 제어(PLC 등)로 실시간 피드백되어야 하므로,
     - 클라우드 분석뿐만 아니라 현장(Edge)에서의 실시간 추론(Inference) 특성이 강조됨
 
-
+<br>
 
 ## 4.일반 비즈니스 데이터 vs 제조 데이터
 

@@ -1,5 +1,5 @@
 .prose {
-    line-height: 1.5rem; // 전체 본문 줄 간격(행간) 설정
+    line-height: 1.7rem; // 전체 본문 줄 간격(행간) 설정
 
     // 문단(Paragraph) 간의 상하 간격 보장
     p {
@@ -39,10 +39,19 @@
         background: transparent;
         border: none;
         border-radius: 0;
-        font-family: Consolas, Monaco, "Courier New", monospace;
+        font-family: "D2Coding", monospace;
         font-size: 0.95rem;
         line-height: 1.5;
         white-space: pre;
+    }
+
+    :not(pre) > code {
+        padding: 0.2em 0.4em;
+        background-color: #fde2a8;
+        border-radius: 4px;
+        font-family: "D2Coding", monospace;
+        font-size: 0.9em;
+        font-weight: 500;
     }
 
     .highlight {
@@ -218,7 +227,7 @@
 blockquote {
     margin-left: 0;
     margin-right: 0;
-    padding: 0.8rem 20px;
+    padding: 0.7rem 20px;
     font-style: normal;
     color: #000;
     border-radius: 10px;
@@ -267,6 +276,38 @@ blockquote {
         font-weight: bold;
     }
 
+    &.gray-quote {
+        border: 1px solid #ccc;
+        border-left: 5px solid #ccc;
+        border-right: 5px solid #999;
+        border-bottom: 2px solid #999;
+        background-color: #f3f3f3;
+    }
+
+    &.yellow-quote {
+        border: 1px solid #fae058;
+        border-left: 5px solid #fae058;
+        border-right: 5px solid #daa749;
+        border-bottom: 1px solid #daa749;
+        background-color: #fffcee;
+    }
+
+    &.pink-quote {
+        border: 1px solid #f3989d;
+        border-left: 5px solid #f3989d;
+        border-right: 5px solid #b64e53;
+        border-bottom: 2px solid #b64e53;
+        background-color: #fff0f1;
+    }
+
+    &.green-quote {
+        border: 1px solid #91ebb3;
+        border-left: 5px solid #91ebb3;
+        border-right: 5px solid #56b85a;
+        border-bottom: 2px solid #56b85a;
+        background-color: #e7f8e9;
+    }        
+
     &.notice-quote {
         border: 1px solid lightgray;
         border-left: 5px solid lightgray;
@@ -296,11 +337,24 @@ blockquote {
         border-radius: 10px;
     }
 
-    .split-content-title {
+    .split-content-title-blue {
         background-color: #dae5fa;
         display: block;
         width: 100%;
         height: 32px;
+        line-height: 32px;
+        border-radius: 10px 10px 0px 0px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        text-indent: 20px;
+    }
+
+    .split-content-title-green {
+        background-color: #bcddc1;
+        display: block;
+        width: 100%;
+        height: 32px;
+        line-height: 32px;
         border-radius: 10px 10px 0px 0px;
         font-weight: bold;
         font-size: 1.1rem;
@@ -312,6 +366,7 @@ blockquote {
         display: block;
         width: 100%;
         height: 32px;
+        line-height: 32px;
         border-radius: 10px 10px 0px 0px;
         font-weight: bold;
         font-size: 1.1rem;
@@ -323,6 +378,7 @@ blockquote {
         display: block;
         width: 100%;
         height: 32px;
+        line-height: 32px;
         border-radius: 10px 10px 0px 0px;
         font-weight: bold;
         font-size: 1.1rem;
@@ -332,8 +388,8 @@ blockquote {
 
 .insert-image {
     width: 900px;
-    max-width: 95%;
-    margin: 3em 1em 4em 3em;
+    max-width: 100%;
+    margin: 2em 1em 2em 1em;
 
     img {
         display: block;

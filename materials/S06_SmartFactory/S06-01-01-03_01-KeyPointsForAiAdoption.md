@@ -16,7 +16,7 @@ tags:
 > **핵심 메시지:** 
 > - AI 모델의 정확도가 99%여도 현장에 안착하지 못하면 쓰레기통으로 감
 > - 스마트 제조 AI의 성공은 알고리즘이 아니라 **현장 도메인 지식, 데이터의 무결성, 그리고 사람(작업자)과의 상호작용**에 달려 있음
-{: .expert-quote}
+{: .pink-quote}
 
 
 ## 1. PoC의 함정과 Roll-out까지의 장벽
@@ -24,7 +24,7 @@ tags:
 <div class="info-table"><b>[용어]</b> PoC (Proof of Concept): 개념 검증 / Roll-out: 전사 확대</div>
 
 > **Point:** &nbsp;&nbsp; 실험실(Colab/Jupyter Notebook)에서 잘 돌아가는 AI 모델이 <span style="color: darkred;">실제 공장에 적용되면 성능이 급격히 떨어지는 현상</span> 이해시키기
-{: .common-quote}
+{: .yellow-quote}
 
 - **주요 내용:**
     - **PoC 잔혹사 (PoC Trap):**
@@ -49,7 +49,7 @@ tags:
 <div class="info-table"><b>[용어]</b> ROI(Return On Investment): 투자 대비 효과</div>
 
 > **Point:** &nbsp;&nbsp; <span style="color: darkred;">AI 기술이 멋져 보여서</span> 도입하는 것이 아니라, 현장의 확실한 <span style="color: darkred;">돈이 되는 문제</span>부터 풀어야 함
-{: .common-quote}
+{: .yellow-quote}
 
 - **주요 내용:**
     - **Top-down vs Bottom-up:** 
@@ -95,19 +95,20 @@ tags:
 
 
 
-## 3. 현장 작업자와의 협업 및 XAI(설명 가능한 AI)
+## 3. 현장 작업자와의 협업 및 XAI
 
 <div class="info-table"><b>[용어]</b> XAI(Explainable AI): 설명 가능한 AI</div>
 
 > **Point:** &nbsp;&nbsp; 현장 베테랑 작업자의 노하우를 AI가 대체하는 것이 아니라 **'디지털 무기'로 쥐여주는 관점**이 필요함
-{: .common-quote}
+{: .yellow-quote}
 
 - **주요 내용:**
     - **블랙박스(Black-box) AI의 거부감:**
         - AI가 "10분 뒤 고장 납니다"라고만 알려주면, 현장 엔지니어는 "왜?"라고 물으며 알람을 꺼버림(Mute)
 
     - **XAI(Explainable AI)의 필요성:**
-        - "10분 뒤 고장 확률 87% (원인: 3번 베어링 진동 센서값 $$3\sigma$$ 초과 및 오일 온도 급상승)"과 같이 **이유를 설명해 주는 AI** 구축
+        - "10분 뒤 고장 확률 87% (원인: 3번 베어링 진동 센서값 $3\sigma$ 초과 및 오일 온도 급상승)"과 같이 **이유를 설명해 주는 AI** 구축
+            - 3 시그마($3\sigma$): 정규분포에서 평균을 기준으로 표준편차의 3배 이내 범위를 의미하며, 전체 데이터의 약 99.73%가 이 구간에 포함됨
 
 
 - **💡 비유 예시:**
@@ -122,7 +123,7 @@ tags:
 <div class="info-table"><b>[용어]</b> OT(Operational Technology): 운용 기술/운영 기술, 현장 제어 기술</div>
 
 > **Point:** &nbsp;&nbsp; AI 분석 결과를 현장에 어떻게 피드백할 것인가(Loop-back)의 문제
-{: .common-quote}
+{: .yellow-quote}
 
 - **주요 내용:**
     - **Passive AI (추천/알람):**
@@ -149,7 +150,7 @@ tags:
 </div>
 
 > **Point:** &nbsp;&nbsp; AI 모델은 만드는 것으로 끝나지 않으며, 공장 설비처럼 지속해서 '유지보수'해야 함
-{: .common-quote}
+{: .yellow-quote}
 
 - **주요 내용:**
     - **Model Drift (모델 성능 저하):**
@@ -173,5 +174,5 @@ tags:
 >      - AI가 불량을 예측했을 때, 실제로 공정을 멈추거나 조건(Recipe)을 바꿀 수 있는 권한과 시스템이 있는가?
 >   - **5. Safety & Interlock (안전 장치가 마련되어 있는가?)** 
 >      - AI 오작동 시 설비와 인명을 보호할 물리적 비상정지(Emergency Stop) 장치가 유효한가?
-{: .summary-quote}
+{: .green-quote}
 

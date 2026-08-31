@@ -1,21 +1,29 @@
 ---
 layout: page
 title:  "물류 자동화 및 제조 로봇(AVR, 협동로봇) 이해"
-date:   2026-07-22 22:50:00 +0900
 permalink: /materials/S06-04-07-02_01-LogisticsAutomationManufacturingRobots
-categories: materials
+description: "물류 자동화를 위해 어떤 기술이 사용되는지, 그리고 자율주행 물류 로봇과 협동로봇은 어떤 역할을 하게 될 것인지 살펴봅니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
+
 
 
 > - 가공 속도를 1초 줄이는 것보다
 > - **자재와 반제품이 라인 사이에 멍하니 대기하는 재공 재고 시간(WIP: Work In Process)을 줄이는 것이 전체 생산성에 훨씬 더 결정적**
 > - 자율주행 물류 로봇(AMR)과 협동로봇(Cobot)은 공장의 혈관을 유연하게 뚫어주는 자율 물류의 핵심 무기
-{: .common-quote}
+{: .yellow-quote}
 
+<br>
 
 ## 1. AGV vs AMR 기술 및 운용 방식 비교
+
+<br>
 
 <div class="info-table">
 <table>
@@ -77,6 +85,7 @@ categories: materials
 </table>
 </div>
 
+<br>
 
 ## 2. 협동로봇(Cobot)과 기존 산업용 로봇의 핵심 차이점
 
@@ -90,7 +99,7 @@ categories: materials
         - **충돌 감지 기술 (Force/Torque Sensor):**
             - 로봇 관절마다 충격/토크 센서가 내장되어 있어,
             - 사람이나 물체와 1 ~ 2 kgf 정도의 아주 미세한 충돌이라도 감지되는 순간
-            - **밀리초(ms) 단위로 즉시 동작을 정지(Power and Force Limitation)**
+            - **밀리초(ms) 단위로 즉시 동작을 정지(Power and Force Limitation)**<br><br>
 
 - **작업 전환(Re-tasking)의 용이성**
     - **기존 산업용 로봇:**
@@ -103,27 +112,20 @@ categories: materials
             - **손으로 잡고 원하는 움직임을 직접 움직여주면, 로봇이 해당 궤적과 위치 좌표를 스스로 기록 및 기억**
         - 비전공자도 **10분 만에 새로운 부품 조립 궤적을 교시(Teaching)** 가능
 
-
+<br>
 
 ## 3. ACS의 중요성
 
 - 로봇 1~2대를 도입하는 것은 쉽지만, 50대 이상으로 늘어나면 차원이 다른 문제가 발생함 🡪 관제 시스템 필요
 
-```text
-       [ MES / WMS (상위 물류 지시) ]
-                    │
-                    ▼
-     ┌──────────────────────────────────┐
-     │  ACS (AGV/AMR Control System)    │ ──► 로봇 군집 실시간 제어 시스템
-     └──────────────────────────────────┘
-         ├── AMR #1 : 최단 경로 할당 및 자재 이송
-         ├── AMR #2 : 교차로 충돌 회피 (우회 경로 제어)
-         └── AMR #3 : 배터리 임계치 감지 (자율 충전 도킹)
-```
+    <div class="insert-image" style="text-align: left;">
+        <img src="/materials/S06_SmartFactory/images/S06-04-07-02_01-001_ACS.png" style="width: 70%;">
+        <span class="caption" style="width: 85%;">(Source: Sky Lectures / AiDALab)</span>
+    </div>
 
 - **ACS (AGV/AMR Control System)란?**
     - 공장이나 물류창고 내에서 가동되는 여러 대의 AGV/AMR 로봇들이 서로 충돌하지 않고 효율적으로 이동하도록
-    - **실시간으로 통합 제어·배차하는 전용 컨트롤 시스템**
+    - **실시간으로 통합 제어·배차하는 전용 컨트롤 시스템**<br><br>
 
 - **ACS의 핵심 제어 기능:**
     - **Traffic Control (실시간 교통 제어):**
@@ -141,7 +143,7 @@ categories: materials
 > - 고정된 컨베이어 벨트나 마그네틱 AGV는 공장 레이아웃을 고착화시켜 변화에 취약하게 만듦
 > - **자율 우회가 가능한 AMR과 안전 펜스 없이 작업자 옆에서 보조하는 협동로봇, 그리고 이들을 하나의 유기체처럼 통제하는 ACS**를 결합할 때,
 >   - 아침과 오후에 생산 품목이 바뀌어도 멈추지 않는 진짜 '유연 물류 체계'가 완공됨
-{: .summary-quote}
+{: .green-quote}
 
 <br>
 

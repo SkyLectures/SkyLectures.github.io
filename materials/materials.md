@@ -12,7 +12,7 @@ qna: false
 ## 파이썬
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-red">파이썬 기초</span>
+<span class="split-content-title-blue">파이썬 기초</span>
 - [파이썬 개요](/materials/S01-01-01-01_01-PythonOverview)
 - [가상환경 설정](/materials/S01-01-02-01_01-VirtualEnvironment)
 - [파이썬 기본 문법](/materials/S01-01-03-01_01-PythonBasic)
@@ -24,7 +24,7 @@ qna: false
     - [Seaborn (작업중)](/materials/S01-01-04-05_01-Seaborn)
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-purple">파이썬 중급</span>
+<span class="split-content-title-green">파이썬 중급</span>
 - [값의 처리와 변수](/materials/S01-02-01-01_01-Variables)
 - [연산자](/materials/S01-02-02-01_01-Operatros)
 - [자료형 (작업중)](/materials/S01-02-03-01_01-DataTypes)
@@ -39,7 +39,7 @@ qna: false
 - [정규표현식 (작업중)](/materials/S01-02-14-01_01-RegularExpressions)
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">파이썬 고급</span>
+<span class="split-content-title-purple">파이썬 고급</span>
 - [Under Bar의 이해](/materials/S01-02-15-01_01-UnderBar)
 - 자료형
     - [Sequence 자료형](/materials/S01-02-04-01_01-SequenceDataTypes)
@@ -49,7 +49,7 @@ qna: false
     - [GUI 예제](/materials/S01-05-02-01_01-GuiExamples)
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Web Service 기초</span>
+<span class="split-content-title-blue">Web Service 기초</span>
 - [웹서버 개발의 이해](/materials/S01-04-01-01_01-WebServerOverview)
 - [Simple 웹서버 개발 예제](/materials/S01-04-01-02_01-SimpleWebServer)
 - [REST API 개요](/materials/S01-04-01-03_01-RestApiOverview)
@@ -63,7 +63,7 @@ qna: false
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Web Service (DJango)</span>
+<span class="split-content-title-green">Web Service (DJango)</span>
 - Django 웹프레임워크 이해
     - [Django 웹프레임워크 개요](/materials/S01-04-02-01_01-DjangoOverview)
     - [Django 기반 서비스 기본 흐름](/materials/S01-04-02-01_02-DjangoBasedServiceProcess)
@@ -79,7 +79,7 @@ qna: false
     - [글 관리](/materials/S01-04-02-04_02-DrfBbsPosts)
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Web Service (Flask)</span>
+<span class="split-content-title-green">Web Service (Flask)</span>
 - Flask 웹프레임워크 이해
     - [Flask 웹프레임워크 개요](/materials/S01-04-03-01_01-FlaskOverview)
     - [Flask 설치 및 환경설정](/materials/S01-04-03-01_02-FlaskSetting)
@@ -93,7 +93,7 @@ qna: false
     - [GET/POST 메서드 활용](/materials/S01-04-03-02_07-GetPostMethods)
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-purple">Web Service (FastAPI)</span>
+<span class="split-content-title-green">Web Service (FastAPI)</span>
 - FastAPI 웹프레임워크의 이해
     - [FastAPI 웹프레임워크 개요](/materials/S01-04-04-01_01-FastApiOverview)
     - [FastAPI 설치 및 환경설정](/materials/S01-04-04-01_02-FastApiSetting)
@@ -111,7 +111,7 @@ qna: false
 ## 데이터 분석
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-red">데이터 분석 기초</span>
+<span class="split-content-title-blue">데이터 분석 기초</span>
 - [데이터 기초]
 - [데이터 수집]
     - [데이터 수집]
@@ -125,7 +125,7 @@ qna: false
     - [Pandas 기반 데이터 분석]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">데이터베이스</span>
+<span class="split-content-title-green">데이터베이스</span>
 - 데이터베이스 개요
     - [데이터베이스 개요]
     - [RDBMS 이해]
@@ -154,7 +154,7 @@ qna: false
     - [Trigger]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">DBMS 종류별 특징과 활용</span>
+<span class="split-content-title-purple">DBMS 종류별 특징과 활용</span>
 - MySQL
     - [MySQL 개요]
     - [비정형 로그데이터 적재]
@@ -183,7 +183,7 @@ qna: false
 ## 인공지능 (AI)
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-red">AI개요 / 머신러닝</span>
+<span class="split-content-title-blue">AI개요 / 머신러닝</span>
 - [AI 개요]
 - [AI 시스템의 개발 공정]
 - [머신러닝 개요]
@@ -202,7 +202,7 @@ qna: false
     - [ANN (인공신경망)]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-red">딥러닝</span>
+<span class="split-content-title-blue">딥러닝</span>
 - [딥러닝 개요]
 - 딥러닝 모델 기초
     - [DNN 모델 / 실습]
@@ -222,7 +222,7 @@ qna: false
     - [도로 표지판 및 신호등 인식]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-purple">OpenCV 기반 영상처리</span>
+<span class="split-content-title-green">OpenCV 기반 영상처리</span>
 - [디지털 이미지의 구조]
 - [OpenCV 기초]
 - [영상 전처리 및 필터링]
@@ -234,7 +234,7 @@ qna: false
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-purple">자연어처리</span>
+<span class="split-content-title-green">자연어처리</span>
 - [자연어처리 개요]
 - 전처리
     - [토큰화]
@@ -251,8 +251,8 @@ qna: false
 - [Chatbot 시스템]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-red">대형언어모델(LLM)</span>
-- [LLM 개요]
+<span class="split-content-title-blue">대형언어모델(LLM)</span>
+- [LLM 개요](/materials/S03-05-01-01_01-LlmOverview)
 - LLM 활용
     - [질의 응답 및 텍스트 생성 해보기]
     - [검색, 요약, 분석 해보기]
@@ -269,7 +269,7 @@ qna: false
     - [(심화) GPT 응용 서비스 설계]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-red">LLM기반 개발 기초</span>
+<span class="split-content-title-green">LLM기반 개발 기초</span>
 - Ollama
     - [Ollama 개요]
     - [Ollama 기초]
@@ -296,20 +296,20 @@ qna: false
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">생성형 AI</span>
+<span class="split-content-title-blue">생성형 AI</span>
 1. [생성형 AI 개요]
 2. [생성형 AI 작동 원리]
 3. [생성형 AI 활용사례]
 4. [텍스트 생성 실습]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">강화학습</span>
+<span class="split-content-title-green">강화학습</span>
 1. [강화학습 개요]
 2. [강화학습 모델]
 3. [강화학습 실습]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">AI 윤리</span>
+<span class="split-content-title-blue">AI 윤리</span>
 - [AI 윤리 개요]
 - [AI 윤리와 전통 윤리]
 - [인공지능의 사회적 문제]
@@ -319,7 +319,7 @@ qna: false
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">음성인식</span>
+<span class="split-content-title-purple">음성인식</span>
 - 음성인식 개요
     - [음성인식의 역사 및 발전 과정]
     - [음성인식 기술의 이론적 기반]
@@ -337,7 +337,7 @@ qna: false
     - [Speech Command Dataset 기반 음성인식]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-red">Physical AI 기초</span>
+<span class="split-content-title-purple">Physical AI 기초</span>
 - Physical AI 기초
     - [Physical AI 개요]
     - [Physical AI의 작동 원리]
@@ -352,7 +352,7 @@ qna: false
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-red">Physical AI: 모빌리티 AI</span>
+<span class="split-content-title-purple">Physical AI: 모빌리티 AI</span>
 - [모빌리티 AI 개요]
 - 자율주행 기술의 원리 및 요소
     - [자율주행 레벨(Level)의 이해]
@@ -376,7 +376,7 @@ qna: false
     - [Decision Tree 기반 판단 시스템]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">AI SW 테스트</span>
+<span class="split-content-title-red">AI SW 테스트</span>
 - AI SW 테스트 개요
     - [AI SW와 평가]
     - [AI SW 테스트 개요]
@@ -408,7 +408,7 @@ qna: false
 ## 개발/운영 시스템 구축
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Git / Github</span>
+<span class="split-content-title-green">Git / Github</span>
 - [Git & Github 개요]
 - [Git 환경 설정]
 - [Git 기본 명령어 실습]
@@ -417,13 +417,13 @@ qna: false
 - [Github Action]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Docker</span>
+<span class="split-content-title-green">Docker</span>
 - [Docker 개요와 이미지, 컨테이너 이해]
 - [Dockerfile 작성 및 이미지 최적화]
 - [Docker Compose 이해]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">MinIO</span>
+<span class="split-content-title-purple">MinIO</span>
 - [MinIO 개요 및 설치, 환경설정]
 - [MinIO 오브젝트 스토리지 구축]
 </div>
@@ -431,17 +431,17 @@ qna: false
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Apache Iceberg</span>
+<span class="split-content-title-purple">Apache Iceberg</span>
 - [Apache Iceberg 개요 및 설치, 환경설정]
 - [Apache Iceberg 기반 레이크하우스 구축]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Trino</span>
+<span class="split-content-title-purple">Trino</span>
 - [Trino 개요]
 - [Trino 기반 S3 데이터 SQL 엔진 구축]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Spark</span>
+<span class="split-content-title-purple">Spark</span>
 - [Spark 개요]
 - [분산 데이터 처리]
 - [Spark 설치 및 환경설정]
@@ -454,13 +454,13 @@ qna: false
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Airflow</span>
+<span class="split-content-title-purple">Airflow</span>
 - [Airflow 개요]
 - 
 - 
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Kafka</span>
+<span class="split-content-title-purple">Kafka</span>
 - [Kafka 개요]
 - [실시간 데이터 & Kafka 이해]
 - [Docker 기반 Kafka 클러스터 구축하기]
@@ -469,7 +469,7 @@ qna: false
 - [Kafka Connect 기반 실시간 데이터 MiniO 적재]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Mixed System</span>
+<span class="split-content-title-purple">Mixed System</span>
 - [MiniO – Iceberg 데이터 파이프라인 구축]
 - [MiniO – Iceberg – Trino 기반 데이터 카탈로그<br>연결 및 레이크하우스 통합]
 - [MinIO - VectorDB 연동]
@@ -481,7 +481,7 @@ qna: false
 ## 미니프로젝트
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Django/DRF 기반 Pystagram 만들기</span>
+<span class="split-content-title-green">Django/DRF 기반 Pystagram 만들기</span>
 - [환경구축](/materials/S01-04-02-05_01-DrfPystagramEnvironment)
 - [기본 정보 설정](/materials/S01-04-02-05_02-DrfPystagramBasicInfo)
 - [로그인/로그아웃 기능 구현](/materials/S01-04-02-05_03-DrfPystagramLoginLogout)
@@ -491,30 +491,30 @@ qna: false
 - [글 상세 관리 기능 구현](/materials/S01-04-02-05_07-DrfPystagramPostDetails)
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Streamit를 활용한 LLM 연동 앱</span>
+<span class="split-content-title-green">Streamit를 활용한 LLM 연동 앱</span>
 - [가이드라인]
 - [Streamlit 기반의 챗봇 인터페이스 개발]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">LangChain, Vector DB 기반 앱 구현</span>
+<span class="split-content-title-purple">LangChain, Vector DB 기반 앱 구현</span>
 - [가이드라인]
 </div>
 </div>
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Semantic Search 및 Hybrid Search 기능 구현</span>
+<span class="split-content-title-purple">Semantic Search 및 Hybrid Search 기능 구현</span>
 - [가이드라인]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">FastAPI, React, TypeScript, PostgreSQL 기반 게시판 만들기</span>
+<span class="split-content-title-purple">FastAPI, React, TypeScript, PostgreSQL 기반 게시판 만들기</span>
 - [가이드라인]
 </div>
 </div>
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">데이터 파이프라인 구축 기반 프로젝트</span>
+<span class="split-content-title-purple">데이터 파이프라인 구축 기반 프로젝트</span>
 - [데이터 파이프라인 구축 및 최종 RAG 챗봇 개발]
 </div>
 </div>
@@ -524,14 +524,14 @@ qna: false
 ## Linux
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">리눅스 기초</span>
+<span class="split-content-title-blue">리눅스 기초</span>
 - [리눅스 개요]
 - 환경 구축
     - [리눅스 설치 및 환경 설정]
     - [WSL 설치 및 환경설정]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">기초 명령어</span>
+<span class="split-content-title-blue">기초 명령어</span>
 - 기초 명령어
     - [기초 명령어 종합]
     - 기초 명령어 상세
@@ -543,7 +543,7 @@ qna: false
         - [텍스트 처리 및 검색]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">리눅스 쉘 프로그래밍</span>
+<span class="split-content-title-green">리눅스 쉘 프로그래밍</span>
 - [리눅스 쉘 프로그래밍]
 </div>
 </div>
@@ -554,26 +554,26 @@ qna: false
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">클라우드 시스템 기초</span>
+<span class="split-content-title-blue">클라우드 시스템 기초</span>
 - [클라우드 시스템 개요]
 - [클라우드 플랫폼 개요]
 - [GCP, AWS, Azure 비교]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">GCP</span>
+<span class="split-content-title-green">GCP</span>
 - [GCP 개요]
 - [GCP 계정 생성 및 환경설정]
 - [VM 인스턴스 생성 및 SSH 접속]
 - [GCP 활용]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">AWS</span>
+<span class="split-content-title-green">AWS</span>
 - [AWS 개요]
 - [AWS 환경 설정]
 - [AWS 활용]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Azure</span>
+<span class="split-content-title-green">Azure</span>
 - [Azure 개요]
 - [Azure 환경 설정]
 - [Azure 활용]
@@ -585,13 +585,13 @@ qna: false
 ## SBC & IoT
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Single Board Computer(SBC)</span>
+<span class="split-content-title-blue">Single Board Computer(SBC)</span>
 - [SBC 개요]
 - [Arduino 기초 및 제어]
 - [라즈베리파이 기초 및 제어]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">Sensor</span>
+<span class="split-content-title-purple">Sensor</span>
 - 센서의 이해
     - [센서에 대한 기본적인 이해와 센서의 역할]
     - [센서의 종류 및 응용 사례]
@@ -626,7 +626,7 @@ qna: false
 ## Smart Factory
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title-purple">스마트팩토리 기초</span>
+<span class="split-content-title-purple-blue">스마트팩토리 기초</span>
 - [스마트팩토리 개요]
 - [제조산업의 패러다임 변화]
 - [현장 적용 관점에서의 AI 도입 포인트 정리]
@@ -635,7 +635,7 @@ qna: false
 - [스마트팩토리 구축 성공사례]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">스마트팩토리 구성 시스템</span>
+<span class="split-content-title-purple">스마트팩토리 구성 시스템</span>
 - [제조 프로세스]
 - [MES(제조실행시스템)]
 - [MRP(자재소요계획)]
@@ -645,7 +645,7 @@ qna: false
 - [물류 시스템]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">품질경영시스템(ISO 9001)</span>
+<span class="split-content-title-purple">품질경영시스템(ISO 9001)</span>
 - [스마트팩토리와 DX 경영의 필요성]
 - [품질경영시스템(ISO 9001)의 개요]
 - [스마트팩토리와 ISO 9001 연계]
@@ -659,7 +659,7 @@ qna: false
 </div>
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">스마트팩토리 구축 기술 (1)</span>
+<span class="split-content-title-purple">스마트팩토리 구축 기술 (1)</span>
 - 제조 데이터 수집 및 분석
     - [제조 데이터 유형 및 특성]
     - [제조 데이터 이해]
@@ -680,7 +680,7 @@ qna: false
     - [공정 개선 시나리오 설계 예시]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">스마트팩토리 구축 기술 (2)</span>
+<span class="split-content-title-purple">스마트팩토리 구축 기술 (2)</span>
 - 설비 데이터 분석과 스마트 운영
     - [설비 센서 데이터 기반 이상 탐지]
     - [예지보전(Predicted Maintenance) 개념]
@@ -701,7 +701,7 @@ qna: false
 ## 업무 자동화/고도화 + 실무 교양
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">프로젝트 관리</span>
+<span class="split-content-title-green">프로젝트 관리</span>
 - 프로젝트 기획 및 설계
     - [프로젝트 주제 선정 및 러프 기획]
     - [API 정의 및 데이터 흐름 설계]
@@ -716,7 +716,7 @@ qna: false
     - [LLM 기반 프로젝트 포트폴리오 작성요령]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">GPT + Copilot</span>
+<span class="split-content-title-green">GPT + Copilot</span>
 - [AI 도구별 개요]
 - [Copilot 개요]
 - GPT + Copilot
@@ -745,7 +745,7 @@ qna: false
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">연구계획서, 기획, 보고서 작성</span>
+<span class="split-content-title-green">연구계획서, 기획, 보고서 작성</span>
 - 연구계획서 작성
     - [연구계획서 기본 구조 및 구성요소의 이해]
     - [연구 문서 활용 사례]
@@ -756,7 +756,7 @@ qna: false
     - [Copilot을 이용한 자동화된 보고서 초안 작성]
 </div>
 <div class="split-content-element" markdown="1">
-<span class="split-content-title">커뮤니케이션과 협업</span>
+<span class="split-content-title-green">커뮤니케이션과 협업</span>
 - [커뮤니케이션]
 - [협업능력의 강화]
 - [실무 보고서 작성법]

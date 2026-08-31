@@ -1,12 +1,17 @@
 ---
 layout: page
 title:  "예측 결과를 공정 개선에 연결하는 방법"
-date:   2026-07-22 15:00:00 +0900
 permalink: /materials/S06-04-05-03_01-ConnectPredictionResultsToProcessImprovement
-categories: materials
+description: "AI 시스템을 활용한 예측 결과를 공정 개선으로 연결하는 방법을 학습합니다."
+categories:
+    - materials
+tags:
+    - smartfactory
+    - AI
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
+
 
 
 > - **우리가 알고 싶은 것**
@@ -14,15 +19,16 @@ categories: materials
 > - "불량이 납니다"라고 알람만 울리는 **1세대 예측 AI**에서, "원인이 무엇이고 어떻게 바꿔야 하는가"를 제시하는 **2세대 처방(Prescriptive) AI**로의 진화
 >   - ‘10분 뒤에 불량이 날 것 같다’고 예측(Predictive)하는 것에서 끝나면 안됨
 >   - **‘불량을 막기 위해 지금 사출 압력을 5 bar 줄여라’**라고 현장에 피드백(Prescriptive)을 줄 수 있어야 진짜 공정 최적화
-{: .common-quote}
+{: .yellow-quote}
 
+<br>
 
 ## 1. 분석 발전의 2단계: 예측 🡪 처방/최적화
 
 - 현장의 작업자나 엔지니어들이 AI 도입 시 가장 자주 하는 불만 중 하나
-    - "불량이 날 거라는 건 알겠는데, 그래서 나보고 어쩌라는 거냐?"
+    - "불량이 날 거라는 건 알겠는데, 그래서 나보고 어쩌라는 거냐?"<br><br>
 
-- **Predictive Analytics (예측 분석) - 1세대**
+- **Predictive Analytics (예측 분석) : 1세대**
     - **기능:**
         - 미래의 결과($Y$) 상태를 단순히 미리 알려주는 단계
 
@@ -32,9 +38,9 @@ categories: materials
     - **한계:**
         - 현장 작업자는 불량이 난다는 사실만 알 뿐,
         - **어떤 파라미터를 얼마나 조절해야 불량을 막을 수 있는지 알 수 없어**
-        - 결국 작업을 정지하거나 감에 의존해 조절하게 됨
+        - 결국 작업을 정지하거나 감에 의존해 조절하게 됨<br><br>
 
-- **Prescriptive Analytics (처방/최적화 분석) - 2세대**
+- **Prescriptive Analytics (처방/최적화 분석) : 2세대**
     - **기능:**
         - 예측을 넘어, 불량을 방지하거나 품질을 극대화할 수 있는
         - **최적의 공정 조건 레시피(Recipe)를 계산하여 역으로 제시**하는 단계
@@ -43,16 +49,16 @@ categories: materials
         - 불량률을 0%로 유지하기 위해, 사출기 2번 노즐 온도를 +2℃ 올리고, 보압 압력을 3 bar 내리십시오.
 
     - **구현 메커니즘 (Virtual Metrology & Optimization):**
-        - AI 예측 모델 $$Y = f(X)$$를 만든 뒤,
+        - AI 예측 모델 $Y = f(X)$를 만든 뒤,
         - 최적화 알고리즘(Genetic Algorithm, Bayesian Optimization 등)을 결합하여
-        - $$Y$$(불량률)를 최소화하는 최적의 $$X$$(센서 파라미터 조합)를 역산해 내는 방식
+        - $Y$(불량률)를 최소화하는 최적의 $X$(센서 파라미터 조합)를 역산해 내는 방식
 
-
+<br>
 
 ## 2. XAI를 통한 원인 인자 규명
 
 - 현장 작업자가 AI의 처방을 믿고 따르려면 
-- "AI가 왜 그런 제안을 내렸는가?"에 대한 블랙박스(Black-box) 해소가 필수
+- "AI가 왜 그런 제안을 내렸는가?"에 대한 블랙박스(Black-box) 해소가 필수<br><br>
 
 - **SHAP (SHapley Additive exPlanations) 기법**
     - **개념:**
@@ -74,7 +80,7 @@ categories: materials
         - "작업자님, AI가 불량 위험도를 85%로 높게 본 결정적 이유는 노즐 2번 온도가 정상보다 낮기 때문(45% 기여)입니다."
         - 라는 그래픽 리포트를 HMI 모니터에 즉시 띄워줌
 
----
+<br>
 
 ## 3. Closed-loop Control 3단계 아키텍처
 
@@ -85,13 +91,13 @@ categories: materials
         - `AI 처방 엔진` 🡪 `POP / HMI 모니터 가이드 표시` 🡪 `작업자가 보고 직접 수동 조절`
     - **특징:**
         - 가장 안전하고 초기 도입 시 현장 거부감이 적음
-        - 단, 작업자의 조치 지연이나 숙련도에 따라 결과가 달라짐
+        - 단, 작업자의 조치 지연이나 숙련도에 따라 결과가 달라짐<br><br>
 
 - **[2단계] Semi-Closed loop Control (작업자 승인 후 자동 반영)**
     - **구조:**
         - `AI 처방 엔진` 🡪 `HMI 화면에 최적 레시피 팝업 (승인 요청)` 🡪 `작업자가 '승인(Confirm)' 버튼 클릭` 🡪 `PLC 제어 파라미터 자동 변경`
     - **특징:**
-        - 안전장치(Human-in-the-loop)를 유지하면서도 작업자의 파라미터 오입력 실수를 완벽히 차단함
+        - 안전장치(Human-in-the-loop)를 유지하면서도 작업자의 파라미터 오입력 실수를 완벽히 차단함<br><br>
 
 - **[3단계] Closed-loop Control (실시간 자율 제어)**
     - **구조:**
@@ -106,4 +112,4 @@ categories: materials
 > - '불량이 날 것 같다'는 예측(Predictive)에서 한 걸음 더 나아가,
 > - **'SHAP으로 원인을 밝히고, 어떻게 제어해야 하는지 처방(Prescriptive)하여 PLC 제어 루프(Closed-loop)에 이식하는 것'**이
 > - 진정한 공정 최적화의 완결
-{: .expert-quote}
+{: .pink-quote}
