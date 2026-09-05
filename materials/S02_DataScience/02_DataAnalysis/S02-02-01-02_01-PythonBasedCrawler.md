@@ -1,12 +1,16 @@
 ---
 layout: page
 title:  "파이썬 기반 크롤러"
-date:   2025-03-01 10:00:00 +0900
 permalink: /materials/S02-02-01-02_01-PythonBasedCrawler
-categories: materials
+description: "크롤링(Crawling)의 개념과 기술적 특징을 살펴보고, 파이썬을 이용한 실습을 통해 크롤링에 대하여 이해합니다."
+categories:
+    - materials
+tags:
+    - Data Analysis
+    - Data Science
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
 ## 1. 크롤링(Crawling)의 개념과 기술적 특징
@@ -18,7 +22,7 @@ categories: materials
     - 예: 구글 봇의 웹 페이지 순회
 
 - **웹 스크래핑(Web Scraping)**
-    - 특정 웹 페이지에서 우리가 **원하는 특정 데이터(가격, 제목, 이미지 등)를 추출**하여 구조화된 데이터로 저장하는 기법
+    - 특정 웹 페이지에서 우리가 **원하는 특정 데이터(가격, 제목, 이미지 등)를 추출**하여 구조화된 데이터로 저장하는 기법<br><br>
 
 ### 1.2 주요 기술 스택 분류
 
@@ -32,18 +36,19 @@ categories: materials
     - `Selenium`, `Playwright`
         - 브라우저를 직접 원격 제어하여 JavaScript 렌더링, 클릭, 스크롤 등의 사용자 상호작용을 시뮬레이션하는 라이브러리
 
+<br>
 
 ## 2. 크롤링 기술의 장단점 및 활용 사례
 
 - **장점**
     - **데이터 확보의 무한성:** 공개된 웹의 방대한 데이터를 자산화할 수 있음
     - **자동화 및 효율성:** 수작업으로 수일이 걸릴 데이터 수집을 수분 내에 완료
-    - **실시간성:** 주기적인 스크래핑을 통해 시장의 실시간 변화를 모니터링할 수 있음
+    - **실시간성:** 주기적인 스크래핑을 통해 시장의 실시간 변화를 모니터링할 수 있음<br><br>
 
 - **단점 및 한계**
     - **대상 사이트 의존성 :** 타겟 웹사이트의 UI/UX나 HTML 구조가 조금만 바뀌어도 크롤러가 작동하지 않음 🡲 **유지보수 비용 발생**
     - **차단 및 제재 위험 :** 짧은 시간 내 많은 요청을 보내면 IP가 차단되거나 디도스(DDoS) 공격으로 오인받을 수 있음
-    - **비정형 데이터 처리의 난해함 :** HTML 내 텍스트 뒤섞임, 숨겨진 데이터 등을 정제하는 데 많은 리소스가 소요됨
+    - **비정형 데이터 처리의 난해함 :** HTML 내 텍스트 뒤섞임, 숨겨진 데이터 등을 정제하는 데 많은 리소스가 소요됨<br><br>
 
 - **주요 활용 사례**
     - **이커머스 :** 경쟁사 상품 가격 비교 및 최저가 모니터링 시스템 구축
@@ -51,28 +56,29 @@ categories: materials
     - **제조/스마트팩토리 :** 공급망 부품 가격 변동성 추적 및 원자재 시장 동향 리포트 자동화
     - **AI/데이터 과학 :** 거대 언어 모델(LLM) 학습용 말뭉치 및 파인튜닝 데이터셋 확보
 
+<br>
 
 ## 3. 라이선스 및 법적 주의점 (Compliance)
 
-> ⚠️ **과거와 달리 현재는 무분별한 크롤링에 대한 법적 처벌 사례가 늘고 있음**
-{: .expert-quote}
+> ‼️ **과거와 달리 현재는 무분별한 크롤링에 대한 법적 처벌 사례가 늘고 있음**
+{: .pink-quote}
 
-<br>
 
 - **`robots.txt` 확인 (필수)**
-    - 웹사이트 루트 경로(예: `https://example.com/robots.txt`)에 위치한 로봇 배제 표준을 반드시 확인하고 준수해야 함
+    - 웹사이트 루트 경로(예: `https://example.com/robots.txt`)에 위치한 로봇 배제 표준을 반드시 확인하고 준수해야 함<br><br>
 
 - **서비스 이용약관(Terms of Service) 위반 여부**
     - 로그인이 필요한 서비스(Gated Data)의 경우,
-        - 로그인 시 동의한 약관에 **"자동화된 수단 이용 금지" 조항**이 있다면 민사상 손해배상 청구 대상이 될 수 있음
+        - 로그인 시 동의한 약관에 **"자동화된 수단 이용 금지" 조항**이 있다면 민사상 손해배상 청구 대상이 될 수 있음<br><br>
 
 - **저작권법 및 정보통신망법 유의**
     - 단순한 '사실(Facts, 예: 상품 가격, 수치)'은 저작권 보호 대상이 아니지만, 타인이 가공한 '창작성 있는 저작물(리뷰 글, 기사, 독창적 이미지 등)'을 무단으로 긁어가서 상업적으로 재배포하면 **저작권 침해**에 해당함
-    - 서버에 무리를 주어 서비스를 마비시키면 **정보통신망법 위반(컴퓨터장애업무방해)**으로 형사 처벌을 받을 수 있음
+    - 서버에 무리를 주어 서비스를 마비시키면 **정보통신망법 위반(컴퓨터장애업무방해)**으로 형사 처벌을 받을 수 있음<br><br>
 
 - **개인정보보호법(개인식별정보 PII)**
     - 공개된 정보라 할지라도 이름, 전화번호, 이메일 주소 등을 대량으로 긁어 모으는 행위는 **국내 개인정보보호법** 및 **글로벌 standard(GDPR, CCPA)**에 전면 위반됨
 
+<br>
 
 ## 4. 최근 업계의 반응 및 기술적 대응 트렌드
 
@@ -82,7 +88,7 @@ categories: materials
     - **AI 기반 CAPTCHA**
         - 사람이 아닌 것으로 의심되면 한 차원 높은 캡차(CAPTCHA)를 요구
     - **`ai.txt` 및 `llms.txt` 등장**
-        - 최근 생성형 AI 붐으로 인해, 기존 `robots.txt`를 넘어 "AI 모델 학습용 데이터 수집(TDM)을 거부한다"는 목적 기반 제어(Purpose-Based Control) 규격이 업계 표준으로 자리 잡고 있음
+        - 최근 생성형 AI 붐으로 인해, 기존 `robots.txt`를 넘어 "AI 모델 학습용 데이터 수집(TDM)을 거부한다"는 목적 기반 제어(Purpose-Based Control) 규격이 업계 표준으로 자리 잡고 있음<br><br>
 
 - **크롤러 측의 진화 (Harness & Agentic Loop)**
     - **헤드리스 브라우저의 고도화**
@@ -91,12 +97,17 @@ categories: materials
         - 과거에는 정규식이나 CSS Selector를 꼼꼼히 짜야 했지만,
         - 최근에는 HTML 통째로 혹은 텍스트 스냅샷을 LLM 지시어(Prompt)에 넣어 원하는 정보만 JSON 구조로 뽑아내는 '에이전트형 스크래핑(Agentic Scraping)'으로 패러다임 이동 중
 
+<br>
+
 ## 5. 크롤러의 구조 이해
+
+<br>
 
 - **🌐 크롤러 아키텍처 흐름도 (숫자 순서 기준)**
 
 <div class="insert-image">
-    <img src="/materials/S02_DataScience/images/S02-02-01-02_01-001.jpg" style="width: 90%;">
+    <img src="/materials/S02_DataScience/images/S02-02-01-02_01-001.jpg">
+    <span class="caption">(Source: Sky Lectures / AiDALab)</span>
 </div>
 
 0. **SEED URLs와 Frontier Queue**
@@ -106,66 +117,66 @@ categories: materials
     - 스케줄러/큐 (Frontier Queue)
         - 방문할 예정인 URL들을 차례대로 쌓아두는 대기열(Queue)
         - 크롤러는 이 큐에서 주소를 하나씩 꺼내어 탐색을 수행하고,
-        - 탐색 중에 새로 발견된 링크들을 다시 이 큐에 추가하며 무한히 확장함
+        - 탐색 중에 새로 발견된 링크들을 다시 이 큐에 추가하며 무한히 확장함<br><br>
 
 1. **HTTP GET REQUEST (요청)**
     - 대기열(Frontier Queue)에서 꺼내온 타겟 URL을 기반으로,
     - 크롤러(Bot)가 인터넷망을 통해 대상 웹사이트(Target Website) 서버에 접속하여
-    - 페이지 소스코드를 요청하는 단계
+    - 페이지 소스코드를 요청하는 단계<br><br>
 
 2. **HTTP RESPONSE (응답)**
     - 요청을 받은 웹 서버가
-    - 크롤러에게 웹페이지의 뼈대가 되는 **순수한 HTML 소스코드**를 반환(응답)하는 단계
+    - 크롤러에게 웹페이지의 뼈대가 되는 **순수한 HTML 소스코드**를 반환(응답)하는 단계<br><br>
 
 3. **Page Loop 🡲 Page Calculation (페이지 제어 및 파싱 준비)**
     - 서버로부터 받은 HTML 원본 데이터를
     - **PAGE PARSER (BeautifulSoup 등)** 엔진에 전달하여
     - 메모리에 DOM 트리 구조로 변환하는 단계
-    - 다중 페이지를 크롤링할 경우, 다음 요청을 위한 페이징 파라미터 계산이 이 시점에서 제어됨
+    - 다중 페이지를 크롤링할 경우, 다음 요청을 위한 페이징 파라미터 계산이 이 시점에서 제어됨<br><br>
 
 4. **EXTRACT DATA (특정 데이터 추출 - 스크래핑)**
     - 파서가 해석한 HTML 구조 안에서
     - 우리가 진짜 목표로 하는 알맹이 정보(기사 제목, 본문, 가격, 이미지 주소 등)만 골라내어
-    - 구조화된 데이터(JSON, Dictionary 등)로 추출하는 단계
+    - 구조화된 데이터(JSON, Dictionary 등)로 추출하는 단계<br><br>
 
 5. **Item Loop 🡲 Check for Elements & Error Handling (아이템 검증)**
     - 추출된 데이터나 HTML 내부에
     - 반복할 뉴스 기사 목록(요소)이 실제로 존재하는지 검증하는 단계
     - 만약 요소가 없다면(`True → BREAK`)
         - 구조가 개편되었거나 차단된 것으로 판단하여
-        - 예외 처리(`Error Handling`) 루틴을 실행
+        - 예외 처리(`Error Handling`) 루틴을 실행<br><br>
 
 6. **LINK QUEUE (새로운 링크 발견 - 크롤링)**
     - 현재 페이지 내에 존재하는 또 다른 하이퍼링크들(`<a href="...">`)을
     - 파서가 모두 찾아내어 수집하는 단계
-    - 이 단계가 크롤러가 스스로 탐색 범위를 넓혀가게 만드는 원동력
+    - 이 단계가 크롤러가 스스로 탐색 범위를 넓혀가게 만드는 원동력<br><br>
 
 7. **FRONTIER QUEUE (스케줄러 대기열 등록)**
     - 6단계에서 새로 발견된 다음 타겟 URL들을 스케줄러 대기열(`Frontier Queue`) 끝에 추가하는 단계
-    - 이 큐에 쌓인 주소들은 다시 1번(HTTP GET REQUEST)의 출발점으로 순환 피딩됨
+    - 이 큐에 쌓인 주소들은 다시 1번(HTTP GET REQUEST)의 출발점으로 순환 피딩됨<br><br>
 
 8. **STORE RESULTS (데이터 저장)**
     - 4단계에서 추출되고 5단계 검증을 거친 최종 순수 데이터들을
     - 파일(`news_data.json`, CSV)이나 데이터베이스(`Database/Index`)에 최종적으로 영구 저장하며
-    - 한 주기의 프로세스를 마치는 단계
+    - 한 주기의 프로세스를 마치는 단계<br><br>
 
 
 > - **Politeness / robots.txt**
 >   - 대기열(Frontier Queue)에서 다음 URL을 꺼내 요청을 보낼 때,
 >       - 대상 사이트의 무리를 주지 않기 위해 `Delay(time.sleep)`를 주고,
 >       - 해당 서버의 수집 거부 규약인 `robots.txt`를 확인하여 스케줄러를 제어해야 함
-
-<br>
+{: .yellow-quote}
 
 > - **웹 크롤링과 웹 스크래핑의 차이**
->   - * **웹 크롤링(Web Crawling)**
+>   - **웹 크롤링(Web Crawling)**
 >       - 그림의 전체적인 **순환 루프(`1번(요청) → 2번(응답) → 3번(파싱) → 6번(링크발견) → 7번(큐등록) → 다시 1번`)** 자체를 의미함
 >       - 끊임없이 링크를 발견하고 탐색 체인을 이어 나가는 '무한한 웹 순회 기술'<br><br>
 >   - **웹 스크래핑(Web Scraping)**
 >       - **`3번(파서) → 4번(추출) → 5번(검증) → 8번(저장)`으로 이어지는 단방향 흐름**을 의미함
 >       - 특정 페이지에서 원하는 특정 데이터만 도려내어 저장하는 '데이터 추출 기술'(특정 데이터 타겟팅 및 자산화 과정)
-{: .common-quote}
+{: .yellow-quote}
 
+<br>
 
 ## 6. 실습 예제
 
@@ -188,7 +199,7 @@ categories: materials
     - 기존에 잘 작동하고 있었으나 보안정책, 페이지 구성, 구성요소 변경 등으로 실패한 사례
 
     ```python
-    #//file: "naver_news_scraper_1.py"
+    # file: "naver_news_scraper_1.py"
     import sys
     import time
     import requests
@@ -278,15 +289,17 @@ categories: materials
     ```
 
     <div class="insert-image">
-        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-002.png" style="width: 90%;"><br><br>
-        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-003.jpg" style="width: 90%;">
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-002.png"><br><br>
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-003.jpg">
+        <span class="caption">(Source: Sky Lectures / AiDALab)</span>
     </div>
 
+    <br>
 
     - 약 10번의 코드, 구조 변경 후 찾아낸 수정코드
 
     ```python
-    #//file: "naver_news_scraper_2.py"
+    # file: "naver_news_scraper_2.py"
     import sys
     import time
     from bs4 import BeautifulSoup
@@ -389,8 +402,9 @@ categories: materials
     ```
 
     <div class="insert-image">
-        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-004.png" style="width: 90%;"><br><br>
-        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-005.jpg" style="width: 90%;">
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-004.png"><br><br>
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-005.jpg">
+        <span class="caption">(Source: Sky Lectures / AiDALab)</span>
     </div>
 
 
@@ -409,7 +423,7 @@ categories: materials
 - **실습 코드 (`naver_stock_scraper.py`)**
 
     ```python
-    #//file: "naver_stock_scraper.py"
+    # file: "naver_stock_scraper.py"
     import sys
     import time
     import requests
@@ -540,6 +554,7 @@ categories: materials
 
 
     <div class="insert-image">
-        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-006.png" style="width: 90%;"><br><br>
-        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-007.jpg" style="width: 90%;">
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-006.png"><br><br>
+        <img src="/materials/S02_DataScience/images/S02-02-01-02_01-007.jpg">
+        <span class="caption">(Source: Sky Lectures / AiDALab)</span>
     </div>

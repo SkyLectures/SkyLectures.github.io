@@ -1,12 +1,17 @@
 ---
 layout: page
 title:  "Pandas를 활용한 데이터 전처리"
-date:   2025-03-01 10:00:00 +0900
 permalink: /materials/S02-02-02-02_01-PandasDataPreprocess
-categories: materials
+description: "기본적인 데이터 전처리 과정을 Pandas를 이용한 실습을 통해 학습합니다."
+categories:
+    - materials
+tags:
+    - Data Analysis
+    - Data Science
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
+
 
 
 ## 1. 가상 데이터셋 생성

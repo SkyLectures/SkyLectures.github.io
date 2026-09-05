@@ -1,18 +1,23 @@
 ---
 layout: page
 title:  "데이터 수집"
-date:   2025-03-01 10:00:00 +0900
 permalink: /materials/S02-02-01-01_01-DataCollection
-categories: materials
+description: "데이터 수집의 개념, 의미와  수집 방법을 살펴봅니다."
+categories:
+    - materials
+tags:
+    - Data Analysis
+    - Data Science
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
 > - **데이터 수집**
 >   - 여러 곳에 분산된 자료들을 한곳으로 모으는 과정
 >   - 정확한 데이터를 수집하는 것은 데이터 기반 의사 결정의 품질에 직접적인 영향을 미치기 때문에 매우 중요함
 >   - 잘못된 데이터는 분석 결과의 신뢰도를 떨어뜨릴 수 있음
+{: .yellow-quote}
 
 ## 1. 일반 데이터 수집
 
@@ -38,7 +43,8 @@ categories: materials
 
 ## 2. 산업 데이터 수집
 
-> - 산업 현장에서는 일반적인 사회과학 데이터나 로그 데이터와는 다른 특수한 환경과 방법으로 데이터를 수집함
+> 산업 현장에서는 일반적인 사회과학 데이터나 로그 데이터와는 다른 특수한 환경과 방법으로 데이터를 수집함
+{: .yellow-quote}
 
 ### 2.1 산업 데이터 수집의 개념
 - 산업 데이터 수집은 물리적 세계와 디지털 세계를 연결하는 중요한 첫 단계
@@ -265,4 +271,4 @@ categories: materials
 >       - 문제 발생 시 신속한 원인 분석을 가능하게 하고 
 >       - 예방적인 유지보수를 통해 서비스 중단을 최소화하며 
 >       - 전반적인 IT 운영 효율성을 크게 향상시킴
-{: .summary-quote}
+{: .green-quote}

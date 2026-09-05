@@ -6,6 +6,7 @@ description: "제조 현장에서의 공정 데이터를 기반으로 품질에 
 categories:
     - materials
 tags:
+    - Data Analysis
     - DataScience
 ---
 * toc

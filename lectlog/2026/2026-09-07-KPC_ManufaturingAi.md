@@ -48,6 +48,7 @@ qna: false
 
 ### 제조 데이터 수집, 정제 및 분석 기초
 
+- [데이터 개요 및 기초](/materials/S02-01-01-01_01-DataOverview)
 - [제조 데이터 유형 및 특성](/materials/S06-04-01-01_01-ManufacturingDataFeature)
 - [제조 데이터 구조 이해](/materials/S06-04-01-02_01-ManufacturingDataOverview)
 - [(PLC-센서-클라우드 기반) 제조 데이터 수집 구조](/materials/S06-04-01-03_01-ManufacturingDataCollectAndAnalyze)

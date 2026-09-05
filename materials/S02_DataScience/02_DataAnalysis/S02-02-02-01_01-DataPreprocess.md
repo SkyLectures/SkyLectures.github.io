@@ -6,7 +6,8 @@ description: "데이터 분석 등 데이터를 다루는 작업을 위한 전�
 categories:
     - materials
 tags:
-    - DataScience
+    - Data Analysis
+    - Data Science
 ---
 * toc
 {:toc}

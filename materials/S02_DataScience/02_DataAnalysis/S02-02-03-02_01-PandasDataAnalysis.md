@@ -1,97 +1,104 @@
 ---
 layout: page
 title:  "Pandas를 활용한 데이터 분석"
-date:   2025-03-01 10:00:00 +0900
 permalink: /materials/S02-02-03-02_01-PandasDataAnalysis
-categories: materials
+description: "Pandas를 이용하여 EDA(탐색적 데이터 분석) 및 기초적인 분석과정을 실습을 통해 학습합니다."
+categories:
+    - materials
+tags:
+    - Data Analysis
+    - Data Science
 ---
 * toc
-{:toc .large-only .toc-sticky:true}
+{:toc}
 
 
+
+> - 실습 내용
+>   - 어느 가상의 테크 기업 마케팅 부서에서 활용하는 '광고 채널별 매출 및 고객 유입 데이터셋'을 대상으로 데이터 분석하기
+>   - 분석할 내용
+>       - 분석할 데이터(`marketing_data`)는 다음과 같은 구조와 문제점을 가지고 있음
+>           - **Channel**: 광고 채널 (YouTube, Instagram 등 / 대소문자 혼용 및 오탈자 존재)
+>           - **Impressions**: 광고 노출 횟수 (결측치 존재)
+>           - **Clicks**: 클릭 횟수
+>           - **Revenue**: 해당 채널을 통해 발생한 매출액 (금액 단위에 `,` 기호 포함)
+{: .yellow-quote}
+
+<br>
 
 ## 1. 가상 데이터셋 생성
 
-- **데이터셋**
-    - 어느 가상의 테크 기업 마케팅 부서에서 활용하는 '광고 채널별 매출 및 고객 유입 데이터셋'
-    - 분석할 데이터(`marketing_data`)는 다음과 같은 구조와 문제점을 가지고 있음
-        * **Channel**: 광고 채널 (YouTube, Instagram 등 / 대소문자 혼용 및 오탈자 존재)
-        * **Impressions**: 광고 노출 횟수 (결측치 존재)
-        * **Clicks**: 클릭 횟수
-        * **Revenue**: 해당 채널을 통해 발생한 매출액 (금액 단위에 `,` 기호 포함)
+- 제시된 마케팅 데이터셋(`marketing_data.csv`)의 구조와 결함 조건에 맞춰 300건의 가상 데이터를 생성하여 파일로 저장
 
-- **가상 데이터셋 생성 코드**
-    - 제시된 마케팅 데이터셋(`marketing_data.csv`)의 구조와 결함 조건에 맞춰 
-    - 300건의 가상 데이터를 생성하여 파일로 저장
+    ```python
+    import random
+    import numpy as np
+    import pandas as pd
 
-        ```python
-        import random
-        import numpy as np
-        import pandas as pd
+    # 일관된 가상 데이터 생성을 위한 난수 시드 설정
+    np.random.seed(42)
+    random.seed(42)
 
-        # 일관된 가상 데이터 생성을 위한 난수 시드 설정
-        np.random.seed(42)
-        random.seed(42)
+    num_samples = 300
 
-        num_samples = 300
+    # 1. Channel 생성 (대소문자 오염 및 의도적인 오탈자 'Youtub', 'insta' 포함)
+    channels_pool = [
+        "YouTube",
+        "youtube",
+        "Youtub",
+        "Instagram",
+        "instagram",
+        "insta",
+        "Facebook",
+        "FACEBOOK",
+    ]
+    channels = [random.choice(channels_pool) for _ in range(num_samples)]
 
-        # 1. Channel 생성 (대소문자 오염 및 의도적인 오탈자 'Youtub', 'insta' 포함)
-        channels_pool = [
-            "YouTube",
-            "youtube",
-            "Youtub",
-            "Instagram",
-            "instagram",
-            "insta",
-            "Facebook",
-            "FACEBOOK",
-        ]
-        channels = [random.choice(channels_pool) for _ in range(num_samples)]
+    # 2. Impressions 생성 (정상 범위 내 분포, 약 7% 확률로 결측치 처리)
+    impressions = []
+    for _ in range(num_samples):
+        if random.random() < 0.07:  # 7% 결측치
+            impressions.append(np.nan)
+        else:
+            impressions.append(
+                random.randint(10000, 150000)
+            )  # 1만 ~ 15만 노출
 
-        # 2. Impressions 생성 (정상 범위 내 분포, 약 7% 확률로 결측치 처리)
-        impressions = []
-        for _ in range(num_samples):
-            if random.random() < 0.07:  # 7% 결측치
-                impressions.append(np.nan)
-            else:
-                impressions.append(
-                    random.randint(10000, 150000)
-                )  # 1만 ~ 15만 노출
+    # 3. Clicks 생성 (노출 수의 1% ~ 5% 사이로 무작위 생성, 결측치인 경우 별도 범위 지정)
+    clicks = []
+    for imp in impressions:
+        if pd.isna(imp):
+            clicks.append(random.randint(500, 3000))
+        else:
+            # 노출 대비 전환율을 고려한 현실적인 클릭 수 계산
+            click_rate = random.uniform(0.01, 0.05)
+            clicks.append(int(imp * click_rate))
 
-        # 3. Clicks 생성 (노출 수의 1% ~ 5% 사이로 무작위 생성, 결측치인 경우 별도 범위 지정)
-        clicks = []
-        for imp in impressions:
-            if pd.isna(imp):
-                clicks.append(random.randint(500, 3000))
-            else:
-                # 노출 대비 전환율을 고려한 현실적인 클릭 수 계산
-                click_rate = random.uniform(0.01, 0.05)
-                clicks.append(int(imp * click_rate))
+    # 4. Revenue 생성 (클릭 수와 연동하여 생성하되, 천단위 쉼표를 포함한 문자열 포맷팅)
+    revenue = []
+    for clk in clicks:
+        # 클릭당 대략 800원 ~ 1500원의 매출이 발생한다고 가정
+        rev_val = clk * random.randint(800, 1500)
+        revenue.append(f"{rev_val:,}")
 
-        # 4. Revenue 생성 (클릭 수와 연동하여 생성하되, 천단위 쉼표를 포함한 문자열 포맷팅)
-        revenue = []
-        for clk in clicks:
-            # 클릭당 대략 800원 ~ 1500원의 매출이 발생한다고 가정
-            rev_val = clk * random.randint(800, 1500)
-            revenue.append(f"{rev_val:,}")
+    # 데이터프레임 조립 및 CSV 저장
+    marketing_df = pd.DataFrame(
+        {
+            "Channel": channels,
+            "Impressions": impressions,
+            "Clicks": clicks,
+            "Revenue": revenue,
+        }
+    )
 
-        # 데이터프레임 조립 및 CSV 저장
-        marketing_df = pd.DataFrame(
-            {
-                "Channel": channels,
-                "Impressions": impressions,
-                "Clicks": clicks,
-                "Revenue": revenue,
-            }
-        )
+    file_name = "marketing_data.csv"
+    marketing_df.to_csv(file_name, index=False, encoding="utf-8-sig")
+    print(
+        f"=== [성공] 300건의 마케팅 원본 데이터가 '{file_name}' 파일로 저장되었습니다. ===\n"
+    )
+    ```
 
-        file_name = "marketing_data.csv"
-        marketing_df.to_csv(file_name, index=False, encoding="utf-8-sig")
-        print(
-            f"=== [성공] 300건의 마케팅 원본 데이터가 '{file_name}' 파일로 저장되었습니다. ===\n"
-        )
-        ```
-
+<br>
 
 ## 2. 데이터 분석 실습
 
@@ -219,36 +226,7 @@ print(channel_analysis.to_string(index=False))
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-Pandas를 활용한 전체적인 데이터 분석 파이프라인을 이해할 수 있도록, [데이터 로드 ➔ 탐색 ➔ 정제 ➔ 집계/분석 ➔ 시각화 데이터 준비]의 전체 흐름을 담은 예제 코드와 상세 설명을 준비했습니다.
-
-이번에 사용할 시나리오는 어느 가상의 테크 기업 마케팅 부서에서 활용하는 '광고 채널별 매출 및 고객 유입 데이터셋'입니다.
-
----
-
-## 1. 가상 데이터셋 및 분석 시나리오
-
-분석할 데이터(`marketing_data`)는 다음과 같은 구조와 문제점을 가지고 있습니다.
-
-* **Channel**: 광고 채널 (YouTube, Instagram 등 / 대소문자 혼용 및 오탈자 존재)
-* **Impressions**: 광고 노출 횟수 (결측치 존재)
-* **Clicks**: 클릭 횟수
-* **Revenue**: 해당 채널을 통해 발생한 매출액 (금액 단위에 `,` 기호 포함)
-
----
-
-## 2. 데이터 분석 통합 예제 코드
+### 2.3 데이터 분석 통합 예제
 
 ```python
 import matplotlib.pyplot as plt
@@ -340,7 +318,6 @@ print("=== 5. 최종 채널별 성과 분석 결과 ===")
 print(channel_analysis)
 
 ```
-
 
 - **데이터 분석 파이프라인 단계별 설명**
     - **데이터 탐색 (`info()`, `describe()`)**

@@ -2,14 +2,18 @@
 layout: page
 title: 개별 학습 자료 모음
 permalink: /materials/
-hide_description: true
+description: "각 주제 별로 학습자료가 분류되어 있습니다. 필요한 항목을 직접 찾아서 사용하시기 바랍니다."
+categories:
+    - materials
+tags:
 qna: false
 ---
 * toc
 {:toc}
 
 
-## 파이썬
+# 파이썬
+
 <div class="split-content">
 <div class="split-content-element" markdown="1">
 <span class="split-content-title-blue">파이썬 기초</span>
@@ -108,29 +112,31 @@ qna: false
 
 <br>
 
-## 데이터 분석
+# 데이터 분석
+
 <div class="split-content">
 <div class="split-content-element" markdown="1">
 <span class="split-content-title-blue">데이터 분석 기초</span>
-- [데이터 기초]
+- [데이터 개요 및 기초](/materials/S02-01-01-01_01-DataOverview)
 - [데이터 수집]
-    - [데이터 수집]
-    - [파이썬 기반 크롤러]
+    - [데이터 수집](/materials/S02-02-01-01_01-DataCollection)
+    - [파이썬 기반 크롤러](/materials/S02-02-01-02_01-PythonBasedCrawler)
 - 데이터 전처리
-    - [데이터 전처리 기초]
-    - [Pandas기반 데이터 전처리]
-    - [데이터 통합 및 품질 관리]
+    - [데이터 전처리 기초](/materials/S02-02-02-01_01-DataPreprocess)
+    - [Pandas기반 데이터 전처리](/materials/S02-02-02-02_01-PandasDataPreprocess)
+    - [데이터 통합 및 품질 관리](/materials/S02-02-02-03_01-DataIntegrationQuality)
 - 데이터 분석
-    - [데이터 분석 기초]
-    - [Pandas 기반 데이터 분석]
+    - [데이터 분석 기초](/materials/S02-02-03-01_01-DataAnalysis)
+    - [Pandas 기반 데이터 분석](/materials/S02-02-03-02_01-PandasDataAnalysis)
+    - [공정 데이터 기반 품질 영향 요인 분석 및 인사이트 도출](/materials/S02-02-03-03_01-DataAnalysisPractice)
 </div>
 <div class="split-content-element" markdown="1">
 <span class="split-content-title-green">데이터베이스</span>
 - 데이터베이스 개요
-    - [데이터베이스 개요]
+    - [데이터베이스 개요](/materials/S02-03-01-01_01-DatabaseOverview)
     - [RDBMS 이해]
 - SQL 기초
-    - [DML]
+    - [SQL 기초 (DCL/DDL/DML)](/materials/S02-03-02-01_01-SqlBasic)
     - [Join]
     - [Subquery]
 - 고급 SQL
@@ -140,11 +146,10 @@ qna: false
     - [Transaction]
     - [ACID]
 - 데이터베이스 설계 및 모델링
-    - [ERD 개요]
-    - [ERD 설계 도구]
+    - [데이터 모델링과 ERD의 개요](/materials/S02-03-04-01_01-ErdOverview)
+    - [ERD 설계의 개념과 설계 도구](/materials/S02-03-04-01_02-ErdDesign)
     - [ERD 설계 기법]
-    - [정규화 및 정규화 전략]
-    - [반정규화 및 반정규화 전략]
+    - [정규화 및 반정규화 전략](/materials/S02-03-04-01_03-ErdNormDenorm)
     - [제약 조건]
 - 성능 최적화 및 인덱싱 (성능 튜닝)
     - [Index]
@@ -156,22 +161,22 @@ qna: false
 <div class="split-content-element" markdown="1">
 <span class="split-content-title-purple">DBMS 종류별 특징과 활용</span>
 - MySQL
-    - [MySQL 개요]
+    - [MySQL 개요 및 설치, 환경설정](/materials/S02-03-06-01_01-MySqlOverview)
     - [비정형 로그데이터 적재]
 - PostgreSQL
     - [PostgreSQL 개요]
     - [활용 및 실습]
 - MongoDB
-    - [MongoDB 개요]
-    - [활용 및 실습]
+    - [MongoDB 개요 및 설치, 환경설정](/materials/S02-03-06-03_01-MongoDbOverview)
+    - [MongoDB 활용 및 실습](/materials/S02-03-06-03_02-MongoDbPractice)
 - DuckDB
-    - [DuckDB 개요]
-    - [로컬 대용량 데이터 처리]
-    - [데이터 분석]
-    - [하이브리드 가공]
+    - [DuckDB 개요 및 설치, 환경설정](/materials/S02-03-06-04_01-DuckDbOverview)
+    - [DuckDB를 이용한 로컬 대용량 데이터 처리](/materials/S02-03-06-04_02-DuckDbLocalBigDataProcess)
+    - [DuckDB를 이용한 데이터 분석](/materials/S02-03-06-04_03-DuckDbDataAnalysis)
+    - [Pandas, DuckDB를 이용한 하이브리드 가공](/materials/S02-03-06-04_04-DuckDbPandasHybrid)
 - Redis
-    - [Redis 개요]
-    - [활용 및 실습]
+    - [Redis 개요 및 설치, 환경설정](/materials/S02-03-06-05_01-RedisOverview)
+    - [Redis 활용 및 실습](/materials/S02-03-06-05_02-RedisPractice)
 - Vector DB
     - [Vector DB 개요]
     - [활용 및 실습]
@@ -180,7 +185,8 @@ qna: false
 
 <br>
 
-## 인공지능 (AI)
+# 인공지능 (AI)
+
 <div class="split-content">
 <div class="split-content-element" markdown="1">
 <span class="split-content-title-blue">AI개요 / 머신러닝</span>
@@ -405,7 +411,31 @@ qna: false
 
 <br>
 
-## 개발/운영 시스템 구축
+# WEB 개발
+
+<div class="split-content">
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-blue">WEB 개발 기초</span>
+- (준비 중)
+</div>
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-green">Node.JS</span>
+- [Node.JS 개요](/materials/S14-02-01-01_01-NodeJsOverview)
+</div>
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-purple">Next.JS</span>
+- [Next.JS 개요](/materials/S14-03-01-01_01-NextJsOverview)
+</div>
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-blue">TypeScript</span>
+- [TypeScript 개요](/materials/S14-04-01-01_01-TypeScriptOverview)
+</div>
+</div>
+
+<br>
+
+# 개발/운영 시스템 구축 기술 및 도구
+
 <div class="split-content">
 <div class="split-content-element" markdown="1">
 <span class="split-content-title-green">Git / Github</span>
@@ -478,79 +508,7 @@ qna: false
 
 <br>
 
-## 미니프로젝트
-<div class="split-content">
-<div class="split-content-element" markdown="1">
-<span class="split-content-title-green">Django/DRF 기반 Pystagram 만들기</span>
-- [환경구축](/materials/S01-04-02-05_01-DrfPystagramEnvironment)
-- [기본 정보 설정](/materials/S01-04-02-05_02-DrfPystagramBasicInfo)
-- [로그인/로그아웃 기능 구현](/materials/S01-04-02-05_03-DrfPystagramLoginLogout)
-- [회원가입 기능 구현](/materials/S01-04-02-05_04-DrfPystagramMemberRegister)
-- [글 관리 기능 구현](/materials/S01-04-02-05_05-DrfPystagramPost)
-- [부가 기능 구현](/materials/S01-04-02-05_06-DrfPystagramAdditionalFunctions)
-- [글 상세 관리 기능 구현](/materials/S01-04-02-05_07-DrfPystagramPostDetails)
-</div>
-<div class="split-content-element" markdown="1">
-<span class="split-content-title-green">Streamit를 활용한 LLM 연동 앱</span>
-- [가이드라인]
-- [Streamlit 기반의 챗봇 인터페이스 개발]
-</div>
-<div class="split-content-element" markdown="1">
-<span class="split-content-title-purple">LangChain, Vector DB 기반 앱 구현</span>
-- [가이드라인]
-</div>
-</div>
-
-<div class="split-content">
-<div class="split-content-element" markdown="1">
-<span class="split-content-title-purple">Semantic Search 및 Hybrid Search 기능 구현</span>
-- [가이드라인]
-</div>
-<div class="split-content-element" markdown="1">
-<span class="split-content-title-purple">FastAPI, React, TypeScript, PostgreSQL 기반 게시판 만들기</span>
-- [가이드라인]
-</div>
-</div>
-
-<div class="split-content">
-<div class="split-content-element" markdown="1">
-<span class="split-content-title-purple">데이터 파이프라인 구축 기반 프로젝트</span>
-- [데이터 파이프라인 구축 및 최종 RAG 챗봇 개발]
-</div>
-</div>
-
-<br>
-
-## Linux
-<div class="split-content">
-<div class="split-content-element" markdown="1">
-<span class="split-content-title-blue">리눅스 기초</span>
-- [리눅스 개요]
-- 환경 구축
-    - [리눅스 설치 및 환경 설정]
-    - [WSL 설치 및 환경설정]
-</div>
-<div class="split-content-element" markdown="1">
-<span class="split-content-title-blue">기초 명령어</span>
-- 기초 명령어
-    - [기초 명령어 종합]
-    - 기초 명령어 상세
-        - [파일 및 디렉토리 관리]
-        - [사용자 및 권한 관리]
-        - [프로세스 관리]
-        - [네트워크 관리]
-        - [패키지 관리]
-        - [텍스트 처리 및 검색]
-</div>
-<div class="split-content-element" markdown="1">
-<span class="split-content-title-green">리눅스 쉘 프로그래밍</span>
-- [리눅스 쉘 프로그래밍]
-</div>
-</div>
-
-<br>
-
-## Cloud System
+# Cloud System
 
 <div class="split-content">
 <div class="split-content-element" markdown="1">
@@ -582,7 +540,38 @@ qna: false
 
 <br>
 
-## SBC & IoT
+# Linux
+
+<div class="split-content">
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-blue">리눅스 기초</span>
+- [리눅스 개요]
+- 환경 구축
+    - [리눅스 설치 및 환경 설정]
+    - [WSL 설치 및 환경설정]
+</div>
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-blue">기초 명령어</span>
+- 기초 명령어
+    - [기초 명령어 종합]
+    - 기초 명령어 상세
+        - [파일 및 디렉토리 관리]
+        - [사용자 및 권한 관리]
+        - [프로세스 관리]
+        - [네트워크 관리]
+        - [패키지 관리]
+        - [텍스트 처리 및 검색]
+</div>
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-green">리눅스 쉘 프로그래밍</span>
+- [리눅스 쉘 프로그래밍]
+</div>
+</div>
+
+<br>
+
+# SBC & IoT
+
 <div class="split-content">
 <div class="split-content-element" markdown="1">
 <span class="split-content-title-blue">Single Board Computer(SBC)</span>
@@ -623,7 +612,8 @@ qna: false
 
 <br>
 
-## Smart Factory
+# Smart Factory
+
 <div class="split-content">
 <div class="split-content-element" markdown="1">
 <span class="split-content-title-purple-blue">스마트팩토리 기초</span>
@@ -698,7 +688,52 @@ qna: false
 
 <br>
 
-## 업무 자동화/고도화 + 실무 교양
+# 미니프로젝트
+
+<div class="split-content">
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-green">Django/DRF 기반 Pystagram 만들기</span>
+- [환경구축](/materials/S01-04-02-05_01-DrfPystagramEnvironment)
+- [기본 정보 설정](/materials/S01-04-02-05_02-DrfPystagramBasicInfo)
+- [로그인/로그아웃 기능 구현](/materials/S01-04-02-05_03-DrfPystagramLoginLogout)
+- [회원가입 기능 구현](/materials/S01-04-02-05_04-DrfPystagramMemberRegister)
+- [글 관리 기능 구현](/materials/S01-04-02-05_05-DrfPystagramPost)
+- [부가 기능 구현](/materials/S01-04-02-05_06-DrfPystagramAdditionalFunctions)
+- [글 상세 관리 기능 구현](/materials/S01-04-02-05_07-DrfPystagramPostDetails)
+</div>
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-green">Streamit를 활용한 LLM 연동 앱</span>
+- [가이드라인]
+- [Streamlit 기반의 챗봇 인터페이스 개발]
+</div>
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-purple">LangChain, Vector DB 기반 앱 구현</span>
+- [가이드라인]
+</div>
+</div>
+
+<div class="split-content">
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-purple">Semantic Search 및 Hybrid Search 기능 구현</span>
+- [가이드라인]
+</div>
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-purple">FastAPI, React, TypeScript, PostgreSQL 기반 게시판 만들기</span>
+- [가이드라인]
+</div>
+</div>
+
+<div class="split-content">
+<div class="split-content-element" markdown="1">
+<span class="split-content-title-purple">데이터 파이프라인 구축 기반 프로젝트</span>
+- [데이터 파이프라인 구축 및 최종 RAG 챗봇 개발]
+</div>
+</div>
+
+<br>
+
+# 업무 자동화/고도화 + 실무 교양
+
 <div class="split-content">
 <div class="split-content-element" markdown="1">
 <span class="split-content-title-green">프로젝트 관리</span>
