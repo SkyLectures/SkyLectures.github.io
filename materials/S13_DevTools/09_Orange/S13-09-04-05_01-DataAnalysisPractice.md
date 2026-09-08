@@ -393,7 +393,7 @@ print("mfg_predictive_maintenance.csv 생성 완료")
 
                 <div class="insert-image">
                     <h3 style="text-align: center">최종 작성 화면</h3>
-                    <img src="/materials/S13_DevTools/images/S13-09-04-05_01-006.png">
+                    <img src="/materials/S13_DevTools/images/S13-09-04-05_01-007.png">
                     <span class="caption">(Source: Sky Lectures / AiDALab)</span>
                 </div>
 
