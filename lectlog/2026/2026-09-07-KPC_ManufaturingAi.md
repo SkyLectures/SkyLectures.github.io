@@ -70,6 +70,7 @@ qna: false
 ### 공정 최적화를 위한 AI 모델 적용
 
 - [노코드/로우코드 기반 AI 활용 구조 이해](/materials/S06-04-05-01_01-NoCodeLowCodeBasedAi)
+- [Orange 기반 데이터 분석 실습](/materials/S13-09-04-05_01-DataAnalysisPractice)
 - [공정 데이터 기반 예측 모델 개념](/materials/S06-04-05-02_01-DataBasedPredictionModels)
 - [예측 결과를 공정 개선에 연결하는 방법](/materials/S06-04-05-03_01-ConnectPredictionResultsToProcessImprovement)
 - [AI 모델 운영 흐름(MLOps) 기초 이해](/materials/S06-04-05-04_01-AiModelOperationalFlow)

@@ -190,8 +190,8 @@ qna: false
 <div class="split-content">
 <div class="split-content-element" markdown="1">
 <span class="split-content-title-blue">AI개요 / 머신러닝</span>
-- [AI 개요]
-- [AI 시스템의 개발 공정]
+- [AI 개요](/materials/S03-01-01-01_01-AiOverview)
+- [AI/ML 시스템의 End-to-End 개발 공정](/materials/S03-01-02-01_01-AiDevelopmentProcess)
 - [머신러닝 개요]
 - 머신러닝 모델
     - [Linear Regression (선형회귀)]
