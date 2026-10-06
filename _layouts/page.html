@@ -18,7 +18,10 @@ layout: default
         </div>        
     </section>
 
+    {% include related_posts.html %}
+    
     {% unless page.qna == false %}
         {% include giscus.html %}
     {% endunless %}
 </article>
+

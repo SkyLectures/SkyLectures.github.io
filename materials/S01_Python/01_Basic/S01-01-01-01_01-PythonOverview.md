@@ -1,12 +1,17 @@
 ---
 layout: page
 title: "파이썬 개요"
+subtitle: "파이썬 개요(서브타이틀)"
 permalink: /materials/S01-01-01-01_01-PythonOverview
 description: "파이썬은 어떤 언어인지, 어떻게 시작되었고, 어떤 특징을 가지고 있는지 등을 살펴봅니다."
 categories:
     - materials
 tags:
     - python
+related_posts:
+  - /materials/S01-01-02-01_01-VirtualEnvironment
+  - /materials/S01-01-03-01_01-PythonBasic
+qna: true
 ---
 * toc
 {:toc}
@@ -104,12 +109,10 @@ tags:
 ### 3.1 국내 도입
 - 1991년에 발표된 언어지만 국내에선 그다지 주목받지 못해..
 
-> - 책장에서 발견한 옛 파이썬 도서 (1998.01.17 발행) 대학생때 사 놓고 거의 보지 않음
-> <div class="insert-image" style="margin-bottom: 1em;">
->   <img src="/materials/S01_Python/images/S01-01-01-01_01-002.jpg" style="width: 300px; height: 310px;">
->   &nbsp;&nbsp;
->   <img src="/materials/S01_Python/images/S01-01-01-01_01-003.png" style="width: 198px; height: 308px;">
-> </div>
+> - 책장에서 발견한 옛 파이썬 도서 (1998.01.17 발행) 대학생때 사 놓고 거의 보지 않음<br><br>
+>   <img src="/materials/S01_Python/images/S01-01-01-01_01-002.jpg" style="height: 400px;">
+>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+>   <img src="/materials/S01_Python/images/S01-01-01-01_01-003.png" style="height: 400px;">
 {: .common-quote}
 
 - 알파고 이후, AI에 대한 관심이 급증하면서 일단 외국의 트렌드를 따라 감

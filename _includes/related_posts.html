@@ -1,0 +1,49 @@
+<br><br>
+<img src="/assets/images/aida_lectures_bar_02.png" alt="Related Posts" style="width: 100%; height: auto;">
+{% if page.related_posts and page.related_posts.size > 0 %}
+<section class="related-posts-section" style="margin-top: 0.5rem; padding: 1.2rem; background-color: #f8f9fa; border-left: 4px solid #0366d6; border-radius: 4px;">
+    <h3 style="margin-top: 0; margin-bottom: 0.8rem; font-size: 1.1rem; color: #24292e;">
+        📌 함께 보면 좋은 글
+    </h3>
+    <ul style="margin-bottom: 0; padding-left: 1.2rem; line-height: 1.8;">
+        {% for raw_ref in page.related_posts %}
+            {% assign target = nil %}
+            {% assign ref = raw_ref | strip %}
+
+            <!-- 1차 탐색: 일반 페이지 (materials 폴더 등) -->
+            {% for item in site.pages %}
+                {% if item.url == ref or item.permalink == ref %}
+                    {% assign target = item %}
+                    {% break %}
+                {% endif %}
+            {% endfor %}
+
+            <!-- 2차 탐색: 컬렉션 및 포스트 문서 (1차에서 못 찾았을 경우) -->
+            {% unless target %}
+                {% for item in site.documents %}
+                    {% if item.url == ref or item.permalink == ref %}
+                        {% assign target = item %}
+                        {% break %}
+                    {% endif %}
+                {% endfor %}
+            {% endunless %}
+
+            <!-- 결과 렌더링 -->
+            {% if target %}
+                <li>
+                    <a href="{{ target.url | relative_url }}" style="text-decoration: none; color: #0366d6; font-weight: 500;">
+                        {{ target.title }}{% if target.subtitle %} - <span style="font-weight: normal; color: #586069;">{{ target.subtitle }}</span>{% endif %}
+                    </a>
+                </li>
+            {% else %}
+                <!-- 정확히 일치하는 문서가 없을 때 기본 링크 유지 -->
+                <li>
+                    <a href="{{ ref | relative_url }}" style="text-decoration: none; color: #0366d6;">
+                        {{ ref }}
+                    </a>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</section>
+{% endif %}
