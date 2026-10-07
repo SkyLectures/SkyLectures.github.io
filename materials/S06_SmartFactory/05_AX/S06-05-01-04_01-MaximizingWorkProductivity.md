@@ -13,9 +13,9 @@ tags:
     - AI Transformation
 related_posts:
     - /materials/S06-05-01-01_01-AxInsight
-    - /materials/S06-05-02-01_01-AiRoadmapForBusinessRestructuring
-    - /materials/S06-05-03-01_01-ManufacturingAiCaseStudy1
-    - /materials/S06-05-03-01_02-ManufacturingAiCaseStudy2
+    - /materials/S06-05-01-02_01-AiRoadmapForBusinessRestructuring
+    - /materials/S06-05-01-03_01-ManufacturingAiCaseStudy1
+    - /materials/S06-05-01-03_02-ManufacturingAiCaseStudy2
 qna: false
 ---
 * toc

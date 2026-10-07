@@ -14,9 +14,9 @@ tags:
     - AI Roadmap
 related_posts:
     - /materials/S06-05-01-01_01-AxInsight
-    - /materials/S06-05-03-01_01-ManufacturingAiCaseStudy1
-    - /materials/S06-05-03-01_02-ManufacturingAiCaseStudy2
-    - /materials/S06-05-04-01_01-MaximizingWorkProductivity
+    - /materials/S06-05-01-03_01-ManufacturingAiCaseStudy1
+    - /materials/S06-05-01-03_02-ManufacturingAiCaseStudy2
+    - /materials/S06-05-01-04_01-MaximizingWorkProductivity
 qna: false
 ---
 * toc
@@ -29,7 +29,7 @@ qna: false
 - 복잡한 수식이나 프로그래밍 언어 대신, 모든 AI를 관통하는 단 하나의 프레임워크인 **'입력(Input) 🡪 처리 🡪 출력(Output)'** 관점으로 접근
 
    <div class="insert-image" style="width: 700px;">
-       <img src="/materials/S06_SmartFactory/images/S06-05-02-01_01-001_AiProcessFlow.png">
+       <img src="/materials/S06_SmartFactory/images/S06-05-01-02_01-001_AiProcessFlow.png">
        <span class="caption">(Source: Sky Lectures / AiDALab)</span>
    </div>
 
@@ -130,7 +130,7 @@ qna: false
     - 에이전트가 자율적으로 일할 수 있는 이유: 사람의 일 처리 방식을 모방한 **4가지 두뇌·신체 모듈**을 갖추고 있기 때문
 
         <div class="insert-image" style="width: 700px;">
-            <img src="/materials/S06_SmartFactory/images/S06-05-02-01_01-002_AiAgentElements.png">
+            <img src="/materials/S06_SmartFactory/images/S06-05-01-02_01-002_AiAgentElements.png">
             <span class="caption">(Source: Sky Lectures / AiDALab)</span>
         </div>
 
@@ -178,7 +178,7 @@ qna: false
     - 각 단계마다 요구되는 AI 기술과 기대 효과, 극복 과제는 완전히 다름
 
         <div class="insert-image" style="width: 700px;">
-            <img src="/materials/S06_SmartFactory/images/S06-05-02-01_01-003_AiAgentLifeCycle.png">
+            <img src="/materials/S06_SmartFactory/images/S06-05-01-02_01-003_AiAgentLifeCycle.png">
             <span class="caption">(Source: Sky Lectures / AiDALab)</span>
         </div>
 
@@ -236,6 +236,7 @@ qna: false
         - **비즈니스 효과:**
             - 백오피스 관리 인력을 크게 늘리지 않고도 **다품종 소량 맞춤 생산의 복잡도를 통제** 가능
 
+<br>
 
 ## 4. 사업재편 AI 도입 시 피해야 할 치명적인 함정
 
