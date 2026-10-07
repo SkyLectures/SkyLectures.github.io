@@ -2,7 +2,7 @@
 layout: page
 title: 생성형 AI 기반 업무 생산성 극대화
 subtitle: 
-permalink: /materials/S06-05-04-01_01-MaximizingWorkProductivity
+permalink: /materials/S06-05-01-04_01-MaximizingWorkProductivity
 description: 사업재편 기획서 작성, 규제/매뉴얼 분석, 시작데이터 요약 프롬프트 실습
 categories:
     - materials
@@ -16,7 +16,7 @@ related_posts:
     - /materials/S06-05-02-01_01-AiRoadmapForBusinessRestructuring
     - /materials/S06-05-03-01_01-ManufacturingAiCaseStudy1
     - /materials/S06-05-03-01_02-ManufacturingAiCaseStudy2
-qna: true
+qna: false
 ---
 * toc
 {:toc}
@@ -78,7 +78,7 @@ qna: true
         다만 초정밀 압출 및 열처리 기술을 보유하지 못한 신규 진입 기업의 경우, 초기 양산 수율 안정화에 최소 9개월 이상 소요되며 
         원자재(알루미늄 6000계열 등) 가격 변동성이 영업이익률을 압박하는 주요 리스크로 작용한다.
         ```
-<br>
+<br><br>
 
 - **[실습 2] 복잡한 규격/공정 매뉴얼 분석 및 트러블슈팅 매핑**
     - **목표:** 수십 페이지짜리 기술 규격서나 설비 에러 로그 매뉴얼을 작업자가 3초 만에 조치할 수 있는 체크리스트로 가공

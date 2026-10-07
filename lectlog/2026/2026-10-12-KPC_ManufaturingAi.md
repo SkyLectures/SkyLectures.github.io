@@ -39,15 +39,15 @@ qna: false
     - 세부 과정
         - [사업재편과 AX(AI Transformation)](/materials/S06-05-01-01_01-AxInsight)
             - 사업재편 필요성(기존사업한계, 신사업전환, 고부가가치화)과 AI 전환이 불가피해진 배경
-        - [비전공자를 위한 사업재편 AI지도](/materials/S06-05-02-01_01-AiRoadmapForBusinessRestructuring)
+        - [비전공자를 위한 사업재편 AI지도](/materials/S06-05-01-02_01-AiRoadmapForBusinessRestructuring)
             - 머신러닝, 딥러닝, 생성형 AI, AI 에이전트의 구조와 사업재편 시 기술별 적용 한계 및 가능 범위 이해
-        - [제조 AI 도입사례 1(공정혁신)](/materials/S06-05-03-01_01-ManufacturingAiCaseStudy1)
+        - [제조 AI 도입사례 1(공정혁신)](/materials/S06-05-01-03_01-ManufacturingAiCaseStudy1)
             - 사업재편 기업의 비전검사, 예지보전, 수율예측 적용사례 및 공정 재설치 조건 비교
-        - [제조 AI 도입사례 2(신사업 및 운영)](/materials/S06-05-03-01_02-ManufacturingAiCaseStudy2)
+        - [제조 AI 도입사례 2(신사업 및 운영)](/materials/S06-05-01-03_02-ManufacturingAiCaseStudy2)
             - 신사업 라인 전환 시 수요예측, 재고 최적화, 사업재편 승인 보고문서 작성 자동화 사례
-        - [생성형 AI 기반 업무 생산성 극대화](/materials/S06-05-04-01_01-MaximizingWorkProductivity)
+        - [생성형 AI 기반 업무 생산성 극대화](/materials/S06-05-01-04_01-MaximizingWorkProductivity)
             - 사업재편 기획서 작성, 규제/매뉴얼 분석, 시작데이터 요약 프롬프트 실습
-        - [(워크숍) 사업재편 AI 과제발굴](/materials/S06-05-05-01_01-IdentifyingAiProjects)
+        - [(워크숍) 사업재편 AI 과제발굴](/materials/S06-05-01-05_01-IdentifyingAiProjects)
             - 신규 사업라인/기존 공정 페인포인트 도출 및 난이도 & ROI 기반 과제 우선순위 매트릭스 작성
             - 산출물: 사업재편 AI 적용 과제 정의서
 
@@ -56,6 +56,18 @@ qna: false
 - **제조 데이터 리터러시-사업재편을 위한 공정 데이터 구조와 분석**
     - 사업재편 공정 재배치 및 신규 설비 도입에 따른 데이터 구조를 이해하고, AI 기반 데이터 정제 및 인사이트 도출 역량 습득
     - 세부 과정
+        - [인공지능과제조 데이터 구조의 이해](/materials/S06-05-01-01_01-)
+            - 인공지능 개요와 제조 데이터 특성(정형·비정형·시계열) 이해
+        - [설비 수집 구조 및 데이터 연계](/materials/)
+            - PLC-센서-클라우드 기반 데이터 수집 및 MES/SCADA 연계, 사업재편 설비 이전 시 발생하는 결손 문제
+        - [데이터 기반 공정 진단 개요](/materials/)
+            - 데이터 수집부터 전처리, 분석, 신사업 라인 최적화 예측까지의 전체 파이프라인 이해
+        - [데이터 품질 관리 및 가공 ①](/materials/)
+            - AI 도구를 활용한 신규/기존 공정 데이터의 결측치·이상치 처리 및 데이터 가공
+        - [데이터 품질 관리 및 가공 ②](/materials/)
+            - 데이터 상관관계 시각화 및 사업재편 핵심 지표(불량률, 가동률 등) 변수 분석
+        - [(실습) 사업재편 공정 데이터 분석](/materials/)
+            - 실제 제조 데이터셋을 활용해 신규 공정 전환 시 발생할 수 있는 문제점 진단 및 공유
 
 ## **10월 14일(수)**
 
