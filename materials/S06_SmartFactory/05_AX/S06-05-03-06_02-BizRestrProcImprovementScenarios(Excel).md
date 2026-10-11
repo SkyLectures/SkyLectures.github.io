@@ -17,7 +17,7 @@ related_posts:
     - /materials/S06-05-03-03_01-NoCodePredictionModels
     - /materials/S06-05-03-04_01-AiAgentsPoweredByCuttingEdgeAi
     - /materials/S06-05-03-05_01-DataAnalysisSkills
-qna: false
+qna: true
 ---
 * toc
 {:toc}

@@ -17,7 +17,7 @@ related_posts:
     - /materials/S06-05-02-03_01-DataDrivenProcessDiagnosis
     - /materials/S06-05-02-04_02-DataQualityManagement2
     - /materials/S06-05-02-05_01-ProcessDataAnalysis
-qna: false
+qna: true
 ---
 * toc
 {:toc}

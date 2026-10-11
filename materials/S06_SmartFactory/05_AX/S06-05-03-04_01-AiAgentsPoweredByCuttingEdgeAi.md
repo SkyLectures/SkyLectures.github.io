@@ -17,7 +17,7 @@ related_posts:
     - /materials/S06-05-03-03_01-NoCodePredictionModels
     - /materials/S06-05-03-05_01-DataAnalysisSkills(Orange3)
     - /materials/S06-05-03-06_01-BizRestrProcImprovementScenarios(Orange3)
-qna: false
+qna: true
 ---
 * toc
 {:toc}

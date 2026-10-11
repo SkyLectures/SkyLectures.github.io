@@ -16,7 +16,7 @@ related_posts:
     - /materials/S06-05-01-02_01-AiRoadmapForBusinessRestructuring
     - /materials/S06-05-01-03_02-ManufacturingAiCaseStudy2
     - /materials/S06-05-01-04_01-MaximizingWorkProductivity
-qna: false
+qna: true
 ---
 * toc
 {:toc}

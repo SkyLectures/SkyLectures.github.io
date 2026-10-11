@@ -87,21 +87,6 @@ qna: false
         - [(실습) 사업재편 공정 개선 시나리오 설계](/materials/S06-05-03-06_01-BizRestrProcImprovementScenarios(Orange3))
             - 예측 결과를 기반으로 현장 알람/작업 표준 변경 및 의사결정 자동화 시나리오 작성
 
-
----
-
-- [현장 적용 관점에서의 AI 도입 포인트 정리](/materials/S06-01-01-03_01-KeyPointsForAiAdoption)
-- [공정 데이터 기반 인사이트 도출](/materials/S02-02-03-03_01-DataAnalysisPractice)
-- [불량 검출 결과 해석 및 개선 포인트 도출](/materials/S06-04-04-05_01-DefectDetectionResultsPractice)
-- [노코드/로우코드 기반 AI 활용 구조 이해](/materials/S06-04-05-01_01-NoCodeLowCodeBasedAi)
-- [Orange 기반 데이터 분석 실습](/materials/S13-09-04-05_01-DataAnalysisPractice)
-- [공정 데이터 기반 예측 모델 개념](/materials/S06-04-05-02_01-DataBasedPredictionModels)
-- [예측 결과를 공정 개선에 연결하는 방법](/materials/S06-04-05-03_01-ConnectPredictionResultsToProcessImprovement)
-- [AI 모델 운영 흐름(MLOps) 기초 이해](/materials/S06-04-05-04_01-AiModelOperationalFlow)
-- [공정 개선 시나리오 설계](/materials/S06-04-05-05_01-DesigningProcessImprovementScenarios)
-- [예지보전(Predicted Maintenance) 개념](/materials/S06-04-06-02_01-PredictedMaintenance)
-- [사례 분석: 현장 적용 운영 전략](/materials/S06-04-06-05_01-FieldApplicationOperationalStrategies)
-
 <br>
 
 > - 참고

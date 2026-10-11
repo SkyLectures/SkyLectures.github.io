@@ -17,7 +17,7 @@ related_posts:
     - /materials/S06-05-02-03_01-DataDrivenProcessDiagnosis
     - /materials/S06-05-02-04_01-DataQualityManagement1
     - /materials/S06-05-02-04_02-DataQualityManagement2
-qna: false
+qna: true
 ---
 * toc
 {:toc}
@@ -161,6 +161,8 @@ qna: false
 
 <br>
 
+- [💾 파일 다운로드(S06-05-02-05_01-smart_factory_transformation_data)](/materials/datasets/S06-05-02-05_01-smart_factory_transformation_data.csv)
+
 - **데이터셋 생성 파이썬 코드**
 
 ```python
@@ -246,8 +248,8 @@ def generate_transformation_dataset(n_samples=1000, random_seed=42):
 
 if __name__ == '__main__':
     df = generate_transformation_dataset()
-    df.to_csv('smart_factory_transformation_data.csv', index=False)
-    print("실습용 데이터셋 생성 완료: smart_factory_transformation_data.csv")
+    df.to_csv('S06-05-02-05_01-smart_factory_transformation_data.csv', index=False)
+    print("실습용 데이터셋 생성 완료: S06-05-02-05_01-smart_factory_transformation_data.csv")
     print(f"- 전체 데이터: {len(df)}건")
     print(f"- 결측치 개수: {df.isna().sum().sum()}개")
     print(f"- 기존 공정 수율: {((1 - df[df['Process_Type']=='Legacy_Process']['Defect_Flag'].mean())*100):.1f}%")

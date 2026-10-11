@@ -17,7 +17,7 @@ related_posts:
     - /materials/S06-05-03-04_01-AiAgentsPoweredByCuttingEdgeAi
     - /materials/S06-05-03-05_01-DataAnalysisSkills(Orange3)
     - /materials/S06-05-03-06_01-BizRestrProcImprovementScenarios(Orange3)
-qna: false
+qna: true
 ---
 * toc
 {:toc}
@@ -90,7 +90,7 @@ qna: false
 - **데이터 생성 파이썬 코드**
     - 실습용 CSV 파일을 자동으로 생성하는 코드
     - 실제 제조 현장의 비선형적 물리 특성(과열 및 압력 부족 시 급격한 불량 증가 등)이 반영되어 있음
-    - [💾 파일 다운로드](/materials/datasets/S06-05-03-03_01-process_yield_dataset.csv)
+    - [💾 파일 다운로드(S06-05-03-03_01-process_yield_dataset)](/materials/datasets/S06-05-03-03_01-process_yield_dataset.csv)
 
         ```python
         import numpy as np
