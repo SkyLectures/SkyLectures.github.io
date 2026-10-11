@@ -143,7 +143,7 @@ qna: false
 ### 1.3 과제 포지셔닝 2×2 매트릭스
 
 <div class="insert-image" style="width: 600px;">
-    <img src="/materials/S06_SmartFactory/images/S06-05-05-01_01-001_PositioningMatrix.png">
+    <img src="/materials/S06_SmartFactory/images/S06-05-01-05_01-001_PositioningMatrix.png">
     <span class="caption">(Source: Sky Lectures / AiDALab)</span>
 </div>
 

@@ -41,9 +41,9 @@ qna: false
             - 사업재편 필요성(기존사업한계, 신사업전환, 고부가가치화)과 AI 전환이 불가피해진 배경
         - [비전공자를 위한 사업재편 AI지도](/materials/S06-05-01-02_01-AiRoadmapForBusinessRestructuring)
             - 머신러닝, 딥러닝, 생성형 AI, AI 에이전트의 구조와 사업재편 시 기술별 적용 한계 및 가능 범위 이해
-        - [제조 AI 도입사례 1(공정혁신)](/materials/S06-05-01-03_01-ManufacturingAiCaseStudy1)
+        - [제조 AI 도입사례 (1): 공정 혁신](/materials/S06-05-01-03_01-ManufacturingAiCaseStudy1)
             - 사업재편 기업의 비전검사, 예지보전, 수율예측 적용사례 및 공정 재설치 조건 비교
-        - [제조 AI 도입사례 2(신사업 및 운영)](/materials/S06-05-01-03_02-ManufacturingAiCaseStudy2)
+        - [제조 AI 도입사례 (2): 신사업 및 운영](/materials/S06-05-01-03_02-ManufacturingAiCaseStudy2)
             - 신사업 라인 전환 시 수요예측, 재고 최적화, 사업재편 승인 보고문서 작성 자동화 사례
         - [생성형 AI 기반 업무 생산성 극대화](/materials/S06-05-01-04_01-MaximizingWorkProductivity)
             - 사업재편 기획서 작성, 규제/매뉴얼 분석, 시작데이터 요약 프롬프트 실습
@@ -62,9 +62,9 @@ qna: false
             - PLC-센서-클라우드 기반 데이터 수집 및 MES/SCADA 연계, 사업재편 설비 이전 시 발생하는 결손 문제
         - [데이터 기반 공정 진단 개요](/materials/S06-05-02-03_01-DataDrivenProcessDiagnosis)
             - 데이터 수집부터 전처리, 분석, 신사업 라인 최적화 예측까지의 전체 파이프라인 이해
-        - [데이터 품질 관리 및 가공 ①](/materials/S06-05-02-04_01-DataQualityManagement1)
+        - [데이터 품질 관리 및 가공 (1)](/materials/S06-05-02-04_01-DataQualityManagement1)
             - AI 도구를 활용한 신규/기존 공정 데이터의 결측치·이상치 처리 및 데이터 가공
-        - [데이터 품질 관리 및 가공 ②](/materials/S06-05-02-04_02-DataQualityManagement2)
+        - [데이터 품질 관리 및 가공 (2)](/materials/S06-05-02-04_02-DataQualityManagement2)
             - 데이터 상관관계 시각화 및 사업재편 핵심 지표(불량률, 가동률 등) 변수 분석
         - [(실습) 사업재편 공정 데이터 분석](/materials/S06-05-02-05_01-ProcessDataAnalysis)
             - 실제 제조 데이터셋을 활용해 신규 공정 전환 시 발생할 수 있는 문제점 진단 및 공유
@@ -73,63 +73,34 @@ qna: false
 
 - **AI 활용 및 자동화- 사업재편 예측 모델과 AI 에이전트**
     - 사업재편에 따른 품질·수율 예측 모델을 노코드로 구축하고, AI 에이전트를 활용해 사업재편 실무 업무를 자동화
+    - 세부 과정
+        - [데이터 기반 사업 최적화 (모듈 오리엔테이션)](/materials/S06-05-03-01_01-DataDrivenBizOptimization)
+            - 분석과 예측의 차이점, 사업재편 타당성 확보를 위한 데이터 기반 의사결정 방식 이해
+        - [사업재편 공정 예측 모델 개요](/materials/S06-05-03-02_01-BizRestrProcPredictionModels)
+            - 신규 제품 생산 시 불량·수율 예측 모델 작동 원리 및 적용 조건, 실패 원인 분석
+        - [(실습) 노코드 기반 예측 모델 구축](/materials/S06-05-03-03_01-NoCodePredictionModels)
+            - 노코드 AI 도구를 활용해 사업재편 공정의 불량 유무 및 수율 예측 모델 생성 및 결과 해석
+        - [최신AI 활용 AI 에이전트](/materials/S06-05-03-04_01-AiAgentsPoweredByCuttingEdgeAi)
+            - 사업재편 후 속도 향상을 위한 AI Agent 개념 및 업무 자동화(Skills) 활용 구조 이해
+        - [(실습) 데이터 분석 Skill 개발](/materials/S06-05-03-05_01-DataAnalysisSkills(Orange3))
+            - 반복되는 공정 데이터 분석 작업 및 사업재편 보고서 수집을 자동화하는 Skill 제작
+        - [(실습) 사업재편 공정 개선 시나리오 설계](/materials/S06-05-03-06_01-BizRestrProcImprovementScenarios(Orange3))
+            - 예측 결과를 기반으로 현장 알람/작업 표준 변경 및 의사결정 자동화 시나리오 작성
 
-## **1일차**
 
-### 스마트 제조와 AI 개요 이해
+---
 
-- [스마트 팩토리 개요](/materials/S06-01-01-01_01-SmartFactoryOverview)
-- [제조 패러다임 변화](/materials/S06-01-01-02_01-ParadigmShift)
 - [현장 적용 관점에서의 AI 도입 포인트 정리](/materials/S06-01-01-03_01-KeyPointsForAiAdoption)
-
-### 제조 데이터 수집, 정제 및 분석 기초
-
-- [데이터 개요 및 기초](/materials/S02-01-01-01_01-DataOverview)
-- [제조 데이터 유형 및 특성](/materials/S06-04-01-01_01-ManufacturingDataFeature)
-- [제조 데이터 구조 이해](/materials/S06-04-01-02_01-ManufacturingDataOverview)
-- [(PLC-센서-클라우드 기반) 제조 데이터 수집 구조](/materials/S06-04-01-03_01-ManufacturingDataCollectAndAnalyze)
-- [데이터 전처리 및 정제 방법 (결측치, 이상치 처리)](/materials/S02-02-02-01_01-DataPreprocess)
-- [데이터 통합 및 품질 관리 방법](/materials/S02-02-02-03_01-DataIntegrationQuality)
-- [EDA(탐색적 데이터 분석) 기반 패턴 분석](/materials/S02-02-03-01_01-DataAnalysis)
 - [공정 데이터 기반 인사이트 도출](/materials/S02-02-03-03_01-DataAnalysisPractice)
-
-## **2일차**
-
-### 비전 AI 기반 품질 검사
-
-- [비전 AI 기반 검사 시스템 구조](/materials/S06-04-04-01_01-VisionAiBasedInspectionSystem)
-- [이미지 데이터 수집 및 라벨링 프로세스](/materials/S06-04-04-02_01-ImageDataCollectionLabeling)
-- [불량 검출 모델 개념 및 적용 방식](/materials/S06-04-04-03_01-DefectDetectionModels)
-- [품질 검사 자동화 사례 분석](/materials/S06-04-04-04_01-QualityInspectionAutomationCases)
 - [불량 검출 결과 해석 및 개선 포인트 도출](/materials/S06-04-04-05_01-DefectDetectionResultsPractice)
-
-### 공정 최적화를 위한 AI 모델 적용
-
 - [노코드/로우코드 기반 AI 활용 구조 이해](/materials/S06-04-05-01_01-NoCodeLowCodeBasedAi)
 - [Orange 기반 데이터 분석 실습](/materials/S13-09-04-05_01-DataAnalysisPractice)
 - [공정 데이터 기반 예측 모델 개념](/materials/S06-04-05-02_01-DataBasedPredictionModels)
 - [예측 결과를 공정 개선에 연결하는 방법](/materials/S06-04-05-03_01-ConnectPredictionResultsToProcessImprovement)
 - [AI 모델 운영 흐름(MLOps) 기초 이해](/materials/S06-04-05-04_01-AiModelOperationalFlow)
 - [공정 개선 시나리오 설계](/materials/S06-04-05-05_01-DesigningProcessImprovementScenarios)
-- [PyTorch 기반 DNN 예제](https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/S03_AI/notebooks/DNN_Pytorch.ipynb){: target="_blank"}
-
-## **3일차**
-
-### 설비 데이터 분석과 스마트 운영
-
-- [설비 센서 데이터 기반 이상 탐지](/materials/S06-04-06-01_01-AnomalyDetectionEquipmentSensorData)
 - [예지보전(Predicted Maintenance) 개념](/materials/S06-04-06-02_01-PredictedMaintenance)
-- [KPI 기반 공정 모니터링 및 대시보드 설계](/materials/S06-04-06-03_01-KpiBasedProcessMonitoring)
-- [실시간 데이터 기반 의사결정 구조](/materials/S06-04-06-04_01-RealTimeDecisionMaking)
 - [사례 분석: 현장 적용 운영 전략](/materials/S06-04-06-05_01-FieldApplicationOperationalStrategies)
-
-### 스마트 공장 확장과 미래 제조 전략
-
-- [디지털 트윈 및 가상 공장 개념과 활용](/materials/S06-04-07-01_01-DigitalTwinVirtualFactory)
-- [물류 자동화 및 제조 로봇(AVR, 협동로봇) 이해](/materials/S06-04-07-02_01-LogisticsAutomationManufacturingRobots)
-- [유연 생산 시스템(FMS) 및 스마트 생산 전략](/materials/S06-04-07-03_01-FlexibleManufacturingSystems)
-- [제조 AI 도입 로드맵 및 조직 변화](/materials/S06-04-07-04_01-ManufacturingAiAdoptionRoadmap)
-- [미래 제조 트렌드 및 산업 전망](/materials/S06-04-07-05_01-FutureManufacturingTrends)
 
 <br>
 

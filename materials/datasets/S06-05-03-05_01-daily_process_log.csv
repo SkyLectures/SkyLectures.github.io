@@ -1,0 +1,121 @@
+﻿batch_id,line_no,shift,die_temp,press_pressure,cool_rate,yield_rate,defect_type
+BATCH_001,Line-A (기존),Night,226.0,157.5,17.0,94.0,None
+BATCH_002,Line-A (기존),Day,224.3,165.6,20.5,94.5,None
+BATCH_003,Line-B (신규재편),Day,209.5,161.7,19.5,89.1,UnderFill (미성형)
+BATCH_004,Line-A (기존),Day,219.0,162.2,22.6,96.0,None
+BATCH_005,Line-A (기존),Night,217.6,162.1,25.1,95.1,None
+BATCH_006,Line-B (신규재편),Night,214.5,171.0,18.2,97.0,None
+BATCH_007,Line-B (신규재편),Night,216.8,161.6,24.4,95.1,None
+BATCH_008,Line-B (신규재편),Night,225.0,171.5,22.6,95.3,None
+BATCH_009,Line-B (신규재편),Night,221.2,166.9,22.1,95.1,None
+BATCH_010,Line-B (신규재편),Day,215.9,165.9,21.2,96.2,None
+BATCH_011,Line-B (신규재편),Night,212.1,164.6,20.5,96.7,None
+BATCH_012,Line-A (기존),Night,225.1,166.3,26.2,96.4,None
+BATCH_013,Line-B (신규재편),Night,218.6,164.1,19.8,93.5,None
+BATCH_014,Line-B (신규재편),Night,220.7,169.6,10.4,97.3,None
+BATCH_015,Line-B (신규재편),Day,225.2,164.5,21.6,95.5,None
+BATCH_016,Line-A (기존),Night,225.7,172.1,21.5,96.2,None
+BATCH_017,Line-B (신규재편),Day,220.3,169.5,23.5,95.5,None
+BATCH_018,Line-B (신규재편),Day,219.5,166.7,18.4,96.7,None
+BATCH_019,Line-A (기존),Day,212.5,166.4,23.9,95.6,None
+BATCH_020,Line-B (신규재편),Day,208.2,171.1,19.8,89.5,UnderFill (미성형)
+BATCH_021,Line-A (기존),Day,223.7,164.4,23.9,94.3,None
+BATCH_022,Line-B (신규재편),Day,224.7,165.1,25.6,95.9,None
+BATCH_023,Line-B (신규재편),Night,223.8,154.8,17.4,92.6,None
+BATCH_024,Line-B (신규재편),Day,217.3,165.4,20.6,96.6,None
+BATCH_025,Line-B (신규재편),Day,218.9,165.6,24.9,96.5,None
+BATCH_026,Line-B (신규재편),Day,217.9,156.7,25.7,95.0,None
+BATCH_027,Line-B (신규재편),Day,208.7,173.1,18.6,90.0,None
+BATCH_028,Line-A (기존),Day,219.8,165.0,19.7,95.8,None
+BATCH_029,Line-A (기존),Night,235.2,159.2,23.2,81.5,Crack (균열)
+BATCH_030,Line-A (기존),Day,212.3,161.1,17.5,96.0,None
+BATCH_031,Line-B (신규재편),Day,215.2,157.5,18.9,96.0,None
+BATCH_032,Line-A (기존),Night,219.2,171.8,21.6,97.3,None
+BATCH_033,Line-A (기존),Night,219.2,175.3,20.2,90.1,None
+BATCH_034,Line-A (기존),Night,209.8,164.9,21.6,90.2,None
+BATCH_035,Line-A (기존),Night,217.4,157.3,18.2,93.7,None
+BATCH_036,Line-A (기존),Night,218.3,161.7,19.0,95.4,None
+BATCH_037,Line-B (신규재편),Day,208.3,168.3,22.9,89.8,UnderFill (미성형)
+BATCH_038,Line-B (신규재편),Day,208.3,165.8,18.0,88.9,UnderFill (미성형)
+BATCH_039,Line-B (신규재편),Day,225.2,164.7,19.4,94.4,None
+BATCH_040,Line-A (기존),Day,218.5,169.8,20.3,95.2,None
+BATCH_041,Line-B (신규재편),Night,218.6,158.0,18.8,95.6,None
+BATCH_042,Line-B (신규재편),Day,220.2,164.3,19.8,96.0,None
+BATCH_043,Line-B (신규재편),Night,215.0,165.0,19.6,96.6,None
+BATCH_044,Line-A (기존),Night,210.6,160.5,24.1,91.9,None
+BATCH_045,Line-B (신규재편),Night,214.4,163.2,20.3,95.4,None
+BATCH_046,Line-B (신규재편),Night,226.1,167.1,23.3,96.8,None
+BATCH_047,Line-B (신규재편),Day,220.6,164.5,24.7,96.8,None
+BATCH_048,Line-A (기존),Night,211.9,166.7,27.3,95.7,None
+BATCH_049,Line-A (기존),Night,234.2,167.1,20.6,82.4,Crack (균열)
+BATCH_050,Line-B (신규재편),Day,214.5,164.2,24.3,96.8,None
+BATCH_051,Line-B (신규재편),Day,215.2,163.2,23.9,96.8,None
+BATCH_052,Line-A (기존),Night,224.4,170.3,18.7,96.0,None
+BATCH_053,Line-A (기존),Day,223.3,162.2,21.0,94.9,None
+BATCH_054,Line-B (신규재편),Day,237.5,159.6,18.1,76.2,Crack (균열)
+BATCH_055,Line-B (신규재편),Night,223.4,165.2,19.0,93.6,None
+BATCH_056,Line-A (기존),Night,224.7,165.1,16.3,93.5,None
+BATCH_057,Line-B (신규재편),Day,211.8,155.9,25.9,94.9,None
+BATCH_058,Line-A (기존),Day,220.7,165.0,19.7,95.1,None
+BATCH_059,Line-B (신규재편),Night,218.4,167.9,22.0,96.2,None
+BATCH_060,Line-B (신규재편),Day,214.1,168.7,18.5,94.4,None
+BATCH_061,Line-B (신규재편),Day,219.7,161.5,21.9,96.9,None
+BATCH_062,Line-B (신규재편),Day,221.4,164.5,16.1,95.0,None
+BATCH_063,Line-B (신규재편),Day,232.7,168.3,15.5,83.2,Crack (균열)
+BATCH_064,Line-B (신규재편),Night,229.5,159.2,12.6,93.1,None
+BATCH_065,Line-B (신규재편),Day,223.5,168.8,19.9,97.1,None
+BATCH_066,Line-B (신규재편),Day,218.2,159.7,23.0,95.2,None
+BATCH_067,Line-B (신규재편),Night,223.2,152.3,20.7,88.0,UnderFill (미성형)
+BATCH_068,Line-A (기존),Day,229.8,172.6,19.5,91.1,None
+BATCH_069,Line-B (신규재편),Day,212.6,161.3,18.4,94.7,None
+BATCH_070,Line-B (신규재편),Day,219.2,169.0,22.5,94.6,None
+BATCH_071,Line-B (신규재편),Day,207.2,168.9,23.9,86.1,UnderFill (미성형)
+BATCH_072,Line-A (기존),Day,226.4,159.6,21.1,95.4,None
+BATCH_073,Line-A (기존),Day,222.4,171.3,21.0,96.1,None
+BATCH_074,Line-B (신규재편),Night,227.1,164.0,23.4,95.3,None
+BATCH_075,Line-B (신규재편),Night,219.7,156.5,18.2,93.3,None
+BATCH_076,Line-B (신규재편),Day,220.8,159.8,13.5,95.5,None
+BATCH_077,Line-B (신규재편),Day,217.3,164.1,17.8,96.5,None
+BATCH_078,Line-A (기존),Night,216.2,160.9,20.4,96.0,None
+BATCH_079,Line-B (신규재편),Night,217.7,163.8,19.0,96.4,None
+BATCH_080,Line-B (신규재편),Night,225.6,161.7,20.0,95.5,None
+BATCH_081,Line-B (신규재편),Day,206.4,156.2,26.0,83.9,UnderFill (미성형)
+BATCH_082,Line-A (기존),Day,215.1,170.6,17.5,94.6,None
+BATCH_083,Line-A (기존),Day,221.7,164.6,19.1,94.7,None
+BATCH_084,Line-A (기존),Day,222.3,170.7,22.6,94.9,None
+BATCH_085,Line-A (기존),Night,210.3,166.0,17.6,93.2,None
+BATCH_086,Line-B (신규재편),Night,220.6,160.0,19.0,94.7,None
+BATCH_087,Line-A (기존),Night,214.1,165.1,12.5,97.7,None
+BATCH_088,Line-B (신규재편),Night,221.5,168.9,20.6,95.5,None
+BATCH_089,Line-A (기존),Night,237.6,160.8,22.1,76.9,Crack (균열)
+BATCH_090,Line-B (신규재편),Night,217.2,163.4,23.6,94.9,None
+BATCH_091,Line-B (신규재편),Night,204.7,163.8,24.5,83.2,UnderFill (미성형)
+BATCH_092,Line-A (기존),Night,222.8,165.0,20.9,96.1,None
+BATCH_093,Line-A (기존),Day,220.6,158.1,24.1,95.9,None
+BATCH_094,Line-B (신규재편),Night,216.0,156.9,19.9,96.9,None
+BATCH_095,Line-B (신규재편),Night,224.7,164.8,25.3,94.2,None
+BATCH_096,Line-B (신규재편),Day,212.1,161.9,20.4,93.9,None
+BATCH_097,Line-A (기존),Night,215.4,166.9,21.1,97.8,None
+BATCH_098,Line-B (신규재편),Night,236.8,158.9,26.4,76.3,Crack (균열)
+BATCH_099,Line-A (기존),Day,221.6,167.5,18.5,96.4,None
+BATCH_100,Line-B (신규재편),Day,228.4,168.2,18.6,94.7,None
+BATCH_101,Line-A (기존),Night,227.3,171.1,19.9,96.9,None
+BATCH_102,Line-B (신규재편),Day,230.4,167.5,17.4,90.7,None
+BATCH_103,Line-A (기존),Day,209.1,165.7,19.8,88.3,UnderFill (미성형)
+BATCH_104,Line-A (기존),Day,211.7,162.4,16.3,94.7,None
+BATCH_105,Line-A (기존),Day,219.3,158.7,22.5,94.7,None
+BATCH_106,Line-B (신규재편),Night,217.7,168.7,18.0,96.2,None
+BATCH_107,Line-B (신규재편),Day,223.7,164.1,22.4,94.4,None
+BATCH_108,Line-B (신규재편),Day,221.2,156.4,22.4,94.4,None
+BATCH_109,Line-A (기존),Night,216.8,167.7,20.4,97.6,None
+BATCH_110,Line-A (기존),Day,209.4,169.5,22.2,91.6,None
+BATCH_111,Line-B (신규재편),Night,220.8,158.6,23.1,95.5,None
+BATCH_112,Line-B (신규재편),Day,223.9,163.6,13.2,96.2,None
+BATCH_113,Line-B (신규재편),Night,221.7,160.5,17.7,95.8,None
+BATCH_114,Line-A (기존),Day,208.9,168.8,21.2,90.3,None
+BATCH_115,Line-A (기존),Day,215.7,160.1,25.6,93.3,None
+BATCH_116,Line-B (신규재편),Night,226.4,170.4,14.4,94.9,None
+BATCH_117,Line-B (신규재편),Day,208.8,164.9,27.4,90.3,None
+BATCH_118,Line-B (신규재편),Night,217.7,162.9,19.0,94.5,None
+BATCH_119,Line-B (신규재편),Night,226.1,159.8,13.6,97.1,None
+BATCH_120,Line-B (신규재편),Day,217.7,165.9,16.4,98.1,None

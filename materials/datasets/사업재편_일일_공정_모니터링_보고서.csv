@@ -1,0 +1,11 @@
+defect_type,Aggregate,Day,Evening,Night
+Burr Crack None UnderFill,Count Mean,continuous,continuous,continuous
+,,,,
+Burr,Count,1.0,1.0,2.0
+Burr,Mean,0.783,0.567,0.557
+Crack,Count,8.0,9.0,1.0
+Crack,Mean,0.838,0.882,0.540
+None,Count,2.0,6.0,4.0
+None,Mean,0.906,0.840,0.866
+UnderFill,Count,5.0,4.0,9.0
+UnderFill,Mean,0.838,0.743,0.717
