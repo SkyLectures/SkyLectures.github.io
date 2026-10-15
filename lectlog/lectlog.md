@@ -8,7 +8,7 @@ qna: false
 * toc
 {:toc}
 
-> 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,538H</span> + <span style="color: #1c5f1c;">(대기 중: 39H)</span> / <span style="color: #CC0000;">멘토링: 총 80H</span> / <span style="color: #CC0000;">동영상 강의 녹화: 총 42H</span>
+> 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,538H</span> + <span style="color: #1c5f1c;">(대기 중: 39H)</span> / <span style="color: #CC0000;">멘토링: 총 80H</span> / <span style="color: #CC0000;">동영상 강의 녹화: 총 42H</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">**🡪 [ 종합 3,699H ]**</span>
 {: .common-quote}
 
 <br>
@@ -16,11 +16,11 @@ qna: false
 # **강의 이력** (3,538H + 39H)
 
 ## 2026 (392H + 39H)
-- <img src="/assets/icons/icon-ready-green.svg"> [(11.09~11.11) 제조 산업과 AI 활용: 일반6차: 서울(21H)](/lectlog/2026-11-09-KPC_ManufaturingAi)
-- <img src="/assets/icons/icon-ready-green.svg"> [(10.26~10.28) 사업재편을 위한 AI 전환 전략 및 과제발굴: 서울-강남(18H)](/lectlog/2026-10-26-KPC_ManufaturingAi)
-- <img src="/assets/icons/icon-complete-red.svg"> [(10.12~10.14) 사업재편을 위한 AI 전환 전략 및 과제발굴: 서울-강남(18H)](/lectlog/2026-10-12-KPC_ManufaturingAi)
-- <img src="/assets/icons/icon-complete-red.svg"> [(09.07~09.09) 제조 산업과 AI 활용: 일반4차: 서울(21H)](/lectlog/2026-09-07-KPC_ManufaturingAi)
-- <img src="/assets/icons/icon-complete-red.svg"> [(07.27~07.29) 제조 산업과 AI 활용: 일반2차: 서울(21H)](/lectlog/2026-07-27-KPC_ManufaturingAi)
+- <img src="/assets/icons/icon-ready-green.svg"> [(11.09~11.11) 제조 산업과 AI 활용: 일반6차(21H)](/lectlog/2026-11-09-KPC_ManufaturingAi)
+- <img src="/assets/icons/icon-ready-green.svg"> [(10.26~10.28) 사업재편을 위한 AI 전환 전략 및 과제발굴 2차(18H)](/lectlog/2026-10-26-KPC_ManufaturingAi)
+- <img src="/assets/icons/icon-complete-red.svg"> [(10.12~10.14) 사업재편을 위한 AI 전환 전략 및 과제발굴 1차(18H)](/lectlog/2026-10-12-KPC_ManufaturingAi)
+- <img src="/assets/icons/icon-complete-red.svg"> [(09.07~09.09) 제조 산업과 AI 활용: 일반4차(21H)](/lectlog/2026-09-07-KPC_ManufaturingAi)
+- <img src="/assets/icons/icon-complete-red.svg"> [(07.27~07.29) 제조 산업과 AI 활용: 일반2차(21H)](/lectlog/2026-07-27-KPC_ManufaturingAi)
 - <img src="/assets/icons/icon-complete-red.svg"> [(05.18~07.14) 데이터 엔지니어링 과정(160H)](/lectlog/2026-05-18-ITC_DataEngineering)
 - <img src="/assets/icons/icon-complete-red.svg"> [(04.14~05.15) 생성형 AI 활용 개발자 양성 및 취업 과정(164H)](/lectlog/2026-04-14-IPA_GenAI)
 - <img src="/assets/icons/icon-complete-red.svg"> [(01.08) AI도구를 활용한 스마트 워크 실무과정(초중급)(4H)](/lectlog/2026-01-08-IPA_RISE_AI_Tech_02)
