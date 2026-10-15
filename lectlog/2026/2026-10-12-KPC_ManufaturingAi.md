@@ -1,13 +1,15 @@
 ---
 layout: page
-title: "제조 산업과 AI 활용(18H)"
+title: "사업재편을 위한 AI 전환 전략 및 과제발굴(18H)"
 permalink: /lectlog/2026-10-12-KPC_ManufaturingAi
-description: "제조 현장의 실무자 및 구직자를 대상으로 현장의 노하우를 데이터화하고, 비전 AI와 예지 정비 등을 활용해 스마트팩토리 공정을 최적화하는 실무 역량 강화 교육 과정"
+description: "사업재편의 관점에서 AI 전환의 필요성을 이해하고 자사의 사업전환 및 신사업 추진에 필요한 AI 적용과제를 도출하기 위한 역량 강화 교육 과정"
 categories:
     - lectlog
 tags:
+    - business restructuring
     - manufacturing
-    - ai
+    - data analysis
+    - ai transformation
 qna: false
 ---
 * toc
