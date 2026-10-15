@@ -71,7 +71,7 @@ qna: true
             | `operator_shift` | Categorical | 작업 조 (Day, Evening, Night) |
             | `defect_type` | Categorical | 현장 가검사 결함 유형 (None, Crack, UnderFill, Burr) |
 
-    - [💾 파일 다운로드(S06-05-03-03_01-process_yield_dataset)](/materials/datasets/S06-05-03-03_01-process_yield_dataset)
+    - [💾 파일 다운로드(S06-05-03-03_01-process_yield_dataset)](/materials/datasets/S06-05-03-03_01-process_yield_dataset.csv)
     - [💾 파일 다운로드(S06-05-03-05_01-today_new_batches.csv)](/materials/datasets/S06-05-03-05_01-today_new_batches.csv)
 
         ```python
@@ -290,7 +290,6 @@ qna: true
 >       - 스킬이란 어려운 기술이 아니라, **새로운 입력이 들어왔을 때 정해진 지능(모델)과 룰에 따라 결과를 뽑아내는 자동화 블록**이라는 개념을 확인
 >   - **현업 즉시 적용성:**
 >       - 실습이 끝난 후 이 Orange 3 워크플로우 파일(`.ows`)을 그대로 저장하여 회사 공장의 실제 MES 로그에 연결하면, 당장 실무 자동화 도구로 쓸 수 있음
->           - 
 {: .green-quote}
 
 <br>

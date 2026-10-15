@@ -15,7 +15,7 @@ qna: false
 
 # 👩🏻‍🏫 Lectures
 
-> 📊 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,499H</span> + <span style="color: #1c5f1c;">(대기 중: 42H)</span> / <span style="color: #CC0000;">멘토링: 총 66H</span> + <span style="color: #1c5f1c;">(대기 중: 14H)</span> / <span style="color: #CC0000;">동영상 강의 녹화: 총 42H</span>
+> 📊 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,538H</span> + <span style="color: #1c5f1c;">(대기 중: 39H)</span> / <span style="color: #CC0000;">멘토링: 총 80H</span> / <span style="color: #CC0000;">동영상 강의 녹화: 총 42H</span>
 {: .common-quote}
 
 
@@ -23,12 +23,12 @@ qna: false
 
 <div class="split-content" style="margin: -15px 0px 0px 0px;">
 <div class="split-content-left" markdown="1">
-- <img src="/assets/icons/icon-ready-green.svg"> [(10.12~10.14) 제조 산업과 AI 활용: 서울-강남(18H)](/lectlog/2026-10-12-KPC_ManufaturingAi)
-- <img src="/assets/icons/icon-ready-green.svg"> [(10.26~10.28) 제조 산업과 AI 활용: 서울-강남(18H)](/lectlog/2026-10-26-KPC_ManufaturingAi)
+- <img src="/assets/icons/icon-ready-green.svg"> [(10.26~10.28) 사업재편을 위한 AI 전환 전략 및 과제발굴: 서울-강남(18H)](/lectlog/2026-10-26-KPC_ManufaturingAi)
 - <img src="/assets/icons/icon-ready-green.svg"> [(11.09~11.11) 제조 산업과 AI 활용: 일반6차: 서울-광화문(21H)](/lectlog/2026-11-09-KPC_ManufaturingAi)
 </div>
 
 <div class="split-content-right" markdown="1">
+- <img src="/assets/icons/icon-complete-red.svg"> [(10.12~10.14) 사업재편을 위한 AI 전환 전략 및 과제발굴: 서울-강남(18H)](/lectlog/2026-10-12-KPC_ManufaturingAi)
 - <img src="/assets/icons/icon-complete-red.svg"> (09.14) SSAFY 15기 전문가 멘토링 2차: Online(7H)
 - <img src="/assets/icons/icon-complete-red.svg"> [(09.07~09.09) 제조 산업과 AI 활용: 일반4차: 서울-광화문(21H)](/lectlog/2026-09-07-KPC_ManufaturingAi)
 - <img src="/assets/icons/icon-complete-red.svg"> (08.27~28) SSAFY 15기 전문가 멘토링 1차: Online(7H)
