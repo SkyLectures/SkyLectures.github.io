@@ -2,7 +2,7 @@
 layout: page
 title: (실습) 노코드 기반 예측 모델 구축
 subtitle: 
-permalink: /materials/S06-05-03-03_01-NoCodePredictionModels
+permalink: /materials/S06-05-03-03_01-NoCodePredictionModels_Type1
 description: 노코드 AI 도구를 활용해 사업재편 공정의 불량 유무 및 수율 예측 모델 생성 및 결과 해석
 categories:
     - materials
@@ -12,9 +12,9 @@ tags:
     - AI Utilization and Automation
     - Process Improvement
 related_posts:
-    - /materials/S06-05-03-01_01-DataDrivenBizOptimization
+    - /materials/S06-05-03-01_01-DataDrivenBizOptimization_Type1
     - /materials/S06-05-03-02_01-BizRestrProcPredictionModels
-    - /materials/S06-05-03-04_01-AiAgentsPoweredByCuttingEdgeAi
+    - /materials/S06-05-03-04_01-AiAgentsPoweredByCuttingEdgeAi_Type1
     - /materials/S06-05-03-05_01-DataAnalysisSkills(Orange3)
     - /materials/S06-05-03-06_01-BizRestrProcImprovementScenarios(Orange3)
 qna: true

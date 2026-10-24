@@ -12,7 +12,7 @@ tags:
     - 공정 데이터 분석
     - Process Data Analysis
 related_posts:
-    - /materials/S06-05-02-01_01-AiAndManufacturingData
+    - /materials/S06-05-02-01_01-AiAndManufacturingData_Type1
     - /materials/S06-05-02-02_01-EquipmentDataCollection
     - /materials/S06-05-02-03_01-DataDrivenProcessDiagnosis
     - /materials/S06-05-02-04_01-DataQualityManagement1
@@ -34,9 +34,8 @@ qna: true
 - **실습 목적**:
     - 파이썬 코딩 없이 생성형 AI(ChatGPT Advanced Data Analysis / Claude Artifacts / 사내 LLM 분석기)를 "AI 데이터 분석 비서"로 활용하는 실무 역량 배양
     - 사람이 일일이 찾기 힘든 다변량 센서 이상치(센서 엇박자)와 **결측치**를 AI에게 감지·정제하도록 지시하는 프롬프트 엔지니어링 체득
-    - 머신러닝 기반 중요도(Feature Importance) 및 의사결정 규칙 도출을 AI에게 지시하여, 공정 불량을 유발하는 핵심 제어 임계치를 도출하고 최종 보고서 자동 작성
+    - 머신러닝 기반 중요도(Feature Importance) 및 의사결정 규칙 도출을 AI에게 지시하여, 공정 불량을 유발하는 핵심 제어 임계치를 도출하고 최종 보고서 자동 작성<br><br>
 
-<br>
 
 ## 2. 실습 환경 및 도구
 
@@ -44,22 +43,21 @@ qna: true
     - **옵션 A (추천: 생성형 AI 기반)**: ChatGPT Plus/Team (Data Analysis 기능) 또는 Claude (Projects/Artifacts)
     - **옵션 B (설치형 노코드 AI 도구)**: Orange Data Mining (마우스 드래그 앤 드롭으로 AI 모델을 조립하는 GUI 무료 도구)
 
-- **제공 데이터셋**: `smart_factory_transformation_data.csv` (1,000건, 결측치 및 계측 노이즈 포함)
+- **제공 데이터셋**: [`smart_factory_transformation_data.csv`](/materials/datasets/S06-05-02-05_01-smart_factory_transformation_data.csv) (1,000건, 결측치 및 계측 노이즈 포함)<br><br>
 
-<br>
 
 ## 3. 실습 시나리오
 
-> - **AI 분석 비서와 함께하는 공정 문제 진단**<br><br>
-> - **현장 상황**
->   - 내연기관 실린더 블록(주철) 라인을 친환경 배터리 팩 케이스(알루미늄) 성형 라인으로 사업재편한 뒤, 3주 만에 수율이 76%로 급락
->   - 현장 담당자는 엑셀로 원인을 찾지 못해, 1,000건의 센서 데이터가 담긴 CSV 파일을 **제조 전문 AI 분석 에이전트**에 업로드하고
->   - 결측치 정제부터 불량 원인 분석, 경영진 보고서 초안까지 단 30분 만에 완성하고자 함
+> **AI 분석 비서와 함께하는 공정 문제 진단**
 {: .yellow-quote}
+- 내연기관 실린더 블록(주철) 라인을 친환경 배터리 팩 케이스(알루미늄) 성형 라인으로 사업재편한 뒤, 3주 만에 수율이 76%로 급락
+- 현장 담당자는 엑셀로 원인을 찾지 못해, 1,000건의 센서 데이터가 담긴 CSV 파일을 **제조 전문 AI 분석 에이전트**에 업로드하고
+- 결측치 정제부터 불량 원인 분석, 경영진 보고서 초안까지 단 30분 만에 완성하고자 함
+
 
 <br>
 
-## 4. 단계별 실습 진행 과정 (자연어 프롬프트 기반 AI 분석)
+## 4. 단계별 실습 진행
 
 - 아래의 [공정 도메인 기반 AI 지시 프롬프트]를 순차적으로 입력
 - AI가 수행한 분석 결과와 시각화 차트를 검증
@@ -73,6 +71,8 @@ qna: true
                         🡫
     [4단계: AI 불량 기여도 분석(SHAP/트리)으로 설비 제어 임계치 도출]
     ```
+
+<br>
 
 - **1단계: AI 데이터 품질 감사 (결측치 및 계측 노이즈 자동 정제)**
 
@@ -133,12 +133,12 @@ qna: true
     - **AI의 수행 및 출력**:
         - 특성 중요도 1위: `Pressure_Bar` (42%), 2위: `Temperature_C` (35%)
         - 도출된 현장 규칙:
-            - **[위험]** 성형 압력 > 136.2 Bar AND 금형 온도 > 200.5°C 🡪 **불량률 88.4%**
+            - **[위험]** 성형 압력 $\gt$ 136.2 Bar & 금형 온도 $\gt$ 200.5°C 🡪 **불량률 88.4%**
             - **[안전]** 성형 압력 $\le$ 135.0 Bar 유지 시 🡪 **불량률 4.1% 수준으로 급감**
 
 <br>
 
-## 5. 산출물: 공정 진단 보고서 검증 및 보완
+## 5. 공정 진단 보고서 검증 및 보완
 
 - 다음의 프롬프트를 입력하여 **경영진 보고용 표준 양식**으로 초안을 작성한 뒤,
 - 현장 엔지니어의 관점에서 타당성을 검증하고 최종 수정본을 완성할 것
@@ -147,111 +147,3 @@ qna: true
     > 지금까지 분석한 모든 결과를 종합하여, 경영진과 생산본부장에게 보고할 **'사업재편 신규 공정 조기 안정화 AI 진단 보고서'**를 작성해 줘.<br>
     > 현황 요약, 수율 급락의 근본 원인(Root Cause), AI 모델이 도출한 안전 임계치, 그리고 설비/공정 관점의 즉각적인 액션 플랜(Action Plan)을 포함한 마크다운 문서로 출력해 줘.
     {: .gray-quote}
-
-<br>
-
-- **엑셀 방식 대비 기대 효과**
-
-    | 구분                    | 기존 엑셀 방식                                | **제조 AI(프롬프트/노코드) 활용 방식**                               |
-    | :---------------------- | :-------------------------------------------- | :------------------------------------------------------------------- |
-    | **실습생의 역할**       | 마우스 클릭, 수식 작성, 필터링 등 단순 노가다 | **"AI에게 문제를 정의하고, 결과를 해석해 조치안을 결정하는 관리자"** |
-    | **다루는 기술**         | 단순 통계(평균, 합계), 2차원 차트             | **선형 보간, Isolation Forest, Feature Importance, XAI 규칙 도출**   |
-    | **교육 주제 부합도**    | 일반 OA / 사무 실습에 가까움                  | **"제조 산업에서의 AI 활용" 주제에 100% 부합**                       |
-    | **난이도 및 소요 시간** | 코딩이 없어 비전문가도 100% 수행 가능         | 동일하게 비코딩이지만, 분석 결과물 완성 속도는 3배 이상 빠름         |
-
-<br>
-
-- [💾 파일 다운로드(S06-05-02-05_01-smart_factory_transformation_data)](/materials/datasets/S06-05-02-05_01-smart_factory_transformation_data.csv)
-
-- **데이터셋 생성 파이썬 코드**
-
-```python
-import numpy as np
-import pandas as pd
-
-def generate_transformation_dataset(n_samples=1000, random_seed=42):
-    np.random.seed(random_seed)
-    half = n_samples // 2
-    
-    # 1. 시계열 타임스탬프 (2분 간격)
-    timestamps = pd.date_range(start="2026-03-01 08:00:00", periods=n_samples, freq="2min")
-    
-    # 2. 공정 구분 (전반 500개: 기존 주철 공정 / 후반 500개: 신규 알루미늄 전환 공정)
-    process_type = ['Legacy_Process'] * half + ['New_Transformation'] * half
-    
-    # 3. 핵심 센서 데이터 기본 생성
-    # - 기존 공정: 좁은 산포, 안정적 운영
-    # - 신규 공정: 평균 상승, 산포 급증(제어 미숙)
-    temp_legacy = np.random.normal(loc=180.0, scale=3.5, size=half)
-    temp_new = np.random.normal(loc=198.5, scale=8.2, size=half)
-    temp = np.concatenate([temp_legacy, temp_new])
-    
-    press_legacy = np.random.normal(loc=120.0, scale=2.0, size=half)
-    press_new = np.random.normal(loc=135.0, scale=7.5, size=half)
-    press = np.concatenate([press_legacy, press_new])
-    
-    vib_legacy = np.random.normal(loc=15.0, scale=1.2, size=half)
-    vib_new = np.random.normal(loc=24.0, scale=4.8, size=half)
-    vib = np.concatenate([vib_legacy, vib_new])
-    
-    cycle_legacy = np.random.normal(loc=45.0, scale=1.0, size=half)
-    cycle_new = np.random.normal(loc=58.0, scale=5.0, size=half)
-    cycle = np.concatenate([cycle_legacy, cycle_new])
-    
-    # 두께 편차 (mm)
-    thick_err_legacy = np.random.normal(loc=0.02, scale=0.01, size=half)
-    thick_err_new = (
-        0.05 + 0.003 * (temp_new - 190) + 0.004 * (press_new - 130) 
-        + np.random.normal(loc=0, scale=0.03, size=half)
-    )
-    thickness_error = np.concatenate([thick_err_legacy, thick_err_new])
-    
-    # 4. 불량 판정 (Defect_Flag: 0=정상, 1=불량)
-    # 기존: 불량률 ~3%
-    defect_legacy = np.random.choice([0, 1], size=half, p=[0.97, 0.03])
-    
-    # 신규: 압력 > 136 Bar 및 온도 > 200°C 복합 과부하 시 불량률 85% 이상 치솟음
-    new_prob = 1 / (1 + np.exp(-(0.18 * (temp_new - 198) + 0.22 * (press_new - 135) + 0.15 * (vib_new - 24))))
-    new_prob = np.clip(new_prob, 0.05, 0.95)
-    defect_new = (np.random.rand(half) < new_prob).astype(int)
-    defect = np.concatenate([defect_legacy, defect_new])
-    
-    # 데이터프레임 초기화
-    df = pd.DataFrame({
-        'Timestamp': timestamps,
-        'Process_Type': process_type,
-        'Temperature_C': np.round(temp, 2),
-        'Pressure_Bar': np.round(press, 2),
-        'Vibration_mm_s': np.round(vib, 2),
-        'Cycle_Time_s': np.round(cycle, 2),
-        'Thickness_Error_mm': np.round(thickness_error, 4),
-        'Defect_Flag': defect
-    })
-    
-    # -------------------------------------------------------------
-    # [데이터 품질 관리 실습용 주입 요소: 결측치 및 계측 노이즈]
-    # -------------------------------------------------------------
-    # (1) 통신 끊김으로 인한 결측치(NaN/빈칸) 주입: 15개 행
-    missing_indices = np.random.choice(range(50, 950), size=15, replace=False)
-    df.loc[missing_indices[:8], 'Temperature_C'] = np.nan
-    df.loc[missing_indices[8:], 'Pressure_Bar'] = np.nan
-    
-    # (2) 센서 노이즈/전압 튐 이상치 (물리적으로 불가능한 극단값): 5개 행
-    noise_indices = [120, 310, 680, 750, 890]
-    df.loc[noise_indices[0], 'Temperature_C'] = 999.0   # 센서 통신 에러 고정값
-    df.loc[noise_indices[1], 'Pressure_Bar'] = -50.0     # 마이너스 압력 에러
-    df.loc[noise_indices[2], 'Vibration_mm_s'] = 250.0   # 순간 정전기 노이즈
-    df.loc[noise_indices[3], 'Temperature_C'] = 0.0      # 영점 탈락 에러
-    df.loc[noise_indices[4], 'Pressure_Bar'] = 999.9     # 전압 스파이크
-    
-    return df
-
-if __name__ == '__main__':
-    df = generate_transformation_dataset()
-    df.to_csv('S06-05-02-05_01-smart_factory_transformation_data.csv', index=False)
-    print("실습용 데이터셋 생성 완료: S06-05-02-05_01-smart_factory_transformation_data.csv")
-    print(f"- 전체 데이터: {len(df)}건")
-    print(f"- 결측치 개수: {df.isna().sum().sum()}개")
-    print(f"- 기존 공정 수율: {((1 - df[df['Process_Type']=='Legacy_Process']['Defect_Flag'].mean())*100):.1f}%")
-    print(f"- 신규 공정 수율: {((1 - df[df['Process_Type']=='New_Transformation']['Defect_Flag'].mean())*100):.1f}%")
-```

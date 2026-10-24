@@ -23,7 +23,7 @@ qna: false
 
 <div class="split-content" style="margin: -15px 0px 0px 0px;">
 <div class="split-content-left" markdown="1">
-- <img src="/assets/icons/icon-ready-green.svg"> [(10.26~10.28) 사업재편을 위한 AI 전환 전략 및 과제발굴 2차(18H)](/lectlog/2026-10-26-KPC_ManufaturingAi)
+- <img src="/assets/icons/icon-progressing-blue.svg"> [(10.26~10.28) 사업재편을 위한 AI 전환 전략 및 과제발굴 2차(18H)](/lectlog/2026-10-26-KPC_ManufaturingAi)
 - <img src="/assets/icons/icon-ready-green.svg"> [(11.09~11.11) 제조 산업과 AI 활용: 일반6차(21H)](/lectlog/2026-11-09-KPC_ManufaturingAi)
 </div>
 

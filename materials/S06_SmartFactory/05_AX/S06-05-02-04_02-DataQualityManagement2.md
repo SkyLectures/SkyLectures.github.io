@@ -12,7 +12,7 @@ tags:
     - 데이터 품질 관리
     - Data Quality Management
 related_posts:
-    - /materials/S06-05-02-01_01-AiAndManufacturingData
+    - /materials/S06-05-02-01_01-AiAndManufacturingData_Type1
     - /materials/S06-05-02-02_01-EquipmentDataCollection
     - /materials/S06-05-02-03_01-DataDrivenProcessDiagnosis
     - /materials/S06-05-02-04_01-DataQualityManagement1

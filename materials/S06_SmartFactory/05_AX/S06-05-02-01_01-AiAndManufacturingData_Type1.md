@@ -2,7 +2,7 @@
 layout: page
 title: 인공지능과 제조 데이터 구조의 이해
 subtitle: 
-permalink: /materials/S06-05-02-01_01-AiAndManufacturingData
+permalink: /materials/S06-05-02-01_01-AiAndManufacturingData_Type1
 description: 인공지능 개요와 제조 데이터 특성(정형·비정형·시계열) 이해
 categories:
     - materials

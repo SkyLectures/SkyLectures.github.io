@@ -58,7 +58,7 @@ qna: false
 - **제조 데이터 리터러시-사업재편을 위한 공정 데이터 구조와 분석**
     - 사업재편 공정 재배치 및 신규 설비 도입에 따른 데이터 구조를 이해하고, AI 기반 데이터 정제 및 인사이트 도출 역량 습득
     - 세부 과정
-        - [인공지능과 제조 데이터 구조의 이해](/materials/S06-05-02-01_01-AiAndManufacturingData)
+        - [인공지능과 제조 데이터 구조의 이해](/materials/S06-05-02-01_01-AiAndManufacturingData_Type1)
             - 인공지능 개요와 제조 데이터 특성(정형·비정형·시계열) 이해
         - [설비 수집 구조 및 데이터 연계](/materials/S06-05-02-02_01-EquipmentDataCollection)
             - PLC-센서-클라우드 기반 데이터 수집 및 MES/SCADA 연계, 사업재편 설비 이전 시 발생하는 결손 문제
@@ -76,13 +76,13 @@ qna: false
 - **AI 활용 및 자동화- 사업재편 예측 모델과 AI 에이전트**
     - 사업재편에 따른 품질·수율 예측 모델을 노코드로 구축하고, AI 에이전트를 활용해 사업재편 실무 업무를 자동화
     - 세부 과정
-        - [데이터 기반 사업 최적화 (모듈 오리엔테이션)](/materials/S06-05-03-01_01-DataDrivenBizOptimization)
+        - [데이터 기반 사업 최적화 (모듈 오리엔테이션)](/materials/S06-05-03-01_01-DataDrivenBizOptimization_Type1)
             - 분석과 예측의 차이점, 사업재편 타당성 확보를 위한 데이터 기반 의사결정 방식 이해
         - [사업재편 공정 예측 모델 개요](/materials/S06-05-03-02_01-BizRestrProcPredictionModels)
             - 신규 제품 생산 시 불량·수율 예측 모델 작동 원리 및 적용 조건, 실패 원인 분석
-        - [(실습) 노코드 기반 예측 모델 구축](/materials/S06-05-03-03_01-NoCodePredictionModels)
+        - [(실습) 노코드 기반 예측 모델 구축](/materials/S06-05-03-03_01-NoCodePredictionModels_Type1)
             - 노코드 AI 도구를 활용해 사업재편 공정의 불량 유무 및 수율 예측 모델 생성 및 결과 해석
-        - [최신AI 활용 AI 에이전트](/materials/S06-05-03-04_01-AiAgentsPoweredByCuttingEdgeAi)
+        - [최신AI 활용 AI 에이전트](/materials/S06-05-03-04_01-AiAgentsPoweredByCuttingEdgeAi_Type1)
             - 사업재편 후 속도 향상을 위한 AI Agent 개념 및 업무 자동화(Skills) 활용 구조 이해
         - [(실습) 데이터 분석 Skill 개발](/materials/S06-05-03-05_01-DataAnalysisSkills(Orange3))
             - 반복되는 공정 데이터 분석 작업 및 사업재편 보고서 수집을 자동화하는 Skill 제작

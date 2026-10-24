@@ -2,7 +2,7 @@
 layout: page
 title: 데이터 기반 사업 최적화
 subtitle: 
-permalink: /materials/S06-05-03-01_01-DataDrivenBizOptimization
+permalink: /materials/S06-05-03-01_01-DataDrivenBizOptimization_Type1
 description: 분석과 예측의 차이점, 사업재편 타당성 확보를 위한 데이터 기반 의사결정 방식 이해
 categories:
     - materials
@@ -13,8 +13,8 @@ tags:
     - Process Improvement
 related_posts:
     - /materials/S06-05-03-02_01-BizRestrProcPredictionModels
-    - /materials/S06-05-03-03_01-NoCodePredictionModels
-    - /materials/S06-05-03-04_01-AiAgentsPoweredByCuttingEdgeAi
+    - /materials/S06-05-03-03_01-NoCodePredictionModels_Type1
+    - /materials/S06-05-03-04_01-AiAgentsPoweredByCuttingEdgeAi_Type1
     - /materials/S06-05-03-05_01-DataAnalysisSkills(Orange3)
     - /materials/S06-05-03-06_01-BizRestrProcImprovementScenarios(Orange3)
 qna: true

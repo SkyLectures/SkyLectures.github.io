@@ -2,7 +2,7 @@
 layout: page
 title: 최신AI 활용 AI 에이전트
 subtitle: 
-permalink: /materials/S06-05-03-04_01-AiAgentsPoweredByCuttingEdgeAi
+permalink: /materials/S06-05-03-04_01-AiAgentsPoweredByCuttingEdgeAi_Type1
 description: 사업재편 후 속도 향상을 위한 AI Agent 개념 및 업무 자동화(Skills) 활용 구조 이해
 categories:
     - materials
@@ -12,9 +12,9 @@ tags:
     - AI Utilization and Automation
     - Process Improvement
 related_posts:
-    - /materials/S06-05-03-01_01-DataDrivenBizOptimization
+    - /materials/S06-05-03-01_01-DataDrivenBizOptimization_Type1
     - /materials/S06-05-03-02_01-BizRestrProcPredictionModels
-    - /materials/S06-05-03-03_01-NoCodePredictionModels
+    - /materials/S06-05-03-03_01-NoCodePredictionModels_Type1
     - /materials/S06-05-03-05_01-DataAnalysisSkills(Orange3)
     - /materials/S06-05-03-06_01-BizRestrProcImprovementScenarios(Orange3)
 qna: true

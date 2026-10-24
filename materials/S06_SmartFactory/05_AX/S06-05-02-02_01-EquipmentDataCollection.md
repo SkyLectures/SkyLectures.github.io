@@ -12,7 +12,7 @@ tags:
     - 설비 데이터 수집
     - Equipment Data Collection
 related_posts:
-    - /materials/S06-05-02-01_01-AiAndManufacturingData
+    - /materials/S06-05-02-01_01-AiAndManufacturingData_Type1
     - /materials/S06-05-02-03_01-DataDrivenProcessDiagnosis
     - /materials/S06-05-02-04_01-DataQualityManagement1
     - /materials/S06-05-02-04_02-DataQualityManagement2

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 생성형 AI 기반 업무 생산성 극대화
+title: (실습) 생성형 AI 기반 업무 생산성 극대화
 subtitle: 
 permalink: /materials/S06-05-01-04_01-MaximizingWorkProductivity
 description: 사업재편 기획서 작성, 규제/매뉴얼 분석, 시작데이터 요약 프롬프트 실습
