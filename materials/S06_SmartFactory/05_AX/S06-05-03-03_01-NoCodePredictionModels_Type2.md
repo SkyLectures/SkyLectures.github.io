@@ -67,7 +67,10 @@ qna: true
 
 <br>
 
-## 3. 실습 데이터셋 구조 및 생성 파이썬 코드
+## 3. 실습 데이터셋
+
+- 실제 제조 현장의 비선형적 물리 특성(과열 및 압력 부족 시 급격한 불량 증가 등)이 반영된 가상 데이터셋
+- [💾 파일 다운로드(S06-05-03-03_01-process_yield_dataset)](/materials/datasets/S06-05-03-03_01-process_yield_dataset.csv)
 
 - **데이터셋 스펙 (총 1,200개 배치 데이터)**
 
@@ -83,12 +86,9 @@ qna: true
     | yield_rate           | Numeric     | **Target (회귀)** | 공정 수율 (%, 범위: 65.0 ~ 99.5)                         |
     | quality_status       | Categorical | **Target (분류)** | 최종 품질 판정 (`Pass`: 수율 90% 이상, `Fail`: 90% 미만) |
 
-    - 실제 제조 현장의 비선형적 물리 특성(과열 및 압력 부족 시 급격한 불량 증가 등)이 반영되어 있음
-    - [💾 파일 다운로드(S06-05-03-03_01-process_yield_dataset)](/materials/datasets/S06-05-03-03_01-process_yield_dataset.csv)
-
 <br>
 
-## 4. Orange 3 따라하기 실습 가이드
+## 4. 실습 내용
 
 - Orange 3 최신 버전의 좌측 툴박스 카테고리(`Data`, `Visualize`, `Model`, `Evaluate`) 기준 단계별 조작법
 
@@ -117,7 +117,6 @@ qna: true
 
             <div class="insert-image" style="width: 800px;">
                 <img src="/materials/S06_SmartFactory/images/S06-05-03-03_01-002_ScreenCapture_01.png">
-                <span class="caption">(Source: Sky Lectures / AiDALab)</span>
             </div>
 
             - **그래프의 실제 분포 형태**
@@ -178,7 +177,6 @@ qna: true
 
             <div class="insert-image" style="width: 400px;">
                 <img src="/materials/S06_SmartFactory/images/S06-05-03-03_01-003_ScreenCapture_02.png">
-                <span class="caption">(Source: Sky Lectures / AiDALab)</span>
             </div>
 
     4. 선이 연결되는 즉시 5-Fold 교차 검증이 백그라운드에서 자동 연산됨<br><br>
@@ -189,7 +187,6 @@ qna: true
 
         <div class="insert-image" style="width: 800px;">
             <img src="/materials/S06_SmartFactory/images/S06-05-03-03_01-004_ScreenCapture_03.png">
-            <span class="caption">(Source: Sky Lectures / AiDALab)</span>
         </div>
 
         - **Target Class:** 상단 드롭다운에서 `Fail` 선택
@@ -197,7 +194,6 @@ qna: true
 
             <div class="insert-image" style="width: 800px;">
                 <img src="/materials/S06_SmartFactory/images/S06-05-03-03_01-005_ScreenCapture_04.png">
-                <span class="caption">(Source: Sky Lectures / AiDALab)</span>
             </div>
 
         - **세부 지표별 상세 해석 (제조 현장 관점)**
@@ -263,7 +259,6 @@ qna: true
 
             <div class="insert-image" style="width: 600px;">
                 <img src="/materials/S06_SmartFactory/images/S06-05-03-03_01-006_ScreenCapture_05.png">
-                <span class="caption">(Source: Sky Lectures / AiDALab)</span>
             </div>
 
             - `Random Forest` 오차 행렬 4개 셀 수치 분석
@@ -312,14 +307,12 @@ qna: true
 
         <div class="insert-image" style="width: 600px;">
             <img src="/materials/S06_SmartFactory/images/S06-05-03-03_01-007_ScreenCapture_06.png">
-            <span class="caption">(Source: Sky Lectures / AiDALab)</span>
         </div>
             
     2. `Tree Viewer`를 더블클릭하면 시각적 분기 다이어그램이 펼쳐짐
 
         <div class="insert-image" style="width: 1000px;">
             <img src="/materials/S06_SmartFactory/images/S06-05-03-03_01-008_ScreenCapture_07.png">
-            <span class="caption">(Source: Sky Lectures / AiDALab)</span>
         </div>
 
         - 최상단 첫 번째 분기 조건이 무엇인지 확인 (예: `die_temp <= 204.5` 또는 `press_pressure <= 148.2`).
@@ -343,7 +336,6 @@ qna: true
 
         <div class="insert-image" style="width: 1000px;">
             <img src="/materials/S06_SmartFactory/images/S06-05-03-03_01-009_ScreenCapture_08.png">
-            <span class="caption">(Source: Sky Lectures / AiDALab)</span>
         </div>
 
     5. `Test and Score`의 결과표가 분류 지표(AUC, F1)에서 회귀 지표(**RMSE, $R^2$**)로 자동 변경된 것을 확인
@@ -352,6 +344,187 @@ qna: true
             - 0.85 이상이면 양호
         - **RMSE (평균 제곱근 오차):**
             - 모델의 수율 예측 오차 범위(%)를 나타냄
-            - 예: RMSE가 1.8이면 예측치와 실제 수율 차이가 평균 ±1.8%p 수준임을 의미
+            - 예: RMSE가 1.8이면 예측치와 실제 수율 차이가 평균 ±1.8%p 수준임을 의미<br><br>
 
 
+## 6. 공정 개선 의사결정 자동화 시나리오
+
+- Orange 3를 활용해 배터리 팩 알루미늄 케이스 라인의 분석 결과를 "공정 개선 의사결정 자동화 시나리오"로 연결하기
+
+- **사전 분석 결과: Orange 3 화면에서 확인된 핵심 데이터**
+
+    - **전체 1,200개 배치 상태:** Fail 61.6% (불량 739건), Pass 38.4% (양품 461건)
+
+        - 제1 분기점 (성형 압력, `press_p`):
+            - $press \le 142.7 ton$ 으로 압력이 부족 🡪 오른쪽 온도 조건과 상관없이 즉시 **`Fail 97.7%`** (불량 확정 구간)
+            - $press \gt 142.7 ton$ 이어야 비로소 다음 공정 조건을 따져볼 수 있음
+
+        - 제2 분기점 (금형 온도, `die_tem`):
+            - $temp \gt 237.8℃$ (과열): **`Fail 89.3%`** (특히 $243.5℃$ 를 넘으면 **`Fail 100%`**)
+            - $temp \le 204.8℃$ (저온): **`Fail 83.6%`** (소재가 굳어 크랙 발생)
+
+        - 양품(Pass)이 모여 있는 구간:
+            - 금형 온도가 $204.8℃ \sim 237.8℃$ 이고, 프레스 압력이 $142.7 ton \sim 186.8 ton$ 일 때 **`Pass 81.8%`** 달성
+            - **주의:** 온도가 정상이더라도 압력이 $press \gt 186.8 ton$ 으로 과도하면 다시 `Fail 85.2%`로 불량 발생
+
+            <div class="insert-image" style="width: 1000px;">
+                <img src="/materials/S06_SmartFactory/images/S06-05-03-03_01-010_ScreenCapture_09.png">
+            </div>
+
+<br>
+
+- **Orange 3 실습 내용 (자동화 시나리오 구현)**
+
+    - Orange 3에서 "불량이 예상되는 배치를 자동으로 걸러내고 조치 명령을 내리는 흐름"을 직접 연결해 보는 실습 단계
+
+    - **실습 워크플로우**
+
+        ```text
+        [File] (과거 1,200건 데이터) ─────► [Tree] (규칙 학습)
+                                                │
+                                                │ (학습된 규칙 전달)
+                                                ▼
+        [신규 File / Data Sampler] ───────► [Predictions] (사전 판정)
+        (현장 센서 실시간 유입 데이터)          │
+                                                ▼
+                                            [Select Rows] (Fail 고위험군 자동 분류)
+                                                │
+                                                ▼
+                                            [Data Table] (현장 PLC 제어 지시 목록)
+        ```
+
+    - **진행 과정**
+
+        - **1단계: 규칙 추출을 위한 Tree 모델 연결**
+            - **Tree** 위젯에 기존 **File** 위젯 연결
+
+            - **Tree** 위젯 설정
+                - **Induce binary tree** 선택
+                - **Classhfication**: **Stop when majority reaches [%]** 체크 후 **95%** 입력
+                    - 불량률 95% 이상인 구간은 추가 분할 없이 즉시 멈추도록 설정
+
+            - **Tree** 위젯 🡪 **Tree Viewer** 위젯과 연결 
+            - **Tree Viewer** 🡪 앞서 확인한 분기 수치(142.7 ton, 237.8℃, 204.8℃) 확인<br><br>
+
+        - **2단계: 현장 실시간 유입 상황 모사 (신규 데이터 공급)**
+            - 현장 센서에서 실시간으로 들어오는 새로운 배치 데이터를 가상으로 만들기 위해, 
+                - **Transform** 카테고리 🡪 **Data Sampler** 위젯 🡪 **File** 위젯과 연결
+            - **Data Sampler** 설정
+                - **Fixed sample size**: **Instances** 🡪  `10` 입력
+                    - 실시간으로 들어온 10개의 신규 배치를 모사<br><br>
+
+        - **3단계: 설비 가동 전 사전 품질 예측 (`Predictions`)**
+            - **Evaluate** 카테고리 🡪 **Predictions** 위젯 선택
+            - 선을 두 개 연결
+                - **Tree** 위젯 🡪 **Predictions** (예측 기준 전달)
+                - **Data Sampler** 위젯 🡪 **Predictions** (평가할 신규 10건 데이터 전달)
+
+            - **Predictions** 위젯 🡪 10개 배치 각각에 대해 기계가 예측한 결과(Pass / Fail)가 표로 나타남
+
+            <div class="insert-image" style="width: 1000px;">
+                <img src="/materials/S06_SmartFactory/images/S06-05-03-03_01-011_ScreenCapture_10.png">
+            </div>
+
+            <br>
+
+        - **4단계: 조치가 필요한 이상 배치 자동 검출 (`Select Rows`)**
+            - **Transform** 카테고리 🡪 **Select Rows** 위젯 🡪 **Predictions** 위젯과 연결
+            - **Select Rows** 위젯 설정 🡪 `quality_status is Fail`
+
+            - 이 설정을 통해 정상 통과 배치는 두고, **문제가 생길 것으로 예측된 배치만 자동으로 추출**됨<br><br>
+
+        - **5단계: 현장 제어 명령 확인 (`Data Table`)**
+            - **Data** 카테고리 🡪 **Data Table** 위젯 🡪 **Select Rows**의 **Matching Data** 출력선과 연결
+            - **Data Table**을 열면 불량으로 판정된 배치가 나열됨
+                - 작업자는 해당 배치의 수치(press_pressure, die_temp)를 보고 설비 인터록 및 보정 조치를 즉시 지시할 수 있음
+
+            <div class="insert-image" style="width: 1000px;">
+                <img src="/materials/S06_SmartFactory/images/S06-05-03-03_01-012_ScreenCapture_11.png">
+            </div>
+
+            <br>
+
+## 6. 공정 개선 의사결정 자동화 시나리오 정의서
+
+```markdown
+====================================================================================================
+                        [공정 개선 의사결정 자동화 시나리오 정의서]
+====================================================================================================
+
+----------------------------------------------------------------------------------------------------
+1. 시나리오 일반 정보
+----------------------------------------------------------------------------------------------------
+* 시나리오 ID   : SCN-AUTO-CASE-01
+* 시나리오 명칭 : 배터리 팩 알루미늄 케이스 프레스·열처리 신규 라인 품질 사전 제어 시나리오
+* 적용 공정     : 전기차용 알루미늄 배터리 하우징 정밀 프레스 성형 및 급랭 열처리 라인
+* 사업재편 배경 : 내연기관 부품 라인 축소 후 신규 전환 라인의 초기 수율(78%) 저하 및 소재 스크랩 손실 해결
+* 자동화 목표   : 성형 타발 전 사전 불량 차단율 90% 이상 확보 및 최종 수율 91.5% 달성
+* 기반 분석모델 : Orange 3 Decision Tree (정보 이득 기반 분기, 최대 불량 순도 95% 가지치기 적용)
+
+----------------------------------------------------------------------------------------------------
+2. 데이터 연동 및 인터페이스 정의
+----------------------------------------------------------------------------------------------------
+* 입력 변수 (센서) : 
+  - 프레스 성형 압력 (press_pressure, 단위: ton)
+  - 금형 가열 온도   (die_temp, 단위: ℃)
+  - 급랭 냉각 속도   (cool_rate, 단위: ℃/s)
+  - 원자재 물성      (raw_tensile_strength, raw_thickness)
+* 수집 및 판정 시점 : 금형 진입 후 프레스 하강 10초 전 (배치 투입 직전 사전 판정)
+* 데이터 연동 구조  : [현장 센서/PLC] -> [Orange 추론 엔진 (Edge)] -> [MES 공정 모니터링 / PLC 제어기]
+
+----------------------------------------------------------------------------------------------------
+3. 공정 제어 및 의사결정 자동화 규칙 (Decision Logic)
+----------------------------------------------------------------------------------------------------
+[규칙 01] 성형 압력 하한 차단 (압력 절대 부족)
+  - 조건 : press_pressure <= 142.7 ton
+  - 판정 : Fail (불량 확률 97.7% - 미성형 위험)
+  - 조치 : 【설비 인터록】 프레스 타발 즉시 금지, 유압 실린더 승압 지시 (+20 ton)
+
+[규칙 02] 금형 과열 구간 차단 (열변형 위험)
+  - 조건 : press_pressure > 142.7 ton AND die_temp > 237.8 ℃
+  - 판정 : Fail (불량 확률 89.3% ~ 100% - 치수 불량 및 열변형)
+  - 조치 : 【냉각 순환】 프레스 대기 모드 진입, 금형 냉각수 밸브 100% 개방 (230℃ 이하 도달 시 해제)
+
+[규칙 03] 금형 저온 구간 차단 (크랙 위험)
+  - 조건 : press_pressure > 142.7 ton AND die_temp <= 204.8 ℃
+  - 판정 : Fail (불량 확률 83.6% ~ 99.0% - 연신율 부족 크랙)
+  - 조치 : 【가열 승온】 금형 카트리지 히터 가동, 설정 온도 220℃ 도달 시까지 작업 대기
+
+[규칙 04] 과압력 방지 제어
+  - 조건 : 204.8 ℃ < die_temp <= 237.8 ℃ AND press_pressure > 186.8 ton
+  - 판정 : Fail (불량 확률 85.2% - 판재 과압 파손 위험)
+  - 조치 : 【압력 하향】 서보 모터 토크 리미트 조정 (170 ton 수준으로 감압)
+
+[규칙 05] 정상 가동 승인 (골디락스 존)
+  - 조건 : 204.8 ℃ < die_temp <= 237.8 ℃ AND 142.7 ton < press_pressure <= 186.8 ton
+  - 판정 : Pass (양품 확률 81.8% 이상 확보)
+  - 조치 : 【정상 타발】 성형 자동 진행 및 MES에 "정상 LOT" 승인 코드 전송
+
+----------------------------------------------------------------------------------------------------
+4. 운영 정책 및 페일세이프 (Fail-Safe)
+----------------------------------------------------------------------------------------------------
+* 제어 방식 구분 :
+  - 미세 보정 (온도 ±3℃, 압력 ±5 ton 이내): 설비 PLC를 통한 '완전 자동 보정'
+  - 한계 이탈 (142.7 ton 이하, 237.8℃ 초과): 설비 정지 후 '작업자 HMI 화면 경보 팝업 및 승인 요청'
+* 통신 이상 대응 : 센서 계측값 누락 시 기본 안전값(온도 220℃, 압력 160 ton) 복귀 전까지 타발 중단
+
+----------------------------------------------------------------------------------------------------
+5. 정량적 기대효과 (사업재편 성과)
+----------------------------------------------------------------------------------------------------
+* 라인 수율 개선 : 신규 전환 초기 수율 78.0% -> 의사결정 자동화 적용 후 91.5% 이상 달성
+* 스크랩 비용 절감 : 고가 알루미늄 6000계열 소재의 크랙 및 미성형 폐기량 연간 60% 이상 감축
+* 조치 반응 속도 : 불량 발생 후 사후 점검(약 20분 소요) -> 성형 전 센서 기반 사전 차단(1초 이내)
+====================================================================================================
+```
+
+> - 분석 결과를 바탕으로 "공정 개선 의사결정 자동화 시나리오 정의서"와 같은 특정 산업용 실무 기획 문서를 한 번에 자동 생성해 주는 전용 위젯이나 기능은 Orange3에서는 아직 지원하지 않음
+> - 따라서 최종 정의서 문서는 Orange 3가 계산해 준 시각적 지표와 규칙을 바탕으로 사용자가 직접 양식에 맞춰 작성하는 것이 일반적인 워크플로우임<br><br>
+> - 화면을 일일이 손으로 받아 적지 않고 Orange 3의 보조 기능들을 활용해 **보고서 작성에 필요한 근거 자료를 반자동으로 추출하는 방법**은 존재함
+>   - 리포트 자동 취합 기능 (Report 창 활용)
+>   - 트리 텍스트 규칙 그대로 복사하기 (Save Graph / 복사)
+>   - 조치 대상 데이터 파일 내보내기 (Save Data 위젯)<br><br>
+> - 그러나 본인이 해당 도메인의 전문가가 아니라면 머신러닝 도구(Orange 3)의 역할과 도메인 전문가(작업자/엔지니어)의 역할을 분리할 것을 권장함
+>   - 데이터 분석과 규칙 도출은 Orange 3가 끝냈고,
+>   - 이를 현장 PLC나 작업자가 알아들을 수 있는 행동 지침으로 정리하는 마지막 단계가 바로 정의서 작성 단계임
+>   - 작업 책임자가 마지막 검토를 수행하는 과정으로 생각하는 것이 좋음
+{: .yellow-quote}
