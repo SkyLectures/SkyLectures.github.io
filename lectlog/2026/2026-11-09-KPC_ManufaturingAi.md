@@ -9,6 +9,7 @@ tags:
     - smartfactory
     - manufacturing
     - ai
+qna: false
 ---
 * toc
 {:toc}
@@ -30,7 +31,7 @@ tags:
 >   - 설비 유지보수 및 예지 정비 시스템 구축 담당자
 >   - 스마트 팩토리 전환 프로젝트 리더 및 기획자
 >   - 제조 분야 AI 알고리즘 적용에 관심 있는 엔지니어
-> - **강의기간:** 2026.07.27~07.29 (09:00 ~ 17:00) (21H)
+> - **강의기간:** 2026.11.09~11.11 (09:30 ~ 17:20) (21H)
 > - **운영방식:** 오프라인 대면 강의
 {: .common-quote}
 
@@ -47,7 +48,6 @@ tags:
         - [제조 데이터 유형 및 특성](/materials/S06-04-01-01_01-ManufacturingDataFeature)
         - [제조 데이터 구조 이해](/materials/S06-04-01-02_01-ManufacturingDataOverview)
         - [제조 데이터 수집 구조](/materials/S06-04-01-03_01-ManufacturingDataCollectAndAnalyze)
-            - PLC-센서-클라우드 기반 데이터 수집 구조
         - [데이터 전처리 및 정제 방법 (결측치, 이상치 처리)](/materials/S02-02-02-01_01-DataPreprocess)
         - [데이터 통합 및 품질 관리 방법](/materials/S02-02-02-03_01-DataIntegrationQuality)
         - [EDA(탐색적 데이터 분석) 기반 패턴 분석](/materials/S02-02-03-01_01-DataAnalysis)
@@ -63,11 +63,11 @@ tags:
 
     - 공정 최적화를 위한 AI 모델 적용 (4H)
         - [노코드/로우코드 기반 AI 활용 구조 이해](/materials/S06-04-05-01_01-NoCodeLowCodeBasedAi)
+            - [(실습) 노코드 기반 예측 모델 + 공정 개선 시나리오](http://localhost:4000/materials/S06-05-03-03_01-NoCodePredictionModels_Type2)
         - [공정 데이터 기반 예측 모델 개념](/materials/S06-04-05-02_01-DataBasedPredictionModels)
         - [예측 결과를 공정 개선에 연결하는 방법](/materials/S06-04-05-03_01-ConnectPredictionResultsToProcessImprovement)
         - [AI 모델 운영 흐름(MLOps) 기초 이해](/materials/S06-04-05-04_01-AiModelOperationalFlow)
         - [(실습) 공정 개선 시나리오 설계](/materials/S06-04-05-05_01-DesigningProcessImprovementScenarios)
-        - [PyTorch 기반 DNN 예제](https://colab.research.google.com/github/SkyLectures/SkyLectures.github.io/blob/main/materials/ai/notebooks/DNN_Pytorch.ipynb){: target="_blank"}
 
 - **3일차**
     - 설비 데이터 분석과 스마트 운영 (3H)
@@ -84,9 +84,3 @@ tags:
         - [제조 AI 도입 로드맵 및 조직 변화](/materials/S06-04-07-04_01-ManufacturingAiAdoptionRoadmap)
         - [미래 제조 트렌드 및 산업 전망](/materials/S06-04-07-05_01-FutureManufacturingTrends)
 
-<br>
-
-> - 참고
->   - 실습은 주로 Orange 등의 무료도구를 사용함
->   - 실습 데이터는 가상의 데이터를 사용함
->   - 실습의 목적은 실질적인 기술을 익히는 것이 아니라 관리자와 실무자로서 데이터의 흐름을 이해하고 의사결정에 활용하는 법을 중심으로 함

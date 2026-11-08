@@ -1,6 +1,6 @@
 ---
 layout: page
-title: (실습) 노코드 기반 예측 모델 구축
+title: (실습) 노코드 기반 예측 모델 + 공정 개선 시나리오
 subtitle: 
 permalink: /materials/S06-05-03-03_01-NoCodePredictionModels_Type2
 description: 노코드 AI 도구를 활용해 사업재편 공정의 불량 유무 및 수율 예측 모델 생성 및 결과 해석

@@ -8,7 +8,7 @@ qna: false
 * toc
 {:toc}
 
-> 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,538H</span> + <span style="color: #1c5f1c;">(대기 중: 39H)</span> / <span style="color: #CC0000;">멘토링: 총 80H</span> / <span style="color: #CC0000;">동영상 강의 녹화: 총 42H</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">**🡪 [ 종합 3,699H ]**</span>
+> 🎤 <b>실적 : </b> <span style="color: #CC0000;">강의: 총 3,556</span> + <span style="color: #1c5f1c;">(대기 중: 21H)</span> / <span style="color: #CC0000;">멘토링: 총 80H</span> / <span style="color: #CC0000;">동영상 강의 녹화: 총 42H</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: red;">**🡪 [ 종합 3,699H ]**</span>
 {: .common-quote}
 
 <br>
